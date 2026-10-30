@@ -1,4 +1,25 @@
-# Phylogenetic Research Tools
+# Welcoem to Phylohist!
+
+***Please Note:*** *This is a former hobby project that is usable but
+remains a solo effort (now with AI assistance).  The `main` branch
+is always expected to be usable, but data entry and other improvements
+proceed when I have time available to devote to them.*
+
+*The repository started as a place to store private notes.  I started
+adding a few very casually-coded scripts for my own use, with the repository
+still set to private mode.  There are now quite a few tests and other
+updates bringing this more in line with software engineering best practices,
+but please do not look to this project to exemplify such things.*
+
+*All data is accurate to the best of my ability, but nearly always
+incomplete.  I am continually going back over the corpus and improving
+the data, and working on new ways to convey what data is truly absent
+from a source vs just not yet entered.*
+
+*If you are interested in contributing in either a scientific or technical
+capacity, please open an issue or otherwise reach out to me.*
+
+## Phylogenetic Research Tools
 
 Science is always in motion.  Most online taxonomy or phylogeny
 databases attempt to show a consensus or accepted view, with
@@ -16,8 +37,8 @@ The current corpus includes information from 218 papers from
 A coverage system tracks how much of the information from a paper has
 been entered and reviewed.
 
-**Please note:** This project began as a hobby, which is where the loader
-code came from.  Further work has been done with the assistance of
+As part of the transition from a hobby project to something more formal,
+further work has been done with the assistance of
 Claude Code, focusing on edrioblastoids (including rhenopyrgids and
 cyathocystids) as the primary proof of concept data set.
 
@@ -25,9 +46,12 @@ Next steps include writing human-user-friendly documentation,
 continuing to improve the software development methodology, and publishing
 the package as well as curating additional data and adding more features.
 
-Work to incorporate specimens and geologic time scales is ongoing, but
-currently handled in several different experimental ways while a final
-design is determined.
+Work to incorporate specimens and geologic time scales is ongoing.
+An approach has recently been chosen, but I have not had enough time to work
+with it in the data to be sure it is the right direction.  AI provides
+a good starting point, but there is no substitute for going through
+many publications from a wide range of times to find out if that starting
+point will properly capture the necessary information.
 
 ## Humans, Models, and Code
 
