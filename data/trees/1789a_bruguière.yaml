@@ -126,7 +126,8 @@ taxonomies:
       - taxon: pileus_müller.o.f_1776
       - taxon: hexagonus_modeer_1790
     - taxon: medusa
-  - taxon: échinodermes-order
+  - taxon: échinodermes
+    rank: Order
     new: true
     children:
     - taxon: asterias

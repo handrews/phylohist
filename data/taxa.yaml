@@ -4440,12 +4440,6 @@ echinodermata:
 
     Common alternatives are Bruguière 1789 or
     Bruguière 1791 [ex Klein 1734].
-echinodermata-class:
-  rank: Class
-  altRankOf: echinodermata
-echinodermata-order:
-  rank: Order
-  altRankOf: echinodermata
 echinodermata-indeterminate-subphylum_bell.b.m_1982:
   name: null
   rank: Subphylum
@@ -4469,21 +4463,14 @@ echinodermata-incertae-sedis_ubaghs_1999:
 echinodermen:
   name: Echinodermen
   lang: DE
-  vulgarSpellingOf: echinodermata-order # maybe?  Rank not at all clear
+  vulgarSpellingOf: echinodermata
 échinodermes:
   name: Échinodermes
+  rank: Order
   vulgarSpellingOf: echinodermata
-  lang: FR
-échinodermes-order:
-  name: Échinodermes
-  vulgarSpellingOf: echinodermata-order
   lang: FR
   authority:
     source: 1789a_bruguière
-échinodermes-class:
-  name: Échinodermes
-  lang: FR
-  vulgarSpellingOf: echinodermata-class
 echinodiscus:
   name: Echinodiscus
   authority:
