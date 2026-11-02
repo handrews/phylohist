@@ -1,8 +1,10 @@
-# Phylogenetic Research Tools
+# Phylohist: Exploring changes in systematics over time
 
 Science is always in motion.  Most online taxonomy or phylogeny
 databases attempt to show a consensus or accepted view, with
 each site having its own editorial policy for what gets included.
+Some include historical information, but do not make it a central
+or easily-accessible part of the sysetm.
 
 The `phylohist` project instead provides access to trees as published,
 over time, while leaving the judgement of what to accept or reject to
@@ -11,23 +13,78 @@ a curated corpus stored as YAML data.  This uses a model where one is
 needed, and prioritizes reliability, reproducibility, speed,
 and lower costs where one is not.
 
-The current corpus includes information from 218 papers from
-1734 to the present, mostly focusing on Paleozoic echinoderms.
+The current corpus holds over 200 papers entered in whole or in part, from
+the mid-1700s to the present, mostly focusing on Paleozoic echinoderms.
 A coverage system tracks how much of the information from a paper has
 been entered and reviewed.
 
-**Please note:** This project began as a hobby, which is where the loader
-code came from.  Further work has been done with the assistance of
-Claude Code, focusing on edrioblastoids (including rhenopyrgids and
-cyathocystids) as the primary proof of concept data set.
+## Status and future plans
 
+This repository began as a place to store my notes, and gradually evolved
+into a software package, featuring more and more modern software engineering
+best practices as I have found time to add them.  However, it remains
+a solo, unfunded project that I work on whenever I can.
+
+The package is published on PyPI as `phylohist` from version 0.1.0.
 Next steps include writing human-user-friendly documentation,
-continuing to improve the software development methodology, and publishing
-the package as well as curating additional data and adding more features.
+continuing to improve the software development methodology, curating
+additional data and adding more features.
 
-Work to incorporate specimens and geologic time scales is ongoing, but
-currently handled in several different experimental ways while a final
-design is determined.
+A data model for capturing specimen information has recenlty been
+designed but data entry for this area is in its infancy.  Additional
+areas of fuure work are proper support for cladograms (currently
+allowed in the data but treated more-or-less like systematic trees)
+and data visualization.
+
+## Corpus Scope and Editorial Curation Policy
+
+Because `phylohist` relies on manual validation and a human-in-the-loop
+workflow, data ingestion proceeds slowly to prioritize high fidelity
+over unchecked volume.
+
+No data is entered purely by AI.  The data model has grown from my experience
+of manually reading papers and figuring out how to work with the data as
+it was published.  Current LLMs are too eager to make things "work" rather
+than step back and consider the user experience.
+
+### Intentional Scoping and Partial Entry
+
+Data entry is guided by the target research scope, currently focusing primarily
+on Paleozoic echinoderms and their relatives in the Ambulacrarian stem group.
+
+* **Partial Ingestion:** For vast foundational texts such as Linnaeus’s
+  *Systema Naturae*, only the specific branches of interest to the active
+  dataset are entered.
+* **Closed-World Boundaries:** The data model is being enhanced with ways
+  to indicate when data is complete by some metric.  However, updating
+  the data with these fields is itself a large, ongoing project.
+
+### Archival Fidelity vs. Modern Interpretation
+
+Tracking archaic, text-heavy literature (particularly pre-19th-century sources
+written in informal prose) presents a unique archival challenge.
+
+* **Philosophy:** The core directive of this corpus is to capture the published
+  author's opinions *as they published them*.  However, no data model is
+  perfect, so `phylohist` attempts to get as close as possible while
+  capturing literal text and editorial reasoning to inform users of
+  possible discrepancies and inferences. Only ICZN-mandated
+  textual normalizations are performed.  In more recently-entered data,
+  the original textual form is also captured (e.g. "Asterias caputmedusae"
+  vs "Aſterias Caput meduſæ").  The common use of only non-Latin names for
+  higher taxa in earlier publications introduces further difficulty, as
+  does the uneven introduction of ranks other than those first used by Linnaeus.
+* **Continuous Ingestion:** Determining how to translate loose, informal
+  prose into deterministic YAML schemas without breaking historical context
+  is an ongoing design effort.  Often, a paper will inspire a revision
+  to the data model, meaning that data entered at different times shows
+  different levels of completion.  Older data may use less precise structures
+  that will eventually brought in line with the current design so that
+  the older structures can be dropped.
+
+*The project welcomes feedback or additions to schemas and coverage maps
+via GitHub issues.  Please open an issue prior to working on a pull request
+to ensure that the request will be well-received.*
 
 ## Humans, Models, and Code
 
@@ -48,8 +105,8 @@ This avoids verbose or hallucinated output while spending tokens only
 on the work that really requires a model's reasoning and flexibility.
 
 <picture>
-  <source media="(prefers-color-scheme: dark)" srcset="docs/architecture-dark.svg">
-  <img alt="How phylohist fits together: three lanes, human, model and code, read in four columns, the data, the CLI, chat and the eval" src="docs/architecture.svg">
+  <source media="(prefers-color-scheme: dark)" srcset="https://raw.githubusercontent.com/handrews/phylohist/main/docs/architecture-dark.svg">
+  <img alt="How phylohist fits together: three lanes, human, model and code, read in four columns, the data, the CLI, chat and the eval" src="https://raw.githubusercontent.com/handrews/phylohist/main/docs/architecture.svg">
 </picture>
 
 - **The data.** The curator records each publication's opinions as
@@ -125,8 +182,7 @@ and the tools.
 
 ### Tool Examples
 
-What one paper places in a family, laid out as the paper
-prints it:
+What one paper places in a family, showing only what the paper included:
 
     $ poetry run phylohist contents 1994_guensburg_sprinkle astrocystitidae
     Guensburg & Sprinkle 1994
@@ -170,19 +226,35 @@ blocks.  It requires an Anthropic API key to be configured.
 
 ## Install
 
-Python 3.12 or later and [Poetry](https://python-poetry.org/):
+From PyPI, for the tools and the MCP server over the claim table as of
+the release (Python 3.12 or later):
+
+    pip install phylohist
+    phylohist history rhenopyrgus
+    phylohist-mcp
+
+The second command is the server over stdio, which any MCP client runs
+by name. For Claude Desktop or Claude Code the entry is
+
+    {"mcpServers": {"phylohist": {"command": "phylohist-mcp"}}}
+
+or, with nothing installed, `uvx --from phylohist phylohist-mcp` as the
+command and its arguments.
+
+From a checkout, for the loader, the generator and the eval,
+[Poetry](https://python-poetry.org/):
 
     poetry install
 
 The claim table the tools read is generated into `phylohist/table/`, so
-the package can also be built (`poetry build`) and installed on its own:
-an installed copy carries the table as of its build and offers the
-`phylohist` and `phylohist-mcp` commands, so any MCP client can run the
-server without a checkout. `PHYLOHIST_CLAIMS` names another table to read.
+a built package carries the table as of its build and a clone answers
+from the table as `poetry run regenerate` last wrote it.
+`PHYLOHIST_CLAIMS` names another table to read.
 
 Only `scripts/eval_run.py` and the grader's `--judge` call a model;
-they read `ANTHROPIC_API_KEY` from the environment or from a
-git-ignored `.env` at the repository root. Nothing else needs a key.
+their client is the `eval` dependency group, and they read
+`ANTHROPIC_API_KEY` from the environment or from a git-ignored `.env` at
+the repository root. Nothing else needs a key.
 
 ## Checks
 
@@ -217,6 +289,9 @@ hold for the data they were last refreshed against.
 
 ## Licence
 
-`LICENSE` (MIT) covers the code. The YAML under `data/` is the owner's
-compilation of published opinions, recorded as printed, and `notes/`
-is the owner's and the assistant's writing.
+`LICENSE` (MIT) covers everything in the repository and in the released
+package: the code; the YAML under `data/`, which is the owner's
+compilation of published opinions, recorded as printed; the claim table
+generated from it; and `notes/`, the owner's and the assistant's writing.
+If the corpus is useful in published work, please cite it
+(`CITATION.cff`).
