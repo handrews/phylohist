@@ -267,7 +267,24 @@ def _print_sources(result, style):
     print(
       f'{c["key"]}  {c["cite"]}; {"entered" if c["entered"] else "not entered"}; '
       + ', '.join(c['authors'])
+      + _source_parts(c)
     )
+
+
+def _source_parts(candidate):
+  """ "; vol. 1, part 6, pp. 3021–3910": the volume, part and pages a
+  candidate carries, which tell the parts of a multi-part work apart."""
+  parts = []
+  if 'volume' in candidate:
+    parts.append(f'vol. {candidate["volume"]}')
+  if 'number' in candidate:
+    parts.append(f'part {candidate["number"]}')
+  pages = candidate.get('pages')
+  if pages:
+    pages = [str(p) for p in pages] if isinstance(pages, list) else [str(pages)]
+    spans = ['–'.join(pages[i : i + 2]) for i in range(0, len(pages), 2)]
+    parts.append(('pp. ' if len(pages) > 1 else 'p. ') + ', '.join(spans))
+  return '; ' + ', '.join(parts) if parts else ''
 
 
 if __name__ == '__main__':

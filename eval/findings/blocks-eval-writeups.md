@@ -678,6 +678,77 @@ when the listing marks it as the editor's inference, which is the
 question's point. The header is the one place the model still speaks
 in its own words, and the judge is there for exactly this.
 
+## The planner run over eval v2
+
+Run 8 (2026-11-01, planner mode, Claude Sonnet 5,
+`eval/runs/2026-11-01-planner-claude-sonnet-5.jsonl`) is the first over
+the v2 set: the 45 gold-slice questions and eleven new ones, q050 to
+q060, over the sources of 1740 to 1854, a specimen cited by two papers
+eighty years apart, a source declared partly entered, an unentered part
+of Gmelin's Systema and an author the corpus lacks (`eval/README.md`,
+"v2"). Since run 7 the corpus grew from 218 to 230 sources and the data
+model changed under 74 commits; every expected answer was held to the
+table by `pytest --demo` before the run.
+
+| class | questions | mechanical pass |
+|---|---|---|
+| absent | 4 | 4 |
+| answerable | 17 | 14 |
+| as-published | 9 | 5 |
+| trajectory | 17 | 15 |
+| uncaptured | 9 | 7 |
+
+**Level with run 7 on the gold slice.** Thirty-eight of 45 (84 %) against
+41 of 47 (87 %). q024 and q035 now pass; q009, q026 and q045 now fail;
+q001, q021, q028 and q034 fail as before and in the same way (the chain
+where the listing is asked, the dependent lookup a plan cannot express,
+the subfamily resolved against the genus, the history where the printed
+forms are asked). The three that turned back are block choices: q009
+plans the listing and omits the occurrence gap, q026 plans the
+specimen's history where the statements about the species were asked,
+q045 plans the family's history where placed_under was asked. The judge
+gave no zeros: every header states parameters and nothing else.
+
+**The new questions, seven of eleven.** Four fail, and two of the four
+are the tools' faults rather than the model's.
+
+- q055, Gmelin 1791, part 6. The model resolved "Gmelin 1791", was given
+  three records with the same citation and year and nothing else, tried
+  the keys themselves as citations, and after seventeen calls answered in
+  prose asking which record was the Vermes part. The resolver exposes no
+  volume, part or pages, so the parts of a multi-part work cannot be told
+  apart from what the tools return. The fix is the resolver's: carry
+  `volume`, `number` and `pages` where the record has them.
+- q054, the spelling of Echinoencrinites. The model planned
+  `printed_forms` for the record and for its hyphenated variant, which is
+  the right shape for the question; both came back empty, because the
+  variant record is itself the printed form and no node carries a
+  `citedAs`. The fix is the tool's: on a spelling variant, list the
+  sources that use it.
+- q053, Tilas's kalckballar. The model restricted the statements to Tilas
+  1740, so Buch's acceptance of the name as Sphaeronites aurantium, the
+  question's second half, did not show. A block choice.
+- q056, Vanuxem 1842, declared partly. The model planned the listing under
+  Echinodermata twice, got no block, and submitted an empty plan where the
+  planner prompt names the gap for a source declared partly. A block
+  choice, and the first time a submitted plan built nothing; the metrics
+  table has a row for it now.
+
+**Cost.** 0.67 M input tokens and 60 k output over 56 questions, twelve
+minutes, 195 lookups, of which q055's seventeen are a third of the excess
+over run 7.
+
+**After the two tool fixes.** q054 and q055 alone, rerun the same day
+(`eval/runs/2026-11-01b-planner-claude-sonnet-5-q054-q055.jsonl`; two
+questions are a check, not a row in the table), both pass. For q055 the
+model resolved "Gmelin 1791", read "vol. 1, part 6, pp. 3021–3910" off
+the first candidate, and planned the gap for it in four calls where run 8
+spent seventeen and gave up; the judge scored its header 1 for saying the
+content "has not been entered", which is the gap block's finding rather
+than a parameter. For q054 the same plan as in run 8, the printed forms of
+the record and of its variant, now renders the seven hyphenated citations
+and passes. On the run-8 yardstick that is 47 of 56.
+
 ## What changes next, in order
 
 1. Source keys: citations accepted wherever a source is a parameter
@@ -693,3 +764,9 @@ in its own words, and the judge is there for exactly this.
    planner run above). What remains open: an operation mapped over the
    sources a closure returns, and a measurement over a closure (the
    dropped q047), neither of which a plan can yet express.
+6. `resolve_source` carries the volume, part and pages a record has, so
+   the parts of a multi-part work can be told apart (run 8, q055; done
+   2026-11-01).
+7. `printed_forms` over a spelling variant lists the sources that print
+   it, and a printed attribution with an author list reads as words (run
+   8, q054; done 2026-11-01).

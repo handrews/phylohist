@@ -145,13 +145,19 @@ class Resolver:
 
   def _source_candidate(self, key):
     row = self.store.sources[key]
-    return {
+    candidate = {
       'key': key,
       'cite': short_citation(row['citation']),
       'year': row['citation'].get('year'),
       'entered': bool(row.get('tree')),
       'authors': list(row['citation'].get('authors') or ()),
     }
+    # The parts of a multi-part work share a citation; the volume, part and
+    # pages are what tells them apart.
+    for field in ('volume', 'number', 'pages'):
+      if field in row['citation']:
+        candidate[field] = row['citation'][field]
+    return candidate
 
   def source_key(self, key):
     return self.key_of('source', key)

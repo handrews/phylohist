@@ -109,7 +109,12 @@ def test_resolve_and_absence(capsys):
 
 def test_source_subcommand_and_citations(capsys):
   code, out = run(capsys, 'source', 'Holloway & Jell 1983')
-  assert code == 0 and out == '1983_holloway_jell  Holloway & Jell 1983; entered; Holloway, Jell'
+  # The volume, part and pages follow, so the parts of a multi-part work
+  # read apart on the line.
+  assert code == 0 and out == (
+    '1983_holloway_jell  Holloway & Jell 1983; entered; Holloway, Jell; '
+    'vol. 57, part 5, pp. 1001–1016'
+  )
   code, out = run(capsys, 'source', 'Klug et al. 2008')
   assert code == 0 and out == '(no source in the corpus is that paper)'
   assert cli.main(['gap', 'Lamarck 1816', 'material']) == 2

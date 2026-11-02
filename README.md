@@ -85,10 +85,13 @@ The project's evolution can be seen through the evaluation
 Moving from AI-written prose answers to planned queries with modular
 output blocks improved key measurements across complete evaluation runs:
 
-* The measured pass rate rose from 61% to 87%, with several failure modes
-  eliminated entirely.
-* Wall clock time was cut from around 25 minutes to around 10 minutes.
-* Token usage dropped from 2.25 million to 0.56 million
+* The measured pass rate rose from 61% to 87% on the original question
+  set, with several failure modes eliminated entirely; the latest run
+  (2026-11-01) passes 84% of those questions and 80% of the expanded set
+  of 56.
+* Wall clock time was cut from around 25 minutes to around 12 minutes,
+  over a quarter more questions.
+* Token usage dropped from 2.25 million to 0.67 million.
 
 Future improvements to how the model selects blocks are expected to raise
 the correctness score.

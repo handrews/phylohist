@@ -124,8 +124,11 @@ TOOL_DESCRIPTIONS = {
   'resolve_source': (
     'The sources a citation can mean: "Dehm 1961", "Holloway & Jell '
     '1983", "Sumrall et al. 2013", "Fay 1967a". Each candidate gives the '
-    'key, the citation as the blocks print it, the year, the authors and '
-    "whether the paper's content is entered. Every tool that takes a "
+    'key, the citation as the blocks print it, the year, the authors, '
+    "whether the paper's content is entered, and the volume, part "
+    '("number") and pages where the record has them, which is what tells '
+    'the parts of a multi-part work apart when they share a citation. '
+    'Every tool that takes a '
     'source accepts the citation itself, so this is needed only when a '
     'citation can mean several papers (the tool then refuses with their '
     'keys) or to check whether a paper is in the corpus at all: an empty '
@@ -261,7 +264,10 @@ TOOL_DESCRIPTIONS = {
   'printed_forms': (
     'Each form a source prints for a record, verbatim, with the page: '
     'how a name, author or year appears on the page, for questions about '
-    'what a paper actually prints. Never corrected.'
+    'what a paper actually prints. A spelling variant of the record is '
+    'itself a printed form, so the sources that write the name that way '
+    'are listed with the spelling they use, whichever spelling is asked '
+    'for. Never corrected.'
   ),
 }
 

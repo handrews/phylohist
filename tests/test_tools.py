@@ -1802,3 +1802,45 @@ def test_specimen_history_without_links_is_what_the_numbers_alone_find(store):
   block = store.specimen_history('UQF 5405')
   assert [e['source'] for e in block['entries']] == ['2021_jell_sprinkle']
   assert block['rendered'].count('the same specimen') == 0
+
+
+def test_source_candidates_carry_the_parts(store):
+  # Three records share the citation "Gmelin 1791": the parts of one
+  # edition. The volume, part and pages are what tells them apart.
+  found = {c['key']: c for c in store.resolve_source('Gmelin 1791')}
+  assert set(found) == {'1791a_gmelin', '1791b_gmelin', '1791c_gmelin'}
+  vermes = found['1791a_gmelin']
+  assert (vermes['volume'], vermes['number'], vermes['pages']) == (1, 6, [3021, 3910])
+  assert all(c['cite'] == 'Gmelin 1791' for c in found.values())
+  # A record without a part carries no `number`; nothing is invented.
+  assert 'number' not in store.resolve_source('Dehm 1961')[0]
+
+
+def test_printed_forms_list_the_spelling_variants(store):
+  # A spelling variant is itself a printed form: the sources that write
+  # Agelacrinus are listed under Agelacrinites with that spelling, and the
+  # same lines come back when the variant is the record asked for.
+  spellings = {
+    (e['source'], e['printed'])
+    for e in store.printed_forms('agelacrinites', style='json')['entries']
+    if e.get('kind') == 'spelling'
+  }
+  assert {('1935_bassler', 'Agelacrinus'), ('1983_holloway_jell', 'Agelacrinus')} <= spellings
+  from_variant = {
+    (e['source'], e['printed'])
+    for e in store.printed_forms('agelacrinus', style='json')['entries']
+    if e.get('kind') == 'spelling'
+  }
+  assert from_variant == spellings
+  assert '"Agelacrinus" Bassler 1935' in store.printed_forms('agelacrinites')['rendered']
+  # A rank variant is the same spelling, so it adds no form.
+  assert store.printed_forms('rhenopyrgus', style='json')['entries'] == []
+
+
+def test_printed_attribution_joins_the_author_names(store):
+  # A printed attribution with an author list reads as the other blocks
+  # word it, never as the list itself.
+  block = store.printed_forms('stromatocystites', source='1966_regnéll', style='json')
+  forms = [e['printed'] for e in block['entries']]
+  assert 'Pompeckj, 1896' in forms
+  assert not any('[' in f for f in forms)

@@ -5,6 +5,21 @@ Rhenopyrgidae, written before the claim table exists so that they say what
 it must be able to express. `questions.yaml` holds them; `docs/claims.md`
 is the vocabulary their expected answers are written in.
 
+## v2: the early corpus, specimens and spellings
+
+Questions q050 to q060, added 2026-11-01, reach what the gold slice did
+not: the sources of 1740 to 1854 (Linnaeus's Echinus, Tilas's mineral
+name, Buch's Cystideen, the history of Echinosphaerites aurantium and the
+hyphenated Echino-encrinites), a specimen cited by two papers eighty years
+apart (`specimen_history`, until then untested), a source whose coverage
+is declared partly, two on record with nothing entered, and an author the
+corpus lacks. Nearly every early source is unaudited with no declared
+coverage, so these questions ask what a source prints and what the corpus
+holds, and leave verdicts alone as before. The gold-slice questions are
+unchanged; q033's prose was refreshed for the sources entered since.
+Run 8 (2026-11-01, planner mode) answered 45 of the 56; the write-up is in
+`findings/blocks-eval-writeups.md` and the row in `findings/metrics.md`.
+
 ## The answer contract
 
 | class | what the data holds | the right answer | the shape |
