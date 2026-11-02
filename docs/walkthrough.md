@@ -92,10 +92,17 @@ The answer:
     Attribution of family Edrioasteridae (name-bearer and year) as printed across sources; family rank only; all years
 
     Edrioasteridae (Family)
+      1935 "Family EDRIOASTERIDAE Bather" Bassler 1935 p. 8
+      1936 "Family EDRIOASTERIDAE Bather" Bassler 1936 p. 22
+      1966 "Family EDRIOASTERIDAE Bather, 1898" Regnéll 1966 U171
+      1975 "Family EDRIOASTERIDAE Bather, 1898" Kolata 1975 p. 56
+      1976 "Family Edrioasteridae BATHER, 1898" Bell 1976 p. 290
       1978 "Family Edrioasteridae Bell, 1976 [emend. herein]" Bell & Sprinkle 1978 p. 246
+      1980 "Family Edrioasteridae Bell, 1976a" Bell 1980
+      1985 "Family EDRIOASTERIDAE Bather, 1898" Smith 1985
       2015 "Family Edrioasteridae Bather, 1899" Sprinkle & Sumrall 2015 p. 348
 
-When the question is about what papers print, the answer is the printed forms, verbatim with their pages. The two sources disagree, one crediting Bell 1976 and the other Bather 1899, and the answer shows both as printed rather than choosing. That disagreement is the object of study, not a defect to resolve.
+When the question is about what papers print, the answer is the printed forms, verbatim with their pages. Nine sources print the family's attribution: four give Bather 1898, two give Bather with no year, two credit Bell 1976, and Sprinkle & Sumrall 2015 alone give Bather 1899. The answer shows every form as printed rather than choosing. That disagreement is the object of study, not a defect to resolve.
 
 ## What occurrence data does Guensburg & Sprinkle (1994) print for the new species Lampteroblastus hintzei?
 

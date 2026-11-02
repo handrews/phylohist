@@ -865,19 +865,18 @@
     - "Bather, 1899"
     - "Bell, 1976"
     answer: |
-      One paper in the corpus prints a year for family Edrioasteridae's
-      attribution to Bather: Sprinkle & Sumrall (2015), citing "Bather, 1899"
-      (p. 348) — printed four lines below "Suborder Edrioasterina, Bather,
-      1898" for the coordinate suborder name, in the same header, from the
-      same two authors.
+      Nine papers in the corpus print an attribution for family
+      Edrioasteridae. Regnéll (1966), Kolata (1975, p. 56), Bell (1976,
+      p. 290) and Smith (1985) print "Bather, 1898"; Bassler (1935, p. 8;
+      1936, p. 22) prints "Bather" with no year; Sprinkle & Sumrall (2015)
+      alone print "Bather, 1899" (p. 348), four lines below "Suborder
+      Edrioasterina, Bather, 1898" in the same header.
 
-      Bell & Sprinkle (1978), the only other paper in the corpus that prints
-      any year at all for the family, instead credit it to an entirely
-      different name-bearer: "Family Edrioasteridae Bell, 1976 [emend.
-      herein]" (p. 246), tracing to "the order Edrioasterida as proposed by
-      Bell (1976a)" (p. 245). No paper in the corpus explains why 1898 and
-      1899 both appear for the same 1899 British Association report, itself
-      dated "for 1898."
+      Bell & Sprinkle (1978) and Bell (1980) instead credit a different
+      name-bearer: "Family Edrioasteridae Bell, 1976 [emend. herein]"
+      (p. 246) and "Bell, 1976a". No paper in the corpus explains why 1898
+      and 1899 both appear for the same British Association report,
+      published in 1899 and dated "for 1898."
   evidence:
   - source: 2015_sprinkle_sumrall
     pages: 348
@@ -1426,3 +1425,299 @@
     carries all three. Added 2026-09-12 so that reaching for cladograms is tested where the
     question asks for it, after q030 lost its cladogram selector (the default reads
     taxonomies only).'
+- id: q046
+  class: answerable
+  question: Which species does Linnaeus (1758) place in his new genus Echinus, and on what page does the genus begin?
+  scope:
+    taxon: echinus
+    source: 1758_linnaeus
+  expected:
+    blocks:
+    - tool: contents
+      parameters: {source: 1758_linnaeus, record: echinus}
+    shows:
+    - "Linnaeus 1758, p. 663"
+    - "Genus Echinus gen. nov."
+    - "Echinus esculentus sp. nov."
+    - "Echinus orbiculus var. α var. nov."
+    answer: |
+      Seventeen species, every one new, from Echinus esculentus to Echinus
+      orbiculus, the last with four varieties lettered α to δ, under "Genus
+      Echinus" beginning on p. 663 of the tenth edition. The headings
+      Linnaeus sets over the regular and the irregular species (pp. 663,
+      665) are sections of the genus, recorded apart from the listing.
+  evidence:
+    source: 1758_linnaeus
+    pages: 663
+  verified: data/trees/1758_linnaeus.yaml, the echinus node (pages 663, new) and its
+    species children, orbiculus with four var. children; data/sections.yaml
+    echinus-regulares (p. 663) and echinus-irregulares (p. 665) are the headings,
+    which yield section claims and not nodes of the listing.
+- id: q047
+  class: trajectory
+  question: How has Gyllenhaal's (1772) Echinus aurantium been treated since, and in which genera?
+  scope:
+    taxon: aurantium_gyllenhaal_1772
+  expected:
+    blocks:
+    - tool: history
+      parameters: {record: aurantium_gyllenhaal_1772}
+    shows:
+    - "Echinus aurantium Gyllenhaal 1772: 14 papers"
+    - "in Sphaeronites 1828–1848"
+    - "Echinosphaerites aurantium, in Vermes"
+    - "cited as a synonym of Sphaeronites citrus"
+    answer: |
+      Named in Echinus by Gyllenhaal (1772, pp. 245–250, 253) and kept there
+      by Hisinger (1802); moved to Echinosphaerites by Wahlenberg (1821,
+      p. 52), followed by Schlotheim (1826) and Pander (1830), who prints it
+      as new (p. 144); in Sphaeronites from Hisinger (1828) through Eichwald
+      (1840), Buch (1840, 1844, 1845) and Forbes (1848), Hisinger (1837)
+      citing it as a synonym of his Sphaeronites citrus; back in
+      Echinosphaerites with Müller (1854) and Paul (1997), who makes it the
+      type species of the subgenus Echinosphaerites (Echinosphaerites).
+      Fourteen papers from ten sets of co-authors; three genera; the
+      present position, Echinosphaerites, since 1821 by five papers.
+  evidence:
+  - source: 1772_gyllenhaal
+    pages: 245
+  - source: 1821_wahlenberg
+    pages: 52
+  - source: 1837_hisinger
+    pages: 245
+  verified: the aurantium_gyllenhaal_1772 nodes in data/trees/ for 1772_gyllenhaal, 1802_hisinger,
+    1821_wahlenberg, 1826_schlotheim, 1828_hisinger, 1830_pander, 1837_hisinger (a synonyms
+    entry under citrus_hisinger_1837), 1840_eichwald, 1840a_buch, 1840b_buch, 1844_buch,
+    1845_buch, 1848b_forbes, 1854_müller.j.p and 1997_paul.c.r.c (type of the subgenus).
+- id: q048
+  class: trajectory
+  question: Who first placed Echinosphaerites among Buch's Cystideen, and who followed?
+  scope:
+    taxon: echinosphaerites
+  expected:
+    blocks:
+      anyOf:
+      - - tool: placed_under
+          parameters: {record: echinosphaerites, parent: cystideen}
+      - - tool: placed_under
+          parameters: {record: echinosphaerites, parent: cystidea}
+    shows:
+    - "first Forbes 1848, last Müller 1854"
+    - "2 papers, 2 co-author sets, 1848–1854"
+    answer: |
+      Forbes (1848) first, within Cystideae and through Sphaeronites, the
+      genus he keeps the species in; Müller (1854) next, under an unnamed
+      division of the Cystideen. Buch himself (1844, 1845) places the same
+      species in Sphaeronites under his Cystideen but never uses the name
+      Echinosphaerites, so his papers do not count. Two papers, two sets of
+      co-authors, 1848 to 1854.
+  evidence:
+  - source: 1848b_forbes
+  - source: 1854_müller.j.p
+  verified: data/trees/1848b_forbes.yaml places sphaeronites under cystideae (a spelling
+    variant of cystideen) with echinosphaerites among its synonyms; data/trees/1854_müller.j.p.yaml
+    places echinosphaerites under an unnamed node under cystideen; data/trees/1844_buch.yaml and
+    1845_buch.yaml carry no echinosphaerites node.
+- id: q049
+  class: answerable
+  question: What is the "kalckballar" that Tilas (1740) figures, and what did later authors make of it?
+  scope:
+    taxon: kalckballar_tilas_1740
+  expected:
+    blocks:
+    - tool: statements
+      parameters: {record: kalckballar_tilas_1740}
+    shows:
+    - "named as new (p. 196)"
+    - "illustration: pl. II, fig. 18"
+    - "accepts kalckballar (Tilas 1740) as Sphaeronites aurantium"
+    answer: |
+      Tilas (1740, p. 196) names the "kalckballar", lime balls, and figures
+      them as fig. 18 of plate II: a mineral-formation name, recorded as such,
+      under which a fossil was described before Linnaean names. The one later
+      source in the corpus to cite it is Buch (1844), who accepts it as
+      Sphaeronites aurantium; his citation is printed in error, which the
+      editor notes (the plate is II, there is no plate XI, and the date is
+      1740).
+  evidence:
+  - source: 1740_tilas
+    pages: 196
+  - source: 1844_buch
+  verified: data/taxa.yaml kalckballar_tilas_1740 (mineral true, Tilas 1740); data/trees/1740_tilas.yaml
+    (pages 196, illustration plate II fig. 18); data/trees/1844_buch.yaml, the synonyms entry
+    under aurantium_gyllenhaal_1772 with its editorial corrections.
+- id: q050
+  class: as-published
+  question: Under what spelling do the papers in the corpus cite Meyer's (1826) genus Echinoencrinites?
+  scope:
+    taxon: echinoencrinites
+  expected:
+    blocks:
+    - tool: history
+      parameters: {record: echinoencrinites}
+    shows:
+    - "Echino-encrinites; named as new"
+    - "Echino-encrinites, in Cystidea"
+    - "cited as a synonym of Echino-encrinus"
+    answer: |
+      Every paper prints the hyphenated form "Echino-encrinites": Meyer
+      (1826) naming it, Hisinger (1828, p. 196) in an unnamed family,
+      Volborth (1842) in Crinoidea, Hall (1847) in Cystidea, and Forbes
+      (1848), who cites it as a synonym of his Echino-encrinus. The
+      unhyphenated record is the editor's key; no paper in the corpus prints
+      it that way.
+  evidence:
+  - source: 1826_meyer
+  - source: 1828_hisinger
+    pages: 196
+  - source: 1847_hall
+  verified: data/taxa.yaml echino-encrinites (altSpellingOf echinoencrinites); the
+    echino-encrinites nodes in data/trees/ for 1826_meyer, 1828_hisinger, 1842_volborth,
+    1847_hall and 1848b_forbes (a synonyms entry); no tree carries the unhyphenated key as
+    its citedAs.
+- id: q051
+  class: uncaptured
+  question: What does Gmelin's (1788) edition of the Systema Naturae place under Echinus?
+  scope:
+    taxon: echinus
+    source: 1788a_gmelin
+  expected:
+    blocks:
+      anyOf:
+      - - tool: gap
+          parameters: {source: 1788a_gmelin}
+      - - tool: gap
+          parameters: {source: 1788b_gmelin}
+    shows:
+    - "Gmelin 1788 is on record; its content has not yet been entered"
+    answer: |
+      Not captured for Gmelin (1788): two papers of his from that year are
+      on record and neither has its content entered, so what either prints
+      under Echinus cannot be reported yet. A planner that resolves "Gmelin
+      1788" is offered both keys and must name one.
+  evidence:
+    source: 1788a_gmelin
+  verified: data/sources.yaml has records 1788a_gmelin and 1788b_gmelin; ls data/trees/ has
+    no file for either and drafts/ holds no draft.
+- id: q052
+  class: uncaptured
+  question: What classification does Vanuxem (1842) print for the fossils of New York's third district?
+  scope:
+    source: 1842_vanuxem
+  expected:
+    blocks:
+    - tool: gap
+      parameters: {source: 1842_vanuxem, kind: skeleton}
+    shows:
+    - "has not yet been entered (only part of it is entered so far)"
+    answer: |
+      Partly captured for Vanuxem (1842): the source declares its
+      classification partly entered (skeleton partly, new taxa partly,
+      material partly; synonymy and types not applicable), reviewed against
+      the paper on 2026-09-09. What is entered amounts to eight placements
+      and three new names, so the printed classification as a whole cannot
+      be reported yet.
+  evidence:
+    source: 1842_vanuxem
+  verified: data/sources.yaml 1842_vanuxem audit (state partial, coverage skeleton partly,
+    newTaxa partly, material partly, synonymy na, types na); data/trees/1842_vanuxem.yaml.
+- id: q053
+  class: answerable
+  question: Which papers cite the University of Queensland specimen F. 5404, and as what?
+  scope:
+    source: 1941_whitehouse
+  expected:
+    blocks:
+      anyOf:
+      - - tool: specimen_history
+          parameters: {number: "UQF 5404"}
+      - - tool: specimen_history
+          parameters: {number: "F. 5404", repository: uq-f}
+    shows:
+    - "Specimen UQF 5404 (University of Queensland, fossil register)"
+    - "Whitehouse"
+    - "Jell & Sprinkle"
+    - "holotype of Peridionites navicula"
+    answer: |
+      Two papers, eighty years apart: Whitehouse (1941) cites it as "F.
+      5404", the holotype of his new Peridionites navicula, and Jell &
+      Sprinkle (2021) cite the same specimen as UQF 5404, still the holotype.
+      The two printed forms are one register entry; the answer lists both
+      citations under the one number and notes the form that differs from
+      the one asked for.
+  evidence:
+  - source: 1941_whitehouse
+  - source: 2021_jell_sprinkle
+  verified: the material entries for navicula in data/trees/1941_whitehouse.yaml (prefix F.,
+    number 5404, holotype) and data/trees/2021_jell_sprinkle.yaml (prefix UQF, 5404, holotype);
+    data/repositories.yaml uq-f lists both prefixes.
+- id: q054
+  class: absent
+  question: How does Breyn (1732) arrange the echinoids in his Schediasma?
+  scope:
+    source: breyn_1732
+  expected:
+    blocks:
+    - tool: gap
+      parameters: {source: "Breyn 1732"}
+    shows:
+    - "No source in the corpus mentions the source Breyn 1732"
+    answer: |
+      Not recoverable from this corpus: no source record exists for Breyn's
+      1732 arrangement of the echinoids, and no entered paper cites it. The
+      earliest echinoid classification on record is Klein (1734), itself not
+      yet entered, and the earliest entered is Linnaeus (1758). That is a
+      fact about the corpus; the Schediasma exists.
+  evidence: []
+  verified: data/sources.yaml has no record whose author is Breyn; resolve_source "Breyn 1732"
+    returns no candidate; 1734_klein is the earliest source key.
+- id: q055
+  class: answerable
+  question: Which genera and species does Buch (1844) list in his new Cystideen, and which is the type genus?
+  scope:
+    taxon: cystideen
+    source: 1844_buch
+  expected:
+    blocks:
+    - tool: contents
+      parameters: {source: 1844_buch, record: cystideen}
+    shows:
+    - "Cystideen nov."
+    - "Type genus. Sphaeronites"
+    - "Genus Sycocystites gen. nov."
+    - "Cryptocrinites cerasus"
+    answer: |
+      Buch (1844, p. 124) erects the Cystideen with Sphaeronites as type
+      genus and lists four genera: Sphaeronites (aurantium, pomum),
+      Hemicosmites (pyriformis), his new genus Sycocystites (senckenbergii)
+      and Cryptocrinites (cerasus).
+  evidence:
+    source: 1844_buch
+    pages: 124
+  verified: data/trees/1844_buch.yaml, the cystideen node (pages 124, new, type sphaeronites)
+    and its four genus children with their species.
+- id: q056
+  class: answerable
+  question: What synonymy does Hisinger (1837) print under his Sphaeronites citrus?
+  scope:
+    taxon: citrus_hisinger_1837
+    source: 1837_hisinger
+  expected:
+    blocks:
+    - tool: synonymy
+      parameters: {record: citrus_hisinger_1837, source: 1837_hisinger}
+    shows:
+    - "Synonymy under Sphaeronites citrus in Hisinger 1837"
+    - "1772 Sphaeronites aurantium Gyllenhaal 1772 p. 245"
+    - "1821 Sphaeronites aurantium Wahlenberg 1821 p. 52"
+    answer: |
+      Two entries, both Sphaeronites aurantium as earlier usage: Gyllenhaal
+      (1772, p. 245) and Wahlenberg (1821, p. 52). Hisinger thus treats the
+      species the earlier authors had called aurantium as his citrus, which
+      the history of aurantium records as the two papers citing it as a
+      synonym (pp. 52, 245 of Hisinger 1837).
+  evidence:
+    source: 1837_hisinger
+    pages: 245
+  verified: data/trees/1837_hisinger.yaml, the citrus_hisinger_1837 node and its two synonyms
+    entries citing 1772_gyllenhaal p. 245 and 1821_wahlenberg p. 52.
