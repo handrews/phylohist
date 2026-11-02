@@ -86,6 +86,58 @@ written in informal prose) presents a unique archival challenge.
 via GitHub issues.  Please open an issue prior to working on a pull request
 to ensure that the request will be well-received.*
 
+## Corpus Scope and Editorial Curation Policy
+
+The `phylohist` project is a curated, closed-world corpus of historical
+taxonomic literature.  Because it relies on deep manual validation and
+a human-in-the-loop workflow, data ingestion follows strict boundaries
+to maintain high fidelity rather than unchecked volume.
+
+### Intentional Scoping and Partial Entry
+
+Data entry is guided by the target research scope, currently focusing primarily
+on Paleozoic echinoderms and to a lesser degree on the early development of
+higher-level classification.
+
+* **Partial Ingestion:** For vast foundational texts such as Linnaeus’s
+  *Systema Naturae*, only the specific branches of interest to the active
+  dataset are entered.
+* **Closed-World Boundaries:** If a tool returns a blank result or an
+  explicit omission, it indicates that the paper, or the relevant part
+  of its contents, have not yet been entered.
+* **Iterative Data Modeling:** The initial data model for this project
+  was quite simple, and gradually expanded as the experience of working
+  with texts made additional needs clear.  Data entered at different
+  times shows different levels of completion, and in some cases using
+  less precise structures that will eventually be brought in line with
+  the current data model.
+
+### Archival Fidelity vs. Modern Interpretation
+
+Tracking archaic, text-heavy literature (particularly pre-19th-century sources
+written in informal prose) presents a unique archival challenge. 
+
+* **Philosophy:** The core directive of this corpus is to capture the published
+  author's opinions *as they published them*, avoiding retrofitted modern
+  consensus or injecting contemporary interpretations.  Only ICZN-mandated
+  textual normalizations are performed, and in more recently-entered data,
+  the original textual form is also captured (e.g. "Asterias caputmedusae"
+  vs "Aſterias Caput meduſæ").  The common use of only non-Latin names for
+  higher taxa in earlier publications introduces further difficulty, as
+  does the uneven introduction of ranks other than those first used by Linnaeus.
+* **Continuous Ingestion:** Determining how to translate loose, informal
+  prose into deterministic YAML schemas without breaking historical context
+  is an ongoing design effort.  In general, the data model has evolved from
+  simplistic beginnings through the experience of manually recording many
+  publications across different times, languages, and systematic approaches.
+  Data entered earlier on may be incomplete compared to more recent entries,
+  or use less precise structures.  These are being upgraded as time and
+  resources permit.
+
+*The project welcomes feedback or additions to schemas and coverage maps
+via GitHub issues.  Please open an issue prior to working on a pull request
+to ensure that the request will be well-received.*
+
 ## Humans, Models, and Code
 
 The internet has made a tremendous amount of information available,
