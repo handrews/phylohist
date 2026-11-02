@@ -803,6 +803,27 @@ suborder names one at a time, an eighth of the run's total, before
 planning the chains alone, where run 8 planned the chains and the history
 in three calls.
 
+**After the fixes run 9 prompted.** Two changes, 2026-11-02, both code
+supplying what the model lacked at the dead end. The plan tool's
+"returned no block" error now says what to plan instead: for a source on
+record with nothing entered, or declaring the kind `none` or `partly`, the
+gap block by source and kind; and the related record (a spelling, the same
+name at another rank) the source does list under, as the answer when the
+coverage is not short and as a note on the part entered when it is. And
+`specimen_history` takes a repository by key, name or prefix, or by the
+institution holding one specimen register. A first check of q055 to q059
+alone passed q055 and q059, q059 by following the hint from Cystidea to
+Cystideen, and failed q056 and q057 in new ways: the hint had pointed at
+the part Vanuxem 1842 has entered rather than the gap, and the model named
+the institution "UQ" instead of the register. The second version orders the
+gap first and resolves an institution, and the check against it
+(`eval/runs/2026-11-02c-planner-claude-sonnet-5-q055-q059.jsonl`; four
+questions are a check, not a row in the table) passes all four: q055 and
+q056 by planning the listing, reading the hint and planning the gap it
+names, q057 and q059 by the model's own choice of "UQF 5404" and
+"Cystideen", so the second check exercised neither the register lookup nor
+the spelling hint. On the run-9 yardstick that is 47 of 56.
+
 ## What changes next, in order
 
 1. Source keys: citations accepted wherever a source is a parameter
@@ -826,8 +847,9 @@ in three calls.
    8, q054; done 2026-11-01).
 8. The plan tool's "returned no block" error says what to do next: check
    the source's coverage and plan the gap, or resolve the record again
-   (run 9, q055, q056, q059; open).
+   (run 9, q055, q056, q059; done 2026-11-02).
 9. `contents` asked for a spelling variant of the record a source lists
-   under says so, or follows the variant to its base (run 9, q059; open).
+   under says so, naming the record the source lists under (run 9, q059;
+   done 2026-11-02).
 10. `specimen_history` takes a repository's prefix as well as its key
-   (run 9, q057; open).
+   (run 9, q057; done 2026-11-02).

@@ -178,6 +178,12 @@ def test_specimen_subcommand(capsys):
   assert code == 0 and 'give the repository.' in out
   code, out = run(capsys, 'specimen', 'PE-199', '--repository', 'north-museum-fm')
   assert code == 0 and out.splitlines()[0].startswith('Specimen PE 199 (North Museum')
+  code, out = run(capsys, 'specimen', 'F. 5404', '--repository', 'UQF')
+  assert (
+    code == 0
+    and out.splitlines()[0] == 'Specimen UQF 5404 (University of Queensland, fossil register)'
+  )
+  assert '1941  Whitehouse' in out
 
 
 def test_specimen_subcommand_by_source_and_label(capsys):

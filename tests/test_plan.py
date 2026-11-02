@@ -127,3 +127,48 @@ def test_execute_reports_what_it_cannot_build():
     plan.execute({'header': 'x', 'blocks': [{'tool': 'bogus', 'parameters': {}}]})['composition']
     is None
   )
+
+
+def _nothing(source, record):
+  outcome = plan.execute(
+    {
+      'header': 'x',
+      'blocks': [{'tool': 'contents', 'parameters': {'source': source, 'record': record}}],
+    }
+  )
+  assert outcome['composition'] is None and outcome['blocks'] == []
+  (error,) = outcome['errors']
+  assert error['error'].startswith(
+    'returned no block; the corpus holds nothing for these parameters'
+  )
+  return error['error']
+
+
+def test_a_block_that_builds_nothing_says_what_to_plan_instead():
+  # A source on record with no tree: the gap for the source. A source whose
+  # classification is declared partly entered: the gap for that kind. A
+  # spelling variant the source lists under its base record: that record.
+  assert _nothing('1734_klein', 'echinus').endswith(
+    '; Klein 1734 is on record with nothing entered; plan gap(source="1734_klein")'
+  )
+  assert _nothing('Dehm 1961', 'astrocystites').endswith(
+    '; Dehm 1961 declares the classification partly entered; '
+    'plan gap(source="1961_dehm", kind="skeleton")'
+  )
+  assert _nothing('1858b_billings', 'agelacrinus').endswith(
+    '; Billings 1858 declares the classification partly entered; '
+    'plan gap(source="1858b_billings", kind="skeleton"); '
+    'Agelacrinus is a spelling of Agelacrinites; '
+    'the part entered lists under agelacrinites (Agelacrinites)'
+  )
+  # A source whose coverage is not short lists under the related record:
+  # that record is the answer.
+  assert _nothing('1857_billings', 'agelacrinus').endswith(
+    '; Agelacrinus is a spelling of Agelacrinites; Billings 1857 lists under '
+    'agelacrinites (Agelacrinites): ask for that record'
+  )
+  # A fully entered source with nothing under an unrelated record: the
+  # sentence alone.
+  assert _nothing('Holloway & Jell 1983', 'astrocystites') == (
+    'returned no block; the corpus holds nothing for these parameters'
+  )
