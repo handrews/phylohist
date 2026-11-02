@@ -749,6 +749,60 @@ than a parameter. For q054 the same plan as in run 8, the printed forms of
 the record and of its variant, now renders the seven hyphenated citations
 and passes. On the run-8 yardstick that is 47 of 56.
 
+## Planner run 9, the run the release ships with
+
+Run 9 (2026-11-02, planner mode, Claude Sonnet 5,
+`eval/runs/2026-11-02-planner-claude-sonnet-5.jsonl`) is the full run
+after the two tool fixes, over the same corpus as run 8 and the claim
+table version 0.1.0 ships; the planner prompt gained one sentence since
+run 8, that a source candidate carries its volume, part and pages. 43 of
+56 pass (77 %): 37 of the 45 gold-slice questions (82 %) and 6 of the 11
+new ones.
+
+| class | questions | mechanical pass |
+|---|---|---|
+| absent | 4 | 4 |
+| answerable | 17 | 13 |
+| as-published | 9 | 5 |
+| trajectory | 17 | 14 |
+| uncaptured | 9 | 7 |
+
+**Against run 8.** Two questions pass that failed: q054, the spelling of
+Echinoencrinites, on the `printed_forms` fix, and q009, a block choice
+turned back. Four fail that passed, all of them choices: q027 plans the
+statements about Edrioasterina and Edrioasteridae in Sprinkle & Sumrall
+2015 where their printed forms were asked, so the printed "Bather, 1898"
+does not show; q035 plans the printed forms of Isorophus and Carneyella
+where their histories were asked; q057 splits "UQF 5404" into a number
+"F. 5404" and a repository "UQF", though the parameter takes a repository
+key and the description says so, and the lookup finds nothing; q059
+resolves Buch's Cystideen to its Latinised spelling record, asks for the
+listing under that record, gets no block twice and submits an empty plan.
+Eight fail as in run 8 and in the same way, among them q053 and q056 of
+the new questions. q055, which passed when rerun alone after the resolver
+fix, fails here the other way: the model read the right candidate off the
+resolver, then planned the listing under Echinus for a source whose
+coverage is `none`, twice, and submitted nothing where the gap was asked.
+
+**Three plans built nothing.** q055, q056 and q059 each ended the same
+way: the plan tool answered "returned no block; the corpus holds nothing
+for these parameters", the model tried a second record, got the same, and
+submitted the empty plan. For the two uncaptured questions the gap block
+was the answer and the planner prompt says so; for q059 the listing exists
+under the record the question names. The error text names no next step.
+
+**The judge.** Two zeros, the first since run 7, both on answers that pass
+otherwise: q019's header announces a gap and q022's asserts an
+attribution. Thirteen headers scored 1, most for pre-stating the finding
+("Gap: not carried by any source") rather than the parameters.
+
+**Cost.** 0.64 M input tokens and 44 k output over 56 questions, nine
+minutes, 199 lookups. Output tokens and wall clock fell by a quarter from
+run 8; the lookups did not, because q021 spent 25 calls resolving guessed
+suborder names one at a time, an eighth of the run's total, before
+planning the chains alone, where run 8 planned the chains and the history
+in three calls.
+
 ## What changes next, in order
 
 1. Source keys: citations accepted wherever a source is a parameter
@@ -770,3 +824,10 @@ and passes. On the run-8 yardstick that is 47 of 56.
 7. `printed_forms` over a spelling variant lists the sources that print
    it, and a printed attribution with an author list reads as words (run
    8, q054; done 2026-11-01).
+8. The plan tool's "returned no block" error says what to do next: check
+   the source's coverage and plan the gap, or resolve the record again
+   (run 9, q055, q056, q059; open).
+9. `contents` asked for a spelling variant of the record a source lists
+   under says so, or follows the variant to its base (run 9, q059; open).
+10. `specimen_history` takes a repository's prefix as well as its key
+   (run 9, q057; open).
