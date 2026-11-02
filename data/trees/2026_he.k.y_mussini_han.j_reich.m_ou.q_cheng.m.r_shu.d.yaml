@@ -1,0 +1,79 @@
+prefixes:
+  ELI: eli
+taxonomies:
+- taxon: ambulacraria
+  citedAs: Superphylum Ambulacraria
+  rank: Superphylum
+  authority: null
+  pages: 2
+  children:
+  - openTaxon: ambulacraria-indeterminate-phylum_he.k.y_mussini_han.j_reich.m_ou.q_cheng.m.r_shu.d_2006
+    citedAs: Phylum, Class, Order, Family indet.
+    rank: Phylum
+    new: true
+    pages: 2
+    children:
+    - openTaxon: ambulacraria-indeterminate-class_he.k.y_mussini_han.j_reich.m_ou.q_cheng.m.r_shu.d_2006
+      citedAs: Phylum, Class, Order, Family indet.
+      rank: Class
+      new: true
+      pages: 2
+      children:
+      - openTaxon: ambulacraria-indeterminate-order_he.k.y_mussini_han.j_reich.m_ou.q_cheng.m.r_shu.d_2006
+        citedAs: Phylum, Class, Order, Family indet.
+        rank: Order
+        new: true
+        pages: 2
+        children:
+        - openTaxon: ambulacraria-indeterminate-family_he.k.y_mussini_han.j_reich.m_ou.q_cheng.m.r_shu.d_2006
+          citedAs: Phylum, Class, Order, Family indet.
+          rank: Family
+          new: true
+          pages: 2
+          children:
+          - taxon: yujingia
+            citedAs: Yujingia glutenotunica gen. et sp. nov.
+            new: true
+            pages: 2
+            type:
+              taxon: glutenotunica_he.k.y_mussini_han.j_reich.m_ou.q_cheng.m.r_shu.d_2006
+              editorial:
+                inferred: true
+                basis: Monotypy
+            children:
+            - taxon: glutenotunica_he.k.y_mussini_han.j_reich.m_ou.q_cheng.m.r_shu.d_2006
+              citedAs: Yujingia glutenotunica gen. et sp. nov.
+              new: true
+              pages: 2
+              contexts:
+                erjie:
+                  unit: 
+                  - Maotianshan Shale Member
+                  - Yu'anshan Formation
+                  biozone: Wutingaspis-Eoredlichia
+                  stage: Cambrian Stage 3
+                  location:
+                  - Erjie section
+                  - Kunming
+                  - Yunnan
+                  - southwestern China
+                jianshan:
+                  - Maotianshan Shale Member
+                  - Yu'anshan Formation
+                  biozone: Wutingaspis-Eoredlichia
+                  stage: Cambrian Stage 3
+                  location:
+                  - Jianshan section
+                  - Haikou
+                  - Yunnan
+                  - southwestern China
+              material:
+              - prefix: ELI
+                numbers: [EJ053]
+                role: holotype
+                context: erjie
+              - prefix: ELI
+                numbers: [JS188A, JS188B, JS033A, JS033B, JS005A, JS005B]
+                role: paratype
+                context: jianshan
+                notes: A and B pairs are part and counterpart

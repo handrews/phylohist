@@ -23,6 +23,11 @@ dpo:
   type: institution
   prefixes: [DPO]
   place: Oviedo, Spain
+eli:
+  name: Early Life Institute, Northwest University
+  type: institution
+  prefixes: [ELI]
+  place: Xi'an, China
 fmnh:
   name: Field Museum of Natural History
   type: institution

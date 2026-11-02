@@ -470,6 +470,38 @@ ambigena_lamarck_1816:
   name: ambigena
   authority:
     source: 1816b_lamarck
+ambulacraria:
+  name: Ambulacraria
+  authority:
+    source: 1881_metschnikoff
+ambulacraria-indeterminate-phylum_he.k.y_mussini_han.j_reich.m_ou.q_cheng.m.r_shu.d_2006:
+  name: null
+  rank: Phylum
+  authority:
+    source: 2006_he.k.y_mussini_han.j_reich.m_ou.q_cheng.m.r_shu.d
+    pages: 2
+  citedAs: Phylum, Class, Order, Family indet.
+ambulacraria-indeterminate-class_he.k.y_mussini_han.j_reich.m_ou.q_cheng.m.r_shu.d_2006:
+  name: null
+  rank: Class
+  authority:
+    source: 2006_he.k.y_mussini_han.j_reich.m_ou.q_cheng.m.r_shu.d
+    pages: 2
+  citedAs: Phylum, Class, Order, Family indet.
+ambulacraria-indeterminate-order_he.k.y_mussini_han.j_reich.m_ou.q_cheng.m.r_shu.d_2006:
+  name: null
+  rank: Order
+  authority:
+    source: 2006_he.k.y_mussini_han.j_reich.m_ou.q_cheng.m.r_shu.d
+    pages: 2
+  citedAs: Phylum, Class, Order, Family indet.
+ambulacraria-indeterminate-family_he.k.y_mussini_han.j_reich.m_ou.q_cheng.m.r_shu.d_2006:
+  name: null
+  rank: Family
+  authority:
+    source: 2006_he.k.y_mussini_han.j_reich.m_ou.q_cheng.m.r_shu.d
+    pages: 2
+  citedAs: Phylum, Class, Order, Family indet.
 amecystis:
   name: Amecystis
   authority:
