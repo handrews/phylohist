@@ -1,0 +1,142 @@
+prefixes:
+  Yjh: nwu-eli
+horizons:
+  yanjiahe:
+    unit:
+    - Bed III
+    - Yanjiahe Formation
+    series: Terrenuevian
+    biota: Yanjiahe
+localities:
+  gunziao:
+    location:
+    - Gunziao section
+    - Sandouping
+    - Yichang
+    - Hubei province
+    - China
+
+taxonomies:
+- openTaxon: metazoa-phylum-uncertain_guo.j.f_li.y_han.h.p_ou.q_zhou.j.r_zheng.y.j_2012
+  rank: Phylum
+  pages: 793
+  new: true
+  children:
+  - openTaxon: metazoa-class-uncertain_guo.j.f_li.y_han.h.p_ou.q_zhou.j.r_zheng.y.j_2012
+    rank: Class
+    pages: 793
+    new: true
+    children:
+    - openTaxon: metazoa-order-uncertain_guo.j.f_li.y_han.h.p_ou.q_zhou.j.r_zheng.y.j_2012
+      rank: Order
+      pages: 793
+      new: true
+      children:
+      - openTaxon: metazoa-family-uncertain_guo.j.f_li.y_han.h.p_ou.q_zhou.j.r_zheng.y.j_2012
+        rank: Family
+        pages: 793
+        new: true
+        children:
+        - taxon: yanjiahella
+          citedAs: Genus Yanjiahella gen. nov.
+          pages: 793
+          new: true
+          type:
+            taxon: ancarpa_guo.j.f_li.y_han.h.p_ou.q_zhou.j.r_zheng.y.j_2012
+            citedAs: Yanjiahella ancarpa sp. nov.
+          children:
+          - taxon: ancarpa_guo.j.f_li.y_han.h.p_ou.q_zhou.j.r_zheng.y.j_2012
+            citedAs: Yanjiahella ancarpa gen. et sp. nov.
+            pages: 793
+            new: true
+            material:
+            - role: holotype
+              prefix: Yjh
+              numbers: [HS7A]
+              horizon: yanjiahe
+              locality: gunziao
+            - role: paratype
+              prefix: Yjh
+              numbers: [HS7B]
+              horizon: yanjiahe
+              locality: gunziao
+            illustrations:
+            - page: 794
+              figures: [2a, 2c]
+              of: HS7A
+              depicts: specimen
+            - page: 794
+              figures: 2b
+              of: HS7B
+              depicts: specimen
+            - page: 795
+              figures: 3a
+              of: HS7A
+              depicts: drawing
+          - taxon: monocarpa_guo.j.f_li.y_han.h.p_ou.q_zhou.j.r_zheng.y.j_2012
+            citedAs: Yanjiahella monocarpa gen. et sp. nov.
+            pages: 795
+            new: true
+            material:
+            - role: holotype
+              prefix: Yjh
+              numbers: [HS18]
+              asPrinted: Yjh-HS18
+              horizon: yanjiahe
+              locality: gunziao
+            - prefix: Yjh
+              role: paratype
+              numbers: [HS84A, HS84B, HS734A]
+              asPrinted: Yjh-HS84A, Yjh-HS84B, Yjh-HS734A
+              horizon: yanjiahe
+              locality: gunziao
+            illustrations:
+            - page: 794
+              figures:
+              - [2d, 2f]
+              of: HS18
+              depicts: specimen
+            - page: 794
+              figures: 2g
+              of: HS84A
+              depicts: specimen
+            - page: 794
+              figures: 2h
+              of: HS84B
+              depicts: specimen
+            - page: 794
+              figures: [2i, 2j]
+              of: HS734A
+              depicts: specimen
+            - page: 795
+              figures: 3b
+              of: HS18
+              depicts: drawing
+          - taxon: biscarpa_guo.j.f_li.y_han.h.p_ou.q_zhou.j.r_zheng.y.j_2012
+            citedAs: Yanjiahella biscarpa gen. et sp. nov.
+            pages: 795
+            new: true
+            material:
+            - prefix: Yjh
+              numbers: [HS722]
+              asPrinted: Yjh-HS722
+              horizon: yanjiahe
+              locality: gunziao
+            - prefix: Yjh
+              numbers: [HS998A]
+              asPrinted: Yjh-HS998A
+              horizon: yanjiahe
+              locality: gunziao
+            illustrations:
+            - page: 794
+              figures: [2k, 2l]
+              of: HS722
+              depicts: specimen
+            - page: 794
+              figures: 2m
+              of: HS998A
+              depicts: specimen
+            - page: 795
+              figures: 3c
+              of: HS722
+              depicts: drawing

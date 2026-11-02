@@ -257,6 +257,28 @@
   ],
   "type": "institution"
  },
+ "nwu": {
+  "name": "Northwest University",
+  "place": "Xi'an, China",
+  "type": "institution"
+ },
+ "nwu-eli": {
+  "name": "Early Life Institute, Northwest University",
+  "place": "Xi'an, China",
+  "prefixes": [
+   "ELI",
+   "Yjh"
+  ],
+  "type": "institution"
+ },
+ "nwu-geo": {
+  "name": "Department of Geology, Northwest University",
+  "place": "Xi'an, China",
+  "prefixes": [
+   "Yjh"
+  ],
+  "type": "institution"
+ },
  "nysm": {
   "name": "New York State Museum",
   "otherNames": [

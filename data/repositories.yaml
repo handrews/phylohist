@@ -156,6 +156,26 @@ north-museum-fm:
   type: institution
   place: Lancaster, Pennsylvania
   prefixes: [PE]
+nwu:
+  name: Northwest University
+  type: institution
+  place: Xi'an, China
+nwu-eli:
+  name: Early Life Institute, Northwest University
+  type: institution
+  prefixes: [ELI, Yjh]
+  place: Xi'an, China
+  notes: >
+    "Yjh" is not a repository prefix, but a temporary prefix for localities
+    near Yanjiahe, Yichang, China, that was used with this repository.
+nwu-geo:
+  name: Department of Geology, Northwest University
+  type: institution
+  place: Xi'an, China
+  prefixes: [Yjh]
+  notes: >
+    "Yjh" is not a repository prefix, but a temporary prefix for localities
+    near Yanjiahe, Yichang, China, that was used with this repository.
 nysm:
   name: New York State Museum
   type: institution

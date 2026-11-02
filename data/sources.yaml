@@ -2073,6 +2073,34 @@
   notes: |
     Regular printing of 1879_schmidt.c.f, sometimes erroneously cited as
     the authority for its contents.
+1881a_metschnikoff:
+  title: Über die systematische Stellung von Balanoglossus
+  journal: zool-a
+  volume: 4
+  number: 78
+  pages:
+  - 139
+  - 143
+  pubDate:
+    year: 1881
+    month: 3
+    day: 14
+  authors:
+  - metschnikoff
+1881b_metschnikoff:
+  title: Über die systematische Stellung von Balanoglossus (Schluss.)
+  journal: zool-a
+  volume: 4
+  number: 79
+  pages:
+  - 153
+  - 157
+  pubDate:
+    year: 1881
+    month: 3
+    day: 28
+  authors:
+  - metschnikoff
 1881_springer:
   book: rev-pcrin
   volume: Part II
@@ -4857,7 +4885,33 @@ inprep_sprinkle_strimple:
   - peng.j
   identifiers:
     doi: 10.1016/j.palaeo.2007.03.020
-2008_luo.h.l_li.y_hu.s.x_fu.x.p_hou.s.g_liu.x.r_chen.l.z_li.j.f_pang.j.y_liu.q:
+2008_guo.j.f_li.y_han.j_zhang.x.l_zhang.z.f_ou.q_liu.j.n_shu.d_maruyama.s_komiya.t:
+  title: >
+    Fossil Association from the Lower Cambrian Yanjiahe Formation in the
+    Yangtze Gorges Area, Hubei, South China
+  journal: acta-g-sinica-eng
+  volume: 82
+  number: 6
+  pages:
+  - 1124
+  - 1132
+  pubDate:
+    year: 2008
+    month: 12
+  authors:
+  - guo.j.f
+  - li.y
+  - han.j
+  - zhang.x.l
+  - zhang.z.f
+  - ou.q
+  - liu.j.n
+  - shu.d
+  - maruyama.s
+  - komiya.t
+  identifiers:
+    doi: 10.1111/j.1755-6724.2008.tb00712.x
+2008_luo.h.l_li.y_hu.s.x_fu.x.p_hou.s.g_liu.x.y_chen.l.z_li.f.j_pang.j.y_liu.q:
   book: malong-guanshan
   pubDate:
     year: 2008
@@ -4867,9 +4921,9 @@ inprep_sprinkle_strimple:
   - hu.s.x
   - fu.x.p
   - hou.s.g
-  - liu.x.r
+  - liu.x.y
   - chen.l.z
-  - li.j.f
+  - li.f.j
   - pang.j.y
   - liu.q
 2008_stewart_owen:
@@ -5269,6 +5323,26 @@ inprep_sprinkle_strimple:
   - doweld
   identifiers:
     doi: 10.1007/s12542-012-0148-y
+2012_guo.j.f_li.y_han.h.p_ou.q_zhou.j.r_zheng.y.j:
+  title: New Macroscopic Problematic Fossil from the Early Cambrian Yanjiahe Biota, Yichang, Hubei, China
+  journal: acta-g-sinica-eng
+  volume: 86
+  number: 4
+  pages:
+  - 791
+  - 798
+  pubDate:
+    year: 2012
+    month: 8
+  authors:
+  - guo.j.f
+  - li.y
+  - han.h.p
+  - ou.q
+  - zhou.j.r
+  - zheng.y.j
+  identifiers:
+    doi: 10.1111/j.1755-6724.2012.00706.x
 2012_zamora_rahman_smith.a.b:
   title: Plated Cambrian Bilaterians Reveal the Earliest Stages of Echinoderm Evolution
   journal: plos-one
@@ -5827,6 +5901,28 @@ inprep_sprinkle_strimple:
   - szabad
   identifiers:
     doi: 10.1080/14772019.2018.1541485
+2019_topper.t.p_guo.j.f_clausen.s_skovsted.c.b_zhang.z.f:
+  title: A stem group echinoderm from the basal Cambrian of China and the origins of Ambulacraria
+  journal: nat-com
+  volume: 10
+  articleNumber: 1366
+  pages:
+  - 1
+  - 8
+  - supplementary 1
+  - supplementary 17
+  pubDate:
+    year: 2019
+    month: 3
+    day: 15
+  authors:
+  - topper.t.p
+  - guo.j.f
+  - clausen.s
+  - skovsted.c.b
+  - zhang.z.f
+  identifiers:
+    doi: 10.1038/s41467-019-09059-3
 2019_wen.r.q_babcock_peng.j_robison:
   title: "New edrioasteroid (Echinodermata) from the Spence Shale (Cambrian), Idaho, USA: further evidence of attachment in the early evolutionary history of edrioasteroids"
   journal: bullgeo
@@ -6110,3 +6206,24 @@ inprep_sprinkle_strimple:
   - rahman
   identifiers:
     doi: 10.4202/app.01228.2024
+2026_he.k.y_mussini_han.j_reich.m_ou.q_cheng.m.r_shu.d:
+  title: Cambrian fossils illuminate the ambulacrarian common ancestor
+  journal: curr-bio
+  volume: 36
+  pages:
+  - 1
+  - 11
+  pubDate:
+    year: 2026
+    month: 10
+    day: 19
+  authors:
+  - he.k.y
+  - mussini
+  - han.j
+  - reich.m
+  - ou.q
+  - cheng.m.r
+  - shu.d
+  identifiers:
+    doi: 10.1016/j.cub.2026.08.053

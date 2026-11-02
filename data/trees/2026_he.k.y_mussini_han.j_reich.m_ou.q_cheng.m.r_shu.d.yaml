@@ -1,0 +1,79 @@
+prefixes:
+  ELI: nwu-eli
+taxonomies:
+- taxon: ambulacraria
+  citedAs: Superphylum Ambulacraria
+  rank: Superphylum
+  authority: null
+  pages: 2
+  children:
+  - openTaxon: ambulacraria-indeterminate-phylum_he.k.y_mussini_han.j_reich.m_ou.q_cheng.m.r_shu.d_2026
+    citedAs: Phylum, Class, Order, Family indet.
+    rank: Phylum
+    new: true
+    pages: 2
+    children:
+    - openTaxon: ambulacraria-indeterminate-class_he.k.y_mussini_han.j_reich.m_ou.q_cheng.m.r_shu.d_2026
+      citedAs: Phylum, Class, Order, Family indet.
+      rank: Class
+      new: true
+      pages: 2
+      children:
+      - openTaxon: ambulacraria-indeterminate-order_he.k.y_mussini_han.j_reich.m_ou.q_cheng.m.r_shu.d_2026
+        citedAs: Phylum, Class, Order, Family indet.
+        rank: Order
+        new: true
+        pages: 2
+        children:
+        - openTaxon: ambulacraria-indeterminate-family_he.k.y_mussini_han.j_reich.m_ou.q_cheng.m.r_shu.d_2026
+          citedAs: Phylum, Class, Order, Family indet.
+          rank: Family
+          new: true
+          pages: 2
+          children:
+          - taxon: yujingia
+            citedAs: Yujingia glutenotunica gen. et sp. nov.
+            new: true
+            pages: 2
+            type:
+              taxon: glutenotunica_he.k.y_mussini_han.j_reich.m_ou.q_cheng.m.r_shu.d_2026
+              editorial:
+                inferred: true
+                basis: Monotypy
+            children:
+            - taxon: glutenotunica_he.k.y_mussini_han.j_reich.m_ou.q_cheng.m.r_shu.d_2026
+              citedAs: Yujingia glutenotunica gen. et sp. nov.
+              new: true
+              pages: 2
+              horizons:
+                wutingaspis:
+                  unit:
+                  - Maotianshan Shale Member
+                  - Yu'anshan Formation
+                  biozone: Wutingaspis-Eoredlichia
+                  stage: Cambrian Stage 3
+              localities:
+                erjie:
+                  location:
+                  - Erjie section
+                  - Kunming
+                  - Yunnan
+                  - southwestern China
+                jianshan:
+                  location:
+                  - Jianshan section
+                  - Haikou
+                  - Yunnan
+                  - southwestern China
+              material:
+              - prefix: ELI
+                numbers: [EJ053]
+                role: holotype
+                horizon: wutingaspis
+                locality: erjie
+              - prefix: ELI
+                numbers: [JS188A, JS188B, JS033A, JS033B, JS005A, JS005B]
+                role: paratype
+                horizon: wutingaspis
+                locality: jianshan
+                notes: A and B pairs are part and counterpart
