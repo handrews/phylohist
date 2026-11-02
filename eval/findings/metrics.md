@@ -18,6 +18,7 @@ defect, is left out.
 | 5 | 2026-09-14 | states a plan; code builds the answer | 72 % ‡ | 0.41 M | 37 k | 8 min | 105 |
 | 6 | 2026-09-14 | same, after the tool and prompt fixes run 5 prompted | 77 % | 0.57 M | 48 k | 10 min | 128 |
 | 7 | 2026-09-14 | same, after three tool fixes and eval alternatives run 6 prompted | 87 % | 0.56 M | 48 k | 11 min | 114 |
+| 8 | 2026-11-01 | same, over eval v2: the 45 gold-slice questions and 11 over the early corpus | 80 % § | 0.67 M | 60 k | 12 min | 195 |
 
 † Run 1 has no blocks to re-grade: 28 of its 46 answers passed the
 eval of its day (every statement the answer rests on retrieved, the
@@ -25,19 +26,24 @@ expected sources cited). ‡ Run 5's grades predate a tool defect and a
 prompt gap fixed since; runs 6 and 7 are the same configuration after
 each round of fixes, and run 7 is the figure to quote for the planner:
 level with compose mode's best at a third of the input tokens.
+§ Run 8 is the first over the v2 set (`eval/README.md`, "v2"): 38 of the
+45 gold-slice questions pass (84 %, level with run 7 within the drift of a
+few block choices) and 7 of the 11 new ones; the corpus had grown from 218
+to 230 sources and the data model changed under 74 commits since run 7.
 
 ## Classes of failure, by questions affected
 
-| failure | 1 | 2 | 3 | 4 | 5 | 6 | 7 |
-|---|---|---|---|---|---|---|---|
-| answer rests on statements the model never looked up | 20 | – | – | – | – | – | – |
-| expected source not cited | 14 | – | – | – | – | – | – |
-| answer summarises or passes a verdict in its own words (judge score 0) | 18 | 2 | 1 | 2 | 0 | 1 | 3 |
-| internal names leak into the answer | 1 | 0 | 0 | 0 | 0 | 0 | 0 |
-| lookup limit reached before answering | 9 | 4 | 3 | 3 | 0 | 1 | 0 |
-| wrong or missing block | – | 12 | 8 | 5 | 12 | 11 | 6 |
-| expected wording missing from the rendered answer | – | 21 | 8 | 5 | 11 | 10 | 6 |
-| commentary written beside the answer (reaches no reader) | – | 11 | 5 | 12 | 2 | 2 | 1 |
+| failure | 1 | 2 | 3 | 4 | 5 | 6 | 7 | 8 |
+|---|---|---|---|---|---|---|---|---|
+| answer rests on statements the model never looked up | 20 | – | – | – | – | – | – | – |
+| expected source not cited | 14 | – | – | – | – | – | – | – |
+| answer summarises or passes a verdict in its own words (judge score 0) | 18 | 2 | 1 | 2 | 0 | 1 | 3 | 0 |
+| internal names leak into the answer | 1 | 0 | 0 | 0 | 0 | 0 | 0 | 0 |
+| lookup limit reached before answering | 9 | 4 | 3 | 3 | 0 | 1 | 0 | 0 |
+| wrong or missing block | – | 12 | 8 | 5 | 12 | 11 | 6 | 9 |
+| expected wording missing from the rendered answer | – | 21 | 8 | 5 | 11 | 10 | 6 | 8 |
+| commentary written beside the answer (reaches no reader) | – | 11 | 5 | 12 | 2 | 2 | 1 | 4 |
+| the plan built no block and nothing was shown | – | – | – | – | – | – | – | 2 |
 
 The first two rows end with run 2 by construction: an answer made of
 blocks the tools returned cannot rest on anything unretrieved or cite
