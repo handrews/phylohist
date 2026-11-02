@@ -32,6 +32,19 @@ def _parameters(function):
   return set(inspect.signature(function).parameters) - {'style'}
 
 
+def test_mcp_server_reports_the_package_version(mcp):
+  # The version a client shows beside the server is the installed
+  # package's, which names the snapshot of the table that answers.
+  import importlib.metadata
+
+  try:
+    expected = importlib.metadata.version('phylohist')
+  except importlib.metadata.PackageNotFoundError:
+    expected = ''
+  assert mcp.server.version == expected
+  assert mcp.version() == expected
+
+
 def test_every_surface_offers_the_same_tools(mcp):
   names = set(SPECS)
   assert set(tools.TOOLS) == names

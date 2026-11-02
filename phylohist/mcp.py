@@ -15,14 +15,28 @@ code builds them (`phylohist.plan`), so a chat can answer without reading
 a block.
 """
 
+import importlib.metadata
+
 from mcp.server.mcpserver import MCPServer
 
 from . import plan as plans
 from . import tools
 from .render import render_composition
 
+
+def version():
+  """The installed package's version, which a client shows beside the
+  server's name and which says which snapshot of the table answers; empty
+  in a checkout that was never installed."""
+  try:
+    return importlib.metadata.version('phylohist')
+  except importlib.metadata.PackageNotFoundError:
+    return ''
+
+
 server = MCPServer(
   'phylohist',
+  version=version(),
   instructions=(
     'A corpus of published taxonomic opinions on Palaeozoic echinoderms, '
     'recorded source by source exactly as printed. Resolve a name first; '
