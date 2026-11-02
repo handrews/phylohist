@@ -19,6 +19,9 @@ dependencies = [
 phylohist = "phylohist.cli:main"
 regenerate = "phylohist.regenerate:main"
 
+[project.urls]
+Repository = "https://github.com/handrews/phylohist"
+
 [tool.poetry]
 packages = [{include = "phylohist"}]
 
