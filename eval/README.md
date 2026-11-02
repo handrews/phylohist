@@ -165,7 +165,7 @@ never from the repository.
   data as it stood when their checked-in results were produced, so the
   check is a demo, not part of the default suite or CI: `poetry run
   pytest --demo tests/test_claims.py` builds every expected block over
-  the committed `claims/` and looks for every shows string in the
+  the committed `phylohist/table/` and looks for every shows string in the
   rendered expectation. The automated tests run over the frozen corpus
   under `tests/corpus/` instead.
 - When a source gains coverage, its uncaptured questions turn into

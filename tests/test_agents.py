@@ -29,10 +29,9 @@ XERJIGNORE = ROOT / '.xerjignore'
 # What AGENTS.md says is not the corpus, and how `.xerjignore` treats it:
 # the whole directory, or everything but its README.
 SKIPPED = {'drafts': 'README.md', 'notes': 'README.md', 'eval/runs': None, 'tests/corpus': None}
-KEPT_WHOLE = ['data', 'claims', 'docs', 'phylohist', 'scripts', 'schemas']
+KEPT_WHOLE = ['data', 'docs', 'phylohist', 'scripts', 'schemas']
 TOP_LEVEL = {
   '.github',
-  'claims',
   'data',
   'docs',
   'drafts',
@@ -137,7 +136,9 @@ def test_coverage_values_are_the_schemas():
 
 
 def test_claim_fields_are_the_tables(store):
-  row = next(line for line in AGENTS.splitlines() if line.startswith('| `claims/<source>.jsonl`'))
+  row = next(
+    line for line in AGENTS.splitlines() if line.startswith('| `phylohist/table/<source>.jsonl`')
+  )
   fields = set(re.findall(r'`(\w+)`', row.split('|')[2]))
   assert fields
   present = set()
@@ -147,16 +148,16 @@ def test_claim_fields_are_the_tables(store):
 
 
 def test_manifest_rows_carry_what_agents_md_reads():
-  manifest = json.loads((ROOT / 'claims' / 'manifest.json').read_text())
+  manifest = json.loads((ROOT / 'phylohist' / 'table' / 'manifest.json').read_text())
   rows = [row for row in manifest['sources'].values() if 'aliasOf' not in row]
   assert rows  # an alias row names the source it stands for and carries its citation only
   for row in rows:
     assert {'citation', 'coverage'} <= set(row)
 
 
-def test_mcp_registration_is_the_server_script():
+def test_mcp_registration_is_the_server_command():
   registered = json.loads((ROOT / '.mcp.json').read_text())
-  assert registered['mcpServers']['phylohist']['args'][-1] == 'scripts/mcp_server.py'
+  assert registered['mcpServers']['phylohist']['args'][-1] == 'phylohist-mcp'
 
 
 def test_ignore_file_skips_what_agents_md_says(tracked):

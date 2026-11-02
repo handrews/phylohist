@@ -1,7 +1,7 @@
 """The walkthrough's answers are what the code renders.
 
 `docs/walkthrough.md` pastes, for each plan file under `docs/walkthrough/`,
-the answer the plan renders over the committed `claims/`; this test
+the answer the plan renders over the committed `phylohist/table/`; this test
 renders each plan and looks for the text, and checks that every plan file
 is the page's. The page holds for the data it was last refreshed against,
 so the test is a demo (marked `demo`, run with `--demo`).

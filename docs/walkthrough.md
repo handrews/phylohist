@@ -15,7 +15,7 @@ without a model:
 
 The answers pasted here are the data as it stood when they were last
 refreshed; `poetry run pytest --demo tests/test_walkthrough.py` renders
-every plan over the committed `claims/` and checks that the page still
+every plan over the committed `phylohist/table/` and checks that the page still
 shows what the code prints. It is not part of the default suite, which
 runs over the frozen corpus under `tests/corpus/`. The eval's own account
 of the run, and of the six that came before it, is under

@@ -27,7 +27,7 @@ text{font-family:-apple-system,'Segoe UI',Helvetica,Arial,sans-serif;text-anchor
 <rect x="202" y="366" width="132" height="56" rx="8" fill="#2C2C2A" stroke="#888780" stroke-width="0.75"/><text x="268.0" y="384" class="th">CLI</text><text x="268.0" y="403" class="ts">phylohist &lt;tool&gt;</text>
 <rect x="352" y="366" width="132" height="56" rx="8" fill="#2C2C2A" stroke="#888780" stroke-width="0.75"/><text x="418.0" y="384" class="th">MCP server</text><text x="418.0" y="403" class="ts">tools and plan</text>
 <rect x="502" y="366" width="132" height="56" rx="8" fill="#2C2C2A" stroke="#888780" stroke-width="0.75"/><text x="568.0" y="384" class="th">Eval runner</text><text x="568.0" y="403" class="ts">grader, scripts</text>
-<rect x="52" y="474" width="120" height="56" rx="8" fill="#2C2C2A" stroke="#888780" stroke-width="0.75"/><text x="112.0" y="492" class="th">claims/</text><text x="112.0" y="511" class="ts">committed table</text>
+<rect x="52" y="474" width="120" height="56" rx="8" fill="#2C2C2A" stroke="#888780" stroke-width="0.75"/><text x="112.0" y="492" class="th">phylohist/table/</text><text x="112.0" y="511" class="ts">committed table</text>
 <rect x="202" y="474" width="432" height="56" rx="8" fill="#2C2C2A" stroke="#888780" stroke-width="0.75"/><text x="418.0" y="492" class="th">Tools over the claim table</text><text x="418.0" y="511" class="ts">store, resolve, words, blocks, render</text>
 <line x1="107" y1="172" x2="107" y2="226" stroke="#B4B2A9" stroke-width="1.5" marker-start="url(#arrow)" marker-end="url(#arrow)"/>
 <line x1="107" y1="302" x2="107" y2="356" stroke="#B4B2A9" stroke-width="1.5" marker-start="url(#arrow)" marker-end="url(#arrow)"/>

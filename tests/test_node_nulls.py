@@ -3,7 +3,7 @@ schema, the loader check, the claims, the derived `skeleton` coverage, and
 the listing, sentence and table the tools say.
 
 Synthetic trees are built on the loaded test corpus under positions
-330 and up; the tool tests read a `ClaimStore` over a copy of `claims/`
+330 and up; the tool tests read a `ClaimStore` over a copy of `phylohist/table/`
 whose file for `1766_linnaeus` is replaced by the claims of those trees,
 since no data uses the nulls yet.
 """
@@ -265,7 +265,7 @@ TREE = {
 
 @pytest.fixture(scope='module')
 def synthetic(corpus, tmp_path_factory):
-  """A `ClaimStore` over a copy of `claims/` with the claims of `SOURCE`
+  """A `ClaimStore` over a copy of `phylohist/table/` with the claims of `SOURCE`
   replaced by those of `TREE`."""
   directory = tmp_path_factory.mktemp('claims')
   shutil.copytree(corpus.claims, directory, dirs_exist_ok=True)
@@ -752,7 +752,7 @@ STOPS = {
 
 @pytest.fixture(scope='module')
 def stopped(corpus, tmp_path_factory):
-  """A `ClaimStore` over a copy of `claims/` with the claims of 1961 Dehm
+  """A `ClaimStore` over a copy of `phylohist/table/` with the claims of 1961 Dehm
   replaced by those of `STOPS`, its `skeleton` coverage `partly`."""
   directory = tmp_path_factory.mktemp('claims_stops')
   shutil.copytree(corpus.claims, directory, dirs_exist_ok=True)

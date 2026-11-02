@@ -7,6 +7,22 @@ license = "MIT"
 license-files = ["LICENSE"]
 authors = [{name = "Henry H. Andrews", email = "henry@henryandrews.net"}]
 requires-python = ">=3.12,<4"
+keywords = [
+  "taxonomy",
+  "phylogenetics",
+  "palaeontology",
+  "echinoderms",
+  "nomenclature",
+  "mcp",
+  "human-in-the-loop",
+  "local-first",
+]
+classifiers = [
+  "Development Status :: 3 - Alpha",
+  "Intended Audience :: Science/Research",
+  "Programming Language :: Python :: 3",
+  "Topic :: Scientific/Engineering :: Bio-Informatics",
+]
 dependencies = [
   "coloredlog>=0.2.5,<0.3",
   "pyyaml>=6.0.3,<7",
@@ -17,12 +33,15 @@ dependencies = [
 
 [project.scripts]
 phylohist = "phylohist.cli:main"
+phylohist-mcp = "phylohist.mcp:main"
 regenerate = "phylohist.regenerate:main"
 
 [project.urls]
 Repository = "https://github.com/handrews/phylohist"
 
 [tool.poetry]
+# The claim table is generated into phylohist/table/, so the wheel carries it
+# and an installed copy answers from the table as of its build.
 packages = [{include = "phylohist"}]
 
 [tool.poetry.group.dev.dependencies]
@@ -50,5 +69,5 @@ indent-style = "space"
 [tool.pytest.ini_options]
 markers = [
   "production: a check of the curated corpus under data/ itself",
-  "demo: the eval questions and the walkthrough over the committed claims/; run with --demo",
+  "demo: the eval questions and the walkthrough over the committed phylohist/table/; run with --demo",
 ]

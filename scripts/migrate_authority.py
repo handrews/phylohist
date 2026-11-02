@@ -458,9 +458,9 @@ def check_claims(root):
   """The regenerated claims equal the committed ones once the committed
   patches are lifted; the other generated files are byte-identical."""
   status = 0
-  for path in sorted((root / 'claims').glob('*.jsonl')):
+  for path in sorted((root / 'phylohist' / 'table').glob('*.jsonl')):
     shown = subprocess.run(
-      ['git', 'show', f'HEAD:claims/{path.name}'], capture_output=True, text=True, cwd=root
+      ['git', 'show', f'HEAD:phylohist/table/{path.name}'], capture_output=True, text=True, cwd=root
     )
     old = [json.loads(line) for line in shown.stdout.splitlines() if line.strip()]
     new = [json.loads(line) for line in path.read_text().splitlines() if line.strip()]
@@ -474,8 +474,10 @@ def check_claims(root):
       differing += [i for i in new_by_id if i not in old_by_id]
       print(f'{path.name}: {len(differing)} claims differ, e.g. {differing[:3]}')
   for name in ('names.json', 'manifest.json', 'repositories.json'):
-    shown = subprocess.run(['git', 'show', f'HEAD:claims/{name}'], capture_output=True, cwd=root)
-    if shown.stdout != (root / 'claims' / name).read_bytes():
+    shown = subprocess.run(
+      ['git', 'show', f'HEAD:phylohist/table/{name}'], capture_output=True, cwd=root
+    )
+    if shown.stdout != (root / 'phylohist' / 'table' / name).read_bytes():
       status = 1
       print(f'{name} differs')
   print('claims unchanged beyond the lifted patches' if status == 0 else 'claims differ')
@@ -492,7 +494,7 @@ def main(argv):
   parser.add_argument(
     '--check-claims',
     action='store_true',
-    help='compare the regenerated claims/ with the committed ones, patches lifted',
+    help='compare the regenerated phylohist/table/ with the committed ones, patches lifted',
   )
   args = parser.parse_args(argv)
   if args.check_claims:

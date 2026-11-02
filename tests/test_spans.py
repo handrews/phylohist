@@ -8,7 +8,7 @@ for sections (the last part of the file).
 
 Synthetic trees are built on each test's copy of the loaded test corpus
 (`records`) under positions 2000 and up; the closure test reads
-a `ClaimStore` over a copy of `claims/` whose file for `1766_linnaeus` is
+a `ClaimStore` over a copy of `phylohist/table/` whose file for `1766_linnaeus` is
 replaced by the claims of one of them.
 """
 

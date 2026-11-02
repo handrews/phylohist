@@ -15,7 +15,7 @@
     phylohist printed edrioblastoidina
     phylohist tools
 
-Reads the committed `claims/` directory only, so it needs no loader and
+Reads the committed `phylohist/table/` directory only, so it needs no loader and
 starts at once. `--style text|markdown|json` picks the rendering; json is
 the block itself. An unresolved name or an unknown source is an answer
 (the corpus holds nothing), exit 0; a bad argument is exit 2.

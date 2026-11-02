@@ -3,24 +3,26 @@
 `phylohist` records published taxonomic opinions on Palaeozoic echinoderms
 source by source, exactly as printed: who published what systematic
 information in which paper, with the page, plate and figure numbers that
-locate it. `data/` is the curated corpus, `claims/` the table generated from
-it that the tools read, and `docs/claims.md` the vocabulary both are written
-in. `README.md` is the overview. This file says how to answer from the
+locate it. `data/` is the curated corpus, `phylohist/table/` the claim table
+generated from it that the tools read, and `docs/claims.md` the vocabulary
+both are written in. `README.md` is the overview. This file says how to answer from the
 corpus and how to change it.
 
 ## Answering a question: use the tools
 
-The tools read `claims/` and return blocks with a rendered form; a grep over
-the files reproduces none of that. The CLI has one subcommand per tool:
+The tools read the claim table and return blocks with a rendered form; a
+grep over the files reproduces none of that. The CLI has one subcommand per tool:
 
     poetry run phylohist tools
     poetry run phylohist resolve "Rhenopyrgus"
     poetry run phylohist history rhenopyrgus --style markdown
     poetry run phylohist plan my-plan.yaml
 
-The same tools are served over MCP by `scripts/mcp_server.py`, which
-`.mcp.json` registers for Claude Code. The `plan` tool takes the blocks an
-answer is made of and returns the rendered answer. `eval/planner-prompt.md`
+The same tools are served over MCP by the `phylohist-mcp` command
+(`phylohist/mcp.py`), which `.mcp.json` registers for Claude Code. The
+`plan` tool takes the blocks an answer is made of and returns the rendered
+answer. The table ships inside the package, so an installed copy answers
+from the table as of its build. `eval/planner-prompt.md`
 is the full statement of how a model plans one; its rules in short:
 
 - Resolve a printed name first. A name can resolve to several records: the
@@ -46,9 +48,9 @@ repository runs one), or any grep, sees files. Read them like this:
 | path | holds | read it as |
 |---|---|---|
 | `data/trees/<source>.yaml` | one file per paper: each classification as printed, in printed order | the source's own statements; a `taxon` key is a record in `data/taxa.yaml` |
-| `claims/<source>.jsonl` | one claim per line, with `source`, `subject`, `kind`, `pages`, `printedAttribution`, `audit`, `notes` | one statement a source prints about one name; the fields are defined in `docs/claims.md`, "The record" |
-| `claims/names.json` | one row per taxon record: name, rank, authority, the folded lookup forms | the way from a printed name to a record key |
-| `claims/manifest.json` | one row per source: its `citation` and its `coverage` per kind (`all`, `partly`, `none`, `na`) | how a gap is told from an absence |
+| `phylohist/table/<source>.jsonl` | one claim per line, with `source`, `subject`, `kind`, `pages`, `printedAttribution`, `audit`, `notes` | one statement a source prints about one name; the fields are defined in `docs/claims.md`, "The record" |
+| `phylohist/table/names.json` | one row per taxon record: name, rank, authority, the folded lookup forms | the way from a printed name to a record key |
+| `phylohist/table/manifest.json` | one row per source: its `citation` and its `coverage` per kind (`all`, `partly`, `none`, `na`) | how a gap is told from an absence |
 
 Cite a source as its `citation` reads ("Holloway & Jell 1983") and give the
 page the claim carries. Before saying the corpus lacks something, check the
@@ -67,8 +69,8 @@ tests). An answer cites a source and a page, never a note or a review.
 The checks are in `README.md` under "Checks": `ruff check`, `ruff format
 --check`, `pytest` with its coverage floor, `poetry run regenerate` after
 any edit under `data/` or `schemas/`, and `git diff --exit-code` on
-`scripts/schema-usage.md`, `claims/` and `tests/expected-warnings.txt`,
-which CI fails on when stale. A draft is checked with
+`scripts/schema-usage.md`, `phylohist/table/` and
+`tests/expected-warnings.txt`, which CI fails on when stale. A draft is checked with
 `scripts/check_draft.py drafts/<file>.yaml`.
 
 - The tests run over `tests/corpus/`, a frozen slice; only tests marked
@@ -88,7 +90,7 @@ which CI fails on when stale. A draft is checked with
 | directory | holds |
 |---|---|
 | `data/` | the curated corpus: the record files (`taxa.yaml`, `sources.yaml`, `authors.yaml`, ...) and one tree file per source under `data/trees/` |
-| `claims/` | the generated claim table with `claims/names.json` and `claims/manifest.json`; committed, and CI fails when stale |
+| `phylohist/table/` | the generated claim table, its name and source indexes and a copy of the rank table; committed, shipped in the package, and CI fails when stale |
 | `docs/` | the claims vocabulary, the tools and answer shapes, the walkthrough |
 | `eval/` | the questions, the prompts, the findings, the run transcripts |
 | `drafts/` | AI-drafted trees awaiting audit; the loader reads them only on request |

@@ -202,7 +202,7 @@ def test_a_load_with_errors_leaves_the_expected_warnings(monkeypatch, tmp_path, 
 
 
 def test_a_run_elsewhere_leaves_the_committed_expected_warnings(monkeypatch, caplog, tmp_path):
-  # Only the full run into claims/ prunes the committed file by default.
+  # Only the full run into phylohist/table/ prunes the committed file by default.
   before = regenerate.EXPECTED_WARNINGS.read_text()
   _run(monkeypatch, caplog, tmp_path, [], error=False)
   assert regenerate.EXPECTED_WARNINGS.read_text() == before

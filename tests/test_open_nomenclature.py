@@ -525,7 +525,7 @@ CITING_TREE = {
 
 @pytest.fixture(scope='module')
 def synthetic(corpus, tmp_path_factory):
-  """A `ClaimStore` over a copy of `claims/` with `SOURCE`'s claims
+  """A `ClaimStore` over a copy of `phylohist/table/` with `SOURCE`'s claims
   replaced by those of `SYNTHETIC`, built on a copy of the corpus that
   holds the record `CF_KEY`."""
   directory = tmp_path_factory.mktemp('claims')
