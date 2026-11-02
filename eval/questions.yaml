@@ -1585,9 +1585,9 @@
     blocks:
       anyOf:
       - - tool: gap
-          parameters: {source: 1788a_gmelin}
+          parameters: {source: 1788a_gmelin, kind: skeleton}
       - - tool: gap
-          parameters: {source: 1788b_gmelin}
+          parameters: {source: 1788b_gmelin, kind: skeleton}
     shows:
     - "Gmelin 1788 is on record; its content has not yet been entered"
     answer: |
