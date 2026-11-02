@@ -1,7 +1,7 @@
 """The claim store: the committed claim table in memory, and the blocks
 built from it.
 
-`ClaimStore` reads `claims/` (the JSONL per source, `manifest.json`,
+`ClaimStore` reads `phylohist/table/` (the JSONL per source, `manifest.json`,
 `names.json`, `repositories.json`) into indices, holds the closure over
 them, and builds every block a tool returns: the listing a source prints, the matrix,
 the descendants and ancestors, the timeline, the statements, the
@@ -11,7 +11,9 @@ surface over the store is `tools.py`.
 """
 
 import collections
+import importlib.resources
 import json
+import os
 import pathlib
 import re
 
@@ -26,9 +28,18 @@ from .render import node_label, pages_text, render
 from .resolve import Resolver
 from .words import COVERAGE_WORDS, PLURAL_KINDS, Words, short_citation, years_span
 
-CLAIMS_DIR = pathlib.Path(__file__).parent / '..' / 'claims'
-
 AMBIGUOUS = 'ambiguous'
+
+
+def claims_dir():
+  """The claim table the tools read when none is named: `PHYLOHIST_CLAIMS`
+  when set, else the table the package carries, `phylohist/table/`, which
+  `regenerate` writes in a clone and a built package ships as it was."""
+  named = os.environ.get('PHYLOHIST_CLAIMS')
+  if named:
+    return pathlib.Path(named)
+  return pathlib.Path(str(importlib.resources.files('phylohist') / 'table'))
+
 
 _WHITESPACE_RE = re.compile(r'\s+')
 _DIGIT_RE = re.compile(r'\d')
@@ -195,8 +206,8 @@ def _with_style(block, style):
 
 
 class ClaimStore:
-  def __init__(self, directory=CLAIMS_DIR):
-    directory = pathlib.Path(directory)
+  def __init__(self, directory=None):
+    directory = pathlib.Path(directory) if directory else claims_dir()
     with open(directory / 'manifest.json') as fd:
       self.manifest = json.load(fd)
     with open(directory / 'names.json') as fd:

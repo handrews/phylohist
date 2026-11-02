@@ -1,5 +1,5 @@
 """Regenerate the files derived from the data: the claim table under
-`claims/` and the schema census `scripts/schema-usage.md`, and keep
+`phylohist/table/` and the schema census `scripts/schema-usage.md`, and keep
 `tests/expected-warnings.txt` to the warnings the load still produces.
 
     poetry run regenerate

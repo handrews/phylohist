@@ -1,7 +1,7 @@
 #!/usr/bin/env python3
 """Regenerate the claim table and its coverage manifest.
 
-    poetry run python scripts/claims.py                # -> claims/
+    poetry run python scripts/claims.py                # -> phylohist/table/
     poetry run python scripts/claims.py --source 1962_fay 1983_holloway_jell
     poetry run python scripts/claims.py --draft --out /tmp/claims-with-drafts
     poetry run python scripts/claims.py --data tests/corpus --out /tmp/corpus-claims
@@ -11,7 +11,7 @@
 Writes one `<source>.jsonl` per tree file, one claim per line,
 `manifest.json`, `names.json` and `repositories.json`; `docs/claims.md`
 defines all four. CI reruns the script and
-fails if `claims/` changes, so every data commit regenerates it.
+fails if `phylohist/table/` changes, so every data commit regenerates it.
 `--draft` also loads `drafts/` and therefore refuses to write into the
 committed directory. `--inconsistencies` writes nothing: it prints each
 source whose declared coverage disagrees with the derived claims, with
@@ -22,7 +22,7 @@ different specimen in two sources (roadmap F5), a report that neither
 counts towards that exit status nor fails a test. `--errors-only` holds the
 load's log until it ends, then shows only its errors when there are any
 and its warnings otherwise, so that the errors are not lost among them.
-A full run over `data/` into `claims/` also drops from
+A full run over `data/` into `phylohist/table/` also drops from
 `tests/expected-warnings.txt` the warnings the load no longer produces
 (`phylohist.regenerate.prune_expected`), so that `regenerate` loads the
 data once; a new warning is added only with `scripts/expected_warnings.py
@@ -45,7 +45,7 @@ from phylohist.loader.load import Collector  # noqa: E402
 from phylohist.regenerate import EXPECTED_WARNINGS, prune_expected  # noqa: E402
 
 ROOT = pathlib.Path(__file__).resolve().parent.parent
-DEFAULT_OUT = ROOT / 'claims'
+DEFAULT_OUT = ROOT / 'phylohist' / 'table'
 
 # Under the package logger, whose handler prints the record; __name__ is __main__ here.
 logger = logging.getLogger('phylohist.scripts.claims')
@@ -57,14 +57,17 @@ _REPOSITORY_FIELDS = ('name', 'type', 'subject', 'within', 'prefixes', 'otherNam
 
 def _repositories(corpus):
   """`data/repositories.yaml` as the load read it, for
-  `claims/repositories.json`: the fields the store reads, as present."""
+  `phylohist/table/repositories.json`: the fields the store reads, as present."""
   return {
     key: {field: entry[field] for field in _REPOSITORY_FIELDS if field in entry}
     for key, entry in sorted(corpus.repositories.items())
   }
 
 
-def write(out, corpus, claims_by_source, full):
+def write(out, corpus, claims_by_source, full, data_dir=DATA_DIR):
+  """The table under ``out``: the claims per source, and on a full run the
+  manifest, the two indexes and a copy of ``data_dir``'s `ranks.yaml`, which
+  `phylohist/ranks.py` reads where an installed package has no `data/`."""
   out.mkdir(parents=True, exist_ok=True)
   if full:
     for stale in out.glob('*.jsonl'):
@@ -83,6 +86,7 @@ def write(out, corpus, claims_by_source, full):
       with open(out / name, 'w') as fd:
         json.dump(content, fd, ensure_ascii=False, indent=1, sort_keys=True)
         fd.write('\n')
+    (out / 'ranks.yaml').write_bytes((data_dir / 'ranks.yaml').read_bytes())
 
 
 # Which tree fields a coverage kind is counted from, for the report.
@@ -255,13 +259,13 @@ def main(argv):
     help='show only the load errors when there are any, else its warnings',
   )
   # The expected-warnings file to prune; by default the committed one, and
-  # only on a full run over data/ into claims/.
+  # only on a full run over data/ into phylohist/table/.
   parser.add_argument('--expected', type=pathlib.Path, help=argparse.SUPPRESS)
   args = parser.parse_args(argv)
 
   out = args.out.resolve()
   if args.draft and out == DEFAULT_OUT.resolve():
-    parser.error('--draft needs --out pointing outside claims/')
+    parser.error('--draft needs --out pointing outside phylohist/table/')
 
   # The package logger prints its own records (phylohist/__init__.py); a
   # root handler would print each of them a second time.
@@ -279,7 +283,7 @@ def main(argv):
   if args.inconsistencies:
     return 1 if report_inconsistencies(corpus, claims_by_source) else 0
   full = args.source is None
-  write(out, corpus, claims_by_source, full)
+  write(out, corpus, claims_by_source, full, data_dir=args.data)
 
   total = sum(len(c) for c in claims_by_source.values())
   print(f'{total} claims from {len(claims_by_source)} sources -> {out}')

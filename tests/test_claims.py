@@ -1,8 +1,8 @@
 """The claim table: what the extractor derives from a tree, the manifest,
-and the eval questions as a demo over the committed `claims/`.
+and the eval questions as a demo over the committed `phylohist/table/`.
 
 `test_question` (marked `demo`, run with `--demo`) checks that every eval
-question's expected answer still builds over `claims/`. An expected
+question's expected answer still builds over `phylohist/table/`. An expected
 answer is the blocks it is made of (a tool and the parameters that
 matter) and the strings the rendered answer shows. Each alternative is a
 plan that `phylohist.plan.execute` must build in full, every block

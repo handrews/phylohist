@@ -1,5 +1,6 @@
 # Read by `xerj autoindex` alongside .gitignore. The corpus is data/ and the
-# claims/ table generated from it; docs/ explains them. Skipped here:
+# claim table generated from it under phylohist/table/; docs/ explains them.
+# Skipped here:
 # model transcripts and grades from the eval runs
 eval/runs/
 # a frozen copy of data/ for the tests; it would duplicate every hit

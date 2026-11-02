@@ -114,8 +114,8 @@ The CLI has one subcommand per tool:
     poetry run phylohist plan my-plan.yaml
     poetry run python scripts/eval_run.py --mode planner --ask "Who first placed Rhenopyrgus under Edrioblastoidina?"
 
-The same tools are served over MCP by
-`scripts/mcp_server.py`, which `.mcp.json` registers for Claude Code:
+The same tools are served over MCP by the `phylohist-mcp` command
+(`phylohist/mcp.py`), which `.mcp.json` registers for Claude Code:
 a chat model can read blocks or state a plan and get the rendered answer.
 The "Reading the table" section of `docs/claims.md` describes the blocks
 and the tools.
@@ -171,6 +171,12 @@ Python 3.12 or later and [Poetry](https://python-poetry.org/):
 
     poetry install
 
+The claim table the tools read is generated into `phylohist/table/`, so
+the package can also be built (`poetry build`) and installed on its own:
+an installed copy carries the table as of its build and offers the
+`phylohist` and `phylohist-mcp` commands, so any MCP client can run the
+server without a checkout. `PHYLOHIST_CLAIMS` names another table to read.
+
 Only `scripts/eval_run.py` and the grader's `--judge` call a model;
 they read `ANTHROPIC_API_KEY` from the environment or from a
 git-ignored `.env` at the repository root. Nothing else needs a key.
@@ -187,13 +193,13 @@ is added with `scripts/expected_warnings.py --add`):
     poetry run ruff format --check .
     poetry run pytest --cov=phylohist --cov-fail-under=90
     poetry run regenerate
-    git diff --exit-code scripts/schema-usage.md claims/ tests/expected-warnings.txt
+    git diff --exit-code scripts/schema-usage.md phylohist/table/ tests/expected-warnings.txt
     poetry run python scripts/check_draft.py drafts/<file>.yaml
 
 The tests run over the frozen copy of the data under `tests/corpus/`;
 only those marked `production` load `data/` itself, so improving the
 data cannot break a test of the code. `poetry run pytest --demo` adds the
-eval questions and the walkthrough over the committed `claims/`, which
+eval questions and the walkthrough over the committed `phylohist/table/`, which
 hold for the data they were last refreshed against.
 
 ## Where things are

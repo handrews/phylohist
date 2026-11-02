@@ -63,7 +63,7 @@ BOXES = (
   (202, 332, 132, 'CLI', 'phylohist &lt;tool&gt;', False),
   (352, 332, 132, 'MCP server', 'tools and plan', False),
   (502, 332, 132, 'Eval runner', 'grader, scripts', False),
-  (52, 440, 120, 'claims/', 'committed table', False),
+  (52, 440, 120, 'phylohist/table/', 'committed table', False),
   (202, 440, 432, 'Tools over the claim table', 'store, resolve, words, blocks, render', False),
 )
 # (x1, y1, x2, y2, two-headed)

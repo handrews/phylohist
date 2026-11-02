@@ -1579,7 +1579,7 @@ NUMBERED = {
 
 @pytest.fixture(scope='module')
 def numbered(corpus, tmp_path_factory):
-  """A `ClaimStore` over a copy of `claims/` whose `1961_dehm` file is
+  """A `ClaimStore` over a copy of `phylohist/table/` whose `1961_dehm` file is
   replaced by the claims of one synthetic tree in the new material shape."""
   directory = tmp_path_factory.mktemp('claims')
   shutil.copytree(corpus.claims, directory, dirs_exist_ok=True)
@@ -1706,7 +1706,7 @@ LINKED = {
 
 @pytest.fixture(scope='module')
 def linked(corpus, tmp_path_factory):
-  """A `ClaimStore` over a copy of `claims/` whose files for Whiteaves 1897,
+  """A `ClaimStore` over a copy of `phylohist/table/` whose files for Whiteaves 1897,
   Bather 1914c and Fay 1962 are replaced by the claims of synthetic trees
   in which Fay's No. 752 (the editor's inference) is Bather's A, which
   Bather says is Whiteaves's first specimen."""

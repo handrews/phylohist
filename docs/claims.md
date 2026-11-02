@@ -5,8 +5,8 @@ provenance. The claim table is generated from the tree files by
 `scripts/claims.py` (the logic is `phylohist/claims.py`, over the `Tree`
 walk), deterministically: the same YAML always yields the same claims, in
 the same order, nothing is merged across sources, and nothing is normalised
-beyond resolving keys. The output is committed: `claims/<source>.jsonl`,
-one claim per line for every tree file, and `claims/manifest.json`; CI
+beyond resolving keys. The output is committed: `phylohist/table/<source>.jsonl`,
+one claim per line for every tree file, and `phylohist/table/manifest.json`; CI
 reruns the script and fails on a stale directory, so every data commit
 regenerates it. This document fixes what a claim is and which tree fields
 produce which claims; the eval questions in `eval/` are written against
@@ -462,7 +462,7 @@ it out, and queries and output over sections are deferred.
 
 ## Derived coverage
 
-`claims/manifest.json` holds, per source record (every key in
+`phylohist/table/manifest.json` holds, per source record (every key in
 `sources.yaml`, whether or not a tree exists: `tree: false` is how "the
 paper is recorded but not yet entered" is derived), the declared `audit`,
 the counts of claims by kind, by `actKind` and by `materialKind`, the
@@ -563,13 +563,15 @@ not fail on them.
 
 ## Reading the table
 
-Three more generated files sit beside the claims. `claims/repositories.json`
+Three more generated files sit beside the claims, with a copy of
+`data/ranks.yaml` (`ranks.yaml`, which `phylohist/ranks.py` reads where an
+installed package has no `data/`). `phylohist/table/repositories.json`
 is `data/repositories.yaml` as the load read it (the corpus's
 `repositories`), keys sorted,
 each entry's `name`, `type`, `subject`, `within`, `prefixes`, `otherNames` and
 `place` as present: the store reads it to split a catalog number a reader
 types into its holder and its bare number.
-`claims/names.json` has
+`phylohist/table/names.json` has
 one row per taxon record: name, rank (null for a record written `rank:
 null`), kind (`primary`; for a derivative
 the field naming its target, `altSpellingOf`, `altGenderOf`,
@@ -669,8 +671,8 @@ the blocks; `phylohist/resolve.py` turns printed names and citations
 into keys, and `phylohist/words.py` phrases what the blocks carry. The
 tools (`phylohist/tools.py`) are the surface over the store: they return
 blocks; the CLI (`phylohist <tool>`, `--style`), the MCP server
-(`scripts/mcp_server.py`, `.mcp.json`) and the eval runner all go through
-`tools.call`:
+(`phylohist-mcp`, `phylohist/mcp.py`, registered by `.mcp.json`) and the
+eval runner all go through `tools.call`:
 
 | tool | answers |
 |---|---|

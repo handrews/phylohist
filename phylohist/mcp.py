@@ -1,29 +1,25 @@
-#!/usr/bin/env python3
 """MCP server exposing the read-only block tools over the claim table.
 
-    poetry run python scripts/mcp_server.py
+    phylohist-mcp
 
-Speaks MCP over stdio; `.mcp.json` at the repository root registers it for
-Claude Code. Every tool reads the committed `claims/` directory and nothing
+Speaks MCP over stdio; `.mcp.json` at the repository root registers the
+command for Claude Code, and an installed copy offers it to any MCP
+client. Every tool reads the claim table (`store.claims_dir`) and nothing
 can write. The descriptions a model sees are `tools.TOOL_DESCRIPTIONS`,
 shared with the CLI and the eval runner, and speak of sources, names and
 statements, not of files. Block-returning tools carry `rendered`, the
 text to reproduce verbatim; every call goes through `tools.call`, so the
-parameters are the specs' and the rendering is text. The `plan` tool is the other route: the
-model states the blocks an answer is made of and code builds them
-(`phylohist.plan`), so a chat can answer without reading a block.
+parameters are the specs' and the rendering is text. The `plan` tool is
+the other route: the model states the blocks an answer is made of and
+code builds them (`phylohist.plan`), so a chat can answer without reading
+a block.
 """
 
-import pathlib
-import sys
+from mcp.server.mcpserver import MCPServer
 
-sys.path.insert(0, str(pathlib.Path(__file__).resolve().parent.parent))
-
-from mcp.server.mcpserver import MCPServer  # noqa: E402
-
-from phylohist import plan as plans  # noqa: E402
-from phylohist import tools
-from phylohist.render import render_composition  # noqa: E402
+from . import plan as plans
+from . import tools
+from .render import render_composition
 
 server = MCPServer(
   'phylohist',
@@ -201,5 +197,9 @@ def plan(header: str, blocks: list[dict], question: str | None = None) -> dict:
   }
 
 
-if __name__ == '__main__':
+def main():
   server.run('stdio')
+
+
+if __name__ == '__main__':
+  main()

@@ -36,5 +36,5 @@ jobs:
       env:
         COVERAGE_CORE: sysmon
     - run: poetry run regenerate
-    - run: git diff --exit-code scripts/schema-usage.md claims/ tests/expected-warnings.txt
+    - run: git diff --exit-code scripts/schema-usage.md phylohist/table/ tests/expected-warnings.txt
     - run: for f in drafts/*.yaml; do poetry run python scripts/check_draft.py "$f" || exit 1; done

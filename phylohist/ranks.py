@@ -10,14 +10,18 @@ in its order and casing, held equal by a test; `SPECIES_GROUP`;
 runs over. Every comparison reads a rank through `fold_rank`, and
 `rank_order` sorts by the table's order. A record written `rank: null`
 (the source prints no rank word and no cladistic term) has no rank: its
-`rank` is `None`.
+`rank` is `None`. An installed package ships no `data/`, so
+`scripts/claims.py` copies the table into `phylohist/table/ranks.yaml`,
+which this module reads when the data file is not beside the package.
 """
 
 import pathlib
 
 import yaml
 
-TABLE_PATH = pathlib.Path(__file__).resolve().parent.parent / 'data' / 'ranks.yaml'
+_PACKAGE = pathlib.Path(__file__).resolve().parent
+_DATA_TABLE = _PACKAGE.parent / 'data' / 'ranks.yaml'
+TABLE_PATH = _DATA_TABLE if _DATA_TABLE.exists() else _PACKAGE / 'table' / 'ranks.yaml'
 
 
 def fold_rank(rank):

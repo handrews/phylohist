@@ -410,7 +410,7 @@ HOMONYM = 'mineralum'
 
 @pytest.fixture(scope='module')
 def synthetic(corpus, tmp_path_factory):
-  """A `ClaimStore` over a copy of `claims/` with `SOURCE`'s claims replaced
+  """A `ClaimStore` over a copy of `phylohist/table/` with `SOURCE`'s claims replaced
   by those of a tree citing the mineral in a synonymy under a genus that
   sits under a record written `rank: null`, and the names index carrying
   the mineral, its spelling, that record and a genus of the mineral's

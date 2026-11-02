@@ -16,7 +16,6 @@ import pytest
 
 from phylohist import blocks, cli, tools
 from phylohist.acts import ACT_KINDS
-from tests import support
 
 PLANNER_PROMPT = pathlib.Path(__file__).parent.parent / 'eval' / 'planner-prompt.md'
 SPECS = {spec['name']: spec for spec in tools.TOOL_SPECS}
@@ -24,7 +23,9 @@ SPECS = {spec['name']: spec for spec in tools.TOOL_SPECS}
 
 @pytest.fixture(scope='module')
 def mcp():
-  return support.script('mcp_server')
+  from phylohist import mcp as module
+
+  return module
 
 
 def _parameters(function):

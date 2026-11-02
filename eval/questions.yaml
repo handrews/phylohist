@@ -1420,7 +1420,7 @@
   - source: 1990_smith.a.b_jell
   - source: 1994_guensburg_sprinkle
   - source: 2013_sumrall_heredia_rodríguez.c.m_mestre
-  verified: 'claims/: placement claims with subject rhenopyrgus and tree cladogram exist for
+  verified: 'phylohist/table/: placement claims with subject rhenopyrgus and tree cladogram exist for
     exactly 1990_smith.a.b_jell (also a diagram), 1994_guensburg_sprinkle and
     2013_sumrall_heredia_rodríguez.c.m_mestre; a history with trees taxonomy and cladogram
     carries all three. Added 2026-09-12 so that reaching for cladograms is tested where the

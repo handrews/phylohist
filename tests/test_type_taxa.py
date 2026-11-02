@@ -3,7 +3,7 @@ synonymy entry: the schema, the loader checks, the claims, and the words
 and listings the tools say.
 
 Synthetic trees are built on the loaded test corpus under positions
-300 and up; the tool tests read a `ClaimStore` over a copy of `claims/`
+300 and up; the tool tests read a `ClaimStore` over a copy of `phylohist/table/`
 whose files for the sources named in `TREES` are replaced by the claims of
 those trees, since no data uses `type` yet.
 """
@@ -658,7 +658,7 @@ TREES = {
 
 @pytest.fixture(scope='module')
 def synthetic(corpus, tmp_path_factory):
-  """A `ClaimStore` over a copy of `claims/` with the claims of each source
+  """A `ClaimStore` over a copy of `phylohist/table/` with the claims of each source
   of `TREES` replaced by those of its tree."""
   directory = tmp_path_factory.mktemp('claims')
   shutil.copytree(corpus.claims, directory, dirs_exist_ok=True)
@@ -1515,7 +1515,7 @@ NULLS = {
 
 @pytest.fixture(scope='module')
 def nulled(corpus, tmp_path_factory):
-  """A `ClaimStore` over a copy of `claims/` with the claims of 1961 Dehm
+  """A `ClaimStore` over a copy of `phylohist/table/` with the claims of 1961 Dehm
   replaced by those of `NULLS`, its `types` coverage `partly`."""
   directory = tmp_path_factory.mktemp('claims_nulls')
   shutil.copytree(corpus.claims, directory, dirs_exist_ok=True)

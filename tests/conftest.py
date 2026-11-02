@@ -4,7 +4,7 @@ the curated corpus for the checks that are about it.
 `tests/corpus/` is a frozen copy of `data/` (its README says from where).
 `corpus` loads it once per process and writes its claim table to a
 temporary directory, so the tests read the shapes the tools read over
-`claims/` without depending on what the curated data says today. The
+`phylohist/table/` without depending on what the curated data says today. The
 loaded `Corpus` is `corpus.records`; a test that adds records or builds
 trees takes `records`, its own copy, so the session's stays as the load
 left it (`_isolated` checks), and every test has the tools' store over the
@@ -12,7 +12,7 @@ corpus; `store` and `closure` are over the corpus too. `production` loads
 `data/` for the tests marked `production`, which are about the curated
 corpus itself. The tests marked
 `demo` run the eval questions and the walkthrough over the committed
-`claims/`; they hold for the data they were last refreshed against, so
+`phylohist/table/`; they hold for the data they were last refreshed against, so
 they run only with `--demo`.
 """
 
@@ -33,14 +33,14 @@ def pytest_addoption(parser):
   parser.addoption(
     '--demo',
     action='store_true',
-    help='run the eval questions and the walkthrough over the committed claims/',
+    help='run the eval questions and the walkthrough over the committed phylohist/table/',
   )
 
 
 def pytest_collection_modifyitems(config, items):
   if config.getoption('--demo'):
     return
-  skip = pytest.mark.skip(reason='a demo over the committed claims/; run with --demo')
+  skip = pytest.mark.skip(reason='a demo over the committed phylohist/table/; run with --demo')
   for item in items:
     if 'demo' in item.keywords:
       item.add_marker(skip)
@@ -114,11 +114,11 @@ def production():
 
 @pytest.fixture(scope='session')
 def production_store():
-  """A store over the committed `claims/`, for the demos."""
+  """A store over the committed `phylohist/table/`, for the demos."""
   return ClaimStore()
 
 
 @pytest.fixture
 def demo_store(production_store, monkeypatch):
-  """The tools over the committed `claims/`, for one test."""
+  """The tools over the committed `phylohist/table/`, for one test."""
   monkeypatch.setattr(tools, '_store', production_store)
