@@ -1425,7 +1425,7 @@
     carries all three. Added 2026-09-12 so that reaching for cladograms is tested where the
     question asks for it, after q030 lost its cladogram selector (the default reads
     taxonomies only).'
-- id: q046
+- id: q050
   class: answerable
   question: Which species does Linnaeus (1758) place in his new genus Echinus, and on what page does the genus begin?
   scope:
@@ -1453,7 +1453,7 @@
     species children, orbiculus with four var. children; data/sections.yaml
     echinus-regulares (p. 663) and echinus-irregulares (p. 665) are the headings,
     which yield section claims and not nodes of the listing.
-- id: q047
+- id: q051
   class: trajectory
   question: How has Gyllenhaal's (1772) Echinus aurantium been treated since, and in which genera?
   scope:
@@ -1489,7 +1489,7 @@
     1821_wahlenberg, 1826_schlotheim, 1828_hisinger, 1830_pander, 1837_hisinger (a synonyms
     entry under citrus_hisinger_1837), 1840_eichwald, 1840a_buch, 1840b_buch, 1844_buch,
     1845_buch, 1848b_forbes, 1854_müller.j.p and 1997_paul.c.r.c (type of the subgenus).
-- id: q048
+- id: q052
   class: trajectory
   question: Who first placed Echinosphaerites among Buch's Cystideen, and who followed?
   scope:
@@ -1518,7 +1518,7 @@
     variant of cystideen) with echinosphaerites among its synonyms; data/trees/1854_müller.j.p.yaml
     places echinosphaerites under an unnamed node under cystideen; data/trees/1844_buch.yaml and
     1845_buch.yaml carry no echinosphaerites node.
-- id: q049
+- id: q053
   class: answerable
   question: What is the "kalckballar" that Tilas (1740) figures, and what did later authors make of it?
   scope:
@@ -1546,7 +1546,7 @@
   verified: data/taxa.yaml kalckballar_tilas_1740 (mineral true, Tilas 1740); data/trees/1740_tilas.yaml
     (pages 196, illustration plate II fig. 18); data/trees/1844_buch.yaml, the synonyms entry
     under aurantium_gyllenhaal_1772 with its editorial corrections.
-- id: q050
+- id: q054
   class: as-published
   question: Under what spelling do the papers in the corpus cite Meyer's (1826) genus Echinoencrinites?
   scope:
@@ -1575,31 +1575,34 @@
     echino-encrinites nodes in data/trees/ for 1826_meyer, 1828_hisinger, 1842_volborth,
     1847_hall and 1848b_forbes (a synonyms entry); no tree carries the unhyphenated key as
     its citedAs.
-- id: q051
+- id: q055
   class: uncaptured
-  question: What does Gmelin's (1788) edition of the Systema Naturae place under Echinus?
+  question: What does the Vermes part of Gmelin's thirteenth edition of the Systema Naturae (1791, part 6) place under Echinus?
   scope:
     taxon: echinus
-    source: 1788a_gmelin
+    source: 1791a_gmelin
   expected:
     blocks:
-      anyOf:
-      - - tool: gap
-          parameters: {source: 1788a_gmelin, kind: skeleton}
-      - - tool: gap
-          parameters: {source: 1788b_gmelin, kind: skeleton}
+    - tool: gap
+      parameters: {source: 1791a_gmelin, kind: skeleton}
     shows:
-    - "Gmelin 1788 is on record; its content has not yet been entered"
+    - "Gmelin 1791 is on record; its content has not yet been entered"
     answer: |
-      Not captured for Gmelin (1788): two papers of his from that year are
-      on record and neither has its content entered, so what either prints
-      under Echinus cannot be reported yet. A planner that resolves "Gmelin
-      1788" is offered both keys and must name one.
+      Not captured for Gmelin (1791): the sixth part of the thirteenth
+      edition, pp. 3021 to 3910, which holds the Vermes and so Echinus, is on
+      record and nothing of it has been entered, so what it places under
+      Echinus cannot be reported yet. Two other parts of the same edition
+      carry the same citation, Gmelin 1791; the question names the part, and
+      only the gap for that part answers it.
   evidence:
-    source: 1788a_gmelin
-  verified: data/sources.yaml has records 1788a_gmelin and 1788b_gmelin; ls data/trees/ has
-    no file for either and drafts/ holds no draft.
-- id: q052
+    source: 1791a_gmelin
+  verified: data/sources.yaml 1791a_gmelin (book systema-naturae-13th-ed, number 6, pages
+    3021-3910, May 1791), beside 1791b_gmelin (part 1) and 1791c_gmelin (part 2); ls
+    data/trees/ has no file for any of the three. The source resolver returns the three
+    with the same citation and year and exposes neither the part nor the pages, so a
+    planner cannot tell them apart from what the tools return; the question stands as
+    what the tools should let it express.
+- id: q056
   class: uncaptured
   question: What classification does Vanuxem (1842) print for the fossils of New York's third district?
   scope:
@@ -1621,7 +1624,7 @@
     source: 1842_vanuxem
   verified: data/sources.yaml 1842_vanuxem audit (state partial, coverage skeleton partly,
     newTaxa partly, material partly, synonymy na, types na); data/trees/1842_vanuxem.yaml.
-- id: q053
+- id: q057
   class: answerable
   question: Which papers cite the University of Queensland specimen F. 5404, and as what?
   scope:
@@ -1651,7 +1654,7 @@
   verified: the material entries for navicula in data/trees/1941_whitehouse.yaml (prefix F.,
     number 5404, holotype) and data/trees/2021_jell_sprinkle.yaml (prefix UQF, 5404, holotype);
     data/repositories.yaml uq-f lists both prefixes.
-- id: q054
+- id: q058
   class: absent
   question: How does Breyn (1732) arrange the echinoids in his Schediasma?
   scope:
@@ -1671,7 +1674,7 @@
   evidence: []
   verified: data/sources.yaml has no record whose author is Breyn; resolve_source "Breyn 1732"
     returns no candidate; 1734_klein is the earliest source key.
-- id: q055
+- id: q059
   class: answerable
   question: Which genera and species does Buch (1844) list in his new Cystideen, and which is the type genus?
   scope:
@@ -1696,7 +1699,7 @@
     pages: 124
   verified: data/trees/1844_buch.yaml, the cystideen node (pages 124, new, type sphaeronites)
     and its four genus children with their species.
-- id: q056
+- id: q060
   class: answerable
   question: What synonymy does Hisinger (1837) print under his Sphaeronites citrus?
   scope:
