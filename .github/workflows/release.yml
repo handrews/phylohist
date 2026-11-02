@@ -1,0 +1,48 @@
+# Publishes to PyPI when a GitHub Release is published, through PyPI's trusted
+# publishing: the upload job trades a GitHub OIDC token for a short-lived PyPI
+# token, so the repository holds no secret. The PyPI publisher is registered
+# for this workflow file and the `pypi` environment.
+#
+# To release: set `version` in pyproject.toml (and CITATION.cff), merge, then
+# publish a GitHub Release whose tag is `v<version>`.
+name: release
+on:
+  release:
+    types: [published]
+permissions:
+  contents: read
+jobs:
+  build:
+    runs-on: ubuntu-latest
+    timeout-minutes: 20
+    steps:
+    - uses: actions/checkout@v4
+    - run: pipx install poetry==2.2.1
+    - uses: actions/setup-python@v5
+      with:
+        python-version: '3.12'
+    # the tag names the version being published, so a tag on the wrong commit
+    # or a version not bumped stops here, before anything is uploaded
+    - run: test "$TAG" = "v$(poetry version --short)"
+      env:
+        TAG: ${{ github.event.release.tag_name }}
+    - run: poetry build
+    # the wheel carries the claim table the tools read
+    - run: unzip -l dist/*.whl | grep -Fq phylohist/table/names.json
+    - uses: actions/upload-artifact@v4
+      with:
+        name: dist
+        path: dist/
+  publish:
+    needs: build
+    runs-on: ubuntu-latest
+    timeout-minutes: 10
+    environment: pypi
+    permissions:
+      id-token: write
+    steps:
+    - uses: actions/download-artifact@v4
+      with:
+        name: dist
+        path: dist/
+    - uses: pypa/gh-action-pypi-publish@release/v1
