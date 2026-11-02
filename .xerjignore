@@ -1,0 +1,14 @@
+# Read by `xerj autoindex` alongside .gitignore. The corpus is data/ and the
+# claims/ table generated from it; docs/ explains them. Skipped here:
+# model transcripts and grades from the eval runs
+eval/runs/
+# a frozen copy of data/ for the tests; it would duplicate every hit
+tests/corpus/
+# AI-drafted trees awaiting a human audit; not part of the corpus
+drafts/*
+!drafts/README.md
+# the development record: reviews, audits, paper notes and translations;
+# none of it is checked against the project's published goals
+notes/*
+!notes/README.md
+poetry.lock
