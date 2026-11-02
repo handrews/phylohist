@@ -11,8 +11,9 @@ a curated corpus stored as YAML data.  This uses a model where one is
 needed, and prioritizes reliability, reproducibility, speed,
 and lower costs where one is not.
 
-The current corpus includes information from 218 papers from
-1734 to the present, mostly focusing on Paleozoic echinoderms.
+The current corpus holds 227 papers entered in whole or in part, from
+Tilas 1740 to 2024, out of 400 on record (the earliest, Klein 1734,
+awaits entry), mostly focusing on Paleozoic echinoderms.
 A coverage system tracks how much of the information from a paper has
 been entered and reviewed.
 
@@ -21,9 +22,10 @@ code came from.  Further work has been done with the assistance of
 Claude Code, focusing on edrioblastoids (including rhenopyrgids and
 cyathocystids) as the primary proof of concept data set.
 
+The package is published on PyPI as `phylohist` from version 0.1.0.
 Next steps include writing human-user-friendly documentation,
-continuing to improve the software development methodology, and publishing
-the package as well as curating additional data and adding more features.
+continuing to improve the software development methodology, curating
+additional data and adding more features.
 
 Work to incorporate specimens and geologic time scales is ongoing, but
 currently handled in several different experimental ways while a final
@@ -48,8 +50,8 @@ This avoids verbose or hallucinated output while spending tokens only
 on the work that really requires a model's reasoning and flexibility.
 
 <picture>
-  <source media="(prefers-color-scheme: dark)" srcset="docs/architecture-dark.svg">
-  <img alt="How phylohist fits together: three lanes, human, model and code, read in four columns, the data, the CLI, chat and the eval" src="docs/architecture.svg">
+  <source media="(prefers-color-scheme: dark)" srcset="https://raw.githubusercontent.com/handrews/phylohist/main/docs/architecture-dark.svg">
+  <img alt="How phylohist fits together: three lanes, human, model and code, read in four columns, the data, the CLI, chat and the eval" src="https://raw.githubusercontent.com/handrews/phylohist/main/docs/architecture.svg">
 </picture>
 
 - **The data.** The curator records each publication's opinions as
@@ -170,19 +172,35 @@ blocks.  It requires an Anthropic API key to be configured.
 
 ## Install
 
-Python 3.12 or later and [Poetry](https://python-poetry.org/):
+From PyPI, for the tools and the MCP server over the claim table as of
+the release (Python 3.12 or later):
+
+    pip install phylohist
+    phylohist history rhenopyrgus
+    phylohist-mcp
+
+The second command is the server over stdio, which any MCP client runs
+by name. For Claude Desktop or Claude Code the entry is
+
+    {"mcpServers": {"phylohist": {"command": "phylohist-mcp"}}}
+
+or, with nothing installed, `uvx --from phylohist phylohist-mcp` as the
+command and its arguments.
+
+From a checkout, for the loader, the generator and the eval,
+[Poetry](https://python-poetry.org/):
 
     poetry install
 
 The claim table the tools read is generated into `phylohist/table/`, so
-the package can also be built (`poetry build`) and installed on its own:
-an installed copy carries the table as of its build and offers the
-`phylohist` and `phylohist-mcp` commands, so any MCP client can run the
-server without a checkout. `PHYLOHIST_CLAIMS` names another table to read.
+a built package carries the table as of its build and a clone answers
+from the table as `poetry run regenerate` last wrote it.
+`PHYLOHIST_CLAIMS` names another table to read.
 
 Only `scripts/eval_run.py` and the grader's `--judge` call a model;
-they read `ANTHROPIC_API_KEY` from the environment or from a
-git-ignored `.env` at the repository root. Nothing else needs a key.
+their client is the `eval` dependency group, and they read
+`ANTHROPIC_API_KEY` from the environment or from a git-ignored `.env` at
+the repository root. Nothing else needs a key.
 
 ## Checks
 
@@ -217,6 +235,9 @@ hold for the data they were last refreshed against.
 
 ## Licence
 
-`LICENSE` (MIT) covers the code. The YAML under `data/` is the owner's
-compilation of published opinions, recorded as printed, and `notes/`
-is the owner's and the assistant's writing.
+`LICENSE` (MIT) covers everything in the repository and in the released
+package: the code; the YAML under `data/`, which is the owner's
+compilation of published opinions, recorded as printed; the claim table
+generated from it; and `notes/`, the owner's and the assistant's writing.
+If the corpus is useful in published work, please cite it
+(`CITATION.cff`).

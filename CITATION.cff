@@ -1,0 +1,17 @@
+cff-version: 1.2.0
+message: If phylohist or its corpus is useful in your work, please cite it.
+title: phylohist
+type: software
+authors:
+- family-names: Andrews
+  given-names: Henry H.
+repository-code: https://github.com/handrews/phylohist
+license: MIT
+version: 0.1.0
+abstract: Published taxonomic opinions on Palaeozoic echinoderms, recorded source by
+  source as printed, with tools that answer from them.
+keywords:
+- taxonomy
+- palaeontology
+- echinoderms
+- nomenclature
