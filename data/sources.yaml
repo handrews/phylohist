@@ -2073,6 +2073,32 @@
   notes: |
     Regular printing of 1879_schmidt.c.f, sometimes erroneously cited as
     the authority for its contents.
+1881a_metschnikoff:
+  title: Über die systematische Stellung von Balanoglossus
+  volume: 4
+  number: 78
+  pages:
+  - 139
+  - 143
+  pubDate:
+    year: 1881
+    month: 3
+    day: 14
+  authors:
+  - metschnikoff
+1881b_metschnikoff:
+  title: Über die systematische Stellung von Balanoglossus (Schluss.)
+  volume: 4
+  number: 79
+  pages:
+  - 153
+  - 157
+  pubDate:
+    year: 1881
+    month: 3
+    day: 28
+  authors:
+  - metschnikoff
 1881_springer:
   book: rev-pcrin
   volume: Part II
@@ -6111,3 +6137,24 @@ inprep_sprinkle_strimple:
   - rahman
   identifiers:
     doi: 10.4202/app.01228.2024
+2026_he.k.y_mussini_han.j_reich.m_ou.q_cheng.m.r_shu.d:
+  title: Cambrian fossils illuminate the ambulacrarian common ancestor
+  journal: curr-bio
+  volume: 36
+  pages:
+  - 1
+  - 11
+  pubDate:
+    year: 2026
+    month: 10
+    day: 19
+  authors:
+  - he.k.y
+  - mussini
+  - han.j
+  - reich.m
+  - ou.q
+  - cheng.m.r
+  - shu.d
+  identifiers:
+    doi: 10.1016/j.cub.2026.08.053

@@ -183,6 +183,9 @@ chen.j.y:
 chen.l.z:
   surname: Chen
   given: L.-Z.
+cheng.m.r:
+  surname: Cheng
+  given: Mei-Rong
 clark.a.h:
   surname: Clark
   given: Austin Hobart
@@ -463,12 +466,18 @@ hall:
   given: James
   birth: 1811
   death: 1898
+han.j:
+  surname: Han
+  given: Jian
 han.n.r:
   surname: Han
   given: N.-R.
 harland:
   surname: Harland
   given: W. B.
+he.k.y:
+  surname: He
+  given: Kaiyue
 heredia:
   surname: Heredia
   given: S
@@ -755,6 +764,9 @@ münster:
 murchison:
   surname: Murchison
   given: Roderick Impey
+mussini:
+  surname: Mussini
+  given: Giovanni
 nardin:
   surname: Nardin
   given: Elise
@@ -780,6 +792,9 @@ norman:
 orłowski:
   surname: Orłowski
   given: S.
+ou.q:
+  surname: Ou
+  givne: Qiang
 owen:
   surname: Owen
   given: Alan W.
@@ -852,6 +867,9 @@ regnéll:
   given: Gerhard
   birth: 1915
   death: 2002
+reich.m:
+  surname: Reich
+  given: Mike
 reynolds:
   surname: Reynolds
   given: A. B.
@@ -926,6 +944,12 @@ seibert.r:
 selden:
   surname: Selden
   given: Paul A.
+shu.d:
+  surname: Shu
+  given: Degan
+  notes: >
+    Shu apparently intentionally treats his given name as needing only
+    one initial, and never uses the D.-G. style in international publications.
 siebold:
   surname: Siebold
   given: carl Theodor Ernst von
