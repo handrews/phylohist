@@ -738,6 +738,17 @@ are the tools' faults rather than the model's.
 minutes, 195 lookups, of which q055's seventeen are a third of the excess
 over run 7.
 
+**After the two tool fixes.** q054 and q055 alone, rerun the same day
+(`eval/runs/2026-11-01b-planner-claude-sonnet-5-q054-q055.jsonl`; two
+questions are a check, not a row in the table), both pass. For q055 the
+model resolved "Gmelin 1791", read "vol. 1, part 6, pp. 3021–3910" off
+the first candidate, and planned the gap for it in four calls where run 8
+spent seventeen and gave up; the judge scored its header 1 for saying the
+content "has not been entered", which is the gap block's finding rather
+than a parameter. For q054 the same plan as in run 8, the printed forms of
+the record and of its variant, now renders the seven hyphenated citations
+and passes. On the run-8 yardstick that is 47 of 56.
+
 ## What changes next, in order
 
 1. Source keys: citations accepted wherever a source is a parameter
