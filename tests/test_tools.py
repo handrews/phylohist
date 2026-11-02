@@ -1802,3 +1802,16 @@ def test_specimen_history_without_links_is_what_the_numbers_alone_find(store):
   block = store.specimen_history('UQF 5405')
   assert [e['source'] for e in block['entries']] == ['2021_jell_sprinkle']
   assert block['rendered'].count('the same specimen') == 0
+
+
+def test_source_candidates_carry_the_parts(store):
+  # Three records share the citation "Gmelin 1791": the parts of one
+  # edition. The volume, part and pages are what tells them apart.
+  found = {c['key']: c for c in store.resolve_source('Gmelin 1791')}
+  assert set(found) == {'1791a_gmelin', '1791b_gmelin', '1791c_gmelin'}
+  vermes = found['1791a_gmelin']
+  assert (vermes['volume'], vermes['number'], vermes['pages']) == (1, 6, [3021, 3910])
+  assert all(c['cite'] == 'Gmelin 1791' for c in found.values())
+  # A record without a part carries no `number`; nothing is invented.
+  assert 'number' not in store.resolve_source('Dehm 1961')[0]
+
