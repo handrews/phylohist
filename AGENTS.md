@@ -87,8 +87,8 @@ which CI fails on when stale. A draft is checked with
 
 | directory | holds |
 |---|---|
-| `data/` | the curated corpus: the record files (`taxa.yaml`, `sources.yaml`, `authors.yaml`, ...) and one tree file per source under `trees/` |
-| `claims/` | the generated claim table with `names.json` and `manifest.json`; committed, and CI fails when stale |
+| `data/` | the curated corpus: the record files (`taxa.yaml`, `sources.yaml`, `authors.yaml`, ...) and one tree file per source under `data/trees/` |
+| `claims/` | the generated claim table with `claims/names.json` and `claims/manifest.json`; committed, and CI fails when stale |
 | `docs/` | the claims vocabulary, the tools and answer shapes, the walkthrough |
 | `eval/` | the questions, the prompts, the findings, the run transcripts |
 | `drafts/` | AI-drafted trees awaiting audit; the loader reads them only on request |

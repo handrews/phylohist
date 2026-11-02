@@ -24,6 +24,8 @@ jobs:
         python-version: ${{ matrix.python }}
         cache: poetry
     - run: poetry check --lock
+    # the project URL names this repository, whatever it is called now
+    - run: grep -Fq "Repository = \"https://github.com/${GITHUB_REPOSITORY}\"" pyproject.toml
     - run: poetry install
     - run: poetry run ruff check .
     - run: poetry run ruff format --check .
