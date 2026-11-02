@@ -264,7 +264,10 @@ TOOL_DESCRIPTIONS = {
   'printed_forms': (
     'Each form a source prints for a record, verbatim, with the page: '
     'how a name, author or year appears on the page, for questions about '
-    'what a paper actually prints. Never corrected.'
+    'what a paper actually prints. A spelling variant of the record is '
+    'itself a printed form, so the sources that write the name that way '
+    'are listed with the spelling they use, whichever spelling is asked '
+    'for. Never corrected.'
   ),
 }
 

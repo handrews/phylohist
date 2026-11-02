@@ -21,6 +21,7 @@ from . import blocks
 from .acts import ACT_KINDS
 from .claims import specimen_components
 from .closure import TAXONOMY, Closure, in_years
+from .derivatives import KINDS as DERIVATIVE_KINDS
 from .loader.material import in_run
 from .names import fold
 from .ranks import GENUS_GROUP, SPECIES_GROUP, fold_rank, rank_order
@@ -29,6 +30,10 @@ from .resolve import Resolver
 from .words import COVERAGE_WORDS, PLURAL_KINDS, Words, short_citation, years_span
 
 AMBIGUOUS = 'ambiguous'
+
+# The derivative kinds that are spellings of a name. A rank variant is the
+# same spelling at another rank, so it is not a printed form of the name.
+SPELLING_KINDS = frozenset(k.field for k in DERIVATIVE_KINDS if k.field != 'altRankOf')
 
 
 def claims_dir():
@@ -1558,25 +1563,44 @@ class ClaimStore:
     block = blocks.statement('gap', fields, {'source': source, 'kind': kind})
     return _with_style(block, style)
 
+  def _spellings(self, record):
+    """The record with the records that are spellings of it: its spelling
+    variants and, for a variant, the record it is a spelling of and that
+    one's other spellings. A rank variant is left out: its spelling is the
+    same."""
+    family = {record}
+    base = (self.names.get(record) or {}).get('of')
+    for key in self.resolver.related_keys(record):
+      if key == base or (self.names.get(key) or {}).get('kind') in SPELLING_KINDS:
+        family.add(key)
+    return family
+
   def printed_forms(self, record, source=None, style='text'):
-    """Each form a source prints for a record, verbatim, with the page."""
+    """Each form a source prints for a record, verbatim, with the page: the
+    `printed` block a claim carries, and the usages of the record's spelling
+    variants, since a variant is itself a printed form of the name."""
     record, source = self.resolver.key(record), self.resolver.source_key(source)
     entries = []
     seen = set()
-    for c in self.by_subject.get(record, ()):
-      if source and c['source'] != source:
-        continue
-      printed = c.get('printed') or {}
-      if not printed:
-        continue
-      form = printed.get('citedAs') or ' '.join(
-        str(printed[f]) for f in ('auth', 'year', 'in') if f in printed
-      )
-      if (c['source'], form, json.dumps(c.get('pages'))) in seen:
-        continue
-      seen.add((c['source'], form, json.dumps(c.get('pages'))))
-      entries.append(
-        blocks.list_entry(
+    for key in sorted(self._spellings(record)):
+      variant = (self.names.get(key) or {}).get('kind') in SPELLING_KINDS
+      for c in self.by_subject.get(key, ()):
+        if source and c['source'] != source:
+          continue
+        printed = c.get('printed') or {}
+        if printed:
+          form = printed.get('citedAs') or self.words.attribution_words(printed)
+          kind = None
+        elif variant and c['kind'] == 'usage':
+          form = self.display(key, c['source'], c['path'])
+          kind = 'spelling'
+        else:
+          continue
+        mark = (c['source'], form, json.dumps(c.get('pages')))
+        if mark in seen:
+          continue
+        seen.add(mark)
+        entry = blocks.list_entry(
           source=c['source'],
           cite=self.cite(c['source']),
           year=self.source_year(c['source']),
@@ -1584,7 +1608,9 @@ class ClaimStore:
           page=c.get('pages'),
           printed=form,
         )
-      )
+        if kind:
+          entry['kind'] = kind
+        entries.append(entry)
     if not entries and source:
       # No verbatim form from that source: the heading as the source's
       # listing is entered, which is the closest thing the corpus holds.

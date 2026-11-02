@@ -754,6 +754,8 @@ over run 7.
    sources a closure returns, and a measurement over a closure (the
    dropped q047), neither of which a plan can yet express.
 6. `resolve_source` carries the volume, part and pages a record has, so
-   the parts of a multi-part work can be told apart (run 8, q055).
+   the parts of a multi-part work can be told apart (run 8, q055; done
+   2026-11-01).
 7. `printed_forms` over a spelling variant lists the sources that print
-   it (run 8, q054).
+   it, and a printed attribution with an author list reads as words (run
+   8, q054; done 2026-11-01).

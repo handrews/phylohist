@@ -1553,12 +1553,28 @@
     taxon: echinoencrinites
   expected:
     blocks:
-    - tool: history
-      parameters: {record: echinoencrinites}
+      anyOf:
+      - blocks:
+        - tool: history
+          parameters: {record: echinoencrinites}
+        shows:
+        - "Echino-encrinites; named as new"
+        - "Echino-encrinites, in Cystidea"
+        - "cited as a synonym of Echino-encrinus"
+      - blocks:
+        - tool: printed_forms
+          parameters: {record: echinoencrinites}
+        shows:
+        - '1826 "Echino-encrinites" Meyer 1826'
+        - '1847 "Echino-encrinites" Hall 1847'
+      - blocks:
+        - tool: printed_forms
+          parameters: {record: echino-encrinites}
+        shows:
+        - '1826 "Echino-encrinites" Meyer 1826'
+        - '1847 "Echino-encrinites" Hall 1847'
     shows:
-    - "Echino-encrinites; named as new"
-    - "Echino-encrinites, in Cystidea"
-    - "cited as a synonym of Echino-encrinus"
+    - "Echino-encrinites"
     answer: |
       Every paper prints the hyphenated form "Echino-encrinites": Meyer
       (1826) naming it, Hisinger (1828, p. 196) in an unnamed family,
@@ -1574,7 +1590,8 @@
   verified: data/taxa.yaml echino-encrinites (altSpellingOf echinoencrinites); the
     echino-encrinites nodes in data/trees/ for 1826_meyer, 1828_hisinger, 1842_volborth,
     1847_hall and 1848b_forbes (a synonyms entry); no tree carries the unhyphenated key as
-    its citedAs.
+    its citedAs. Since run 8 (2026-11-01) `printed_forms` lists the usages of a
+    spelling variant, so the printed forms of either spelling answer too.
 - id: q055
   class: uncaptured
   question: What does the Vermes part of Gmelin's thirteenth edition of the Systema Naturae (1791, part 6) place under Echinus?

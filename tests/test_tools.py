@@ -1815,3 +1815,32 @@ def test_source_candidates_carry_the_parts(store):
   # A record without a part carries no `number`; nothing is invented.
   assert 'number' not in store.resolve_source('Dehm 1961')[0]
 
+
+def test_printed_forms_list_the_spelling_variants(store):
+  # A spelling variant is itself a printed form: the sources that write
+  # Agelacrinus are listed under Agelacrinites with that spelling, and the
+  # same lines come back when the variant is the record asked for.
+  spellings = {
+    (e['source'], e['printed'])
+    for e in store.printed_forms('agelacrinites', style='json')['entries']
+    if e.get('kind') == 'spelling'
+  }
+  assert {('1935_bassler', 'Agelacrinus'), ('1983_holloway_jell', 'Agelacrinus')} <= spellings
+  from_variant = {
+    (e['source'], e['printed'])
+    for e in store.printed_forms('agelacrinus', style='json')['entries']
+    if e.get('kind') == 'spelling'
+  }
+  assert from_variant == spellings
+  assert '"Agelacrinus" Bassler 1935' in store.printed_forms('agelacrinites')['rendered']
+  # A rank variant is the same spelling, so it adds no form.
+  assert store.printed_forms('rhenopyrgus', style='json')['entries'] == []
+
+
+def test_printed_attribution_joins_the_author_names(store):
+  # A printed attribution with an author list reads as the other blocks
+  # word it, never as the list itself.
+  block = store.printed_forms('stromatocystites', source='1966_regnéll', style='json')
+  forms = [e['printed'] for e in block['entries']]
+  assert 'Pompeckj, 1896' in forms
+  assert not any('[' in f for f in forms)
