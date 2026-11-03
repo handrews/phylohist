@@ -137,7 +137,7 @@ on the work that really requires a model's reasoning and flexibility.
 ## Correctness, Performance, and Cost
 
 The project's evolution can be seen through the evaluation
-[metrics](eval/findings/metrics.md).
+[metrics](https://github.com/handrews/phylohist/blob/main/eval/findings/metrics.md).
 
 Moving from AI-written prose answers to planned queries with modular
 output blocks improved key measurements across complete evaluation runs:
@@ -197,7 +197,7 @@ The emendation, the new genus and species, and the type species are the
 paper's own statements; nothing here is inferred, and a source whose
 listing is not yet entered says so instead.
 
-See [`docs/walkthrough.md`](docs/walkthrough.md) for additional examples.
+See [`docs/walkthrough.md`](https://github.com/handrews/phylohist/blob/main/docs/walkthrough.md) for additional examples.
 
 ### Asking from the CLI
 
