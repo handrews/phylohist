@@ -472,34 +472,37 @@ ambigena_lamarck_1816:
     source: 1816b_lamarck
 ambulacraria:
   name: Ambulacraria
+  rank: Typus
   authority:
-    source: 1881_metschnikoff
+    source: 1881b_metschnikoff
+    pages: 156
+  citedAs: Typus Ambulacraria
 ambulacraria-indeterminate-phylum_he.k.y_mussini_han.j_reich.m_ou.q_cheng.m.r_shu.d_2006:
   name: null
   rank: Phylum
   authority:
-    source: 2006_he.k.y_mussini_han.j_reich.m_ou.q_cheng.m.r_shu.d
+    source: 2026_he.k.y_mussini_han.j_reich.m_ou.q_cheng.m.r_shu.d
     pages: 2
   citedAs: Phylum, Class, Order, Family indet.
 ambulacraria-indeterminate-class_he.k.y_mussini_han.j_reich.m_ou.q_cheng.m.r_shu.d_2006:
   name: null
   rank: Class
   authority:
-    source: 2006_he.k.y_mussini_han.j_reich.m_ou.q_cheng.m.r_shu.d
+    source: 2026_he.k.y_mussini_han.j_reich.m_ou.q_cheng.m.r_shu.d
     pages: 2
   citedAs: Phylum, Class, Order, Family indet.
 ambulacraria-indeterminate-order_he.k.y_mussini_han.j_reich.m_ou.q_cheng.m.r_shu.d_2006:
   name: null
   rank: Order
   authority:
-    source: 2006_he.k.y_mussini_han.j_reich.m_ou.q_cheng.m.r_shu.d
+    source: 2026_he.k.y_mussini_han.j_reich.m_ou.q_cheng.m.r_shu.d
     pages: 2
   citedAs: Phylum, Class, Order, Family indet.
 ambulacraria-indeterminate-family_he.k.y_mussini_han.j_reich.m_ou.q_cheng.m.r_shu.d_2006:
   name: null
   rank: Family
   authority:
-    source: 2006_he.k.y_mussini_han.j_reich.m_ou.q_cheng.m.r_shu.d
+    source: 2026_he.k.y_mussini_han.j_reich.m_ou.q_cheng.m.r_shu.d
     pages: 2
   citedAs: Phylum, Class, Order, Family indet.
 amecystis:
@@ -1663,6 +1666,13 @@ bigsbyi_billings_1857:
   name: bigsbyi
   authority:
     source: 1857_billings
+bilateralia:
+  name: Bilateralia
+  rank: Subtypus
+  authority:
+    source: 1881b_metschnikoff
+    pages: 156
+  citedAs: 2. - Subtypus Bilateralia s. Enteropneusta
 billingsi_chapman.e.j_1860:
   name: billingsi
   authority:
@@ -5038,6 +5048,12 @@ enterocoelia:
 enterocoela:
   name: Enterocoela
   altSpellingOf: enterocoelia
+enteropneusta:
+  name: Enteropneusta
+  rank: Order
+  authority:
+    auth: [gegenbaur]
+    year: 1870
 enterozoa:
   name: Enterozoa
   rank: Grade
@@ -6008,6 +6024,13 @@ glutinosa_linnaeus_1758:
     source: 1758_linnaeus
     pages: 650
   citedAs: glutinoſa. 1.
+glutenotunica_he.k.y_mussini_han.j_reich.m_ou.q_cheng.m.r_shu.d_2026:
+  name: glutenotunica
+  rank: species
+  authority:
+    source: 2026_he.k.y_mussini_han.j_reich.m_ou.q_cheng.m.r_shu.d
+    pages: 2
+  citedAs: Yujingia glutenotunica gen. et sp. nov.
 glyptaster:
   name: Glyptaster
   authority:
@@ -14452,6 +14475,13 @@ yui_zhao.y.l_parsley_peng.j_2007:
   name: yui
   authority:
     source: 2007_zhao.y.l_parsley_peng.j
+yujingia:
+  name: Yujingia
+  rank: genus
+  authority:
+    source: 2026_he.k.y_mussini_han.j_reich.m_ou.q_cheng.m.r_shu.d
+    pages: 2
+  citedAs: Yujingia glutenotunica gen. et sp. nov.
 ###################### Z
 zagoraensis_chauvel_1971:
   name: zagoraensis
