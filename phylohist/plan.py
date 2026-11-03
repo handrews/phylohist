@@ -10,6 +10,8 @@ what could not be built.
 """
 
 from . import blocks, tools
+from .store import SPELLING_KINDS
+from .words import COVERAGE_WORDS
 
 
 def _specs():
@@ -26,7 +28,10 @@ PLAN_SPEC = {
     'parameters; and a question back only when a parameter is genuinely '
     'ambiguous. Code builds the blocks from the corpus; you do not see '
     'them. Name records by key or as the literature prints the name, and '
-    'sources by citation ("Dehm 1961").'
+    'sources by citation ("Dehm 1961"). An error names what could not be '
+    'built and, when the corpus holds nothing for a block, what to plan '
+    'instead: the record a source lists a spelling under, or the gap for a '
+    'source with nothing or part entered.'
   ),
   'input_schema': {
     'type': 'object',
@@ -150,6 +155,62 @@ def _type_words(schema):
   return ' or '.join(said) or 'omitted'
 
 
+# The coverage kind a tool's block rests on, where it is not the classification.
+_COVERAGE_KIND_OF_TOOL = {'synonymy': 'synonymy'}
+
+
+def _nothing_hint(tool, params):
+  """What to plan instead when a block builds nothing: the gap, for a
+  source on record with nothing entered or with its coverage of that kind
+  declared `none` or `partly`, since the contract answers such a source
+  with the gap; then the related record (a spelling, the same name at
+  another rank) the source does list under, when there is one, which is
+  the answer for a source whose coverage is not short and a note on what
+  the part entered holds for one whose coverage is. Empty when neither
+  holds and the corpus simply has nothing there."""
+  store = tools.store()
+  source = params.get('source')
+  record = params.get('record')
+  source_key = store.resolver.source_key(source) if source else None
+  parts, short = [], False
+  if source_key:
+    row = store.sources.get(source_key)
+    if row is None:
+      return f'the corpus has no source {source_key}; plan gap(source="{source_key}")'
+    cite = store.cite(source_key)
+    if not row.get('tree'):
+      return f'{cite} is on record with nothing entered; plan gap(source="{source_key}")'
+    kind = _COVERAGE_KIND_OF_TOOL.get(tool, 'skeleton')
+    declared = (row.get('coverage') or {}).get(kind)
+    if declared in ('none', 'partly'):
+      short = True
+      parts.append(
+        f'{cite} declares {COVERAGE_WORDS[kind]} {declared} entered; '
+        f'plan gap(source="{source_key}", kind="{kind}")'
+      )
+  if record:
+    key = store.resolver.key(record)
+    listed = sorted(
+      k
+      for k in store.resolver.related_keys(key)
+      if any(
+        c['kind'] == 'usage' and (source_key is None or c['source'] == source_key)
+        for c in store.by_subject.get(k, ())
+      )
+    )
+    if listed:
+      row = store.names.get(key) or {}
+      if row.get('kind') in SPELLING_KINDS and row.get('of') in store.names:
+        parts.append(f'{row["name"]} is a spelling of {store.names[row["of"]]["name"]}')
+      under = ', '.join(f'{k} ({store.names[k]["name"]})' for k in listed)
+      if short:
+        parts.append(f'the part entered lists under {under}')
+      else:
+        where = store.cite(source_key) if source_key else 'the corpus'
+        parts.append(f'{where} lists under {under}: ask for that record')
+  return '; '.join(parts)
+
+
 def execute(plan):
   """Build a plan's composition from the corpus. Returns ``{composition,
   blocks, errors}``: the composition (None when nothing could be
@@ -176,12 +237,14 @@ def execute(plan):
     got = result if isinstance(result, list) else [result]
     got = [b for b in got if isinstance(b, dict) and 'blockId' in b]
     if not got:
+      error = 'returned no block; the corpus holds nothing for these parameters'
+      hint = _nothing_hint(spec['tool'], params)
       errors.append(
         {
           'block': i + 1,
           'tool': spec['tool'],
           'parameters': params,
-          'error': 'returned no block; the corpus holds nothing for these parameters',
+          'error': f'{error}; {hint}' if hint else error,
         }
       )
       continue

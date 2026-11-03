@@ -146,7 +146,11 @@ def build_parser():
     help='the number as a paper prints it ("UQF 5404", "F. 5404"); or give --source and --label',
   )
   p.add_argument(
-    '--repository', help='a repository key, for a number with no prefix or a shared one'
+    '--repository',
+    help=(
+      'a repository by key, name or prefix, or its institution, for a number with no prefix '
+      'or a shared one'
+    ),
   )
   p.add_argument('--source', help='with --label, a specimen with no number: its source')
   p.add_argument('--label', help='the label the source gives the specimen ("A")')

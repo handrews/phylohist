@@ -17,8 +17,10 @@ corpus lacks. Nearly every early source is unaudited with no declared
 coverage, so these questions ask what a source prints and what the corpus
 holds, and leave verdicts alone as before. The gold-slice questions are
 unchanged; q033's prose was refreshed for the sources entered since.
-Run 8 (2026-11-01, planner mode) answered 45 of the 56; the write-up is in
-`findings/blocks-eval-writeups.md` and the row in `findings/metrics.md`.
+Run 8 (2026-11-01, planner mode) answered 45 of the 56, run 9 (2026-11-02)
+43 and run 10 (2026-11-02, the run version 0.1.0 ships with) 45; the
+write-ups are in `findings/blocks-eval-writeups.md` and the rows in
+`findings/metrics.md`.
 
 ## The answer contract
 

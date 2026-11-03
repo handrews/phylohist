@@ -230,8 +230,9 @@ TOOL_DESCRIPTIONS = {
   'specimen_history': (
     'Every citation of one specimen across the corpus, by catalog number: '
     'give the number as a paper prints it ("UQF 5404", "F. 5404", "MCZ '
-    '581A"); the prefix names the repository, or give the repository key '
-    'when the number has none or its prefix is shared. One line per citing '
+    '581A"); the prefix names the repository, or give the repository, by '
+    'key, name or prefix (or the institution holding it), when the number has '
+    'none or its prefix is shared. One line per citing '
     'source, in year order: the role, the taxon it is cited under, whether '
     'the assignment is doubtful, the figures tied to it and the page. A '
     'specimen without a number is asked for by source and label (the '
@@ -432,7 +433,10 @@ TOOL_SPECS = [
       },
       'repository': {
         'type': ['string', 'null'],
-        'description': 'a repository key, for a number with no prefix or a shared one',
+        'description': (
+          'a repository by key, name or prefix, or the institution holding it, for a number '
+          'with no prefix or a shared one'
+        ),
       },
       'source': {
         'type': ['string', 'null'],

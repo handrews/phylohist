@@ -105,13 +105,7 @@ def split_typed_number(number, repositories):
   if prefix is None:
     return None, None, number
   prefix = _folded(prefix)
-  claims = {}
-  for key, entry in repositories.items():
-    if entry.get('subject') == 'localities':
-      continue
-    for via, values in (('otherNames', entry.get('otherNames')), ('prefix', entry.get('prefixes'))):
-      for value in values or ():
-        claims.setdefault(_folded(value), {})[key] = via
+  claims = _repository_forms(repositories)
   forms = [
     form
     for form in claims
@@ -124,6 +118,60 @@ def split_typed_number(number, repositories):
     return tuple(sorted(claims[form])), AMBIGUOUS, number
   ((key, via),) = claims[form].items()
   return key, via, _strip_form(number, form)
+
+
+def _repository_forms(repositories):
+  """`{folded form: {key: via}}` over the `prefixes` and `otherNames` of
+  every entry of `repositories` that is not a locality register; a form
+  listed both ways counts as `'prefix'`."""
+  claims = {}
+  for key, entry in repositories.items():
+    if entry.get('subject') == 'localities':
+      continue
+    for via, values in (('otherNames', entry.get('otherNames')), ('prefix', entry.get('prefixes'))):
+      for value in values or ():
+        claims.setdefault(_folded(value), {})[key] = via
+  return claims
+
+
+def repository_key(repository, repositories):
+  """`(key, via)` for a repository as a person names it: its registry key
+  or name (`via` `'key'` or `'name'`, case and spacing aside), or the one
+  entry whose prefix or other name it is (compared as `split_typed_number`
+  compares a prefix). An entry that holds no specimens itself, an
+  institution, stands for the specimen registers `within` it (`via`
+  `'within'`): one resolves, several are ambiguous. `(keys, AMBIGUOUS)`,
+  `keys` a sorted tuple, when several entries claim the form or the
+  institution has several registers; `(None, None)` when nothing matches."""
+  wanted = _folded(repository)
+  matched = {}
+  for key, entry in repositories.items():
+    if _folded(key) == wanted:
+      matched[key] = 'key'
+    elif _folded(entry.get('name') or '') == wanted:
+      matched[key] = 'name'
+  if not matched:
+    matched = _repository_forms(repositories).get(wanted) or {}
+  if not matched:
+    return None, None
+  if len(matched) > 1:
+    return tuple(sorted(matched)), AMBIGUOUS
+  ((key, via),) = matched.items()
+  entry = repositories[key]
+  if entry.get('subject') == 'localities':
+    return None, None
+  if entry.get('prefixes') or entry.get('subject') == 'specimens':
+    return key, via
+  registers = sorted(
+    k
+    for k, e in repositories.items()
+    if e.get('within') == key and e.get('subject') != 'localities' and e.get('prefixes')
+  )
+  if not registers:
+    return None, None
+  if len(registers) > 1:
+    return tuple(registers), AMBIGUOUS
+  return registers[0], 'within'
 
 
 _NODE_FLAGS = ('new', 'provisional', 'mutable', 'questionable', 'quoted')
@@ -1405,7 +1453,8 @@ class ClaimStore:
     """Every citation of one specimen, one line per claim in year order,
     asked for by catalog number or, for a specimen with no number, by
     source and label. The number is split by `split_typed_number` (or, with
-    `repository`, as that registry entry's own number) and meets the
+    `repository`, a register named as `repository_key` accepts, as that
+    entry's own number) and meets the
     claims' join keys; a number inside a printed run ("GSC 25935–25961") is
     found as well. A source and label meet the labels of that source's
     specimen claims (folded). Either way every claim in the component of a
@@ -1418,8 +1467,11 @@ class ClaimStore:
         raise ValueError('give a catalog number, or a source and a label')
       return self._label_history(self.resolver.source_key(source), label, style)
     if repository is not None:
-      key = repository
-      if key not in self.repositories:
+      key, via = repository_key(repository, self.repositories)
+      if via == AMBIGUOUS:
+        block = self._unfound_specimen(number, repository, candidates=key)
+        return _with_style(block, style)
+      if key is None:
         return _with_style(self._unfound_specimen(number, repository), style)
       _, _, bare = split_typed_number(number, {key: self.repositories[key]})
     else:
@@ -1444,7 +1496,9 @@ class ClaimStore:
     block = self._specimen_listing(
       list(found.values()),
       {'key': join_key, 'name': printed, 'rank': None},
-      {'number': number, 'repository': repository},
+      # The repository parameter is the resolved key, as a source parameter
+      # is the resolved source key.
+      {'number': number, 'repository': key if repository is not None else None},
       {'repository': key, 'holder': entry['name'], 'number': bare},
       number,
       join_key,

@@ -1439,6 +1439,22 @@ def test_specimen_history_asks_for_the_repository_when_the_prefix_is_shared(stor
   ] == [(e['source'], e['claim']) for e in store.specimen_history('UQF 5404')['entries']]
 
 
+def test_specimen_history_takes_a_repository_by_prefix(store):
+  # A repository named by one of its prefixes, in any case, is that
+  # registry entry; the block's parameter is the key, as a source
+  # parameter is the source key. A prefix two entries share names them.
+  by_key = store.specimen_history('5404', repository='uq-f')
+  for repository in ('UQF', 'uqf', 'F', 'UQ', 'University of Queensland', 'UQ-F'):
+    block = store.specimen_history('F. 5404', repository=repository)
+    assert [e['claim'] for e in block['entries']] == [e['claim'] for e in by_key['entries']]
+    assert block['parameters'] == {'number': 'F. 5404', 'repository': 'uq-f'}
+  assert by_key['parameters'] == {'number': '5404', 'repository': 'uq-f'}
+  shared = store.specimen_history('199', repository='PE')
+  assert shared['kind'] == 'absent'
+  assert shared['fields']['candidates'] == ['fmnh-pe', 'north-museum-fm']
+  assert shared['parameters'] == {'number': '199', 'repository': 'PE'}
+
+
 def test_specimen_history_of_an_unknown_specimen_is_absent(store):
   for number, repository in (('MCZ 999', None), ('ZZZ 12', None), ('UQF 5404', 'no-such-key')):
     block = store.specimen_history(number, repository)

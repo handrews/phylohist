@@ -19,6 +19,8 @@ defect, is left out.
 | 6 | 2026-09-14 | same, after the tool and prompt fixes run 5 prompted | 77 % | 0.57 M | 48 k | 10 min | 128 |
 | 7 | 2026-09-14 | same, after three tool fixes and eval alternatives run 6 prompted | 87 % | 0.56 M | 48 k | 11 min | 114 |
 | 8 | 2026-11-01 | same, over eval v2: the 45 gold-slice questions and 11 over the early corpus | 80 % § | 0.67 M | 60 k | 12 min | 195 |
+| 9 | 2026-11-02 | same, after the two tool fixes run 8 prompted | 77 % ¶ | 0.64 M | 44 k | 9 min | 199 |
+| 10 | 2026-11-02 | same, after the plan tool's hint and the repository lookup run 9 prompted; the run version 0.1.0 ships with | 80 % ‖ | 0.60 M | 49 k | 10 min | 180 |
 
 † Run 1 has no blocks to re-grade: 28 of its 46 answers passed the
 eval of its day (every statement the answer rests on retrieved, the
@@ -30,20 +32,33 @@ level with compose mode's best at a third of the input tokens.
 45 gold-slice questions pass (84 %, level with run 7 within the drift of a
 few block choices) and 7 of the 11 new ones; the corpus had grown from 218
 to 230 sources and the data model changed under 74 commits since run 7.
+¶ Run 9 is the run after the two tool fixes, the day after run 8 over the
+same corpus: 37 of the 45 gold-slice questions (82 %) and 6 of
+the 11 new ones. The two questions the tool fixes were for now pass and
+four others turned back, every one a block or parameter choice; the
+spread between runs 7, 8 and 9 on the gold slice is the drift of a few
+such choices, and the output tokens and wall clock fell by a quarter.
+‖ Run 10 is the run over the code version 0.1.0 ships, the same day over
+the same corpus: 36 of the 45 gold-slice questions (80 %) and 9 of the 11
+new ones. Where the plan tool's new hint fired and the model could revise,
+it followed the hint and passed (q019, q055); q056 spent the runner's one
+revision on a bad parameter before the hint came. On the gold slice two
+came back (q027, q035) and three turned (q002, q008, q048): the drift, now
+measured over four runs as 80 to 87 %.
 
 ## Classes of failure, by questions affected
 
-| failure | 1 | 2 | 3 | 4 | 5 | 6 | 7 | 8 |
-|---|---|---|---|---|---|---|---|---|
-| answer rests on statements the model never looked up | 20 | – | – | – | – | – | – | – |
-| expected source not cited | 14 | – | – | – | – | – | – | – |
-| answer summarises or passes a verdict in its own words (judge score 0) | 18 | 2 | 1 | 2 | 0 | 1 | 3 | 0 |
-| internal names leak into the answer | 1 | 0 | 0 | 0 | 0 | 0 | 0 | 0 |
-| lookup limit reached before answering | 9 | 4 | 3 | 3 | 0 | 1 | 0 | 0 |
-| wrong or missing block | – | 12 | 8 | 5 | 12 | 11 | 6 | 9 |
-| expected wording missing from the rendered answer | – | 21 | 8 | 5 | 11 | 10 | 6 | 8 |
-| commentary written beside the answer (reaches no reader) | – | 11 | 5 | 12 | 2 | 2 | 1 | 4 |
-| the plan built no block and nothing was shown | – | – | – | – | – | – | – | 2 |
+| failure | 1 | 2 | 3 | 4 | 5 | 6 | 7 | 8 | 9 | 10 |
+|---|---|---|---|---|---|---|---|---|---|---|
+| answer rests on statements the model never looked up | 20 | – | – | – | – | – | – | – | – | – |
+| expected source not cited | 14 | – | – | – | – | – | – | – | – | – |
+| answer summarises or passes a verdict in its own words (judge score 0) | 18 | 2 | 1 | 2 | 0 | 1 | 3 | 0 | 2 | 0 |
+| internal names leak into the answer | 1 | 0 | 0 | 0 | 0 | 0 | 0 | 0 | 0 | 0 |
+| lookup limit reached before answering | 9 | 4 | 3 | 3 | 0 | 1 | 0 | 0 | 0 | 0 |
+| wrong or missing block | – | 12 | 8 | 5 | 12 | 11 | 6 | 9 | 12 | 10 |
+| expected wording missing from the rendered answer | – | 21 | 8 | 5 | 11 | 10 | 6 | 8 | 12 | 8 |
+| commentary written beside the answer (reaches no reader) | – | 11 | 5 | 12 | 2 | 2 | 1 | 4 | 2 | 2 |
+| the plan built no block and nothing was shown | – | – | – | – | – | – | – | 2 | 3 | 1 |
 
 The first two rows end with run 2 by construction: an answer made of
 blocks the tools returned cannot rest on anything unretrieved or cite
@@ -54,4 +69,9 @@ run 2 to run 3 because the renderer, not the model, learned to print
 rank words, new-taxon marks and type species; what remains in runs 4
 to 7 is the model choosing a block the question did not ask for, which
 varies by a few questions from run to run; run 7's six are the floor
-the write-up names, one of them a plan a plan cannot express.
+the write-up names, one of them a plan a plan cannot express. Run 9's
+twelve are nine of run 8's and three new choices; its two judge zeros are
+headers that pre-state an attribution, on answers that pass otherwise.
+Run 10's ten are seven of run 9's and three turned choices; its one
+empty plan is q056, whose hint came after the runner's one revision was
+spent.
