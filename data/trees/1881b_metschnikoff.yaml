@@ -2,11 +2,11 @@ taxonomies:
 - taxon: ambulacraria
   citedAs: Typus Ambulacraria
   new: true
-  rank: Phylum
+  rank: Typus
   children:
   - taxon: radiata
     citedAs: 1. - Subtypus Radiata s. Echinodermata
-    rank: Subphylum
+    rank: Subtypus
     emended: true
     editorial:
       inferred: [emended]
@@ -15,17 +15,20 @@ taxonomies:
         and other researchers were starting to remove Echinodermata and
         retain only Cnidaria and Ctenophora in Radiata.  Although it is
         not absolutely certain that Metschnikoff was intending to restrict
-        the existing taxon.
+        (from its original definition) or emend (from its then-emerging
+        definition) the existing taxon.
     or:
-      taxon: echinodermata
+    - taxon: echinodermata
       citedAs: 1. - Subtypus Radiata s. Echinodermata
-      rank: Subphylum
+      rank: Subtypus
     children: null
   - taxon: bilateralia
     citedAs: 2. - Subtypus Bilateralia s. Enteropneusta
-    rank: Subphylum
+    rank: Subtypus
+    new: true
+    pages: 156
     or:
-      taxon: enteropneusta
+    - taxon: enteropneusta
       citedAs: 2. - Subtypus Bilateralia s. Enteropneusta
-      rank: Subphylum
+      rank: Subtypus
     children: null

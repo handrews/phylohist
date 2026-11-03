@@ -50,6 +50,11 @@ baster:
   given: Job
   birth: 1711
   death: 1775
+bateson.w:
+  surname: Bateson
+  given: William
+  birth: 1861
+  death: 1926
 bather:
   surname: Bather
   given: F. A.
@@ -372,6 +377,11 @@ gahn:
 garbisch:
   surname: Garbisch
   given: Jon
+gegenbaur:
+  surname: Gegenbaur
+  given: Carl
+  birth: 1826
+  death: 1903
 gehling:
   surname: Gehling
   given: J. G.
@@ -477,7 +487,7 @@ harland:
   given: W. B.
 he.k.y:
   surname: He
-  given: Kaiyue
+  given: Kai-Yue
 heredia:
   surname: Heredia
   given: S
@@ -708,6 +718,15 @@ meng.x.y:
 mestre:
   surname: Mestre
   given: Ana I.
+metschnikoff:
+  surname: Metschnikoff
+  given: Élie
+  birth: 1845
+  death: 1916
+  notes: >
+    Born Ilya Ilyich Mechnikof (Russian name with patronymic).
+    Gallicised surname often spelled Metchnikoff, but is Metschnikoff
+    in the one source indexed here to date.
 meyer:
   surname: Meyer
   given: Hermann von
@@ -794,7 +813,7 @@ orłowski:
   given: S.
 ou.q:
   surname: Ou
-  givne: Qiang
+  given: Qiang
 owen:
   surname: Owen
   given: Alan W.

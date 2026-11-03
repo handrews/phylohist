@@ -7,25 +7,25 @@ taxonomies:
   authority: null
   pages: 2
   children:
-  - openTaxon: ambulacraria-indeterminate-phylum_he.k.y_mussini_han.j_reich.m_ou.q_cheng.m.r_shu.d_2006
+  - openTaxon: ambulacraria-indeterminate-phylum_he.k.y_mussini_han.j_reich.m_ou.q_cheng.m.r_shu.d_2026
     citedAs: Phylum, Class, Order, Family indet.
     rank: Phylum
     new: true
     pages: 2
     children:
-    - openTaxon: ambulacraria-indeterminate-class_he.k.y_mussini_han.j_reich.m_ou.q_cheng.m.r_shu.d_2006
+    - openTaxon: ambulacraria-indeterminate-class_he.k.y_mussini_han.j_reich.m_ou.q_cheng.m.r_shu.d_2026
       citedAs: Phylum, Class, Order, Family indet.
       rank: Class
       new: true
       pages: 2
       children:
-      - openTaxon: ambulacraria-indeterminate-order_he.k.y_mussini_han.j_reich.m_ou.q_cheng.m.r_shu.d_2006
+      - openTaxon: ambulacraria-indeterminate-order_he.k.y_mussini_han.j_reich.m_ou.q_cheng.m.r_shu.d_2026
         citedAs: Phylum, Class, Order, Family indet.
         rank: Order
         new: true
         pages: 2
         children:
-        - openTaxon: ambulacraria-indeterminate-family_he.k.y_mussini_han.j_reich.m_ou.q_cheng.m.r_shu.d_2006
+        - openTaxon: ambulacraria-indeterminate-family_he.k.y_mussini_han.j_reich.m_ou.q_cheng.m.r_shu.d_2026
           citedAs: Phylum, Class, Order, Family indet.
           rank: Family
           new: true
@@ -36,12 +36,12 @@ taxonomies:
             new: true
             pages: 2
             type:
-              taxon: glutenotunica_he.k.y_mussini_han.j_reich.m_ou.q_cheng.m.r_shu.d_2006
+              taxon: glutenotunica_he.k.y_mussini_han.j_reich.m_ou.q_cheng.m.r_shu.d_2026
               editorial:
                 inferred: true
                 basis: Monotypy
             children:
-            - taxon: glutenotunica_he.k.y_mussini_han.j_reich.m_ou.q_cheng.m.r_shu.d_2006
+            - taxon: glutenotunica_he.k.y_mussini_han.j_reich.m_ou.q_cheng.m.r_shu.d_2026
               citedAs: Yujingia glutenotunica gen. et sp. nov.
               new: true
               pages: 2
@@ -58,6 +58,7 @@ taxonomies:
                   - Yunnan
                   - southwestern China
                 jianshan:
+                  unit:
                   - Maotianshan Shale Member
                   - Yu'anshan Formation
                   biozone: Wutingaspis-Eoredlichia
