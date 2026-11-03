@@ -39,6 +39,14 @@
   ],
   "type": "institution"
  },
+ "eli": {
+  "name": "Early Life Institute, Northwest University",
+  "place": "Xi'an, China",
+  "prefixes": [
+   "ELI"
+  ],
+  "type": "institution"
+ },
  "fmnh": {
   "name": "Field Museum of Natural History",
   "place": "Chicago",

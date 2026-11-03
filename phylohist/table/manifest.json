@@ -13,6 +13,7 @@
   "barrande": "Barrande",
   "bassler": "Bassler",
   "baster": "Baster",
+  "bateson.w": "Bateson",
   "bather": "Bather",
   "beecher": "Beecher",
   "bell.b.m": "Bell",
@@ -46,6 +47,7 @@
   "chen.g.y": "Chen",
   "chen.j.y": "Chen",
   "chen.l.z": "Chen",
+  "cheng.m.r": "Cheng",
   "clark.a.h": "Clark",
   "clark.a.m": "Clark",
   "clark.b.l": "Clark",
@@ -96,6 +98,7 @@
   "gaertner": "Gaertner",
   "gahn": "Gahn",
   "garbisch": "Garbisch",
+  "gegenbaur": "Gegenbaur",
   "gehling": "Gehling",
   "gekker": "Gekker",
   "gibson": "Gibson",
@@ -120,8 +123,10 @@
   "haeckel": "Haeckel",
   "hahn": "Hahn",
   "hall": "Hall",
+  "han.j": "Han",
   "han.n.r": "Han",
   "harland": "Harland",
+  "he.k.y": "He",
   "heredia": "Heredia",
   "hisinger": "Hisinger",
   "holland": "Holland",
@@ -183,6 +188,7 @@
   "melville": "Melville",
   "meng.x.y": "Meng",
   "mestre": "Mestre",
+  "metschnikoff": "Metschnikoff",
   "meyer": "Meyer",
   "miller.j.s": "Miller",
   "miller.s.a": "Miller",
@@ -191,6 +197,7 @@
   "mooi": "Mooi",
   "moore": "Moore",
   "murchison": "Murchison",
+  "mussini": "Mussini",
   "müller.j.p": "Müller",
   "müller.o.f": "Müller",
   "müller.p": "Müller",
@@ -203,6 +210,7 @@
   "nohejlová": "Nohejlová",
   "norman": "Norman",
   "orłowski": "Orłowski",
+  "ou.q": "Ou",
   "owen": "Owen",
   "pallas": "Pallas",
   "pan.y": "Pan",
@@ -223,6 +231,7 @@
   "rahman": "Rahman",
   "ramsbottom": "Ramsbottom",
   "regnéll": "Regnéll",
+  "reich.m": "Reich",
   "reynolds": "Reynolds",
   "rhenberg": "Rhenberg",
   "richter.r": "Richter",
@@ -243,6 +252,7 @@
   "schuchert": "Schuchert",
   "seibert.r": "Seibert",
   "selden": "Selden",
+  "shu.d": "Shu",
   "siebold": "Siebold",
   "siveter.da.j": "Siveter",
   "siveter.de.j": "Siveter",
@@ -7171,6 +7181,97 @@
    "inconsistencies": [],
    "material": {},
    "tree": false
+  },
+  "1881a_metschnikoff": {
+   "acts": {},
+   "audit": {
+    "state": "unaudited"
+   },
+   "citation": {
+    "authors": [
+     "Metschnikoff"
+    ],
+    "in": "Zoologischer Anzeiger",
+    "number": 78,
+    "pages": [
+     139,
+     143
+    ],
+    "title": "Über die systematische Stellung von Balanoglossus",
+    "volume": 4,
+    "year": 1881
+   },
+   "claims": {},
+   "coverage": {
+    "illustrations": null,
+    "material": null,
+    "newTaxa": null,
+    "occurrences": null,
+    "phylogeny": null,
+    "skeleton": null,
+    "synonymy": null,
+    "types": null
+   },
+   "derived": {},
+   "derivedCoverage": {},
+   "inconsistencies": [],
+   "material": {},
+   "tree": false
+  },
+  "1881b_metschnikoff": {
+   "acts": {
+    "emended": 1,
+    "new": 2
+   },
+   "audit": {
+    "state": "unaudited"
+   },
+   "citation": {
+    "authors": [
+     "Metschnikoff"
+    ],
+    "in": "Zoologischer Anzeiger",
+    "number": 79,
+    "pages": [
+     153,
+     157
+    ],
+    "title": "Über die systematische Stellung von Balanoglossus (Schluss.)",
+    "volume": 4,
+    "year": 1881
+   },
+   "claims": {
+    "absence": 2,
+    "act": 3,
+    "editorial": 1,
+    "placement": 2,
+    "usage": 5
+   },
+   "coverage": {
+    "illustrations": null,
+    "material": null,
+    "newTaxa": null,
+    "occurrences": null,
+    "phylogeny": null,
+    "skeleton": "all",
+    "synonymy": null,
+    "types": null
+   },
+   "derived": {
+    "newTaxa": 2,
+    "skeleton": 7
+   },
+   "derivedCoverage": {
+    "illustrations": null,
+    "material": null,
+    "occurrences": null,
+    "skeleton": "all",
+    "synonymy": null,
+    "types": null
+   },
+   "inconsistencies": [],
+   "material": {},
+   "tree": true
   },
   "1883_miller.s.a": {
    "aliasOf": "1883_worthen_st. john_miller.s.a",
@@ -19030,6 +19131,72 @@
    "material": {},
    "tree": false
   },
+  "2026_he.k.y_mussini_han.j_reich.m_ou.q_cheng.m.r_shu.d": {
+   "acts": {
+    "new": 2,
+    "placeholder": 4,
+    "type": 1
+   },
+   "audit": {
+    "state": "unaudited"
+   },
+   "citation": {
+    "authors": [
+     "He",
+     "Mussini",
+     "Han",
+     "Reich",
+     "Ou",
+     "Cheng",
+     "Shu"
+    ],
+    "in": "Current Biology",
+    "pages": [
+     1,
+     11
+    ],
+    "title": "Cambrian fossils illuminate the ambulacrarian common ancestor",
+    "volume": 36,
+    "year": 2026
+   },
+   "claims": {
+    "act": 7,
+    "editorial": 1,
+    "material": 4,
+    "placement": 6,
+    "usage": 8
+   },
+   "coverage": {
+    "illustrations": null,
+    "material": null,
+    "newTaxa": null,
+    "occurrences": null,
+    "phylogeny": null,
+    "skeleton": null,
+    "synonymy": null,
+    "types": null
+   },
+   "derived": {
+    "material": 2,
+    "newTaxa": 6,
+    "occurrences": 2,
+    "skeleton": 13
+   },
+   "derivedCoverage": {
+    "illustrations": null,
+    "material": null,
+    "occurrences": null,
+    "skeleton": null,
+    "synonymy": null,
+    "types": null
+   },
+   "inconsistencies": [],
+   "material": {
+    "occurrence": 2,
+    "specimen": 2
+   },
+   "tree": true
+  },
   "inprep_sprinkle_strimple": {
    "acts": {},
    "audit": {
@@ -19380,6 +19547,22 @@
   ],
   "ambigena_lamarck_1816": [
    "1816b_lamarck"
+  ],
+  "ambulacraria": [
+   "1881b_metschnikoff",
+   "2026_he.k.y_mussini_han.j_reich.m_ou.q_cheng.m.r_shu.d"
+  ],
+  "ambulacraria-indeterminate-class_he.k.y_mussini_han.j_reich.m_ou.q_cheng.m.r_shu.d_2026": [
+   "2026_he.k.y_mussini_han.j_reich.m_ou.q_cheng.m.r_shu.d"
+  ],
+  "ambulacraria-indeterminate-family_he.k.y_mussini_han.j_reich.m_ou.q_cheng.m.r_shu.d_2026": [
+   "2026_he.k.y_mussini_han.j_reich.m_ou.q_cheng.m.r_shu.d"
+  ],
+  "ambulacraria-indeterminate-order_he.k.y_mussini_han.j_reich.m_ou.q_cheng.m.r_shu.d_2026": [
+   "2026_he.k.y_mussini_han.j_reich.m_ou.q_cheng.m.r_shu.d"
+  ],
+  "ambulacraria-indeterminate-phylum_he.k.y_mussini_han.j_reich.m_ou.q_cheng.m.r_shu.d_2026": [
+   "2026_he.k.y_mussini_han.j_reich.m_ou.q_cheng.m.r_shu.d"
   ],
   "amecystis": [
    "1968b_paul.c.r.c",
@@ -20234,6 +20417,9 @@
    "1966_regnéll",
    "1975_kolata",
    "1976_bell.b.m"
+  ],
+  "bilateralia": [
+   "1881b_metschnikoff"
   ],
   "billingsi_chapman.e.j_1860": [
    "1935_bassler",
@@ -22364,6 +22550,7 @@
    "1854c_billings",
    "1857_billings",
    "1858_salter_billings",
+   "1881b_metschnikoff",
    "1941_whitehouse",
    "1960_gill_caster",
    "1963_brown.i.a",
@@ -22943,6 +23130,9 @@
   ],
   "enterocoela": [
    "1900_bather"
+  ],
+  "enteropneusta": [
+   "1881b_metschnikoff"
   ],
   "enterozoa": [
    "1900_bather"
@@ -23648,6 +23838,9 @@
   "globus_zhao.y.l_yuan.j.l_zhu.m.y_yang.r.d_guo.q.j_qian.y_huang.y.z_pan.y_1999": [
    "1999_zhao.y.l_yuan.j.l_zhu.m.y_yang.r.d_guo.q.j_qian.y_huang.y.z_pan.y",
    "2008_zhao.y.l_parsley_peng.j"
+  ],
+  "glutenotunica_he.k.y_mussini_han.j_reich.m_ou.q_cheng.m.r_shu.d_2026": [
+   "2026_he.k.y_mussini_han.j_reich.m_ou.q_cheng.m.r_shu.d"
   ],
   "glutinosa_lamarck_1816": [
    "1816b_lamarck"
@@ -27657,7 +27850,8 @@
   ],
   "radiata": [
    "1825i_gray.j.e",
-   "1857_billings"
+   "1857_billings",
+   "1881b_metschnikoff"
   ],
   "radiata-phylum": [
    "1821_macleay"
@@ -29974,6 +30168,9 @@
   ],
   "yui_zhao.y.l_parsley_peng.j_2007": [
    "2007_zhao.y.l_parsley_peng.j"
+  ],
+  "yujingia": [
+   "2026_he.k.y_mussini_han.j_reich.m_ou.q_cheng.m.r_shu.d"
   ],
   "zagoraensis_chauvel_1971": [
    "2017_allaire_lefebvre_nardin_martin.e.l.o_vaucher_escarguel"

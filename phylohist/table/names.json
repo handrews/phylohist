@@ -1318,6 +1318,106 @@
   "name": "ambigena",
   "rank": "species"
  },
+ "ambulacraria": {
+  "authority": {
+   "authors": [
+    "Metschnikoff"
+   ],
+   "display": "Metschnikoff 1881",
+   "source": "1881b_metschnikoff",
+   "year": 1881
+  },
+  "folded": [
+   "ambulacraria"
+  ],
+  "kind": "primary",
+  "name": "Ambulacraria",
+  "rank": "Typus"
+ },
+ "ambulacraria-indeterminate-class_he.k.y_mussini_han.j_reich.m_ou.q_cheng.m.r_shu.d_2026": {
+  "authority": {
+   "authors": [
+    "He",
+    "Mussini",
+    "Han",
+    "Reich",
+    "Ou",
+    "Cheng",
+    "Shu"
+   ],
+   "display": "He, Mussini, Han, Reich, Ou, Cheng, Shu 2026",
+   "source": "2026_he.k.y_mussini_han.j_reich.m_ou.q_cheng.m.r_shu.d",
+   "year": 2026
+  },
+  "folded": [],
+  "kind": "placeholder",
+  "name": null,
+  "placeholder": "uncertain",
+  "rank": "Class"
+ },
+ "ambulacraria-indeterminate-family_he.k.y_mussini_han.j_reich.m_ou.q_cheng.m.r_shu.d_2026": {
+  "authority": {
+   "authors": [
+    "He",
+    "Mussini",
+    "Han",
+    "Reich",
+    "Ou",
+    "Cheng",
+    "Shu"
+   ],
+   "display": "He, Mussini, Han, Reich, Ou, Cheng, Shu 2026",
+   "source": "2026_he.k.y_mussini_han.j_reich.m_ou.q_cheng.m.r_shu.d",
+   "year": 2026
+  },
+  "folded": [],
+  "kind": "placeholder",
+  "name": null,
+  "placeholder": "uncertain",
+  "rank": "Family"
+ },
+ "ambulacraria-indeterminate-order_he.k.y_mussini_han.j_reich.m_ou.q_cheng.m.r_shu.d_2026": {
+  "authority": {
+   "authors": [
+    "He",
+    "Mussini",
+    "Han",
+    "Reich",
+    "Ou",
+    "Cheng",
+    "Shu"
+   ],
+   "display": "He, Mussini, Han, Reich, Ou, Cheng, Shu 2026",
+   "source": "2026_he.k.y_mussini_han.j_reich.m_ou.q_cheng.m.r_shu.d",
+   "year": 2026
+  },
+  "folded": [],
+  "kind": "placeholder",
+  "name": null,
+  "placeholder": "uncertain",
+  "rank": "Order"
+ },
+ "ambulacraria-indeterminate-phylum_he.k.y_mussini_han.j_reich.m_ou.q_cheng.m.r_shu.d_2026": {
+  "authority": {
+   "authors": [
+    "He",
+    "Mussini",
+    "Han",
+    "Reich",
+    "Ou",
+    "Cheng",
+    "Shu"
+   ],
+   "display": "He, Mussini, Han, Reich, Ou, Cheng, Shu 2026",
+   "source": "2026_he.k.y_mussini_han.j_reich.m_ou.q_cheng.m.r_shu.d",
+   "year": 2026
+  },
+  "folded": [],
+  "kind": "placeholder",
+  "name": null,
+  "placeholder": "uncertain",
+  "rank": "Phylum"
+ },
  "amecystis": {
   "authority": {
    "authors": [
@@ -5006,6 +5106,22 @@
   "kind": "primary",
   "name": "bigsbyi",
   "rank": "species"
+ },
+ "bilateralia": {
+  "authority": {
+   "authors": [
+    "Metschnikoff"
+   ],
+   "display": "Metschnikoff 1881",
+   "source": "1881b_metschnikoff",
+   "year": 1881
+  },
+  "folded": [
+   "bilateralia"
+  ],
+  "kind": "primary",
+  "name": "Bilateralia",
+  "rank": "Subtypus"
  },
  "billingsi_chapman.e.j_1860": {
   "authority": {
@@ -15667,6 +15783,21 @@
   "name": "Enterocoelia",
   "rank": "Division"
  },
+ "enteropneusta": {
+  "authority": {
+   "authors": [
+    "Gegenbaur"
+   ],
+   "display": "Gegenbaur 1870",
+   "year": 1870
+  },
+  "folded": [
+   "enteropneusta"
+  ],
+  "kind": "primary",
+  "name": "Enteropneusta",
+  "rank": "Order"
+ },
  "enterozoa": {
   "authority": {
    "authors": [
@@ -18702,6 +18833,28 @@
   ],
   "kind": "primary",
   "name": "globus",
+  "rank": "species"
+ },
+ "glutenotunica_he.k.y_mussini_han.j_reich.m_ou.q_cheng.m.r_shu.d_2026": {
+  "authority": {
+   "authors": [
+    "He",
+    "Mussini",
+    "Han",
+    "Reich",
+    "Ou",
+    "Cheng",
+    "Shu"
+   ],
+   "display": "He, Mussini, Han, Reich, Ou, Cheng, Shu 2026",
+   "source": "2026_he.k.y_mussini_han.j_reich.m_ou.q_cheng.m.r_shu.d",
+   "year": 2026
+  },
+  "folded": [
+   "glutenotunica"
+  ],
+  "kind": "primary",
+  "name": "glutenotunica",
   "rank": "species"
  },
  "glutinosa_lamarck_1816": {
@@ -45944,6 +46097,28 @@
   "kind": "primary",
   "name": "yui",
   "rank": "species"
+ },
+ "yujingia": {
+  "authority": {
+   "authors": [
+    "He",
+    "Mussini",
+    "Han",
+    "Reich",
+    "Ou",
+    "Cheng",
+    "Shu"
+   ],
+   "display": "He, Mussini, Han, Reich, Ou, Cheng, Shu 2026",
+   "source": "2026_he.k.y_mussini_han.j_reich.m_ou.q_cheng.m.r_shu.d",
+   "year": 2026
+  },
+  "folded": [
+   "yujingia"
+  ],
+  "kind": "primary",
+  "name": "Yujingia",
+  "rank": "genus"
  },
  "zagoraensis_chauvel_1971": {
   "authority": {
