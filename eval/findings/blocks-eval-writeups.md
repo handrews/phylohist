@@ -749,7 +749,7 @@ than a parameter. For q054 the same plan as in run 8, the printed forms of
 the record and of its variant, now renders the seven hyphenated citations
 and passes. On the run-8 yardstick that is 47 of 56.
 
-## Planner run 9, the run the release ships with
+## Planner run 9, after the two tool fixes
 
 Run 9 (2026-11-02, planner mode, Claude Sonnet 5,
 `eval/runs/2026-11-02-planner-claude-sonnet-5.jsonl`) is the full run
@@ -824,6 +824,55 @@ names, q057 and q059 by the model's own choice of "UQF 5404" and
 "Cystideen", so the second check exercised neither the register lookup nor
 the spelling hint. On the run-9 yardstick that is 47 of 56.
 
+## Planner run 10, the run version 0.1.0 ships with
+
+Run 10 (2026-11-02, planner mode, Claude Sonnet 5,
+`eval/runs/2026-11-02-run10-planner-claude-sonnet-5.jsonl`) is the full
+run over the code the release ships, the same day and corpus as run 9,
+after the plan tool's hint and the repository lookup. 45 of 56 pass
+(80 %): 36 of the 45 gold-slice questions (80 %) and 9 of the 11 new ones.
+
+| class | questions | mechanical pass |
+|---|---|---|
+| absent | 4 | 4 |
+| answerable | 17 | 13 |
+| as-published | 9 | 6 |
+| trajectory | 17 | 14 |
+| uncaptured | 9 | 8 |
+
+**The hint, where it fired.** Three plans built nothing. For q019 the
+model planned the synonymy of ottawaensis in Fay 1962, read that Fay 1962
+declares its synonymy partly entered, and planned the gap the hint named;
+for q055 the same with Gmelin 1791's listing under Echinus. Both pass. For
+q056 the first plan carried a parameter `contents` does not take, which
+spent the runner's one revision; the second plan hit the hint, and the
+runner took the empty composition instead of returning it. In the MCP
+server there is no such limit, so this is the runner's shape rather than
+the tool's, and an open item below. q057 and q059 pass on the model's own
+choices ("UQF 5404", "Cystideen"), as in the check; the register lookup
+and the spelling hint were not needed.
+
+**The gold slice, against run 9.** Two came back, q027 and q035, both
+block choices that went the other way in run 9. Three turned: q002 plans
+the statements about the genus where those about the species were asked;
+q008 plans the placement statements where the listing under the
+placeholder was asked, and run 9's chains were accepted; q048 plans two
+statements blocks where the second half of the question, the synonymy
+Holloway & Jell 1983 print, is a declared gap. Seven fail as in run 9:
+q001, q021, q026, q028, q034, q045 of the fixed floor and the flippers,
+and q053 of the new questions. Over runs 7 to 10 the gold slice reads 87,
+84, 82, 80 %, four samples of the same prompt family; the questions that
+move are q002, q008, q009, q024, q026, q027, q035, q045 and q048, and the
+measurement to take next is their pass fraction over repeated samples
+before any prompt change for block choice.
+
+**The judge.** No zeros; nine headers scored 1, most for pre-stating the
+finding or an attribution.
+
+**Cost.** 0.60 M input tokens and 49 k output over 56 questions, ten
+minutes, 180 lookups, the fewest since run 7: q021 resolved ten names
+where run 9 resolved 25.
+
 ## What changes next, in order
 
 1. Source keys: citations accepted wherever a source is a parameter
@@ -853,3 +902,8 @@ the spelling hint. On the run-9 yardstick that is 47 of 56.
    done 2026-11-02).
 10. `specimen_history` takes a repository's prefix as well as its key
    (run 9, q057; done 2026-11-02).
+11. The eval runner returns a plan's errors for revision more than once,
+    or at least once after a validation error, so a hint that comes after
+    a bad parameter is seen (run 10, q056; open).
+12. The pass fraction of the questions that move between runs, over ten
+    samples each, before any prompt change for block choice (open).

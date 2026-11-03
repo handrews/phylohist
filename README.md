@@ -144,11 +144,11 @@ output blocks improved key measurements across complete evaluation runs:
 
 * The measured pass rate rose from 61% to 87% on the original question
   set, with several failure modes eliminated entirely; the latest run
-  (2026-11-02, over the table version 0.1.0 ships) passes 82% of those
-  questions and 77% of the expanded set of 56.
-* Wall clock time was cut from around 25 minutes to around 9 minutes,
+  (2026-11-02, the run version 0.1.0 ships with) passes 80% of those
+  questions and 80% of the expanded set of 56.
+* Wall clock time was cut from around 25 minutes to around 10 minutes,
   over a quarter more questions.
-* Token usage dropped from 2.25 million to 0.64 million.
+* Token usage dropped from 2.25 million to 0.60 million.
 
 Future improvements to how the model selects blocks are expected to raise
 the correctness score.
