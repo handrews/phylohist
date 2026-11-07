@@ -34,7 +34,7 @@ taxonomies:
   - taxon: lanceolatus_pallas_1774
     new: true
     pages: 19
-    notes: A lancelet
+    notes: First described lancelet
 - taxon: ascidia
   pages: 24
   children:
