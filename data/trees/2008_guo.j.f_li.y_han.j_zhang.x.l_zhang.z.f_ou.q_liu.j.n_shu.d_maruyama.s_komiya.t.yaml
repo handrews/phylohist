@@ -1,0 +1,37 @@
+prefixes:
+  Yjh: yjh
+
+taxonomies:
+- taxon: metazoa
+  authority: null
+  rank: null
+  notes: >
+    In the absence of a Systematic Paleontology section, the image captions
+    are used here as the most specific account available.
+  children:
+  - openTaxon: metazoa-genus_guo.j.f_li.y_han.j_zhang.x.l_zhang.z.f_ou.q_liu.j.n_shu.d_maruyama.s_komiya.t_2008
+    provisional: true
+    new: true
+    pages: 1130
+    children:
+    - openTaxon: metazoa-genus-sp_guo.j.f_li.y_han.j_zhang.x.l_zhang.z.f_ou.q_liu.j.n_shu.d_maruyama.s_komiya.t_2008
+      citedAs: a probable metazoan
+      pages: 1130
+      new: true
+
+- taxon: yuknessia
+  authority: null
+  children:
+  - openTaxon: yuknessia-sp_guo.j.f_li.y_han.j_zhang.x.l_zhang.z.f_ou.q_liu.j.n_shu.d_maruyama.s_komiya.t_2008
+    citedAs: '?Yuknessia sp.'
+    provisional: true
+    new: true
+
+- taxon: protoconites
+  authority: null
+  children:
+  - taxon: minor_chen.m.g_xioa.z.z_yuan.x.l_1994
+    citedAs: Protoconites minor Chen et al. 1994
+    authority:
+      auth: [chen.m.g, xioa.z.z, yuan.x.l]
+      year: 1994

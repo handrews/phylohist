@@ -2,10 +2,12 @@ abh-k-akad-wiss-berlin:
   name: Abhandlungen der Königlichen Akademie der Wissenschaften zu Berlin
 ac-st-p-bulletin:
   name: Académie Impériale des Sciences de Saint Petersbourg Bulletin
+acta-g-sinica:
+  name: Acta Geologica Sinica
 acta-p-polonica:
   name: Acta Palaeontologica Polonica
-acta-p-sinica:
-  name: Acta Palaeontologica Sinica
+acta-p-sinica-eng:
+  name: Acta Palaeontologica Sinica (English Edition)
 additamenta-klein:
   name: >
     Additamenta ad Iacobi Theodori Klein Naturalem Dispositionem

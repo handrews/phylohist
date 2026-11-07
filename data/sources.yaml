@@ -4885,6 +4885,32 @@ inprep_sprinkle_strimple:
   - peng.j
   identifiers:
     doi: 10.1016/j.palaeo.2007.03.020
+2008_guo.j.f_li.y_han.j_zhang.x.l_zhang.z.f_ou.q_liu.j.n_shu.d_maruyama.s_komiya.t:
+  title: >
+    Fossil Association from the Lower Cambrian Yanjiahe Formation in the
+    Yangtze Gorges Area, Hubei, South China
+  journal: acta-g-sinica-eng
+  volume: 82
+  number: 6
+  pages:
+  - 1124
+  - 1132
+  pubDate:
+    year: 2008
+    month: 12
+  authors:
+  - guo.j.f
+  - li.y
+  - han.j
+  - zhang.x.l
+  - zhang.z.f
+  - ou.q
+  - liu.j
+  - shu.d
+  - maruyama.s
+  - komiya.t
+  identifiers:
+    doi: 10.1111/j.1755-6724.2008.tb00712.x
 2008_luo.h.l_li.y_hu.s.x_fu.x.p_hou.s.g_liu.x.r_chen.l.z_li.j.f_pang.j.y_liu.q:
   book: malong-guanshan
   pubDate:
