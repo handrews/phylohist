@@ -1,0 +1,40 @@
+1879_springer:
+  book: rev-pcrin
+  volume: Part I
+  pubDate:
+    year: 1879
+  authors:
+  - springer
+  identifier:
+    url: https://archive.org/details/jstor-4060328/page/n1/mode/2up
+
+1881_springer:
+  book: rev-pcrin
+  volume: Part II
+  pubDate:
+    year: 1881
+  authors:
+  - springer
+  identifier:
+    url: https://archive.org/details/jstor-4060543/page/n1/mode/2up
+
+188t_wachsmuth_springer:
+  book: rev-pcrin
+  volume: Part III, Section I
+  pubDate:
+    year: 1885
+  authors:
+  - wachsmuth
+  - springer
+  identifier:
+    url: https://archive.org/details/revisionpalaeoc00sprigoog/page/n12/mode/2up
+
+1886_springer:
+  book: rev-pcrin
+  volume: Part III, Section II
+  pubDate:
+    year: 1886
+  authors:
+  - springer
+  identifier:
+    url: https://archive.org/details/jstor-4061335/page/n1/mode/2up

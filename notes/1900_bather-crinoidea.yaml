@@ -1,0 +1,310 @@
+taxonomies:
+- taxon: animalia
+  rank: null
+  authority: null
+  children:
+  - taxon: protozoa
+    rank: Grade
+    authority: null
+    children:
+    - taxon: metazoa
+      rank: Grade
+      authority: null
+      children:
+      - taxon: parazoa
+        rank: Branch
+        authority: null
+      - taxon: enterozoa
+        rank: Branch
+        authority: null
+        children:
+        - taxon: enterocoela
+          rank: Grade
+          authority: null
+          synonyms:
+          - taxon: coelentera
+            rank: Grade
+            authority: null
+          children:
+          - taxon: coelomocoela
+            rank: Grade
+            authority: null
+            synonyms:
+            - taxon: coelomata
+              rank: Grade
+              authority: null
+            children:
+            - taxon: echinoderma
+              rank: Phylum
+              authority: null
+              children:
+              - taxon: pelmatozoa
+                citedAs: GRADE A. PELMATOZOA, Leuckart (1848)
+                rank: Grade
+                pages: 38
+                synonyms:
+                - taxon: crinoidea
+                  citedAs: (= CRINOIDEA, sensu lato Auctt.).
+                  authority:
+                    auctt: true
+                  sensu: lato
+                  rank: null
+                children:
+                - taxon: cystidea
+                  citedAs: CLASS I. CYSTIDEA, Von Buch (1844).
+                  rank: Class
+                  pages: 39
+                  children:
+                  - taxon: amphoridea
+                    citedAs: ORDER 1. Amphoridea, Haeckel (1896, pars).
+                    rank: Order
+                    pages: 43
+                    synonyms:
+                    - authority:
+                        source: 1896a_haeckel
+                      pars: true
+                      citedAs: "Haeckel (1896, pars)"
+                    children:
+                    - taxon: aristocystidae
+                    - taxon: dendrocystidae
+                    - taxon: eocystidae
+                      new: true
+                    - taxon: anomalocystidae
+                  - taxon: rhombifera_zittel_1879
+                    citedAs: ORDER 2. Rhombifera, Zittel (1879, emend.)
+                    emended: true
+                    rank: Order
+                    pages: 52
+                    children:
+                    - taxon: echinosphaeridae
+                    - taxon: comarocystidae
+                    - taxon: macrocystellidae
+                    - taxon: tiaracrinidae
+                    - taxon: malocystidae
+                    - taxon: glyptocystidae
+                      children:
+                      - taxon: echinoencrininae
+                      - taxon: callocystinae
+                      - taxon: glyptocystinae
+                    - taxon: caryocrinidae
+                  - taxon: aporita
+                    citedAs: ORDER 3. Aporita, Zittel (1879, restr.)
+                    rank: Order
+                    restricted: true
+                    pages: 69
+                    children:
+                    - taxon: cryptocrinidae
+                  - taxon: diploporita
+                    citedAs: ORDER 4. Diploporita, Zittel (1879, emend.)
+                    rank: Order
+                    emended: true
+                    pages: 70
+                    children:
+                    - taxon: sphaeronidae
+                    - taxon: glyptosphaeridae
+                    - taxon: protocrinidae
+                    - taxon: mesocystidae
+                    - taxon: gomphocystidae
+                - taxon: blastoidea
+                  citedAs: CLASS II. BLASTOIDEA, Say (1825, sensu eatenso).
+                  rank: Class
+                  sensu: extenso
+                  pages: 78
+                  notes: |
+                    Their line of evolution, though in some respects
+                    parallel to those of the Callocystinae and
+                    Edrioasteroidea, was independently derived through
+                    the Diploporita from the primitive Amphoridea.
+                  children:
+                  - taxon: protoblastoidea
+                    citedAs: GRADE A. Protoblastoidea, Bather (1899).
+                    rank: Grade
+                    pages: 79
+                  - taxon: eublastoidea
+                    citedAs: GRADE B. Eublastoidea, Bather (1899).
+                    rank: Grade
+                    synonyms:
+                    - taxon: blastoidea
+                      citedAs: (=BLASTOIDEA, Auctt.).
+                      authority:
+                        auctt: true
+                    pages: 81
+                - taxon: crinoidea
+                  citedAs: >
+                    CLASS III. CRINOIDEA, MILLER (1821)
+                  rank: Class
+                  pages: 94
+                  synonyms:
+                  - taxon: crinoidea brachiata
+                    citedAs: (=CRINOIDEA BRACHIATA, Auctt. veterum;
+                    authority:
+                      auctt: veterum
+                  - taxon: eucrinoidea
+                    citedAs: =EUCRINOIDEA, Zittel, 1879
+                    authority:
+                      source: 1879_zittel
+                  children:
+                  - taxon: monocyclica
+                    citedAs: Sub-Ciass 1. Monocyclica, Bather (1899).
+                    rank: Subclass
+                    pages: 144
+                    children:
+                    - taxon: monocyclica inadunata
+                      citedAs: ORDER 1. Monocyclica Inadunata
+                      rank: Order
+                      authority: null
+                      pages: 144
+                      synonyms:
+                      - taxon: inadunata
+                        citedAs: (=Inadunata, W. & Sp. pars, emend.)
+                        pars: true
+                        emended: true
+                    - taxon: adunata
+                      citedAs: ORDER 2. Adunata (Bather, 1899).
+                      rank: Order
+                      pages: 155
+                    - taxon: monocyclica camerata
+                      citedAs: ORDER 3. Monocyclica Camerata
+                      rank: Order
+                      authority: null
+                      pages: 159
+                      synonyms:
+                      - taxon: camerata
+                        citedAs: (=Camerata, W. & Sp. pars).
+                        pars: true
+                      children:
+                      - taxon: melocrinoidea
+                        citedAs: Sub-Order 1. Melocrinoidea.
+                        rank: Suborder
+                        authority: null
+                        pages: 160
+                      - taxon: batocrinoidea
+                        citedAs: Sub-Order 2. Batocrinoidea.
+                        rank: Suborder
+                        authority: null
+                        pages: 164
+                      - taxon: actinocrinoidea
+                        citedAs: Sub-Order 3. Actinocrinoidea.
+                        rank: Suborder
+                        authority: null
+                        pages: 169
+                  - taxon: Dicyclica
+                    citedAs: Sub-Class 2. Dicyclica, Bather (1899).
+                    rank: Subclass
+                    pages: 171
+                    children:
+                    - taxon: dicyclica inadunata
+                      citedAs: Order 1. Dicyclica Inadunata
+                      rank: Order
+                      authority: null
+                      pages: 171
+                      synonyms:
+                      - taxon: inadunata
+                        citedAs: (=Inadunata, W. & Sp. pars, emend.).
+                        pars: true
+                        emendedBy:
+                        - source: 1900_bather
+                        authority:
+                          source: 1885_wachsmuth_springer
+                      children:
+                      - taxon: cyathocrinoidea
+                        citedAs: Sub-Order 1. Cyathocrinoidea.
+                        rank: Suborder
+                        authority: null
+                        pages: 172
+                      - taxon: dendrocrinoidea
+                        citedAs: Sub-Order 2. Dendrocrinoidea,
+                        rank: Suborder
+                        authority: null
+                        pages: 178
+                    - taxon: flexibilia
+                      citedAs: Order 2. Flexibilia, Zittel
+                      rank: Order
+                      pages: 187
+                      notes: No year on attribution, but it should be 1895.
+                      synonyms:
+                      - taxon: articulata
+                        citedAs: (=ArticuLata, W. & Sp. non Müller).
+                        authority:
+                          source: 1885_wachsmuth_springer
+                        non:
+                          authority:
+                - taxon: edrioasteroidea
+                  citedAs: >
+                    CLASS IV. EDRIOASTEROIDEA,
+                    E.  Billings (1854,-58; Huxley, 1877; and Bather, 1899)
+                  rank: Class
+                  authority:
+                    source: 1858b_billings
+                    notes:
+                      1854 is the date of Billings's description of what is
+                      now Edrioaster bigsbyi, but no precursor to
+                      edrioasteroidea was declared until 1858.
+                  emendedBy:
+                  - source: 1877_huxley.t.h
+                  - source: 1899_bather
+                  pages: 205
+                  synonyms:
+                  - taxon: thyroida
+                    authority:
+                      source: 1860b_chapman.e.j
+                    citedAs: =Thyroida, Chapman, 1860
+                  - taxon: agelacrinoidea
+                    citedAs: >
+                      Agelacrinoidea, S. A. Miller, 1877-83; Worthen, 1883
+                    authority:
+                      source: 1877_miller.s.a
+                    emendedBy:
+                    - source: 1883_miller.s.a
+                    - source: 1883_worthen
+                  - taxon: cystasteroidea
+                    citedAs: Cystasteroidea, Steinmann, 1888; F. Bernard, 1893
+                    authority:
+                      source: 1888_steinmnn.g
+                    emendedBy:
+                    - source: 1893_bernard.f
+                  - taxon: thecoidea
+                    citedAs: Thecoidea, Jaekel, 1895
+                  children:
+                  - taxon: agelacrinidae
+                  - taxon: cyathocystidae
+                  - taxon: edrioasteridae
+                  - taxon: steganoblastidae
+                    new: true
+                - taxon: eleutherozoa
+                  citedAs: GRADE B. ELEUTHEROZOA.
+                  rank: Grade
+                  authority: null
+                  pages: 217
+                  children:
+                  - taxon: holothurioidea
+                    citedAs: >
+                      CLASS I. HOLOTHURIOIDEA, C. T. v. Siebold (1848)
+                    rank: Class
+                    authority:
+                      source: 1848_siebold
+                    synonyms:
+                    - taxon: fistulides
+                      citedAs: =FISTULIDES, Lamarck, 1801
+                    - taxon: scytodermata
+                      citedAs: =SCYTODERMATA, Burmeister, 1837
+                    - taxon: ascidiastella
+                      citedAs: =ASCIDIASTELLA, T. & T. Austin, 1840
+                      auth: [austin.t, austin.t.j]
+                      year: 1840
+                      editorial:
+                        corrections:
+                          auth: null
+                          year: null
+                          authority:
+                            source: 1842_austin.t_austin.t.j
+                        basis: >
+                          T. & T. Austin, 1842 mentions that the classification
+                          was developed in 1840, but while there was apparently
+                          a talk that year, there was not a real pre-print.
+                    - taxon: scytactinota
+                      citedAs: =SCYTACTINOTA, Bronn, 1860
+                    pages: 218
+                    children:
+                  - taxon: stelleroidea
+                  - taxon: echinoidea
