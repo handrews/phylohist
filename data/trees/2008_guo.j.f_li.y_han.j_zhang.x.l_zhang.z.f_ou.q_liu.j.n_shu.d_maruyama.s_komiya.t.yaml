@@ -1,6 +1,5 @@
 prefixes:
-  Yjh: yjh
-
+  Yjh: nwu-geo-l
 taxonomies:
 - taxon: metazoa
   authority: null
@@ -25,12 +24,17 @@ taxonomies:
   - openTaxon: yuknessia-sp_guo.j.f_li.y_han.j_zhang.x.l_zhang.z.f_ou.q_liu.j.n_shu.d_maruyama.s_komiya.t_2008
     citedAs: '?Yuknessia sp.'
     provisional: true
+    pages: 1130
     new: true
+    material:
+    - prefix: Yjh
+      numbers: [HS18]
+      asPrinted: Yjh-HS81
 
 - taxon: protoconites
   authority: null
   children:
-  - taxon: minor_chen.m.g_xioa.z.z_yuan.x.l_1994
+  - taxon: minor_chen.m.g_xiao.z.z_yuan.x.l_1994
     citedAs: Protoconites minor Chen et al. 1994
     authority:
       auth: [chen.m.g, xioa.z.z, yuan.x.l]

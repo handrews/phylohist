@@ -187,7 +187,10 @@ chen.j.y:
   given: Jun-Yuan
 chen.l.z:
   surname: Chen
-  given: L.-Z.
+  given: Liang-Zhong
+chen.m.g:
+  surname: Chen
+  given: M.-G.
 cheng.m.r:
   surname: Cheng
   given: Mei-Rong
@@ -365,7 +368,7 @@ frizzell:
   given: Don L.
 fu.x.p:
   surname: Fu
-  given: X.-P.
+  given: Xiao-Ping
 gaertner:
   surname: Gaertner
   given: Joseph
@@ -449,6 +452,9 @@ gunnerus:
 guo.j:
   surname: Guo
   given: Jin
+guo.j.f:
+  surname: Guo
+  given: Jun-Feng
 guo.q.j:
   surname: Guo
   given: Qing-Jun
@@ -508,18 +514,12 @@ hoşgör:
 hou.s.g:
   surname: Hou
   given: Shu-Guang
-  notes: |
-    In 2008_luo.h.l_li.y_hu.s.x_fu.x.p_hou.s.g_liu.x.r_chen.l.z_li.j.f_pang.j.y_liu.q,
-    no given names are spelled out, unclear if this is the same Hou S.-G.
 house:
   surname: House
   given: M. R.
 hu.s.x:
   surname: Hu
   given: Shi-Xue
-  notes: |
-    In 2008_luo.h.l_li.y_hu.s.x_fu.x.p_hou.s.g_liu.x.r_chen.l.z_li.j.f_pang.j.y_liu.q,
-    no given names are spelled out, unclear if this is the same Hu S.-X.
 huang.y.l:
   surname: Huang
   given: Y.-L.
@@ -581,6 +581,9 @@ klein:
 kolata:
   surname: Kolata
   given: Dennis R.
+komiya.t:
+  surname: Komiya
+  given: Tsuyoshi
 kordule:
   surname: Kordule
   given: Vratislav
@@ -621,12 +624,12 @@ leuckart:
 lewis.r.d:
   surname: Lewis
   given: Ronald D.
-li.j.f:
+li.f.j:
   surname: Li
-  given: J.-F.
+  given: Feng-Jun
 li.y:
   surname: Li
-  given: Y.
+  given: Yong
 li.y.j:
   surname: Li
   given: Yu-Jing
@@ -641,12 +644,15 @@ linnaeus:
 liñán:
   surname: Liñán
   given: Eladio
+liu.j.n:
+  surname: Liu
+  given: Jian-Ni
 liu.q:
   surname: Liu
   given: Qi
-liu.x.r:
+liu.x.y:
   surname: Liu
-  given: X.-R.
+  given: Xing-Yao
 liu.y.j:
   surname: Liu
   given: Yu-Juan
@@ -656,9 +662,6 @@ longman:
 luo.h.l:
   surname: Luo
   given: Hui-Lin
-  notes:
-    In 2008_luo.h.l_li.y_hu.s.x_fu.x.p_hou.s.g_liu.x.r_chen.l.z_li.j.f_pang.j.y_liu.q,
-    no given names are spelled out, unclear if this is the same Luo H.-L.
 luo.x.c:
   surname: Luo
   given: Xiu-Chun
@@ -688,6 +691,9 @@ martin.m:
 martin.w:
   surname: Martin
   given: William
+maruyama.s:
+  surname: Maruyama
+  given: Shigenori
 matsumoto:
   surname: Matsumoto
   given: Hikoshichirō
@@ -833,7 +839,7 @@ pander:
   notes: Also known as Christian Heinrich
 pang.j.y:
   surname: Pang
-  given: J.-Y.
+  given: Ji-Yuan
 parkinson:
   surname: Parkinson
   given: James
@@ -1171,6 +1177,9 @@ wu.m.y:
 wu.y.s:
   surname: Wu
   given: Yi-Shan
+xiao.z.z:
+  surname: Xiao
+  given: Z.-Z.
 yang.r.d:
   surname: Yang
   given: Rui-Dong
@@ -1186,18 +1195,27 @@ young.t.p:
 yuan.j.l:
   surname: Yuan
   given: Jin-Liang
+yuan.x.l:
+  surname: Yuan
+  given: X.-L.
 zamora:
   surname: Zamora
   given: Samuel
 zeng.h:
   surname: Zeng
   given: Han
+zhang.x.l:
+  surname: Zhang
+  given: Xing-Liang
 zhang.y.p:
   surname: Zhang
   given: Yao-Ping
 zhang.z:
   surname: Zhang
   given: Ze
+zhang.z.f:
+  surname: Zhang
+  given: Zhi-Fei
 zhao.f.c:
   surname: Zhao
   given: Fang-Chen

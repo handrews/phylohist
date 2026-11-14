@@ -8741,6 +8741,19 @@ metazoa:
   authority:
     auth: [haeckel]
     year: 1874
+metazoa-genus_guo.j.f_li.y_han.j_zhang.x.l_zhang.z.f_ou.q_liu.j.n_shu.d_maruyama.s_komiya.t_2008:
+  name: null
+  rank: genus
+  authority:
+    source: 2008_guo.j.f_li.y_han.j_zhang.x.l_zhang.z.f_ou.q_liu.j.n_shu.d_maruyama.s_komiya.t
+    pages: 1130
+metazoa-genus-sp_guo.j.f_li.y_han.j_zhang.x.l_zhang.z.f_ou.q_liu.j.n_shu.d_maruyama.s_komiya.t_2008:
+  name: null
+  rank: species
+  authority:
+    source: 2008_guo.j.f_li.y_han.j_zhang.x.l_zhang.z.f_ou.q_liu.j.n_shu.d_maruyama.s_komiya.t
+    pages: 1130
+  citedAs: a probable metazoan
 metularia_lamarck_1816:
   name: metularia
   authority:
@@ -8801,6 +8814,12 @@ minervaecystis-sp_sumrall_sprinkle_guensburg_1997:
   rank: species
   authority:
     source: 1997_sumrall_sprinkle_guensburg
+minor_chen.m.g_xiao.z.z_yuan.x.l_1994:
+  name: minor
+  rank: species
+  authority:
+    auth: [chen.m.g, xiao.z.z, yuan.x.l]
+    year: 1994
 minor_leske_1778_angulosa_leske_1778_cidaris:
   name: minor
   rank: variety
@@ -10977,6 +10996,12 @@ protoblastoidea:
   rank: Grade
   authority:
     source: 1899_bather
+protoconites:
+  name: Protoconites
+  rank: genus
+  authority:
+    auth: [chen.m.g, xiao.z.z, yuan.x.l]
+    year: 1994
 protocrinidae:
   name: Protocrinidae
   rank: Family
@@ -11417,7 +11442,7 @@ rarus_hu.s.x_luo.h.l_2008:
   name: rarus
   authority:
     attributedTo: [hu.s.x, luo.h.l]
-    source: 2008_luo.h.l_li.y_hu.s.x_fu.x.p_hou.s.g_liu.x.r_chen.l.z_li.j.f_pang.j.y_liu.q
+    source: 2008_luo.h.l_li.y_hu.s.x_fu.x.p_hou.s.g_liu.x.y_chen.l.z_li.f.j_pang.j.y_liu.q
 raymondi_foerste_1920:
   name: raymondi
   authority:
@@ -14422,7 +14447,7 @@ wudingeocrinus:
   name: Wudingeocrinus
   authority:
     attributedTo: [hu.s.x, luo.h.l]
-    source: 2008_luo.h.l_li.y_hu.s.x_fu.x.p_hou.s.g_liu.x.r_chen.l.z_li.j.f_pang.j.y_liu.q
+    source: 2008_luo.h.l_li.y_hu.s.x_fu.x.p_hou.s.g_liu.x.y_chen.l.z_li.f.j_pang.j.y_liu.q
 ###################### X
 xenocystites:
   name: Xenocystites
@@ -14482,6 +14507,19 @@ yujingia:
     source: 2026_he.k.y_mussini_han.j_reich.m_ou.q_cheng.m.r_shu.d
     pages: 2
   citedAs: Yujingia glutenotunica gen. et sp. nov.
+yuknessia:
+  name: Yuknessia
+  rank: genus
+  authority:
+    auth: [walcott]
+    year: 1919
+yuknessia-sp_guo.j.f_li.y_han.j_zhang.x.l_zhang.z.f_ou.q_liu.j.n_shu.d_maruyama.s_komiya.t_2008:
+  name: null
+  rank: species
+  authority:
+    source: 2008_guo.j.f_li.y_han.j_zhang.x.l_zhang.z.f_ou.q_liu.j.n_shu.d_maruyama.s_komiya.t
+    pages: 1130
+  citedAs: '?Yuknessia sp.'
 ###################### Z
 zagoraensis_chauvel_1971:
   name: zagoraensis

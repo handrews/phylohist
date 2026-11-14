@@ -23,11 +23,6 @@ dpo:
   type: institution
   prefixes: [DPO]
   place: Oviedo, Spain
-eli:
-  name: Early Life Institute, Northwest University
-  type: institution
-  prefixes: [ELI]
-  place: Xi'an, China
 fmnh:
   name: Field Museum of Natural History
   type: institution
@@ -161,6 +156,41 @@ north-museum-fm:
   type: institution
   place: Lancaster, Pennsylvania
   prefixes: [PE]
+nwu:
+  name: Northwest University
+  type: institution
+  place: Xi'an, China
+nwu-eli:
+  name: Early Life Institute, Northwest University
+  type: institution
+  prefixes: [ELI]
+  place: Xi'an, China
+  notes: >
+    See notes under mwu-geo and mwu-l.
+nwu-geo:
+  name: Department of Geology, Northwest University
+  type: institution
+  place: Xi'an, China
+  notes: >
+    Specimens in Guo et al. 2008 were initially in the Department of Geology
+    with an apparent "Yjh-" locality prefix, then moved to the Early Life
+    Institute by the time of Guo et al. 2012, but with "Yjh-HS" described
+    as a locality prefix and no prefix for the Early Life Institute,
+    and then in Topper et al. 2019, "ELI-" was specifically used for the Early
+    Life Institute in place of "Yjh-", but the "HS" was retained.
+nwu-l:
+  name: Northwest University locality register
+  type: institution
+  subject: localities
+  place: Xi'an, China
+  notes: >
+    Includes 3-letter codes such as "Yjh", with no prefix.
+    Regarding specimens designated e.g. "Yjh-HS18", Guo et al. 2012 states
+    that "Collection numbers Yjh-HS means the locality of the fossils from
+    Yanjiahe village", but Topper et al. replace the "Yjh" part with the
+    Early Life Institute "ELI" prefix, yielding "ELI-HS18" without mentioning
+    the meaning of "HS", so it is assumed to be a more integral part of the
+    specimen identifier.
 nysm:
   name: New York State Museum
   type: institution
