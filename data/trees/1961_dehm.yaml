@@ -68,15 +68,20 @@ taxonomies:
       pages: 294
       illustrations:
       - figures: 1h
-    contexts:
-      bornich:
+    horizons:
+      greywacke-slates:
         series: Lower Devonian
         unit:
         - greywacke slates
+    localities:
+      bornich:
         location:
         - Bornich
         - near Weisel on the Rhine
         - Germany
+    occurrences:
+    - horizon: greywacke-slates
+      locality: bornich
   - taxon: rhenopyrgus-subgenus
     new: true
     citedAs: Rhenopyrgus nov. subgen.
@@ -101,13 +106,18 @@ taxonomies:
             - [1, 4]
         parents:
         - taxon: pyrgocystis
-      contexts:
-        bundenbach:
+      horizons:
+        hunsruck-slates:
           series: Lower Devonian
           unit:
           - Hunsrück Slates
+      localities:
+        bundenbach:
           location:
           - Bundenbach
+      occurrences:
+      - horizon: hunsruck-slates
+        locality: bundenbach
 # TODO: I'm not sure where the phylogeny came from?
 # phylogenies:
 # - taxon: pyrgocystis

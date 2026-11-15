@@ -139,7 +139,7 @@ _ILLUSTRATION_LOCATOR_FIELDS = (
 )
 
 # `$defs/timeFields` and `$defs/localTimeFields` in schema order, for the
-# time words of a context or a range.
+# time words of a horizon or a range.
 _TIME_FIELDS = (
   'eon',
   'era',
@@ -163,6 +163,41 @@ _TIME_FIELDS = (
   'localStageModifier',
 )
 
+
+# The fields of each side of an occurrence that are read into its words, in
+# the order they are read.
+_OCCURRENCE_FIELDS = (
+  (
+    'horizon',
+    (
+      'stage',
+      'stageBoundary',
+      'stageRange',
+      'stageModifier',
+      'series',
+      'seriesBoundary',
+      'seriesRange',
+      'seriesModifier',
+      'unit',
+      'eon',
+      'era',
+      'period',
+      'localPeriod',
+      'localSeries',
+      'localSeriesBoundary',
+      'localSeriesRange',
+      'localSeriesModifier',
+      'localStage',
+      'localStageBoundary',
+      'localStageRange',
+      'localStageModifier',
+      'biozone',
+      'biozones',
+      'biozoneRange',
+    ),
+  ),
+  ('locality', ('location', 'localityNumbers')),
+)
 
 # Each time modifier with the field it qualifies.
 _MODIFIER_BASE = {
@@ -687,8 +722,9 @@ class Words:
       words += f' fragment of {" ".join(_flat_words(claim["fragmentOf"]))}'
     if claim.get('repositoryVia') == 'explicit' and claim.get('repository'):
       words += f' [{claim["repository"]}]'
-    if claim.get('contextTentative') and claim.get('contextKey'):
-      words += f' ({claim["contextKey"]}?)'
+    for side in claim.get('tentativeFields') or ():
+      if claim.get(f'{side}Key'):
+        words += f' ({side} {claim[f"{side}Key"]}?)'
     if claim.get('localityNumbers'):
       words += f' (locality {", ".join(_flat_words(claim["localityNumbers"]))})'
     if claim.get('uncertain'):
@@ -762,42 +798,33 @@ class Words:
     return words
 
   def _occurrence_words(self, claim):
-    """ "occurrence <key>: " and the context's time, unit, place and zone
-    words, a modifier read before its unit ("upper Lower Cambrian"); "?"
-    follows the key when the whole context is `tentative`."""
-    fields = (
-      'stage',
-      'stageBoundary',
-      'stageRange',
-      'stageModifier',
-      'series',
-      'seriesBoundary',
-      'seriesRange',
-      'seriesModifier',
-      'unit',
-      'location',
-      'eon',
-      'era',
-      'period',
-      'localPeriod',
-      'localSeries',
-      'localSeriesBoundary',
-      'localSeriesRange',
-      'localSeriesModifier',
-      'localStage',
-      'localStageBoundary',
-      'localStageRange',
-      'localStageModifier',
-      'biozone',
-      'biozones',
-      'biozoneRange',
-      'localityNumbers',
-    )
-    body = _field_words(claim.get('occurrence') or {}, fields)
-    prefix = f'occurrence {claim["contextKey"]}' if claim.get('contextKey') else 'occurrence'
-    if (claim.get('occurrence') or {}).get('tentative') is True:
-      prefix += '?'
-    return f'{prefix}: {body}' if body else prefix
+    """ "occurrence <horizon key>, <locality key>: " and the horizon's time,
+    unit and zone words, then the locality's place and number words, a
+    modifier read before its unit ("upper Lower Cambrian"). "?" follows the
+    key of a side that is `tentative` as a whole or that the claim's
+    `tentativeFields` names; a field the record's editorial block gives the
+    editor is named after the words, with the basis."""
+    occurrence = claim.get('occurrence') or {}
+    queried = claim.get('tentativeFields') or ()
+    keys, bodies, editor = [], [], []
+    for side, fields in _OCCURRENCE_FIELDS:
+      record = occurrence.get(side)
+      if record is None:
+        continue
+      key = claim.get(f'{side}Key')
+      if key:
+        keys.append(f'{key}?' if record.get('tentative') is True or side in queried else key)
+      bodies.append(_field_words(record, fields))
+      editorial = record.get('editorial') or {}
+      inferred = editorial.get('inferred')
+      names = [n for n in (inferred if isinstance(inferred, list) else ()) if n in fields]
+      if names:
+        note = f'{", ".join(names)} inferred by the editor'
+        editor.append(f'{note}: {editorial["basis"]}' if editorial.get('basis') else note)
+    body = '; '.join(b for b in bodies if b)
+    prefix = f'occurrence {", ".join(keys)}' if keys else 'occurrence'
+    words = f'{prefix}: {body}' if body else prefix
+    return words + ''.join(f' ({note})' for note in editor)
 
   def _illustration_claim_words(self, claim):
     """ "illustration: pl. 2, figs. 1–4", then "of <of>" and the medium

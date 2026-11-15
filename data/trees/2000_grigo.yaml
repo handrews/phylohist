@@ -20,17 +20,20 @@ taxonomies:
           material:
           - prefix: GIK
             numbers: [1585]
-            context: rommersheim-route-b-51
+            horizon: grauberg-subformation
+            locality: rommersheim-route-b-51
             role: holotype
           illustrations:
           - page: 93
             figures: 2
-          contexts:
-            rommersheim-route-b-51:
+          horizons:
+            grauberg-subformation:
               series: Middle Devonian
               unit:
               - Grauberg Subformation
               - Junkerberg Formation
+          localities:
+            rommersheim-route-b-51:
               location:
               - Rommersheim Route (B 51)
               - east of Prüm
@@ -45,7 +48,8 @@ taxonomies:
           material:
           - prefix: GIK
             numbers: [1586]
-            context: railway-embankment-near
+            horizon: hustley-member
+            locality: railway-embankment-near
             role: holotype
           illustrations:
           - page: 94
@@ -53,13 +57,15 @@ taxonomies:
           - page: 94
             figures: 7
             uncertain: true
-          contexts:
-            railway-embankment-near:
+          horizons:
+            hustley-member:
               stage: Givetian
               series: Middle Devonian
               unit:
               - Hustley Member
               - Loogh Formation
+          localities:
+            railway-embankment-near:
               location:
               - Railway embankment near
               - Gerolstine
@@ -91,35 +97,36 @@ taxonomies:
               material:
               - prefix: GIK
                 numbers: [1857]
-                context: auberg-near-gerolstein
+                horizon: flesten-member
+                locality: auberg-near-gerolstein
               illustrations:
               - page: 96
                 figures:
                 - [8a, 8f]
               - page: 96
                 figures: 8g
-              contexts:
-                auberg-near-gerolstein:
+              horizons:
+                flesten-member:
                   stage: Eifelian
                   series: Middle Devonian
                   unit:
                   - Flesten Member
                   - Ahrdorf Formation
+              localities:
+                auberg-near-gerolstein:
                   location:
                   - Auberg near Gerolstein
                   - MTB 5705 Gerolstein
                   - r 461000 / h 656250
                 salmer-weg-near-gees:
-                  stage: Eifelian
-                  series: Middle Devonian
-                  unit:
-                  - Flesten Member
-                  - Ahrdorf Formation
                   location:
                   - Salmer Weg near Gees
                   - MTB 5706 Hillesheim
                   - r 493000 / h 652000
                   notes: Figure 8g in the Prescher collection
+              occurrences:
+              - horizon: flesten-member
+                locality: salmer-weg-near-gees
               notes: |
                 Figure 8a-8f are the GIK specimen, figure 8g
                 from the other location is in the

@@ -35,12 +35,17 @@ taxonomies:
         illustrations:
         - page: 287
           textFigures: [1, 2, 3]
-        contexts:
-          division-st:
+        horizons:
+          trenton-limestone:
             unit:
             - Trenton limestone
+        localities:
+          division-st:
             location:
             - Division St.
             - Ottawa
+        occurrences:
+        - horizon: trenton-limestone
+          locality: division-st
   - taxon: rhombiferi
     rank: Order

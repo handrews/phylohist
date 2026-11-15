@@ -13,7 +13,7 @@ it from; nothing is kept between calls.
 import collections
 
 from .acts import RELATED_ACTS
-from .loader.material import context_key, entries_named, flat_numbers, same_as_matches
+from .loader.material import OCCURRENCE_SIDES, entries_named, flat_numbers, same_as_matches
 from .loader.taxa import names_attribution
 from .names import fold, fold_forms, key_stem
 from .ranks import GENUS_GROUP, SPECIES_GROUP, fold_rank
@@ -153,19 +153,22 @@ _MATERIAL_FIELDS = (
 # `fields`; `None`: the kind has no such form and is never `na`); `ranks`:
 # count only the nodes of these ranks; `excludeRanks`: count every node but
 # those of these ranks; `named`: leave out the placeholders (an unnamed or
-# open taxon); `via`: a field whose entries carry a key that also counts as
-# presence (a material entry's `context` is an occurrence, a child's
-# `isType` the type statement).
+# open taxon); `via`: a field whose entries carry a key, any of those named,
+# that also counts as presence (a material entry's `horizon` or `locality`
+# is an occurrence, a child's `isType` the type statement).
 DERIVED_KINDS = {
   'material': {'fields': ('material',), 'ranks': SPECIES_GROUP},
-  'occurrences': {'fields': ('contexts', 'ranges'), 'via': ('material', 'context')},
+  'occurrences': {
+    'fields': ('occurrences', 'ranges'),
+    'via': ('material', ('horizon', 'locality')),
+  },
   'illustrations': {'fields': ('illustrations',), 'ranks': SPECIES_GROUP},
   'synonymy': {'fields': ('synonyms', 'non'), 'unused': ('synonyms',)},
   'types': {
     'fields': ('type',),
     'ranks': GENUS_GROUP,
     'named': True,
-    'via': ('children', 'isType'),
+    'via': ('children', ('isType',)),
   },
   # Every named node above the species level (genus and subgenus included): a
   # list of `children` or a null is the source's say about its members, and a
@@ -676,41 +679,66 @@ class _NodeClaims:
     if node.axis == 'removed':
       self._act('removed', 'removed', removedFrom=self.owner_key)
 
-  # -- material: contexts, material, illustrations, ranges, in that order,
-  # which is what fixes the claim ids ---------------------------------------
+  # -- material: occurrences, material, illustrations, ranges, in that
+  # order, which is what fixes the claim ids --------------------------------
 
   def _material(self):
-    self._contexts()
+    self._occurrences()
     self._entries()
     self._illustrations()
     self._ranges()
     self._unfigured()
 
-  def _contexts(self):
-    """One claim per context the node's material refers to, and per
-    context the node defines; a file context once per node that refers
-    to it."""
+  def _occurrences(self):
+    """One claim per pairing of a horizon and a locality the node states:
+    each of its `occurrences`, then each pair a material entry names that
+    none before it did. A side the pairing does not name is absent."""
     data = self.data
-    wanted = set(data.get('contexts') or ())
+    seen = set()
+    for item in data.get('occurrences') or ():
+      seen.add((item.get('horizon'), item.get('locality')))
+      self._occurrence(item)
     for entry in data.get('material') or ():
-      if entry.get('context') is not None:
-        wanted.add(context_key(entry['context']))
-    scopes = self.node.context_scopes
-    for key, context in self.node.contexts.items():
-      if key not in wanted:
+      pair = (entry.get('horizon'), entry.get('locality'))
+      if pair != (None, None) and pair not in seen:
+        seen.add(pair)
+        self._occurrence(
+          {side: key for side, key in (('horizon', pair[0]), ('locality', pair[1])) if key}
+        )
+
+  def _occurrence(self, item):
+    """The claim for one pairing: `occurrence` holds the horizon and the
+    locality records verbatim under those names, beside each one's key and
+    the scope it was read from; `inferredFields` names the fields a
+    record's editorial block gives the editor, as `<side>.<field>`."""
+    claim = self._base('material')
+    claim['materialKind'] = 'occurrence'
+    occurrence = claim['occurrence'] = {}
+    inferred = []
+    for side, plural in OCCURRENCE_SIDES:
+      key = item.get(side)
+      record = getattr(self.node, plural).get(key) if key is not None else None
+      if record is None:
         continue
-      claim = self._base('material')
-      claim['materialKind'] = 'occurrence'
-      claim['occurrence'] = context
-      claim['contextKey'] = key
-      claim['contextScope'] = scopes[key]
-      if keys := self._locality_keys(context):
-        claim['localityKeys'] = keys
-      self._emit(claim, 'contexts')
+      occurrence[side] = record
+      claim[f'{side}Key'] = key
+      claim[f'{side}Scope'] = self.node.record_scope(plural, key)
+      names = (record.get('editorial') or {}).get('inferred')
+      if isinstance(names, list):
+        inferred.extend(f'{side}.{name}' for name in names)
+    if inferred:
+      claim['inferredFields'] = inferred
+    if item.get('tentative'):
+      claim['tentativeFields'] = list(item['tentative'])
+    if 'notes' in item:
+      claim['occurrenceNotes'] = item['notes']
+    if keys := self._locality_keys(occurrence.get('locality') or {}):
+      claim['localityKeys'] = keys
+    self._emit(claim, 'occurrences')
 
   def _locality_keys(self, carrier):
     """`<register>:<folded number>` for each of the `localityNumbers` of a
-    context or a material entry that has a register, once each, in order:
+    locality or a material entry that has a register, once each, in order:
     the number's own `register`, else the tree file's `prefixes` map for its
     `prefix`, else the file's `localityRegister` when it has neither."""
     keys = []
@@ -770,11 +798,11 @@ class _NodeClaims:
           claim[field] = entry[field]
       if 'notes' in entry:
         claim['materialNotes'] = entry['notes']
-      if 'context' in entry:
-        ref = entry['context']
-        claim['contextKey'] = context_key(ref)
-        if isinstance(ref, dict) and ref.get('tentative'):
-          claim['contextTentative'] = True
+      for side, _ in OCCURRENCE_SIDES:
+        if side in entry:
+          claim[f'{side}Key'] = entry[side]
+      if entry.get('tentative'):
+        claim['tentativeFields'] = list(entry['tentative'])
       # The claim is about the entry, so the entry's editorial block replaces
       # the node's; the claim's own `inferred` stays as `_emit` sets it.
       if 'editorial' in entry:
@@ -872,9 +900,11 @@ class _NodeClaims:
     def nulled(*fields):
       return [f for f in fields if f in data and data[f] is None]
 
-    linked = any(entry.get('context') for entry in data.get('material') or ())
-    occurrences = nulled('contexts', 'ranges')
-    if linked or any(data.get(f) is not None for f in ('contexts', 'ranges')):
+    linked = any(
+      entry.get(side) for entry in data.get('material') or () for side, _ in OCCURRENCE_SIDES
+    )
+    occurrences = nulled('occurrences', 'ranges')
+    if linked or any(data.get(f) is not None for f in ('occurrences', 'ranges')):
       occurrences = []
     for absence_of, fields in (
       ('material', nulled('material')),
@@ -934,7 +964,7 @@ def derived_coverage(roots):
   `illustrations` only the species-level nodes are counted, since specimens
   are cited and figures drawn for species, and a genus or higher node
   without either is not an uncaptured field. A node whose `material` entry
-  has a `context` carries `occurrences` through that link, whatever else it
+  has a `horizon` or a `locality` carries `occurrences` through that link, whatever else it
   writes. For `synonymy` a node's `synonyms` or `non`, value or null,
   counts it as present; only `synonyms: null` writes a null. For `types`
   only the named genus and subgenus nodes are counted (a family's `type`
@@ -973,12 +1003,14 @@ def derived_coverage(roots):
         counted = [node for node in counted if fold_rank(node.rank) not in spec['excludeRanks']]
       if spec.get('named'):
         counted = [node for node in counted if placeholder_kind(node.taxon) is None]
-      via_field, via_key = spec.get('via', (None, None))
+      via_field, via_keys = spec.get('via', (None, ()))
       states = [
         _node_writes(
           node.data,
           fields,
-          linked=any(entry.get(via_key) for entry in node.data.get(via_field) or ()),
+          linked=any(
+            entry.get(key) for entry in node.data.get(via_field) or () for key in via_keys
+          ),
         )
         for node in counted
       ]

@@ -1275,7 +1275,7 @@ class ClaimStore:
     if kind is not None:
       if kind in _MATERIAL_KINDS:
         # Material kinds a reader asks for by name; `occurrences` covers a
-        # node's contexts and its distribution `ranges` alike.
+        # node's occurrences and its distribution `ranges` alike.
         material_kinds = _MATERIAL_KINDS[kind]
         claims = [
           c for c in claims if c['kind'] == 'material' and c.get('materialKind') in material_kinds

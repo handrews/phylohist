@@ -211,7 +211,8 @@ def test_earlier_state_entries_are_cited(records, caplog, axis):
     # The cited work's own material is not this source's: none of the four
     # material fields on a cited entry emits a claim.
     'material': [{'prefix': 'GSC', 'numbers': [1]}],
-    'contexts': {'somewhere': {'unit': ['Some Formation']}},
+    'horizons': {'somewhere': {'unit': ['Some Formation']}},
+    'occurrences': [{'horizon': 'somewhere'}],
     'ranges': [{'series': 'Ordovician'}],
   }
   child = {'taxon': 'rhenopyrgus', axis: [earlier] if axis == 'removed' else earlier}
@@ -413,19 +414,26 @@ def test_restricted_by_lists_the_restrictions_followed(records, caplog):
 
 
 def test_material_adapter(records, caplog):
-  # Contexts, material, illustrations, ranges, in that fixed order, over a
-  # node with a file context, a node context, a numbered entry, a range
-  # pair, a label-only entry, an explicit repository, a prefix the file's
-  # map gives a register, a tentative context, tied and untied
-  # illustrations, and two ranges.
-  file_contexts = {
-    'division-st': {'unit': ['Trenton Limestone'], 'location': ['Division Street, Ottawa']},
-  }
+  # Occurrences, material, illustrations, ranges, in that fixed order, over a
+  # node with a file horizon and locality, a node horizon stated as an
+  # occurrence, a numbered entry, a range pair, a label-only entry, an
+  # explicit repository, a prefix the file's map gives a register, an entry
+  # with a tentative locality, tied and untied illustrations, and two
+  # ranges.
+  file_horizons = {'trenton': {'unit': ['Trenton Limestone']}}
+  file_localities = {'division-st': {'location': ['Division Street, Ottawa']}}
   node_data = {
     'taxon': 'rhenopyrgus',
-    'contexts': {'quarry-x': {'unit': ['Quarry X Beds']}},
+    'horizons': {'quarry-x': {'unit': ['Quarry X Beds']}},
+    'occurrences': [{'horizon': 'quarry-x'}],
     'material': [
-      {'prefix': 'GSC', 'numbers': [752], 'role': 'lectotype', 'context': 'division-st'},
+      {
+        'prefix': 'GSC',
+        'numbers': [752],
+        'role': 'lectotype',
+        'horizon': 'trenton',
+        'locality': 'division-st',
+      },
       {'prefix': 'GSC', 'numbers': [[100, 105]], 'role': 'paratype', 'formerIds': ['G 1']},
       {'label': 'the specimen lent to Hudson', 'role': 'syntype', 'status': 'lost'},
       {'numbers': ['XYZ 1'], 'repository': 'nhmuk', 'notes': 'lent'},
@@ -433,7 +441,9 @@ def test_material_adapter(records, caplog):
       {
         'prefix': 'GSC',
         'numbers': [900],
-        'context': {'key': 'division-st', 'tentative': True},
+        'horizon': 'trenton',
+        'locality': 'division-st',
+        'tentative': ['locality'],
         'role': 'hypotype',
       },
       {
@@ -467,7 +477,8 @@ def test_material_adapter(records, caplog):
       'source_key': '1961_dehm',
       'type': 'taxonomy',
       'position': 90,
-      'file_contexts': file_contexts,
+      'file_horizons': file_horizons,
+      'file_localities': file_localities,
       'file_unused': (),
       'file_prefixes': {'GSC': 'gsc', 'PE': 'fmnh-pe'},
     },
@@ -485,18 +496,26 @@ def test_material_adapter(records, caplog):
     c['id'] for c in extract(records, {'1961_dehm': [root]})['1961_dehm'] if c['kind'] == 'material'
   ] == [c['id'] for c in material]
 
-  # A file context the node refers to and the node's own context, once each.
-  file_ctx, node_ctx = material[:2]
-  assert file_ctx['contextKey'] == 'division-st' and file_ctx['contextScope'] == 'file'
-  assert file_ctx['occurrence'] == file_contexts['division-st']
-  assert node_ctx['contextKey'] == 'quarry-x' and node_ctx['contextScope'] == 'node'
-  assert node_ctx['occurrence'] == node_data['contexts']['quarry-x']
+  # The node's own stated occurrence first, then the pairing its entries
+  # name, once for the two entries that name it: a file horizon and locality
+  # each carry the scope they were read from.
+  node_occ, file_occ = material[:2]
+  assert node_occ['horizonKey'] == 'quarry-x' and node_occ['horizonScope'] == 'node'
+  assert node_occ['occurrence'] == {'horizon': node_data['horizons']['quarry-x']}
+  assert 'localityKey' not in node_occ and 'localityScope' not in node_occ
+  assert file_occ['horizonKey'] == 'trenton' and file_occ['horizonScope'] == 'file'
+  assert file_occ['localityKey'] == 'division-st' and file_occ['localityScope'] == 'file'
+  assert file_occ['occurrence'] == {
+    'horizon': file_horizons['trenton'],
+    'locality': file_localities['division-st'],
+  }
 
   numbered, pair, label_only, explicit, file_listed, tentative, inferred = material[2:9]
 
   assert numbered['role'] == 'lectotype' and numbered['ids'] == ['GSC 752']
-  assert numbered['numbers'] == [752] and numbered['contextKey'] == 'division-st'
-  assert 'contextTentative' not in numbered
+  assert numbered['numbers'] == [752]
+  assert numbered['horizonKey'] == 'trenton' and numbered['localityKey'] == 'division-st'
+  assert 'tentativeFields' not in numbered
   assert numbered['repository'] == 'gsc' and numbered['repositoryVia'] == 'file'
   assert numbered['joinKeys'] == ['gsc:752'] and 'rangeJoin' not in numbered
   assert 'roleAct' not in numbered  # not a protologue node
@@ -517,7 +536,7 @@ def test_material_adapter(records, caplog):
   assert file_listed['repository'] == 'fmnh-pe' and file_listed['repositoryVia'] == 'file'
   assert file_listed['preparation'] == 'latex cast' and file_listed['castOf'] == 752
 
-  assert tentative['contextKey'] == 'division-st' and tentative['contextTentative'] is True
+  assert tentative['localityKey'] == 'division-st' and tentative['tentativeFields'] == ['locality']
 
   # The claim is about the entry: its editorial block, not the node's.
   assert inferred['editorial'] == node_data['material'][6]['editorial']
@@ -692,7 +711,7 @@ def test_locality_keys_on_specimen_claims(records):
     {
       'prefix': 'GK',
       'numbers': [1731],
-      'context': 'miaobanpo',
+      'locality': 'miaobanpo',
       'localityNumbers': [
         {'prefix': 'GTBM', 'number': '9-1-526a'},
         {'register': 'usgs-l', 'number': '4148 CO'},
@@ -700,18 +719,18 @@ def test_locality_keys_on_specimen_claims(records):
         {'prefix': 'ZZ', 'number': 9},
       ],
     },
-    {'prefix': 'GK', 'numbers': [1732], 'context': 'miaobanpo'},
+    {'prefix': 'GK', 'numbers': [1732], 'locality': 'miaobanpo'},
   ]
   prefixes = {'GK': 'mcz', 'GTBM': 'usgs-l'}
   with_default, without = _numbered(
-    records, entries, prefixes, 'sprinkle-l', contexts={'miaobanpo': {'unit': ['Kaili Formation']}}
+    records, entries, prefixes, 'sprinkle-l', localities={'miaobanpo': {'location': ['Kaili']}}
   )
   assert with_default['localityKeys'] == ['usgs-l:91526a', 'usgs-l:4148co', 'sprinkle-l:fc1']
   assert with_default['localityNumbers'] == entries[0]['localityNumbers']
   assert 'localityKeys' not in without and 'localityNumbers' not in without
   # Without a file `localityRegister` the bare number keys nothing.
   [claim, _] = _numbered(
-    records, entries, prefixes, contexts={'miaobanpo': {'unit': ['Kaili Formation']}}
+    records, entries, prefixes, localities={'miaobanpo': {'location': ['Kaili']}}
   )
   assert claim['localityKeys'] == ['usgs-l:91526a', 'usgs-l:4148co']
 
@@ -740,9 +759,9 @@ def test_an_object_of_names_one_specimen_by_prefix_or_label(records):
   )
 
 
-def _locality(records, context, prefixes=None, locality_register=None):
+def _locality(records, locality, prefixes=None, locality_register=None):
   root = Tree(
-    {'taxon': 'rhenopyrgus', 'contexts': {'x': context}},
+    {'taxon': 'rhenopyrgus', 'localities': {'x': locality}, 'occurrences': [{'locality': 'x'}]},
     {
       'source_key': '1961_dehm',
       'type': 'taxonomy',
@@ -758,7 +777,7 @@ def _locality(records, context, prefixes=None, locality_register=None):
 
 
 def test_locality_keys_of_object_numbers(records):
-  context = {
+  locality = {
     'localityNumbers': [
       {'number': 'FC-1'},
       {'prefix': 'USGS', 'number': '4148 CO'},
@@ -770,7 +789,7 @@ def test_locality_keys_of_object_numbers(records):
     ]
   }
   prefixes = {'USGS': 'usgs-l', 'Walcott': 'usnm-l'}
-  claim = _locality(records, context, prefixes, 'sprinkle-l')
+  claim = _locality(records, locality, prefixes, 'sprinkle-l')
   assert claim['localityKeys'] == [
     'sprinkle-l:fc1',
     'usgs-l:4148co',
@@ -781,7 +800,7 @@ def test_locality_keys_of_object_numbers(records):
   ]
   # With no `localityRegister` a number with neither prefix nor register is skipped;
   # a prefix the map lacks never falls to it.
-  assert _locality(records, context, prefixes)['localityKeys'] == [
+  assert _locality(records, locality, prefixes)['localityKeys'] == [
     'usgs-l:4148co',
     'usnm-l:35k',
     'usnm-l:35',
@@ -796,9 +815,9 @@ def test_locality_keys_of_object_numbers(records):
     ]
   }
   assert _locality(records, both, prefixes)['localityKeys'] == ['usgs-l:4148co']
-  # A context with no locality numbers has no field.
+  # A locality with no locality numbers has no field.
   assert 'localityKeys' not in _locality(
-    records, {'unit': ['Wheeler Shale']}, prefixes, 'sprinkle-l'
+    records, {'location': ['Wheeler Quarry']}, prefixes, 'sprinkle-l'
   )
   assert 'localityKeys' not in _locality(
     records, {'localityNumbers': [{'number': 'SH-1'}]}, prefixes
@@ -906,19 +925,19 @@ def test_derived_coverage(records):
   for expected, root in cases:
     assert derived(root) == expected, (expected, root.data)
 
-  # `occurrences` reads `contexts` or `ranges`; `na` needs both unused.
+  # `occurrences` reads `occurrences` or `ranges`; `na` needs both unused.
   occ = tree(
     {
       'taxon': 'rhenopyrgus',
       'ranges': [{'series': 'Ordovician'}],
-      'children': [{**child, 'contexts': None}],
+      'children': [{**child, 'occurrences': None}],
     },
     7,
   )
   assert derived(occ, 'occurrences') == 'all'
   only_one = tree({'taxon': 'rhenopyrgus'}, 8, file_unused=('ranges',))
   assert derived(only_one, 'occurrences') is None
-  both = tree({'taxon': 'rhenopyrgus'}, 9, file_unused=('ranges', 'contexts'))
+  both = tree({'taxon': 'rhenopyrgus'}, 9, file_unused=('ranges', 'occurrences'))
   assert derived(both, 'occurrences') == 'na'
 
   # `illustrations` reads the `illustrations` field.
@@ -948,21 +967,34 @@ def test_derived_coverage(records):
   ill_on_genus = tree({'taxon': 'rhenopyrgus', 'illustrations': [{'plate': 1}]}, 14)
   assert derived(ill_on_genus, 'illustrations') is None
 
-  # `occurrences` is captured through a material entry's `context`: a
-  # species with no `contexts`/`ranges` but a linked entry counts as
-  # present, beside a species whose `ranges` is null.
+  # `occurrences` is captured through a material entry's `horizon` or
+  # `locality`: a species with no `occurrences`/`ranges` but a linked entry
+  # counts as present, beside a species whose `ranges` is null.
   linked = tree(
     {
       'taxon': 'rhenopyrgus',
       'ranges': [{'series': 'Ordovician'}],
       'children': [
-        {**child, 'material': [{'label': 'A', 'context': 'x'}]},
+        {**child, 'material': [{'label': 'A', 'horizon': 'x'}]},
         {**other, 'ranges': None},
       ],
     },
     15,
   )
   assert derived(linked, 'occurrences') == 'all'
+  # A locality alone links as well.
+  by_locality = tree(
+    {
+      'taxon': 'rhenopyrgus',
+      'ranges': [{'series': 'Ordovician'}],
+      'children': [
+        {**child, 'material': [{'label': 'A', 'locality': 'x'}]},
+        {**other, 'ranges': None},
+      ],
+    },
+    21,
+  )
+  assert derived(by_locality, 'occurrences') == 'all'
   # Without the link the same species is an uncaptured field.
   unlinked = tree(
     {
@@ -978,7 +1010,7 @@ def test_derived_coverage(records):
     {
       'taxon': 'rhenopyrgus',
       'ranges': [{'series': 'Ordovician'}],
-      'children': [{**child, 'material': [{'label': 'A', 'context': 'x'}], 'contexts': None}],
+      'children': [{**child, 'material': [{'label': 'A', 'horizon': 'x'}], 'occurrences': None}],
     },
     17,
   )
@@ -987,7 +1019,7 @@ def test_derived_coverage(records):
     {
       'taxon': 'rhenopyrgus',
       'ranges': [{'series': 'Ordovician'}],
-      'children': [{**child, 'material': [{'label': 'A', 'context': 'x'}]}],
+      'children': [{**child, 'material': [{'label': 'A', 'horizon': 'x'}]}],
     },
     18,
   )
@@ -1165,15 +1197,18 @@ def test_absence_emission_by_kind(records):
   assert absences({'material': None}, 200) == [('material', ['material'])]
   assert absences({'illustrations': None}, 201) == [('illustrations', ['illustrations'])]
   assert absences({'synonyms': None}, 202) == [('synonymy', ['synonyms'])]
-  assert absences({'contexts': None, 'ranges': None}, 203) == [
-    ('occurrences', ['contexts', 'ranges'])
+  assert absences({'occurrences': None, 'ranges': None}, 203) == [
+    ('occurrences', ['occurrences', 'ranges'])
   ]
   assert absences({'ranges': None}, 204) == [('occurrences', ['ranges'])]
-  # A value for either field, or a material entry linked to a context,
-  # says the node has occurrences.
-  assert absences({'contexts': None, 'ranges': [{'series': 'Ordovician'}]}, 205) == []
-  linked = {'contexts': None, 'material': [{'label': 'A', 'context': 'x'}]}
-  assert absences(linked, 206, file_contexts={'x': {'unit': ['a']}}) == []
+  # A value for either field, or a material entry linked to a horizon or a
+  # locality, says the node has occurrences.
+  assert absences({'occurrences': None, 'ranges': [{'series': 'Ordovician'}]}, 205) == []
+  assert absences({'occurrences': [{'horizon': 'x'}], 'ranges': None}, 211) == []
+  linked = {'occurrences': None, 'material': [{'label': 'A', 'horizon': 'x'}]}
+  assert absences(linked, 206, file_horizons={'x': {'unit': ['a']}}) == []
+  by_locality = {'occurrences': None, 'material': [{'label': 'A', 'locality': 'x'}]}
+  assert absences(by_locality, 210, file_localities={'x': {'location': ['a']}}) == []
   # Absent fields and values say nothing.
   assert absences({}, 207) == []
   assert absences({'material': [{'label': 'A'}], 'synonyms': [{'taxon': _SISTER}]}, 208) == []
@@ -1623,3 +1658,271 @@ def test_auctt_cites_authors_in_place_of_a_work(records, caplog):
   section = {'name': 'Integra', 'authority': {'source': '1968b_paul.c.r.c'}}
   assert schema['sections'].check({'integra': section})
   assert not schema['sections'].check({'integra': section | {'authority': {'auctt': True}}})
+
+
+# -- occurrences: horizons and localities paired -------------------------------
+
+
+def _occurrences(records, data, position, **metadata):
+  claims = _claims_of(records, {'taxon': _SPECIES, **data}, position, **metadata)
+  return [c for c in claims if c.get('materialKind') == 'occurrence']
+
+
+def test_a_horizon_shared_by_two_localities_gives_two_claims_sharing_the_horizon(records):
+  horizon = {'unit': ['Trenton Limestone'], 'series': 'Middle Ordovician'}
+  data = {
+    'horizons': {'trenton': horizon},
+    'localities': {
+      'ottawa': {'location': ['Ottawa']},
+      'kingston': {'location': ['Kingston']},
+    },
+    'material': [
+      {'label': 'A', 'horizon': 'trenton', 'locality': 'ottawa'},
+      {'label': 'B', 'horizon': 'trenton', 'locality': 'kingston'},
+    ],
+  }
+  first, second = _occurrences(records, data, 300)
+  assert first['horizonKey'] == second['horizonKey'] == 'trenton'
+  assert first['occurrence']['horizon'] == second['occurrence']['horizon'] == horizon
+  assert (first['localityKey'], second['localityKey']) == ('ottawa', 'kingston')
+  assert second['occurrence']['locality'] == {'location': ['Kingston']}
+  assert first['id'] != second['id']
+
+
+def test_a_locality_with_two_horizons_gives_two_claims_sharing_the_locality(records):
+  data = {
+    'horizons': {'lower': {'unit': ['Lower Bed']}, 'upper': {'unit': ['Upper Bed']}},
+    'localities': {'quarry': {'location': ['Quarry Road']}},
+    'material': [
+      {'label': 'A', 'horizon': 'lower', 'locality': 'quarry'},
+      {'label': 'B', 'horizon': 'upper', 'locality': 'quarry'},
+    ],
+  }
+  first, second = _occurrences(records, data, 301)
+  assert first['localityKey'] == second['localityKey'] == 'quarry'
+  assert (first['horizonKey'], second['horizonKey']) == ('lower', 'upper')
+  assert first['occurrence']['locality'] == second['occurrence']['locality']
+
+
+def test_an_occurrence_with_no_specimen_gives_a_claim_and_counts_as_present(records, store):
+  data = {
+    'horizons': {'bed': {'unit': ['Wheeler Shale'], 'series': 'Cambrian Series 3'}},
+    'localities': {'house-range': {'location': ['House Range, Utah']}},
+    'occurrences': [{'horizon': 'bed', 'locality': 'house-range', 'notes': 'as listed'}],
+  }
+  claims = _claims_of(records, {'taxon': _SPECIES, **data}, 302)
+  [claim] = [c for c in claims if c['kind'] == 'material']
+  assert claim['materialKind'] == 'occurrence'
+  assert claim['horizonKey'] == 'bed' and claim['horizonScope'] == 'node'
+  assert claim['localityKey'] == 'house-range' and claim['localityScope'] == 'node'
+  assert claim['occurrenceNotes'] == 'as listed'
+  assert claim['occurrence']['horizon'] == data['horizons']['bed']
+  assert claim['occurrence']['locality'] == data['localities']['house-range']
+  assert store.words.claim_words(claim) == (
+    'occurrence bed, house-range: Cambrian Series 3; Wheeler Shale; House Range, Utah'
+  )
+  # No specimen claim, and a node that states an occurrence says nothing absent
+  # even when its `ranges` is null.
+  assert not [c for c in claims if c.get('materialKind') == 'specimen']
+  assert _absences(claims) == []
+  with_null_ranges = _claims_of(
+    records, {'taxon': _SPECIES, **data, 'ranges': None, 'occurrences': data['occurrences']}, 303
+  )
+  assert _absences(with_null_ranges) == []
+  # `occurrences: null` alone is the declared absence.
+  assert _absences(_claims_of(records, {'taxon': _SPECIES, 'occurrences': None}, 304)) == [
+    ('occurrences', ['occurrences'])
+  ]
+
+  # The node counts as present for the derived coverage: a value alone
+  # declares nothing, and beside a sister that says `occurrences: null` the
+  # kind is `all`.
+  def coverage(*children):
+    root = Tree(
+      {'taxon': 'rhenopyrgus', 'ranges': [{'series': 'Ordovician'}], 'children': list(children)},
+      {**_BASE, 'position': 305},
+      corpus=records,
+    )
+    return derived_coverage({'s': [root]})['s']['occurrences']
+
+  assert coverage({'taxon': _SPECIES, **data}) is None
+  assert coverage({'taxon': _SPECIES, **data}, {'taxon': _SISTER, 'occurrences': None}) == 'all'
+  # Without the occurrence the same species is an uncaptured field.
+  assert coverage({'taxon': _SPECIES}, {'taxon': _SISTER, 'ranges': None}) == 'partly'
+  assert coverage({'taxon': _SPECIES, **data}, {'taxon': _SISTER, 'ranges': None}) == 'all'
+
+
+def test_two_entries_naming_one_pair_give_one_claim(records):
+  data = {
+    'horizons': {'bed': {'unit': ['Wheeler Shale']}},
+    'localities': {'quarry': {'location': ['Quarry Road']}},
+    'material': [
+      {'label': 'A', 'horizon': 'bed', 'locality': 'quarry'},
+      {'label': 'B', 'horizon': 'bed', 'locality': 'quarry'},
+      {'label': 'C'},
+    ],
+  }
+  [claim] = _occurrences(records, data, 306)
+  assert claim['horizonKey'] == 'bed' and claim['localityKey'] == 'quarry'
+  # The pair is not the same as either side alone.
+  data['material'].append({'label': 'D', 'horizon': 'bed'})
+  assert len(_occurrences(records, data, 307)) == 2
+
+
+def test_an_occurrence_item_and_an_entry_naming_the_same_pair_give_one_claim(records):
+  data = {
+    'horizons': {'bed': {'unit': ['Wheeler Shale']}},
+    'localities': {'quarry': {'location': ['Quarry Road']}},
+    'occurrences': [{'horizon': 'bed', 'locality': 'quarry', 'notes': 'stated first'}],
+    'material': [{'label': 'A', 'horizon': 'bed', 'locality': 'quarry'}],
+  }
+  [claim] = _occurrences(records, data, 308)
+  # The item came first and keeps its note.
+  assert claim['occurrenceNotes'] == 'stated first'
+  # Either order, one claim: the node's own statement is emitted first.
+  claims = _claims_of(records, {'taxon': _SPECIES, **data}, 309)
+  kinds = [c['materialKind'] for c in claims if c['kind'] == 'material']
+  assert kinds == ['occurrence', 'specimen']
+
+
+def test_an_entry_tentative_list_reaches_the_specimen_claim_and_renders(records, store):
+  data = {
+    'horizons': {'bed': {'unit': ['Wheeler Shale']}},
+    'localities': {'quarry': {'location': ['Quarry Road']}},
+    'material': [
+      {
+        'prefix': 'GSC',
+        'numbers': [1],
+        'horizon': 'bed',
+        'locality': 'quarry',
+        'tentative': ['locality'],
+      },
+      {
+        'prefix': 'GSC',
+        'numbers': [2],
+        'horizon': 'bed',
+        'locality': 'quarry',
+        'tentative': ['horizon', 'locality'],
+      },
+      {'prefix': 'GSC', 'numbers': [3], 'horizon': 'bed', 'locality': 'quarry'},
+    ],
+  }
+  claims = _claims_of(records, {'taxon': _SPECIES, **data}, 310, file_prefixes={'GSC': 'gsc'})
+  one, both, plain = [c for c in claims if c.get('materialKind') == 'specimen']
+  assert one['tentativeFields'] == ['locality']
+  assert both['tentativeFields'] == ['horizon', 'locality']
+  assert 'tentativeFields' not in plain
+  assert one['horizonKey'] == 'bed' and one['localityKey'] == 'quarry'
+  assert store.words.claim_words(one) == 'specimens: GSC 1 (locality quarry?)'
+  assert store.words.claim_words(both) == 'specimens: GSC 2 (horizon bed?) (locality quarry?)'
+  assert store.words.claim_words(plain) == 'specimens: GSC 3'
+  # An entry's doubt does not make the pairing's own claim tentative.
+  [occurrence] = [c for c in claims if c.get('materialKind') == 'occurrence']
+  assert 'tentativeFields' not in occurrence
+
+
+def test_an_occurrence_item_tentative_list_reaches_the_claim_and_renders(records, store):
+  data = {
+    'horizons': {'bed': {'unit': ['Wheeler Shale']}},
+    'localities': {'quarry': {'location': ['Quarry Road']}},
+    'occurrences': [{'horizon': 'bed', 'locality': 'quarry', 'tentative': ['locality']}],
+  }
+  [claim] = _occurrences(records, data, 311)
+  assert claim['tentativeFields'] == ['locality']
+  assert store.words.claim_words(claim) == 'occurrence bed, quarry?: Wheeler Shale; Quarry Road'
+
+
+def test_an_occurrence_with_one_side_has_no_key_for_the_other(records, store):
+  data = {
+    'horizons': {'bed': {'unit': ['Wheeler Shale']}},
+    'localities': {'quarry': {'location': ['Quarry Road']}},
+    'occurrences': [{'horizon': 'bed'}, {'locality': 'quarry'}],
+  }
+  only_horizon, only_locality = _occurrences(records, data, 312)
+  assert only_horizon['occurrence'] == {'horizon': {'unit': ['Wheeler Shale']}}
+  assert 'localityKey' not in only_horizon and 'localityScope' not in only_horizon
+  assert only_locality['occurrence'] == {'locality': {'location': ['Quarry Road']}}
+  assert 'horizonKey' not in only_locality and 'horizonScope' not in only_locality
+  assert store.words.claim_words(only_horizon) == 'occurrence bed: Wheeler Shale'
+  assert store.words.claim_words(only_locality) == 'occurrence quarry: Quarry Road'
+  # An entry with one side names a one-sided pairing too.
+  [entry_only] = _occurrences(
+    records, {**data, 'occurrences': None, 'material': [{'label': 'A', 'locality': 'quarry'}]}, 313
+  )
+  assert entry_only['occurrence'] == {'locality': {'location': ['Quarry Road']}}
+
+
+def test_a_file_horizon_and_a_node_locality_keep_their_own_scopes(records):
+  data = {
+    'localities': {'quarry': {'location': ['Quarry Road']}},
+    'occurrences': [{'horizon': 'bed', 'locality': 'quarry'}],
+  }
+  [claim] = _occurrences(records, data, 314, file_horizons={'bed': {'unit': ['Wheeler Shale']}})
+  assert claim['horizonScope'] == 'file' and claim['localityScope'] == 'node'
+  # A node horizon shadows the file's of the same key, and says so in its scope.
+  [shadowed] = _occurrences(
+    records,
+    {**data, 'horizons': {'bed': {'unit': ['Marjum Formation']}}},
+    315,
+    file_horizons={'bed': {'unit': ['Wheeler Shale']}},
+  )
+  assert shadowed['horizonScope'] == 'node'
+  assert shadowed['occurrence']['horizon'] == {'unit': ['Marjum Formation']}
+
+
+def test_a_horizon_and_a_locality_may_share_a_key(records):
+  data = {
+    'horizons': {'x': {'unit': ['Wheeler Shale']}},
+    'localities': {'x': {'location': ['Quarry Road']}},
+    'occurrences': [{'horizon': 'x', 'locality': 'x'}],
+  }
+  [claim] = _occurrences(records, data, 316)
+  assert claim['occurrence']['horizon'] == {'unit': ['Wheeler Shale']}
+  assert claim['occurrence']['locality'] == {'location': ['Quarry Road']}
+
+
+def test_locality_keys_of_an_occurrence_come_from_its_locality(records):
+  data = {
+    'localities': {'quarry': {'localityNumbers': [{'prefix': 'USGS', 'number': '4148 CO'}]}},
+    'occurrences': [{'locality': 'quarry'}],
+  }
+  [claim] = _occurrences(records, data, 317, file_prefixes={'USGS': 'usgs-l'})
+  assert claim['localityKeys'] == ['usgs-l:4148co']
+
+
+def test_editorial_inferred_on_a_horizon_reaches_inferred_fields_and_the_words(records, store):
+  data = {
+    'horizons': {
+      'bed': {
+        'unit': ['Wheeler Shale'],
+        'stage': 'Drumian',
+        'editorial': {'inferred': ['stage'], 'basis': 'The formation is Drumian.'},
+      }
+    },
+    'localities': {
+      'quarry': {
+        'location': ['Quarry Road'],
+        'editorial': {'inferred': ['location'], 'basis': 'Named by the map sheet.'},
+      }
+    },
+    'occurrences': [{'horizon': 'bed', 'locality': 'quarry'}],
+  }
+  [claim] = _occurrences(records, data, 318)
+  assert claim['inferredFields'] == ['horizon.stage', 'locality.location']
+  assert claim['occurrence']['horizon']['editorial'] == data['horizons']['bed']['editorial']
+  assert store.words.claim_words(claim) == (
+    'occurrence bed, quarry: Drumian; Wheeler Shale; Quarry Road'
+    ' (stage inferred by the editor: The formation is Drumian.)'
+    ' (location inferred by the editor: Named by the map sheet.)'
+  )
+  # A record without an editorial block adds none.
+  plain = {**data, 'horizons': {'bed': {'unit': ['Wheeler Shale']}}}
+  [other] = _occurrences(records, plain, 319)
+  assert other['inferredFields'] == ['locality.location']
+
+
+def test_a_range_with_editorial_inferred_keeps_its_own_claim_shape(records):
+  rng = {'series': 'Ordovician', 'editorial': {'inferred': ['series'], 'basis': 'Dated by zone.'}}
+  claims = _claims_of(records, {'taxon': _SPECIES, 'ranges': [rng]}, 320)
+  [claim] = [c for c in claims if c.get('materialKind') == 'range']
+  assert claim['range'] == rng

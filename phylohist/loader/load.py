@@ -114,7 +114,8 @@ def _source_ids(value, pointer=()):
   """``(pointer, key)`` for every source id under `value`, as the schema
   types them (`$defs/sourceId`): a `source` field, which is an authority's
   (a node's, `fixedBy`, an `emendedBy` or `restrictedBy` entry, a `by`, an
-  editorial correction) or a `sameAs` link's, and the `sources` of a context."""
+  editorial correction) or a `sameAs` link's, and the `sources` of a horizon
+  or a locality."""
   if isinstance(value, dict):
     for field, item in value.items():
       if not pointer and field in _NODE_BRANCHES:
@@ -424,7 +425,8 @@ def _load_trees(corpus):
       continue
     roots[ref_key] = []
     file_meta = {
-      'file_contexts': opinion.get('contexts') or {},
+      'file_horizons': opinion.get('horizons') or {},
+      'file_localities': opinion.get('localities') or {},
       'file_unused': tuple(opinion.get('unused') or ()),
       'file_prefixes': dict(opinion.get('prefixes') or {}),
       'file_locality_register': opinion.get('localityRegister'),

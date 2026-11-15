@@ -263,24 +263,35 @@ Emitted from four node fields on a primary node; a cited entry (see
 `pages`) emits none, since its `illustrations` are the cited work's and
 its other material is not this source's. A field that is `null` emits
 nothing. One node emits them in a fixed order, which fixes the claim ids
-(`<n>` runs through the `material` claims in this order): `contexts`,
-then `material`, then `illustrations`, then `ranges`. `materialKind`
-says which.
+(`<n>` runs through the `material` claims in this order): `occurrences`
+(with the pairings the `material` entries name), then `material`, then
+`illustrations`, then `ranges`. `materialKind` says which.
 
-- `occurrence` (field `contexts`): one claim for each context a
-  `material` entry refers to and each context the node defines. `occurrence`
-  is the context verbatim; `contextKey` is its key and `contextScope`
-  (`node` or `file`) where it was defined. A file-level context is
-  emitted once for each node that refers to it. `localityKeys`, when the
-  context has `localityNumbers`, are `<register>:<folded number>` for
-  each locality number that has a register: its `register`, else the tree
-  file's `prefixes` map for its `prefix`, else the file's
-  `localityRegister` when it has neither `prefix` nor `register`. The
-  number is folded whole (an integer as its digits), one with no register
-  gives no key, and each key is given once.
-  A `tentative` the context carries (`true` for the whole statement, a
-  list of the fields whose values are queried) rides inside `occurrence`
-  as written.
+- `occurrence` (field `occurrences`): one claim for each pairing of a
+  horizon and a locality the node states. Each item of the node's
+  `occurrences` makes one, in printed order; then each distinct
+  (`horizon`, `locality`) pair that the node's `material` entries name, and
+  that no earlier claim of the node names, makes one. Either side may be
+  absent. `occurrence` holds the horizon and the locality records verbatim
+  under `horizon` and `locality` (a side the pairing does not name is
+  absent); `horizonKey` and `localityKey` are their keys, and `horizonScope`
+  and `localityScope` (`node` or `file`) say where each was defined. A
+  file-level record is emitted once for each node whose pairing names it.
+  `localityKeys`, when the locality has `localityNumbers`, are
+  `<register>:<folded number>` for each locality number that has a
+  register: its `register`, else the tree file's `prefixes` map for its
+  `prefix`, else the file's `localityRegister` when it has neither `prefix`
+  nor `register`. The number is folded whole (an integer as its digits), one
+  with no register gives no key, and each key is given once. A `tentative`
+  a horizon or locality carries (`true` for the whole statement, a list of
+  the fields whose values are queried) rides inside it as written; a
+  `tentative` on the occurrence item (a list naming `horizon`, `locality` or
+  both) is `tentativeFields`, and the item's `notes` are `occurrenceNotes`.
+  `inferredFields` names, as `<side>.<field>` (`horizon.stage`,
+  `locality.paleocontinent`), the fields the `editorial.inferred` of the
+  horizon or the locality gives to the editor; the record's own field holds
+  the editor's value and its `editorial` block, with the `basis`, rides
+  inside it.
 - `specimen` (field `material`): one claim per entry. `role` is the
   entry's role, absent when the source attaches none. `prefix`, `numbers`
   (a number a string or an integer, a range pair a two-element list) and
@@ -307,11 +318,12 @@ says which.
   `examined`, `listComplete`, `preparation`, `castOf`, `sameAs`,
   `collectedBy`, `collectedDate`, `localityNumbers`, `uncertain` (the specimen is doubtfully assigned to the
   taxon), `roleUncertain` (the role word is queried in the source),
-  `contextKey`, `contextTentative` (from the object form of
-  the entry's `context`), and the entry's `notes` as `materialNotes`.
+  `horizonKey` and `localityKey` (the entry's `horizon` and `locality`),
+  `tentativeFields` (the entry's `tentative`, naming `horizon`, `locality`
+  or both), and the entry's `notes` as `materialNotes`.
   `localityKeys`, when the entry has `localityNumbers` (the specimen's own
-  locality numbers within its context), are built from them by the rule
-  the occurrence claim uses for a context's. `castOf` and `fragmentOf` are
+  locality numbers within its locality), are built from them by the rule
+  the occurrence claim uses for a locality's. `castOf` and `fragmentOf` are
   copied as written: a bare number or label, or the object form
   (`{number, prefix}` or `{label}`) that names an entry on the same node
   within a prefix. An
@@ -350,7 +362,7 @@ says which.
   names by number among the entries of that prefix alone, and `{label}` by
   label alone); a figure with no `of` is tied to no specimen.
 - `range` (field `ranges`): one claim per element, `range` the element
-  verbatim, a `tentative` it carries included. It counts under the `occurrences` coverage kind, and
+  verbatim, a `tentative` or `editorial` it carries included. It counts under the `occurrences` coverage kind, and
   `statements(kind='occurrences')` returns it with the `occurrence` claims.
 
 ### `secondhand`
@@ -389,14 +401,14 @@ for, in this order:
 | `absenceOf` | emitted when |
 |---|---|
 | `material` | `material` is null |
-| `occurrences` | `contexts` and/or `ranges` is null, neither has a value, and no `material` entry has a `context` |
+| `occurrences` | `occurrences` and/or `ranges` is null, neither has a value, and no `material` entry has a `horizon` or a `locality` |
 | `illustrations` | `illustrations` is null |
 | `synonymy` | `synonyms` is null |
 | `types` | `type` is null |
 | `skeleton` | `children` is null (on a node above the species level: the source places nothing under it) |
 
 Fields: the shared record, `absenceOf`, and `fields`, the node's fields
-that are null for that kind (`['contexts', 'ranges']`). Nothing is emitted
+that are null for that kind (`['occurrences', 'ranges']`). Nothing is emitted
 for a file-level `unused`, which the source-level `na` already says. The
 claim has no `audit.coverageKind`, so the manifest's per-kind counts and
 cross-checks ignore it; it does appear in the per-kind `claims` counts.
@@ -481,7 +493,7 @@ claims behind them and the review file to check against, and
 `tests/test_claims.py` fails while any row exists, so a new one cannot
 land unnoticed.
 
-Six kinds, `material`, `occurrences` (the node fields `contexts` and
+Six kinds, `material`, `occurrences` (the node fields `occurrences` and
 `ranges`), `illustrations`, `synonymy` (`synonyms` and `non`), `types`
 (`type`) and `skeleton` (`children`), are also read from the tree itself (G11): `claims.derived_coverage(roots)` walks the
 primary, non-cited, named nodes of a source's taxonomy trees (a cladogram
@@ -497,8 +509,8 @@ writes, else its record's. For `material` and `illustrations` only the
 species-level nodes (species, subspecies, variety) are counted, since
 specimens are cited and figures drawn for species; `occurrences` counts
 every named
-node, and a node whose `material` entry has a `context` counts as carrying
-it. `synonymy` counts every named node of every rank: a node carrying
+node, and a node whose `material` entry has a `horizon` or a `locality` counts as
+carrying it. `synonymy` counts every named node of every rank: a node carrying
 `synonyms` or `non`, as a value or a null, is present (a `non` list is a
 synonymy of rejected names), and only `synonyms: null` writes a null (the
 loader rejects it beside a `non` list). `types` counts the named genus
@@ -739,13 +751,13 @@ each is a usage of *grayae* by the cited source, and each is an
 p. 1004, `1985_smith.a.b` p. 732 with text-figure 11, and two entries for
 `2013_sumrall_heredia_rodríguez.c.m_mestre` (figure 1; p. 773). The first
 and fourth carry `parents: [pyrgocystis]`. None carries the species
-node's `pages`. The node's one context (`lady-burn-starfish-bed`) yields an
-`occurrence` claim, emitted first, and its `material` entries yield
+node's `pages`. The node's one pairing of horizon `farden-member` and locality
+`lady-burn-starfish-bed` yields an `occurrence` claim, emitted first, and its `material` entries yield
 `specimen` claims after it: the holotype claim has `role: holotype`,
 `prefix: NHMUK E`, `numbers: [23470]`, `ids: [NHMUK E 23470]`,
 `repository: nhmuk-e` with `repositoryVia: file` (the file's `prefixes` map),
-`joinKeys: [nhmuk-e:23470]` and the context's
-`contextKey`; the next entry has no role, since the paper attaches none.
+`joinKeys: [nhmuk-e:23470]`, `horizonKey: farden-member` and
+`localityKey: lady-burn-starfish-bed`; the next entry has no role, since the paper attaches none.
 
 ### Fay 1962, *ottawaensis* (`data/trees/1962_fay.yaml`)
 

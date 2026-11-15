@@ -1,4 +1,4 @@
-"""The material checks (`phylohist.loader.material`): context references,
+"""The material checks (`phylohist.loader.material`): horizon and locality references,
 figure references, material entries and the file's `prefixes` map, nulls on
 a cited entry, and the file-level `unused` list. Synthetic node dicts and
 documents, one test per rule; a few exercise the loader's own wiring
@@ -104,35 +104,94 @@ def test_registry_links_chain_into_a_cycle_reports_the_cycle():
   assert material.registry_links(registry) == [('error', '`within` cycles: b -> c -> b')]
 
 
-# -- context_refs -------------------------------------------------------------
+# -- occurrence_refs ----------------------------------------------------------
 
 
-def test_context_refs_missing_is_error():
-  node = {'material': [{'label': 'A', 'context': 'nowhere'}]}
-  assert material.context_refs(node, {}, {}) == [
-    ('error', 'context "nowhere" is not defined on the node or the file'),
+def _records(horizons=None, localities=None):
+  return {'horizons': horizons or {}, 'localities': localities or {}}
+
+
+def test_occurrence_refs_missing_is_error_on_each_side():
+  node = {'material': [{'label': 'A', 'horizon': 'nowhere', 'locality': 'nowhere-else'}]}
+  assert material.occurrence_refs(node, _records(), _records()) == [
+    ('error', 'horizon "nowhere" is not defined on the node or the file'),
+    ('error', 'locality "nowhere-else" is not defined on the node or the file'),
+  ]
+  # A horizon key is not looked up among the localities, nor the reverse.
+  node = {'material': [{'label': 'A', 'horizon': 'x'}]}
+  assert material.occurrence_refs(node, _records(), _records(localities={'x': {}})) == [
+    ('error', 'horizon "x" is not defined on the node or the file'),
+  ]
+  assert material.occurrence_refs(
+    {'occurrences': [{'locality': 'x'}]}, _records(), _records(horizons={'x': {}})
+  ) == [('error', 'locality "x" is not defined on the node or the file')]
+
+
+def test_occurrence_refs_resolves_from_node_or_file_with_no_message():
+  node_only = {'material': [{'label': 'A', 'horizon': 'here', 'locality': 'here'}]}
+  assert material.occurrence_refs(node_only, _records({'here': {}}, {'here': {}}), _records()) == []
+  file_only = {'material': [{'label': 'A', 'horizon': 'there', 'locality': 'there'}]}
+  assert (
+    material.occurrence_refs(file_only, _records(), _records({'there': {}}, {'there': {}})) == []
+  )
+  stated = {'occurrences': [{'horizon': 'there'}, {'locality': 'here'}]}
+  assert (
+    material.occurrence_refs(stated, _records(localities={'here': {}}), _records({'there': {}}))
+    == []
+  )
+
+
+def test_occurrence_refs_node_key_shadows_file_key_is_warning_on_each_side():
+  node = {'material': [{'label': 'A', 'horizon': 'here', 'locality': 'here'}]}
+  records = _records({'here': {}}, {'here': {}})
+  assert material.occurrence_refs(node, records, records) == [
+    ('warning', 'horizon "here" on the node shadows a file-level horizon'),
+    ('warning', 'locality "here" on the node shadows a file-level locality'),
+  ]
+  # An occurrence item shadows in the same way.
+  stated = {'occurrences': [{'horizon': 'here'}]}
+  assert material.occurrence_refs(stated, _records({'here': {}}), _records({'here': {}})) == [
+    ('warning', 'horizon "here" on the node shadows a file-level horizon'),
   ]
 
 
-def test_context_refs_resolves_from_node_or_file_with_no_message():
-  node_only = {'material': [{'label': 'A', 'context': 'here'}]}
-  assert material.context_refs(node_only, {'here': {}}, {}) == []
-  file_only = {'material': [{'label': 'A', 'context': 'there'}]}
-  assert material.context_refs(file_only, {}, {'there': {}}) == []
+def test_occurrence_refs_entries_without_a_side_are_quiet():
+  node = {'material': [{'label': 'A', 'horizon': 'h', 'tentative': ['horizon']}, {'count': 1}]}
+  assert material.occurrence_refs(node, _records({'h': {}}), _records()) == []
+  assert material.occurrence_refs({}, _records(), _records()) == []
+  assert material.occurrence_refs({'occurrences': None}, _records(), _records()) == []
 
 
-def test_context_refs_node_key_shadows_file_key_is_warning():
-  node = {'material': [{'label': 'A', 'context': 'here'}]}
-  messages = material.context_refs(node, {'here': {}}, {'here': {}})
-  assert messages == [('warning', 'context "here" on the node shadows a file-level context')]
+def test_occurrence_refs_node_record_nothing_on_the_node_refers_to_is_error():
+  node = {
+    'material': [{'label': 'A', 'horizon': 'used'}],
+    'occurrences': [{'locality': 'stated'}],
+  }
+  records = _records({'used': {}, 'stray-horizon': {}}, {'stated': {}, 'stray-locality': {}})
+  assert material.occurrence_refs(node, records, _records()) == [
+    ('error', 'horizon "stray-horizon" is defined on the node and referred to by nothing on it'),
+    ('error', 'locality "stray-locality" is defined on the node and referred to by nothing on it'),
+  ]
+  # A file-level record is not held to it: the file-level check covers it.
+  assert material.occurrence_refs({}, _records(), records) == []
 
 
-def test_context_refs_object_form_and_no_context():
-  node = {'material': [{'label': 'A', 'context': {'key': 'here', 'tentative': True}}, {'count': 1}]}
-  assert material.context_refs(node, {'here': {}}, {}) == []
+def test_occurrence_refs_tentative_naming_a_field_the_entry_lacks_is_error():
+  node = {
+    'material': [
+      {'label': 'A', 'horizon': 'h', 'tentative': ['horizon', 'locality']},
+      {'label': 'B', 'horizon': 'h', 'locality': 'l', 'tentative': ['locality']},
+    ],
+    'occurrences': [{'horizon': 'h', 'tentative': ['locality']}],
+  }
+  records = _records({'h': {}}, {'l': {}})
+  assert material.occurrence_refs(node, records, _records()) == [
+    ('error', '`tentative` names `locality`, which the entry does not carry'),
+    ('error', '`tentative` names `locality`, which the entry does not carry'),
+  ]
 
 
-# -- tentative_fields ---------------------------------------------------------
+# -- tentative_fields and inferred_fields -------------------------------------
 
 
 def test_tentative_names_a_field_the_range_does_not_carry():
@@ -140,90 +199,156 @@ def test_tentative_names_a_field_the_range_does_not_carry():
   assert material.tentative_fields(rng, 'range') == [
     ('error', '`tentative` names `series`, which the range does not carry'),
   ]
-  context = {'unit': ['A Fm.'], 'tentative': ['unit', 'biozone']}
-  assert material.tentative_fields(context, 'context') == [
-    ('error', '`tentative` names `biozone`, which the context does not carry'),
+  horizon = {'unit': ['A Fm.'], 'tentative': ['unit', 'biozone']}
+  assert material.tentative_fields(horizon, 'horizon') == [
+    ('error', '`tentative` names `biozone`, which the horizon does not carry'),
+  ]
+  locality = {'location': ['A Quarry'], 'tentative': ['mapSheet']}
+  assert material.tentative_fields(locality, 'locality') == [
+    ('error', '`tentative` names `mapSheet`, which the locality does not carry'),
   ]
 
 
 def test_tentative_cannot_name_a_key_that_is_no_printed_value():
   rng = {'series': 'Middle Ordovician', 'regions': ['Ottawa'], 'asPrinted': 'x', 'notes': 'y'}
-  rng['tentative'] = ['tentative', 'notes', 'asPrinted', 'inferred', 'sources', 'regions']
+  rng['tentative'] = ['tentative', 'notes', 'asPrinted', 'editorial', 'sources', 'regions']
   messages = material.tentative_fields(rng, 'range')
   assert [level for level, _ in messages] == ['error'] * 6
   assert [m.split('`')[3] for _, m in messages] == rng['tentative']
-
-
-def test_tentative_true_on_a_file_level_context_is_error():
-  context = {'unit': ['A Fm.'], 'tentative': True}
-  assert material.tentative_fields(context, 'context', file_level=True) == [
-    (
-      'error',
-      'a file-level context cannot be `tentative: true`; the doubt belongs to the node '
-      'or the specimen that uses it',
-    ),
+  # Present on the record, `editorial` is still no queriable value.
+  rng['editorial'] = {'inferred': ['series']}
+  rng['tentative'] = ['editorial']
+  assert material.tentative_fields(rng, 'range') == [
+    ('error', '`tentative` cannot name `editorial`, which is not a printed value'),
   ]
 
 
+def test_tentative_true_on_a_file_level_horizon_or_locality_is_error():
+  for kind in ('horizon', 'locality'):
+    record = {'unit': ['A Fm.'], 'tentative': True}
+    assert material.tentative_fields(record, kind, file_level=True) == [
+      (
+        'error',
+        f'a file-level {kind} cannot be `tentative: true`; the doubt belongs to the node '
+        'or the specimen that uses it',
+      ),
+    ]
+
+
 def test_tentative_clean_cases():
-  # A list on a range, a list on a node and a file-level context, `true`
-  # on a node-level context and on a range, and no `tentative` at all.
+  # A list on a range, a list on a node and a file-level horizon, `true`
+  # on a node-level horizon and on a range, and no `tentative` at all.
   assert material.tentative_fields({'series': 'X', 'tentative': ['series']}, 'range') == []
   assert material.tentative_fields({'series': 'X', 'tentative': True}, 'range') == []
-  assert material.tentative_fields({'biozone': 'X', 'tentative': ['biozone']}, 'context') == []
+  assert material.tentative_fields({'biozone': 'X', 'tentative': ['biozone']}, 'horizon') == []
   assert (
-    material.tentative_fields({'biozone': 'X', 'tentative': ['biozone']}, 'context', True) == []
+    material.tentative_fields({'biozone': 'X', 'tentative': ['biozone']}, 'horizon', True) == []
   )
-  assert material.tentative_fields({'unit': ['A']}, 'context', True) == []
-  assert material.tentative_fields(None, 'context') == []
+  assert material.tentative_fields({'unit': ['A']}, 'horizon', True) == []
+  assert material.tentative_fields(None, 'horizon') == []
   node = {
     'ranges': [{'series': 'X', 'tentative': ['series']}, {'period': 'Y', 'tentative': True}, None],
-    'contexts': {'a': {'biozone': 'X', 'tentative': ['biozone']}, 'b': {'tentative': True}},
+    'horizons': {'a': {'biozone': 'X', 'tentative': ['biozone']}, 'b': {'tentative': True}},
+    'localities': {'c': {'location': ['Q'], 'tentative': ['location']}, 'd': {'tentative': True}},
   }
   assert material.range_tentatives(node) == []
-  assert material.context_tentatives(node['contexts']) == []
+  assert material.record_tentatives(_records(node['horizons'], node['localities'])) == []
   assert material.range_tentatives({'ranges': None}) == []
 
 
-def test_tentative_checks_name_the_context_and_run_over_the_lists():
+def test_tentative_checks_name_the_record_and_run_over_the_lists():
   node = {'ranges': [{'period': 'Y', 'tentative': ['series']}]}
   assert material.range_tentatives(node) == [
     ('error', '`tentative` names `series`, which the range does not carry'),
   ]
-  contexts = {'a': {'unit': ['A'], 'tentative': True}, 'b': {'tentative': ['biozone']}, 'c': None}
-  assert material.context_tentatives(contexts) == [
-    ('error', 'context "b": `tentative` names `biozone`, which the context does not carry'),
+  horizons = {'a': {'unit': ['A'], 'tentative': True}, 'b': {'tentative': ['biozone']}, 'c': None}
+  localities = {'d': {'location': ['A'], 'tentative': True}, 'e': {'tentative': ['location']}}
+  records = _records(horizons, localities)
+  assert material.record_tentatives(records) == [
+    ('error', 'horizon "b": `tentative` names `biozone`, which the horizon does not carry'),
+    ('error', 'locality "e": `tentative` names `location`, which the locality does not carry'),
   ]
-  assert [m for _, m in material.context_tentatives(contexts, file_level=True)] == [
-    'context "a": a file-level context cannot be `tentative: true`; the doubt belongs to the '
+  assert [m for _, m in material.record_tentatives(records, file_level=True)] == [
+    'horizon "a": a file-level horizon cannot be `tentative: true`; the doubt belongs to the '
     'node or the specimen that uses it',
-    'context "b": `tentative` names `biozone`, which the context does not carry',
+    'horizon "b": `tentative` names `biozone`, which the horizon does not carry',
+    'locality "d": a file-level locality cannot be `tentative: true`; the doubt belongs to the '
+    'node or the specimen that uses it',
+    'locality "e": `tentative` names `location`, which the locality does not carry',
   ]
 
 
-# -- unreferenced_file_contexts -----------------------------------------------
-
-
-def test_unreferenced_file_contexts_empty_when_none_declared():
-  assert material.unreferenced_file_contexts({'taxonomies': []}) == []
-
-
-def test_unreferenced_file_contexts_warns_on_the_unused_one():
-  document = {
-    'contexts': {'used': {}, 'unused-one': {}},
-    'taxonomies': [{'taxon': 'a', 'material': [{'label': 'A', 'context': 'used'}]}],
-  }
-  assert material.unreferenced_file_contexts(document) == [
-    ('warning', 'context "unused-one" is defined but referenced by no material entry'),
+def test_inferred_names_a_field_the_record_does_not_carry():
+  horizon = {'unit': ['A'], 'editorial': {'inferred': ['unit', 'stage'], 'basis': 'x'}}
+  assert material.inferred_fields(horizon, 'horizon') == [
+    ('error', '`editorial.inferred` names `stage`, which the horizon does not carry'),
+  ]
+  assert material.inferred_fields({'unit': ['A']}, 'horizon') == []
+  assert material.inferred_fields({'editorial': {'basis': 'x'}}, 'locality') == []
+  assert material.inferred_fields(None, 'locality') == []
+  rng = {'series': 'X', 'editorial': {'inferred': ['period']}}
+  assert material.inferred_fields(rng, 'range') == [
+    ('error', '`editorial.inferred` names `period`, which the range does not carry'),
   ]
 
 
-def test_unreferenced_file_contexts_all_referenced_is_quiet():
+def test_inferred_is_checked_on_ranges_horizons_and_localities():
+  node = {'ranges': [{'series': 'X', 'editorial': {'inferred': ['period']}}]}
+  assert material.range_tentatives(node) == [
+    ('error', '`editorial.inferred` names `period`, which the range does not carry'),
+  ]
+  records = _records(
+    {'h': {'unit': ['A'], 'editorial': {'inferred': ['stage']}}},
+    {'l': {'location': ['A'], 'editorial': {'inferred': ['location', 'mapSheet']}}},
+  )
+  assert material.record_tentatives(records) == [
+    (
+      'error',
+      'horizon "h": `editorial.inferred` names `stage`, which the horizon does not carry',
+    ),
+    (
+      'error',
+      'locality "l": `editorial.inferred` names `mapSheet`, which the locality does not carry',
+    ),
+  ]
+
+
+# -- unreferenced_file_records ------------------------------------------------
+
+
+def test_unreferenced_file_records_empty_when_none_declared():
+  assert material.unreferenced_file_records({'taxonomies': []}) == []
+
+
+def test_unreferenced_file_records_warns_on_the_unused_one_of_each_side():
   document = {
-    'contexts': {'used': {}},
-    'taxonomies': [{'taxon': 'a', 'material': [{'label': 'A', 'context': 'used'}]}],
+    'horizons': {'used': {}, 'unused-one': {}},
+    'localities': {'used': {}, 'unused-two': {}},
+    'taxonomies': [
+      {'taxon': 'a', 'material': [{'label': 'A', 'horizon': 'used', 'locality': 'used'}]}
+    ],
   }
-  assert material.unreferenced_file_contexts(document) == []
+  assert material.unreferenced_file_records(document) == [
+    ('warning', 'horizon "unused-one" is defined but referred to by no entry or occurrence'),
+    ('warning', 'locality "unused-two" is defined but referred to by no entry or occurrence'),
+  ]
+
+
+def test_unreferenced_file_records_an_occurrence_refers_too():
+  document = {
+    'horizons': {'h': {}},
+    'localities': {'l': {}},
+    'taxonomies': [{'taxon': 'a', 'occurrences': [{'horizon': 'h'}, {'locality': 'l'}]}],
+  }
+  assert material.unreferenced_file_records(document) == []
+
+
+def test_unreferenced_file_records_all_referenced_is_quiet():
+  document = {
+    'horizons': {'used': {}},
+    'taxonomies': [{'taxon': 'a', 'material': [{'label': 'A', 'horizon': 'used'}]}],
+  }
+  assert material.unreferenced_file_records(document) == []
 
 
 # -- figure_refs ---------------------------------------------------------------
@@ -486,7 +611,7 @@ def test_cast_refs_absent_castof_and_absent_material_are_quiet():
 # -- null_material --------------------------------------------------------------
 
 
-@pytest.mark.parametrize('field', ['material', 'contexts', 'ranges'])
+@pytest.mark.parametrize('field', ['material', 'occurrences', 'ranges'])
 def test_null_material_cited_entry_with_any_field_is_error(field):
   node = {field: None}
   assert material.null_material(node, is_cited=True) == [
@@ -494,8 +619,18 @@ def test_null_material_cited_entry_with_any_field_is_error(field):
   ]
 
 
+@pytest.mark.parametrize('field', ['horizons', 'localities'])
+def test_null_material_cited_entry_with_a_record_map_is_error(field):
+  # The cited work's own horizons and localities are not this source's.
+  node = {field: {'x': {'unit': ['A']}}}
+  assert material.null_material(node, is_cited=True) == [
+    ('error', f'cited entry carries `{field}`'),
+  ]
+  assert material.null_material(node, is_cited=False) == []
+
+
 def test_null_material_not_cited_is_quiet():
-  node = {'material': None, 'illustrations': None, 'contexts': None, 'ranges': None}
+  node = {'material': None, 'illustrations': None, 'occurrences': None, 'ranges': None}
   assert material.null_material(node, is_cited=False) == []
 
 
@@ -717,46 +852,59 @@ def test_walk_document_ignores_non_dict_and_absent_axes():
   assert list(material.walk_document({'taxonomies': [None]})) == []
 
 
-# -- Tree.file_contexts / file_unused / contexts / context_scopes -------------
+# -- Tree.file_horizons / file_localities / file_unused / horizons / localities -
 
 
-def test_tree_file_contexts_and_unused_read_from_root_metadata(records):
+def test_tree_file_records_and_unused_read_from_root_metadata(records):
   # No `taxon` field: only a registered source is needed (`Tree` hashes by
   # it), which the corpus provides for source key '1961_dehm'.
   metadata = {
     'source_key': '1961_dehm',
     'position': 900,
     'type': 'taxonomy',
-    'file_contexts': {'loc': {}},
+    'file_horizons': {'loc': {}},
+    'file_localities': {'site': {}},
     'file_unused': ('ranges',),
   }
   root = Tree({'children': [{}]}, metadata, corpus=records)
-  assert root.file_contexts == {'loc': {}}
+  assert root.file_horizons == {'loc': {}}
+  assert root.file_localities == {'site': {}}
   assert root.file_unused == ('ranges',)
   child = root.children[0]
-  assert child.file_contexts == {'loc': {}}
+  assert child.file_horizons == {'loc': {}}
+  assert child.file_localities == {'site': {}}
   assert child.file_unused == ('ranges',)
 
 
-def test_tree_contexts_merge_node_over_file_with_scope_map(records):
+def test_tree_records_merge_node_over_file_with_scope(records):
   metadata = {
     'source_key': '1961_dehm',
     'position': 901,
     'type': 'taxonomy',
-    'file_contexts': {'loc': {'unit': ['a']}, 'file-only': {}},
+    'file_horizons': {'loc': {'unit': ['a']}, 'file-only': {}},
+    'file_localities': {'loc': {'location': ['a']}, 'site': {}},
   }
-  root = Tree({'contexts': {'loc': {'unit': ['b']}}}, metadata, corpus=records)
-  assert root.contexts == {'loc': {'unit': ['b']}, 'file-only': {}}
-  assert root.context_scopes == {'loc': 'node', 'file-only': 'file'}
+  root = Tree(
+    {'horizons': {'loc': {'unit': ['b']}}, 'localities': {'new': {'location': ['c']}}},
+    metadata,
+    corpus=records,
+  )
+  assert root.horizons == {'loc': {'unit': ['b']}, 'file-only': {}}
+  assert root.localities == {'loc': {'location': ['a']}, 'site': {}, 'new': {'location': ['c']}}
+  assert root.record_scope('horizons', 'loc') == 'node'
+  assert root.record_scope('horizons', 'file-only') == 'file'
+  # The same key on the other side is its own record.
+  assert root.record_scope('localities', 'loc') == 'file'
+  assert root.record_scope('localities', 'new') == 'node'
 
 
-def test_tree_file_contexts_defaults_when_absent(records):
+def test_tree_file_records_default_when_absent(records):
   metadata = {'source_key': '1961_dehm', 'position': 902, 'type': 'taxonomy'}
   root = Tree({}, metadata, corpus=records)
-  assert root.file_contexts == {}
+  assert root.file_horizons == {} and root.file_localities == {}
   assert root.file_unused == ()
-  assert root.contexts == {}
-  assert root.context_scopes == {}
+  assert root.horizons == {} and root.localities == {}
+  assert root.record_scope('horizons', 'x') == 'file'
 
 
 def test_source_year_puts_a_work_in_preparation_last():
@@ -777,7 +925,7 @@ def test_load_reports_material_checks_at_the_right_level(records, caplog):
     'repositories': {'gm': _entry('GM'), 'cyc': _entry('CYC', within='cyc')},
     'trees': {
       '_synthetic_source': {
-        'contexts': {'stray': {}},
+        'horizons': {'stray': {}},
         'unused': ['ranges'],
         'prefixes': {'GM': 'gm'},
         'taxonomies': [
@@ -785,12 +933,12 @@ def test_load_reports_material_checks_at_the_right_level(records, caplog):
             'taxon': 'cyathocystis',
             'ranges': None,
             'material': [
-              {'prefix': 'GM', 'numbers': [1], 'context': 'missing-ctx'},
+              {'prefix': 'GM', 'numbers': [1], 'horizon': 'missing-ctx'},
               {'prefix': 'GM', 'numbers': [3], 'castOf': 2},
               {'numbers': [4], 'repository': 'nowhere'},
             ],
             'illustrations': [{'plate': 1, 'of': 'nope'}],
-            'synonyms': [{'taxon': 'cyathocystis', 'contexts': None}],
+            'synonyms': [{'taxon': 'cyathocystis', 'occurrences': None}],
           },
         ],
       },
@@ -800,11 +948,11 @@ def test_load_reports_material_checks_at_the_right_level(records, caplog):
     _report_material(support.with_documents(records, data))
   warnings = [r.getMessage() for r in caplog.records if r.levelno == logging.WARNING]
   errors = [r.getMessage() for r in caplog.records if r.levelno == logging.ERROR]
-  assert any('_synthetic_source' in m and 'context "stray"' in m for m in warnings)
+  assert any('_synthetic_source' in m and 'horizon "stray"' in m for m in warnings)
   assert any('`ranges` is listed as `unused`' in m for m in errors)
-  assert any('context "missing-ctx" is not defined' in m for m in errors)
+  assert any('horizon "missing-ctx" is not defined' in m for m in errors)
   assert any('figure "of" value "nope"' in m for m in errors)
-  assert any('cited entry carries `contexts`' in m for m in errors)
+  assert any('cited entry carries `occurrences`' in m for m in errors)
   assert any('castOf "2" matches 0' in m for m in errors)
   assert any('repositories: `within` cycles: cyc -> cyc' in m for m in errors)
   assert any(
@@ -814,17 +962,20 @@ def test_load_reports_material_checks_at_the_right_level(records, caplog):
   assert sum('repository "nowhere"' in m for m in errors) == 1
 
 
-def test_load_reports_tentative_on_ranges_and_contexts(records, caplog):
+def test_load_reports_tentative_on_ranges_horizons_and_localities(records, caplog):
   from phylohist.loader.load import _report_material
 
   data = {
     'trees': {
       '_synthetic_source': {
-        'contexts': {'f': {'biozone': 'X', 'tentative': True}},
+        'horizons': {'f': {'biozone': 'X', 'tentative': True}},
+        'localities': {'g': {'location': ['Q'], 'tentative': True}},
         'taxonomies': [
           {
             'taxon': 'a',
-            'contexts': {'n': {'tentative': ['biozone']}},
+            'horizons': {'n': {'tentative': ['biozone']}},
+            'localities': {'m': {'tentative': ['location']}},
+            'occurrences': [{'horizon': 'n', 'locality': 'm'}, {'horizon': 'f', 'locality': 'g'}],
             'ranges': [{'period': 'Y', 'tentative': ['series']}],
           },
         ],
@@ -834,13 +985,111 @@ def test_load_reports_tentative_on_ranges_and_contexts(records, caplog):
   with caplog.at_level(logging.ERROR, logger='phylohist'):
     _report_material(support.with_documents(records, data))
   errors = [r.getMessage() for r in caplog.records if r.levelno == logging.ERROR]
-  assert any(m.startswith('_synthetic_source: context "f": a file-level context') for m in errors)
+  assert any(m.startswith('_synthetic_source: horizon "f": a file-level horizon') for m in errors)
+  assert any(m.startswith('_synthetic_source: locality "g": a file-level locality') for m in errors)
   assert any(
-    m.startswith('_synthetic_source at 0: context "n": `tentative` names `biozone`') for m in errors
+    m.startswith('_synthetic_source at 0: horizon "n": `tentative` names `biozone`') for m in errors
+  )
+  assert any(
+    m.startswith('_synthetic_source at 0: locality "m": `tentative` names `location`')
+    for m in errors
   )
   assert any(
     m.startswith('_synthetic_source at 0: `tentative` names `series`, which the range')
     for m in errors
+  )
+
+
+def test_load_reports_the_occurrence_checks(records, caplog):
+  from phylohist.loader.load import _report_material
+
+  data = {
+    'trees': {
+      '_synthetic_source': {
+        'horizons': {'shared': {'unit': ['A']}, 'file-stray': {'unit': ['B']}},
+        'localities': {'shared': {'location': ['C']}},
+        'taxonomies': [
+          {
+            'taxon': 'a',
+            # Each side shadows the file's, and a node record nothing refers to.
+            'horizons': {'shared': {'unit': ['A2']}, 'stray-h': {'unit': ['D']}},
+            'localities': {'shared': {'location': ['C2']}, 'stray-l': {'location': ['E']}},
+            'material': [
+              {
+                'label': 'A',
+                'horizon': 'shared',
+                'locality': 'shared',
+                'tentative': ['horizon', 'locality'],
+              },
+              {'label': 'B', 'horizon': 'shared', 'tentative': ['locality']},
+            ],
+            'occurrences': [{'horizon': 'shared', 'tentative': ['locality']}],
+          },
+          {'taxon': 'b', 'occurrences': [{'locality': 'nowhere'}]},
+        ],
+      },
+    },
+  }
+  with caplog.at_level(logging.WARNING, logger='phylohist'):
+    _report_material(support.with_documents(records, data))
+  warnings = [r.getMessage() for r in caplog.records if r.levelno == logging.WARNING]
+  errors = [r.getMessage() for r in caplog.records if r.levelno == logging.ERROR]
+  assert (
+    '_synthetic_source at 0: horizon "shared" on the node shadows a file-level horizon' in warnings
+  )
+  assert (
+    '_synthetic_source at 0: locality "shared" on the node shadows a file-level locality'
+    in warnings
+  )
+  assert (
+    '_synthetic_source at 0: horizon "stray-h" is defined on the node and referred to by '
+    'nothing on it' in errors
+  )
+  assert (
+    '_synthetic_source at 0: locality "stray-l" is defined on the node and referred to by '
+    'nothing on it' in errors
+  )
+  tentative = '`tentative` names `locality`, which the entry does not carry'
+  assert sum(m == f'_synthetic_source at 0: {tentative}' for m in errors) == 2
+  assert (
+    '_synthetic_source at 1: locality "nowhere" is not defined on the node or the file' in errors
+  )
+  # The file-level `file-stray` horizon nothing refers to is a warning.
+  assert any('horizon "file-stray" is defined but referred to by no entry' in m for m in warnings)
+
+
+def test_load_reports_editorial_inferred_naming_an_absent_field(records, caplog):
+  from phylohist.loader.load import _report_material
+
+  data = {
+    'trees': {
+      '_synthetic_source': {
+        'horizons': {'f': {'unit': ['A'], 'editorial': {'inferred': ['stage']}}},
+        'taxonomies': [
+          {
+            'taxon': 'a',
+            'localities': {'n': {'location': ['B'], 'editorial': {'inferred': ['mapSheet']}}},
+            'occurrences': [{'horizon': 'f', 'locality': 'n'}],
+            'ranges': [{'period': 'Cambrian', 'editorial': {'inferred': ['series']}}],
+          },
+        ],
+      },
+    },
+  }
+  with caplog.at_level(logging.ERROR, logger='phylohist'):
+    _report_material(support.with_documents(records, data))
+  errors = [r.getMessage() for r in caplog.records if r.levelno == logging.ERROR]
+  assert (
+    '_synthetic_source: horizon "f": `editorial.inferred` names `stage`, which the horizon '
+    'does not carry' in errors
+  )
+  assert (
+    '_synthetic_source at 0: locality "n": `editorial.inferred` names `mapSheet`, which the '
+    'locality does not carry' in errors
+  )
+  assert (
+    '_synthetic_source at 0: `editorial.inferred` names `series`, which the range does not '
+    'carry' in errors
   )
 
 
@@ -889,13 +1138,16 @@ def test_check_draft_exits_one_on_material_null_on_a_cited_entry(tmp_path):
 def test_check_draft_exits_one_on_a_tentative_naming_an_absent_field(tmp_path):
   draft = tmp_path / '1898_bather.yaml'
   draft.write_text(
-    'contexts:\n  f:\n    tentative: true\n'
+    'horizons:\n  f:\n    tentative: true\n'
+    'localities:\n  g:\n    tentative: true\n'
     'taxonomies:\n- taxon: cyathocystis\n'
+    '  occurrences:\n  - {horizon: f, locality: g}\n'
     '  ranges:\n  - period: Cambrian\n    tentative: [series]\n',
   )
   result = _run_check_draft(draft)
   assert result.returncode == 1, result.stdout + result.stderr
-  assert 'a file-level context cannot be `tentative: true`' in result.stdout
+  assert 'a file-level horizon cannot be `tentative: true`' in result.stdout
+  assert 'a file-level locality cannot be `tentative: true`' in result.stdout
   assert '`tentative` names `series`, which the range does not carry' in result.stdout
 
 
@@ -970,9 +1222,10 @@ def test_check_draft_exits_one_on_a_cited_entrys_node_level_pages(tmp_path):
 
 def test_check_draft_warns_on_a_locality_number_with_no_register_and_is_quiet_with_one(tmp_path):
   body = (
-    'contexts:\n  a:\n    localityNumbers: [{number: SH-1}]\n'
-    'taxonomies:\n- taxon: cyathocystis\n  contexts:\n    b:\n'
+    'localities:\n  a:\n    localityNumbers: [{number: SH-1}]\n'
+    'taxonomies:\n- taxon: cyathocystis\n  localities:\n    b:\n'
     '      localityNumbers: [{number: IK-3}]\n'
+    '  occurrences:\n  - {locality: a}\n  - {locality: b}\n'
   )
   draft = tmp_path / '1898_bather.yaml'
   draft.write_text(body)
@@ -1120,7 +1373,7 @@ def test_file_prefixes_clean_file_is_quiet(numbered):
     {'prefix': 'MCZ', 'numbers': [1]},
     {'prefix': 'F.', 'numbers': [2]},
     {'prefix': 'EE', 'numbers': [3]},
-    contexts={'a': {'localityNumbers': [{'prefix': 'USGS', 'number': 1}]}},
+    localities={'a': {'localityNumbers': [{'prefix': 'USGS', 'number': 1}]}},
     localityRegister='usgs-l',
   )
   assert material.file_prefixes(document, numbered) == []
@@ -1139,7 +1392,7 @@ def test_file_prefixes_a_prefix_nothing_uses_is_error(numbered):
     {'MCZ': 'mcz', 'GM': 'gm', 'USGS': 'usgs-l', 'NMV': 'gm'},
     {'prefix': 'MCZ', 'numbers': [1]},
   )
-  document['taxonomies'][0]['contexts'] = {
+  document['taxonomies'][0]['localities'] = {
     'b': {'localityNumbers': [{'prefix': 'USGS', 'number': 1}]}
   }
   assert [m for _, m in material.file_prefixes(document, numbered)] == [
@@ -1192,7 +1445,7 @@ def test_file_prefixes_locality_register_must_be_a_registry_key(numbered):
 
 
 def test_locality_objects(numbered):
-  contexts = {
+  localities = {
     'a': {
       'localityNumbers': [
         {'number': 'FC-2'},
@@ -1205,13 +1458,15 @@ def test_locality_objects(numbered):
     'b': None,
   }
   prefixes = {'USGS': 'usgs-l'}
-  assert material.locality_objects(contexts, prefixes, None, numbered) == [
+  assert material.locality_objects(localities, prefixes, None, numbered) == [
     ('warning', 'locality number "FC-2" has no register'),
     ('error', 'prefix "ZZ" is not in the file\'s `prefixes` map'),
     ('error', 'locality register "nope-l" is not a key of the registry'),
   ]
   # A file `localityRegister` gives the bare number its register.
-  assert [m for _, m in material.locality_objects(contexts, prefixes, 'sprinkle-l', numbered)] == [
+  assert [
+    m for _, m in material.locality_objects(localities, prefixes, 'sprinkle-l', numbered)
+  ] == [
     'prefix "ZZ" is not in the file\'s `prefixes` map',
     'locality register "nope-l" is not a key of the registry',
   ]
@@ -1328,7 +1583,7 @@ def test_schema_accepts_the_new_shape():
     {'prefix': 'USNM', 'repository': 'usnm-walcott', 'numbers': [1], 'castOf': 5, 'fragmentOf': 6},
     prefixes={'MCZ': 'mcz', 'GSC': 'gsc', 'USNM': 'usnm'},
     localityRegister='sprinkle-l',
-    contexts={
+    localities={
       'a': {
         'localityNumbers': [
           {'number': 'FC-1'},
@@ -1376,16 +1631,104 @@ def test_schema_rejects_a_malformed_or_mixed_entry(entry):
     {'prefixes': ['MCZ']},
     {'localityRegister': ['sprinkle-l']},
     {'repositories': ['mcz']},
-    {'contexts': {'a': {'localityNumbers': ['USGS 1']}}},
-    {'contexts': {'a': {'localityNumbers': [{'prefix': 'A'}]}}},
-    {'contexts': {'a': {'localityNumbers': [{'number': 1, 'prefix': 'A', 'register': 'usgs-l'}]}}},
-    {'contexts': {'a': {'localityNumbers': [{'number': 1, 'other': 'x'}]}}},
-    {'contexts': {'a': {'localityNumbers': [{'number': 1, 'prefix': ''}]}}},
-    {'contexts': {'a': {'localityNumbers': [{'number': 1, 'register': 'Not A Key'}]}}},
+    {'localities': {'a': {'localityNumbers': ['USGS 1']}}},
+    {'localities': {'a': {'localityNumbers': [{'prefix': 'A'}]}}},
+    {
+      'localities': {'a': {'localityNumbers': [{'number': 1, 'prefix': 'A', 'register': 'usgs-l'}]}}
+    },
+    {'localities': {'a': {'localityNumbers': [{'number': 1, 'other': 'x'}]}}},
+    {'localities': {'a': {'localityNumbers': [{'number': 1, 'prefix': ''}]}}},
+    {'localities': {'a': {'localityNumbers': [{'number': 1, 'register': 'Not A Key'}]}}},
   ],
 )
 def test_schema_rejects_a_malformed_prefix_map_or_locality_number(extra):
   assert not _schema_accepts(_numbers_document({'label': 'A'}, **extra))
+
+
+def _node_document(node, **extra):
+  return {'taxonomies': [{'taxon': 'cyathocystis', **node}], **extra}
+
+
+def test_schema_accepts_horizons_localities_occurrences_and_tentative_lists():
+  document = _node_document(
+    {
+      'horizons': {
+        'h': {
+          'unit': ['Wheeler Shale'],
+          'stage': 'Drumian',
+          'biozone': 'X',
+          'tentative': ['biozone'],
+          'editorial': {'inferred': ['stage'], 'basis': 'The formation is Drumian.'},
+        }
+      },
+      'localities': {
+        'l': {
+          'location': ['Quarry Road'],
+          'localityNumbers': [{'number': 'SH-1'}],
+          'tentative': True,
+          'editorial': {'inferred': ['location'], 'basis': 'The map sheet names it.'},
+        }
+      },
+      'occurrences': [
+        {'horizon': 'h', 'locality': 'l', 'tentative': ['locality'], 'notes': 'x'},
+        {'horizon': 'h'},
+        {'locality': 'l'},
+      ],
+      'material': [
+        {'label': 'A', 'horizon': 'h', 'locality': 'l', 'tentative': ['horizon', 'locality']},
+        {'label': 'B', 'locality': 'l', 'tentative': ['locality']},
+      ],
+      'ranges': [
+        {
+          'series': 'Middle Cambrian',
+          'editorial': {'inferred': ['series'], 'basis': 'Dated by zone.'},
+        }
+      ],
+    },
+    horizons={'fh': {'unit': ['A']}},
+    localities={'fl': {'location': ['B']}},
+  )
+  assert _schema_accepts(document)
+  assert _schema_accepts(_node_document({'occurrences': None}))
+  assert _schema_accepts(_node_document({'material': [{'label': 'A'}]}, unused=['occurrences']))
+
+
+@pytest.mark.parametrize(
+  'document',
+  [
+    # The one `context` record, on an entry and on a node and a file, is gone.
+    _node_document({'material': [{'label': 'A', 'context': 'x'}]}),
+    _node_document({'material': [{'label': 'A', 'context': {'key': 'x', 'tentative': True}}]}),
+    _node_document({'contexts': {'x': {'unit': ['A']}}}),
+    _node_document({'contexts': None}),
+    _node_document({}, contexts={'x': {'unit': ['A']}}),
+    _node_document({}, unused=['contexts']),
+    # An occurrence names a horizon, a locality or both.
+    _node_document({'occurrences': [{}]}),
+    _node_document({'occurrences': [{'notes': 'x'}]}),
+    _node_document({'occurrences': [{'tentative': ['horizon']}]}),
+    _node_document({'occurrences': [{'horizon': 'h', 'unit': ['A']}]}),
+    # `tentative` on an entry or an occurrence names a side, nothing else.
+    _node_document({'material': [{'label': 'A', 'horizon': 'h', 'tentative': ['role']}]}),
+    _node_document({'material': [{'label': 'A', 'horizon': 'h', 'tentative': True}]}),
+    _node_document({'occurrences': [{'horizon': 'h', 'tentative': ['unit']}]}),
+    _node_document({'occurrences': [{'horizon': 'h', 'tentative': ['horizon', 'horizon']}]}),
+    # The entry's plain keys are strings, not the old object.
+    _node_document({'material': [{'label': 'A', 'horizon': {'key': 'h'}}]}),
+    _node_document({'material': [{'label': 'A', 'locality': ['l']}]}),
+    # The bare `inferred` object is gone from a range, a horizon and a locality.
+    _node_document(
+      {'ranges': [{'series': 'Middle Cambrian', 'inferred': {'series': 'Middle Cambrian'}}]}
+    ),
+    _node_document({'horizons': {'h': {'unit': ['A'], 'inferred': {'stage': 'Drumian'}}}}),
+    _node_document({'localities': {'l': {'location': ['A'], 'inferred': {'location': ['B']}}}}),
+    # A horizon has no place and a locality has no unit.
+    _node_document({'horizons': {'h': {'location': ['A']}}}),
+    _node_document({'localities': {'l': {'unit': ['A']}}}),
+  ],
+)
+def test_schema_rejects_the_old_context_shape_and_a_malformed_occurrence(document):
+  assert not _schema_accepts(document)
 
 
 # -- Tree metadata, the loader and the draft checker ---------------------------
@@ -1417,7 +1760,7 @@ def test_load_reports_the_new_shape_checks(records, caplog):
     'trees': {
       '_synthetic_source': {
         'prefixes': {'MCZ': 'mcz', 'GM': 'mcz', 'USGS': 'usgs-l'},
-        'contexts': {'f': {'localityNumbers': [{'prefix': 'QQ', 'number': 1}]}},
+        'localities': {'f': {'localityNumbers': [{'prefix': 'QQ', 'number': 1}]}},
         'taxonomies': [
           {
             'taxon': 'a',
@@ -1426,9 +1769,10 @@ def test_load_reports_the_new_shape_checks(records, caplog):
               {'prefix': 'ZZ', 'numbers': [2]},
               {'numbers': [3]},
             ],
-            'contexts': {
+            'localities': {
               'n': {'localityNumbers': [{'number': 'FC-1'}, {'prefix': 'USGS', 'number': 1}]}
             },
+            'occurrences': [{'locality': 'n'}, {'locality': 'f'}],
           },
         ],
       },
@@ -1447,7 +1791,7 @@ def test_load_reports_the_new_shape_checks(records, caplog):
   assert '_synthetic_source at 0: prefix "ZZ" is not in the file\'s `prefixes` map' in errors
   assert '_synthetic_source at 0: numbers with no prefix, repository or holder' in errors
   assert '_synthetic_source: prefix "QQ" is not in the file\'s `prefixes` map' in errors
-  # The file's own contexts are read as a file: no `localityRegister`, no prefix.
+  # The file's own localities are read as a file: no `localityRegister`, no prefix.
   assert not any('resolves to no locality register' in m for m in warnings)
 
 
@@ -1456,8 +1800,8 @@ def test_check_draft_reports_the_new_shape_checks(tmp_path):
   draft.write_text(
     'prefixes:\n  MCZ: mcz\n  XX: usnm\n'
     'localityRegister: sprinkle-l\n'
-    'contexts:\n  a:\n    localityNumbers:\n    - {number: FC-1}\n    - {prefix: ZZ, number: 1}\n'
-    'taxonomies:\n- taxon: cyathocystis\n  material:\n'
+    'localities:\n  a:\n    localityNumbers:\n    - {number: FC-1}\n    - {prefix: ZZ, number: 1}\n'
+    'taxonomies:\n- taxon: cyathocystis\n  occurrences:\n  - {locality: a}\n  material:\n'
     '  - {prefix: MCZ, numbers: [581A]}\n  - {numbers: [3]}\n  - {prefix: QQ, numbers: [4]}\n'
   )
   result = _run_check_draft(draft)
@@ -1477,9 +1821,9 @@ def test_check_draft_is_quiet_on_a_clean_new_shape_draft(tmp_path):
   draft = tmp_path / '1898_bather.yaml'
   draft.write_text(
     'prefixes:\n  MCZ: mcz\n  USGS: usgs-l\n'
-    'contexts:\n  a:\n    localityNumbers:\n    - {prefix: USGS, number: 4148 CO}\n'
+    'localities:\n  a:\n    localityNumbers:\n    - {prefix: USGS, number: 4148 CO}\n'
     'taxonomies:\n- taxon: cyathocystis\n  material:\n'
-    '  - {prefix: MCZ, numbers: [581A, [1, 5]], context: a}\n'
+    '  - {prefix: MCZ, numbers: [581A, [1, 5]], locality: a}\n'
     '  - {holder: A. R. Palmer, numbers: [500]}\n'
   )
   result = _run_check_draft(draft)

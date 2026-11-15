@@ -15,7 +15,7 @@ taxonomies:
         illustrations:
         - plate: XI
           figures: 5
-        contexts:
+        localities:
           the-falls-of-the-chaudi-re:
             location:
             - the falls of the Chaudière
@@ -23,6 +23,8 @@ taxonomies:
             - Lower Canada
             - Canada
             notes: Specimen from the plates.
+        occurrences:
+        - locality: the-falls-of-the-chaudi-re
   - taxon: crinoidea-family
   - taxon: blastoidea-family
     authority:

@@ -997,9 +997,14 @@ class Tree:
     return self.root._metadata.get('notes')
 
   @property
-  def file_contexts(self):
-    """This node's tree file's own `contexts`, shared by every node in it."""
-    return self.root._metadata.get('file_contexts') or {}
+  def file_horizons(self):
+    """This node's tree file's own `horizons`, shared by every node in it."""
+    return self.root._metadata.get('file_horizons') or {}
+
+  @property
+  def file_localities(self):
+    """This node's tree file's own `localities`, shared by every node in it."""
+    return self.root._metadata.get('file_localities') or {}
 
   @property
   def file_unused(self):
@@ -1017,18 +1022,21 @@ class Tree:
     return self.root._metadata.get('file_locality_register')
 
   @cached_property
-  def contexts(self):
-    """This node's own `contexts` merged over the file's, the node
-    winning a key both define."""
-    return {**self.file_contexts, **(self._data.get('contexts') or {})}
+  def horizons(self):
+    """This node's own `horizons` merged over the file's, the node winning
+    a key both define."""
+    return {**self.file_horizons, **(self._data.get('horizons') or {})}
 
   @cached_property
-  def context_scopes(self):
-    """Which scope (`'file'` or `'node'`) each key of `contexts` came
-    from."""
-    scopes = {key: 'file' for key in self.file_contexts}
-    scopes.update({key: 'node' for key in (self._data.get('contexts') or {})})
-    return scopes
+  def localities(self):
+    """This node's own `localities` merged over the file's, the node
+    winning a key both define."""
+    return {**self.file_localities, **(self._data.get('localities') or {})}
+
+  def record_scope(self, plural, key):
+    """Which scope (`'file'` or `'node'`) the key of `horizons` or
+    `localities` (`plural`) is read from on this node."""
+    return 'node' if key in (self._data.get(plural) or {}) else 'file'
 
   @property
   def bracket_start(self):

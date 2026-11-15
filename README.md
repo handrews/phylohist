@@ -112,7 +112,7 @@ on the work that really requires a model's reasoning and flexibility.
 - **The data.** The curator records each publication's opinions as
   printed: who published what systematic information in which paper.
   That is names and nomenclatural acts, placements, usages and
-  synonymies, the specimens they rest on with their geological context,
+  synonymies, the specimens they rest on with their horizon and locality,
   and the page, plate and figure numbers that locate each of these. It
   is not diagnoses, descriptions or a narration of the paper; a
   researcher who wants those follows the citation to the paper itself.

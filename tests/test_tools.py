@@ -833,10 +833,11 @@ def test_material_words(store):
       repositoryVia='explicit',
       preparation='latex cast',
       castOf='XYZ 2',
-      contextKey='quarry',
-      contextTentative=True,
+      horizonKey='quarry',
+      localityKey='pit',
+      tentativeFields=['horizon', 'locality'],
     )
-    == 'specimens: XYZ 1 (latex cast) cast of XYZ 2 [nhmuk] (quarry?)'
+    == 'specimens: XYZ 1 (latex cast) cast of XYZ 2 [nhmuk] (horizon quarry?) (locality pit?)'
   )
   assert (
     material(
@@ -845,7 +846,7 @@ def test_material_words(store):
       numbers=[1707],
       castOf={'number': 112, 'prefix': 'GTB'},
       fragmentOf={'label': 'the slab'},
-      contextKey='balang-wuliu',
+      horizonKey='balang-wuliu',
       localityNumbers=[{'prefix': 'GTB', 'number': '24-60a'}, {'number': 'X-1'}],
     )
     == 'specimens: GK 1707 cast of GTB 112 fragment of the slab (locality GTB 24-60a, X-1)'
@@ -856,30 +857,47 @@ def test_material_words(store):
   assert (
     material(
       'occurrence',
-      contextKey='quarry',
-      occurrence={'stage': 'Telychian', 'unit': ['Cybèle Member'], 'localityNumbers': ['SH-1']},
+      horizonKey='telychian-bed',
+      localityKey='quarry',
+      occurrence={
+        'horizon': {'stage': 'Telychian', 'unit': ['Cybèle Member']},
+        'locality': {'location': ['Quarry Road'], 'localityNumbers': ['SH-1']},
+      },
     )
-    == 'occurrence quarry: Telychian; Cybèle Member; SH-1'
+    == 'occurrence telychian-bed, quarry: Telychian; Cybèle Member; Quarry Road; SH-1'
   )
-  assert material('occurrence', contextKey='bare', occurrence={'notes': 'none'}) == (
+  # One side alone names only its own key.
+  assert (
+    material(
+      'occurrence',
+      localityKey='quarry',
+      occurrence={'locality': {'location': ['Quarry Road']}},
+    )
+    == 'occurrence quarry: Quarry Road'
+  )
+  assert material('occurrence', horizonKey='bare', occurrence={'horizon': {'notes': 'none'}}) == (
     'occurrence bare'
   )
   assert (
     material(
       'occurrence',
-      contextKey='sh-1',
+      horizonKey='sh-1',
       occurrence={
-        'period': 'Cambrian',
-        'localSeries': 'Lower Cambrian',
-        'localSeriesModifier': 'upper',
-        'stage': 'Wuliuan',
-        'stageModifier': 'lower',
-        'biozoneRange': ['Olenellus', 'Bonnia'],
+        'horizon': {
+          'period': 'Cambrian',
+          'localSeries': 'Lower Cambrian',
+          'localSeriesModifier': 'upper',
+          'stage': 'Wuliuan',
+          'stageModifier': 'lower',
+          'biozoneRange': ['Olenellus', 'Bonnia'],
+        }
       },
     )
     == 'occurrence sh-1: lower Wuliuan; Cambrian; upper Lower Cambrian; Olenellus, Bonnia'
   )
-  assert material('occurrence', occurrence={'localStageModifier': 'lower'}) == ('occurrence: lower')
+  assert material('occurrence', occurrence={'horizon': {'localStageModifier': 'lower'}}) == (
+    'occurrence: lower'
+  )
   assert (
     material(
       'illustration',
@@ -915,12 +933,14 @@ def test_material_words(store):
   assert (
     material(
       'occurrence',
-      contextKey='sh-1',
+      horizonKey='sh-1',
       occurrence={
-        'localSeries': 'Lower Cambrian',
-        'localSeriesModifier': 'upper',
-        'period': 'Cambrian',
-        'tentative': ['localSeries'],
+        'horizon': {
+          'localSeries': 'Lower Cambrian',
+          'localSeriesModifier': 'upper',
+          'period': 'Cambrian',
+          'tentative': ['localSeries'],
+        }
       },
     )
     == 'occurrence sh-1: Cambrian; ?upper Lower Cambrian'
@@ -951,11 +971,13 @@ def test_material_words(store):
   assert (
     material(
       'occurrence',
-      contextKey='ik-3',
+      horizonKey='ik-3',
       occurrence={
-        'unit': ['Antelope Valley Fm.'],
-        'biozone': 'Orthidiella',
-        'tentative': ['biozone'],
+        'horizon': {
+          'unit': ['Antelope Valley Fm.'],
+          'biozone': 'Orthidiella',
+          'tentative': ['biozone'],
+        }
       },
     )
     == 'occurrence ik-3: Antelope Valley Fm.; ?Orthidiella'
@@ -966,11 +988,65 @@ def test_material_words(store):
   )
   assert material('range', range={'tentative': True}) == 'range?'
   assert (
-    material('occurrence', contextKey='x', occurrence={'period': 'Silurian', 'tentative': True})
+    material(
+      'occurrence',
+      horizonKey='x',
+      occurrence={'horizon': {'period': 'Silurian', 'tentative': True}},
+    )
     == 'occurrence x?: Silurian'
   )
-  assert material('occurrence', occurrence={'period': 'Silurian', 'tentative': True}) == (
-    'occurrence?: Silurian'
+  assert material(
+    'occurrence', occurrence={'horizon': {'period': 'Silurian', 'tentative': True}}
+  ) == ('occurrence: Silurian')
+  # A side queried as a whole, on the occurrence, marks its own key only.
+  assert (
+    material(
+      'occurrence',
+      horizonKey='x',
+      localityKey='y',
+      tentativeFields=['locality'],
+      occurrence={'horizon': {'period': 'Silurian'}, 'locality': {'location': ['Gotland']}},
+    )
+    == 'occurrence x, y?: Silurian; Gotland'
+  )
+  assert (
+    material(
+      'occurrence',
+      horizonKey='x',
+      localityKey='y',
+      tentativeFields=['horizon', 'locality'],
+      occurrence={'horizon': {'period': 'Silurian'}, 'locality': {'location': ['Gotland']}},
+    )
+    == 'occurrence x?, y?: Silurian; Gotland'
+  )
+  # What the editor inferred is named, with the basis, for a rendered field.
+  assert (
+    material(
+      'occurrence',
+      horizonKey='x',
+      occurrence={
+        'horizon': {
+          'stage': 'Telychian',
+          'unit': ['Cybèle Member'],
+          'editorial': {'inferred': ['stage'], 'basis': 'The member is Telychian.'},
+        }
+      },
+    )
+    == 'occurrence x: Telychian; Cybèle Member'
+    ' (stage inferred by the editor: The member is Telychian.)'
+  )
+  assert (
+    material(
+      'occurrence',
+      localityKey='y',
+      occurrence={
+        'locality': {
+          'location': ['Gotland'],
+          'editorial': {'inferred': ['location', 'paleocontinent']},
+        }
+      },
+    )
+    == 'occurrence y: Gotland (location inferred by the editor)'
   )
 
 
@@ -985,7 +1061,8 @@ def test_queried_values_of_sprinkle_1973_print_the_question_mark(store):
   # A locality's queried biozone ("Orthidiella(?) zone").
   block = store.statements('nevadensis_sprinkle_1973', source='1973_sprinkle', kind='occurrences')
   assert any(
-    'occurrence ik-3:' in line and '; ?Orthidiella;' in line for line in _rendered_lines(block)
+    'occurrence antelope-valley-fm-zone-queried, ik-3:' in line and '; ?Orthidiella;' in line
+    for line in _rendered_lines(block)
   )
 
 
