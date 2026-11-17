@@ -5,7 +5,7 @@ The loader (`load.py`) and `scripts/check_draft.py` run the checks of
 table reaches both; what each check reports is in its own docstring. An
 entry is a check and the names of its arguments in a scope: `file_scope`
 describes a tree file, and `node_messages` adds each node, whether it is a
-cited entry, and its own `contexts` and `material`. The loader runs
+cited entry, and its own horizons, localities and `material`. The loader runs
 `FILE_CHECKS` and `MATERIAL_CHECKS` in one pass and `NOMENCLATURE_CHECKS` in
 a second; a draft runs the `DRAFT_` tables, which add the checks only a
 draft needs: the pairing of bracket and section markers, which the loader
@@ -18,24 +18,24 @@ caller makes them itself.
 from . import material, nomenclature
 
 FILE_CHECKS = (
-  (material.unreferenced_file_contexts, ('document',)),
+  (material.unreferenced_file_records, ('document',)),
   (material.unused_fields, ('document',)),
   (material.file_prefixes, ('document', 'repositories')),
   (
     material.locality_objects,
-    ('file_contexts', 'file_prefixes', 'locality_register', 'repositories'),
+    ('file_localities', 'file_prefixes', 'locality_register', 'repositories'),
   ),
-  (material.context_tentatives, ('file_contexts', 'file_level')),
+  (material.record_tentatives, ('file_records', 'file_level')),
 )
 MATERIAL_CHECKS = (
-  (material.context_refs, ('node', 'node_contexts', 'file_contexts')),
+  (material.occurrence_refs, ('node', 'node_records', 'file_records')),
   (material.figure_refs, ('node', 'is_cited')),
   (material.number_entries, ('node', 'file_prefixes', 'repositories')),
   (
     material.locality_objects,
-    ('node_contexts', 'file_prefixes', 'locality_register', 'repositories', 'node_material'),
+    ('node_localities', 'file_prefixes', 'locality_register', 'repositories', 'node_material'),
   ),
-  (material.context_tentatives, ('node_contexts',)),
+  (material.record_tentatives, ('node_records',)),
   (material.range_tentatives, ('node',)),
   (material.cast_refs, ('node',)),
   (material.null_material, ('node', 'is_cited')),
@@ -61,6 +61,12 @@ DRAFT_NODE_CHECKS = (
 )
 
 
+def _records(holder):
+  """The `horizons` and `localities` maps of a tree file or a node, each
+  empty when absent."""
+  return {plural: holder.get(plural) or {} for _, plural in material.OCCURRENCE_SIDES}
+
+
 def file_scope(document, repositories, taxa=None):
   """The names the tables' arguments are read from, for the raw tree file
   `document`; `taxa` (a corpus's `taxa.get`, or `nomenclature.record_lookup`) is read
@@ -69,7 +75,8 @@ def file_scope(document, repositories, taxa=None):
     'document': document,
     'repositories': repositories,
     'taxa': taxa,
-    'file_contexts': document.get('contexts') or {},
+    'file_records': _records(document),
+    'file_localities': document.get('localities') or {},
     'file_prefixes': document.get('prefixes') or {},
     'locality_register': document.get('localityRegister'),
     'file_level': True,
@@ -93,7 +100,8 @@ def node_messages(scope, table):
       'file_level': False,
       'node': node,
       'is_cited': is_cited,
-      'node_contexts': node.get('contexts') or {},
+      'node_records': _records(node),
+      'node_localities': node.get('localities') or {},
       'node_material': node.get('material') or (),
     }
     for check, names in table:

@@ -39,13 +39,17 @@ taxonomies:
       notes: The "n. sp." listing is the figure captions.
       material:
       - label: 'F. I, 1'
-        context: reval
+        horizon: echinosphaerites-bed
+        locality: reval
       - label: 'F. I, 2'
-        context: reval
+        horizon: echinosphaerites-bed
+        locality: reval
       - label: 'F. II, 2'
-        context: reval
+        horizon: echinosphaerites-bed
+        locality: reval
       - label: 'F. II, 3'
-        context: reval
+        horizon: echinosphaerites-bed
+        locality: reval
       illustrations:
       - page: 2
         textFigures: 1
@@ -72,39 +76,47 @@ taxonomies:
         of: 'F. II, 3'
         depicts: drawing
         notes: Holzschnitt II
-      contexts:
-        reval:
+      horizons:
+        echinosphaerites-bed:
           unit:
           - Echinosphaerites bed
           - Estonian Glint
-          location:
-          - Reval
-          collectedBy: Frau Generalin Plautin
-          collectedDate: Sommer 1878
           notes: |
             Ech. bed is uppermost bed of Estonian Glint and lies on the
             Vaginatus or Orthoceren limestone.  Ech. bed corresponds
             "for the most part" to the Swedish Chasmps limestone.
+      localities:
+        reval:
+          location:
+          - Reval
+          collectedBy: Frau Generalin Plautin
+          collectedDate: Sommer 1878
     - taxon: rhizophora_schmidt.c.f_1879
       new: true
       citedAs: Cyathocystis rhizophora n. sp.
       pages: [2, [5, 7]]
       material:
       - label: 'F. I, 4'
-        context: wassalem
+        horizon: hemicosmitenkalk
+        locality: wassalem
       - label: 'F. III, 1'
-        context: wassalem
+        horizon: hemicosmitenkalk
+        locality: wassalem
       - label: 'F. III, 2'
-        context: wassalem
+        horizon: hemicosmitenkalk
+        locality: wassalem
       - label: 'F. III, 3'
-        context: wassalem
+        horizon: hemicosmitenkalk
+        locality: wassalem
       - label: 'F. III, 4'
-        context: wassalem
+        horizon: hemicosmitenkalk
+        locality: wassalem
       - label: mehrere Exemplare, 1863
         collectedBy: the author
         collectedDate: '1863'
         holder: Volborth'sche Sammlung (jetzt der Akademie der Wissenschaften gehörig)
-        context: wassalem
+        horizon: hemicosmitenkalk
+        locality: wassalem
         notes: |
           "ich sammelte damals mehrere Exemplare, die grösstentheils in die
           Volborth'sche Sammlung (jetzt der Akademie der Wissenschaften
@@ -138,13 +150,11 @@ taxonomies:
         of: 'F. III, 4'
         depicts: drawing
         notes: Fig. 4 b, a side section, is cited in the text as "F. III 4 b" (p. 6).
-      contexts:
-        wassalem:
+      horizons:
+        hemicosmitenkalk:
           unit:
           - Hemicosmitenkalk
           - Jewesche Schicht
-          location:
-          - Wassalem
           notes: |
             "aus dem Hemicosmitenkalk von Wassalem (in der Jeweschen Schicht
             Estlands)" (p. 5); "aus dem Hemicosmitenkalk von Wassalem (der
@@ -154,6 +164,10 @@ taxonomies:
             Reval gefunden und nicht genauer beachtet" (p. 7) -- "Similar
             pieces were later also found near Reval and not examined more
             closely"; which species those are is not said.
+      localities:
+        wassalem:
+          location:
+          - Wassalem
       notes: |
         "die wir C. rhizophora (F. III, 1-4 und F. I, 4) nennen nach der
         stärkern Entwicklung ihres Wurzelapparats, mit dem sie auf allerhand

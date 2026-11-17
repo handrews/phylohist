@@ -96,7 +96,7 @@ _KIND_SOURCES = {
   'types': '`isType: true` or a `type` node',
   'synonymy': '`synonyms` and `non` entries',
   'material': '`material` entries',
-  'occurrences': '`contexts` and `ranges`',
+  'occurrences': "`occurrences`, a material entry's `horizon` or `locality`, and `ranges`",
   'illustrations': '`illustrations` on a primary node (not on a synonymy line)',
   'phylogeny': 'children in a phylogeny',
 }

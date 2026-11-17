@@ -81,7 +81,7 @@ any edit under `data/` or `schemas/`, and `git diff --exit-code` on
 - The tree files keep printed order and claim ids depend on it, so
   reordering a tree is a data change.
 - The data records what a paper prints: names and acts, placements, usages
-  and synonymies, material with its context, and the locators. Diagnoses,
+  and synonymies, material with its horizon and locality, and the locators. Diagnoses,
   descriptions and the paper's argument are not recorded; a reader follows
   the citation to the paper.
 

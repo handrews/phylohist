@@ -133,10 +133,12 @@ taxonomies:
             "1 von oben, 2 von der einen, 3 von der anderen Seite. etwa
             10:1; 3 a natürl. Grösse" (1 from above, 2 from one side, 3
             from the other side; about 10:1; fig. 3a natural size) (p. 5).
-        contexts:
-          boda:
+        horizons:
+          roter-leptaenakalk:
             unit:
             - roter Leptaenakalk
+        localities:
+          boda:
             location:
             - Boda
             - Dalarna
@@ -154,6 +156,9 @@ taxonomies:
               Verbreitung im mittleren und vielleicht schon unteren
               Ordovicium" (geological range: Middle, and perhaps already
               Lower, Ordovician).
+        occurrences:
+        - horizon: roter-leptaenakalk
+          locality: boda
       - taxon: corallum_jaekel_1918
         citedAs: "Cyathotheca corallum Jaekel sp."
         pages: 5
@@ -184,7 +189,7 @@ taxonomies:
             5 theca from above; 6 lower attachment surface) (p. 5). OCR of
             the caption's genus name reads "Cyatholheca corallum JAEKEL
             sp."
-        contexts:
+        localities:
           petersburg:
             location:
             - Petersburg
@@ -193,6 +198,8 @@ taxonomies:
               Petersburg" (Lower Ordovician, vicinity of [St.] Petersburg).
               Comparative material already published by Jaekel in 1918, not
               new here.
+        occurrences:
+        - locality: petersburg
         notes: |
           The recombination from Cyathocystis to Cyathotheca is visible
           only by comparing this plate caption against the running text

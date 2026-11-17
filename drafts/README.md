@@ -23,7 +23,8 @@ The data says who published what systematic information in which paper
 placements, usages, synonymies, `material` (specimens with their printed
 prefix and numbers, entered separately, their role and holder; the file's
 `prefixes` map says which registry entry each prefix means) with the
-`contexts` they came from and the
+`horizons` and `localities` they came from, the `occurrences` a source
+states without citing a specimen, and the
 `ranges` a source gives for a taxon, this source's `illustrations` on a
 primary node (tied to a material entry by `of`, with `depicts` when the
 figure is not a specimen photograph; on a cited entry an illustration is

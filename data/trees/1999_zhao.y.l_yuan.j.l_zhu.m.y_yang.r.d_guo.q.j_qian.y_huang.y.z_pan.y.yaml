@@ -4,13 +4,21 @@ prefixes:
   GK: gut-ipbm
   GTB: gut-ipbm-l
   GTBM: gut-ipbm-l
-contexts:
-  miaobanpo:
+horizons:
+  kaili-at-boundary:
     biota: kaili
     unit:
     - immediately adjacent to the Lower-Middle Cambrian boundary
     - middle-upper
     - Kaili Formation
+  kaili-22m-above-boundary:
+    biota: kaili
+    unit:
+    - 22m above Lower Cambrian boundary
+    - middle-upper
+    - Kaili Formation
+localities:
+  miaobanpo:
     location:
     - Miaobanpo Section
     - Balang
@@ -18,11 +26,6 @@ contexts:
     - Guizhou
     - China
   balang-wuliu:
-    biota: kaili
-    unit:
-    - 22m above Lower Cambrian boundary
-    - middle-upper
-    - Kaili Formation
     location:
     - Balang Wuliu Section
     - Balang
@@ -89,7 +92,8 @@ taxonomies:
           - prefix: GK
             numbers: [1731]
             asPrinted: GTBM-9-1-526a, GK1731。
-            context: miaobanpo
+            horizon: kaili-at-boundary
+            locality: miaobanpo
             localityNumbers:
             - prefix: GTBM
               number: 9-1-526a
@@ -121,7 +125,8 @@ taxonomies:
           - prefix: GK
             numbers: [1730]
             asPrinted: GTBM-9-2-12, GK1730.
-            context: miaobanpo
+            horizon: kaili-at-boundary
+            locality: miaobanpo
             localityNumbers:
             - prefix: GTBM
               number: 9-2-12
@@ -136,7 +141,8 @@ taxonomies:
           - prefix: GK
             numbers: [1707]
             asPrinted: GTB24-60a, GK1707。
-            context: balang-wuliu
+            horizon: kaili-22m-above-boundary
+            locality: balang-wuliu
             localityNumbers:
             - prefix: GTB
               number: 24-60a
@@ -240,7 +246,8 @@ taxonomies:
           - prefix: GK
             numbers: [1725]
             asPrinted: GTBM-8-5-1365, GK1725。
-            context: miaobanpo
+            horizon: kaili-at-boundary
+            locality: miaobanpo
             localityNumbers:
             - prefix: GTBM
               number: 8-5-1365
@@ -271,7 +278,8 @@ taxonomies:
           - prefix: GK
             numbers: [1730]
             asPrinted: GTBM-9-3-170, GK1730。
-            context: miaobanpo
+            horizon: kaili-at-boundary
+            locality: miaobanpo
             localityNumbers:
             - prefix: GTBM
               number: 9-3-170
@@ -314,14 +322,16 @@ taxonomies:
     - prefix: GK
       numbers: [112]
       asPrinted: GTBM-20-33, GK112
-      context: miaobanpo
+      horizon: kaili-at-boundary
+      locality: miaobanpo
       localityNumbers:
       - prefix: GTBM
         number: 20-33
     - prefix: GK
       numbers: [113]
       asPrinted: GTBM-24-3-633, GK113。
-      context: miaobanpo
+      horizon: kaili-at-boundary
+      locality: miaobanpo
       localityNumbers:
       - prefix: GTBM
         number: 24-3-633

@@ -18327,7 +18327,6 @@
      "illustrations": "partly",
      "material": "all",
      "newTaxa": "all",
-     "occurrences": "partly",
      "phylogeny": "na",
      "skeleton": "all",
      "synonymy": "all",
@@ -18356,7 +18355,7 @@
    "claims": {
     "acceptance": 11,
     "act": 4,
-    "material": 27,
+    "material": 26,
     "placement": 16,
     "usage": 35
    },
@@ -18374,7 +18373,7 @@
     "illustrations": 5,
     "material": 12,
     "newTaxa": 1,
-    "occurrences": 10,
+    "occurrences": 9,
     "skeleton": 51,
     "synonymy": 11,
     "types": 1
@@ -18382,7 +18381,7 @@
    "derivedCoverage": {
     "illustrations": null,
     "material": null,
-    "occurrences": null,
+    "occurrences": "partly",
     "skeleton": null,
     "synonymy": null,
     "types": null
@@ -18390,7 +18389,7 @@
    "inconsistencies": [],
    "material": {
     "illustration": 5,
-    "occurrence": 10,
+    "occurrence": 9,
     "specimen": 12
    },
    "tree": true

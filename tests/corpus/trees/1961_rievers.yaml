@@ -10,25 +10,37 @@ taxonomies:
     material:
     - label: RVS [Plate 2, Figures 1–4]
       repository: rievers
-      context: near-kirn-nahe
+      horizon: hunsrueck-slate
+      locality: near-kirn-nahe
       role: holotype
     illustrations:
     - plate: 2
       figures:
       - [1, 4]
-    contexts:
-      near-kirn-nahe:
+    horizons:
+      hunsrueck-slate:
         series: Lower Devonian
         unit:
         - Roofing Slate facies
         - Hunsrück Slate
+        fauna:
+        - Shallow-marine
+        stage: Emsian
+        editorial:
+          inferred: [stage]
+          basis: >-
+            The Bundenbach (Hunsrück) slate is well-established to be of
+            Emsian age.
+    localities:
+      near-kirn-nahe:
         location:
         - near Kirn (Nahe)
         - Bundenbach
         - Hunsrück Region
         - Germany
-        fauna:
-        - Shallow-marine
-        inferred:
-          stage: Emsian
-          paleocontinent: Laurussia
+        paleocontinent: Laurussia
+        editorial:
+          inferred: [paleocontinent]
+          basis: >-
+            The Bundenbach (Hunsrück) slate is well-established to have been
+            a back-arc basin off the coast of Laurussia during the Emsian.

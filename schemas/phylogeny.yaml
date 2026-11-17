@@ -59,11 +59,16 @@ $defs:
         type: array
         items:
           $ref: taxonomyTree
-      contexts:
+      horizons:
         description: |
-          Contexts shared by several nodes of this source, stated once and
-          referred to by key from material entries.
-        $ref: "#/$defs/contexts"
+          Horizons shared by several nodes of this source, stated once and
+          referred to by key from material entries and occurrences.
+        $ref: "#/$defs/horizons"
+      localities:
+        description: |
+          Localities shared by several nodes of this source, stated once and
+          referred to by key from material entries and occurrences.
+        $ref: "#/$defs/localities"
       unused:
         description: |
           Fields the source uses nowhere, so no node need carry a null for
@@ -72,7 +77,7 @@ $defs:
         uniqueItems: true
         items:
           type: string
-          enum: [material, illustrations, contexts, ranges, synonyms, type]
+          enum: [material, illustrations, occurrences, ranges, synonyms, type]
       prefixes:
         description: |
           The prefixes this source prints before its catalog numbers, each
@@ -1136,8 +1141,28 @@ $defs:
         type: [array, "null"]
         items:
           $ref: "#/$defs/materialEntry"
-      contexts:
-        $ref: "#/$defs/contexts"
+      horizons:
+        description: |
+          Horizons this node's material entries and occurrences refer to by
+          key; a key here is read before the same key at the top of the file.
+        $ref: "#/$defs/horizons"
+      localities:
+        description: |
+          Localities this node's material entries and occurrences refer to
+          by key; a key here is read before the same key at the top of the
+          file.
+        $ref: "#/$defs/localities"
+      occurrences:
+        description: |
+          What the source says of where the taxon occurs without citing a
+          specimen, one entry per statement in printed order; `null` when
+          the source prints no horizon or locality for the node (an
+          auditor's statement, roadmap G11). A specimen's own horizon and
+          locality sit on its material entry.
+        type: [array, "null"]
+        minItems: 1
+        items:
+          $ref: "#/$defs/occurrence"
       ranges:
         type: [array, "null"]
         items:
@@ -1662,25 +1687,23 @@ $defs:
     - cotype
     - chirotype
     - figured
-  contextRef:
+  occurrenceKey:
     description: |
-      A reference to a context by key, looked up on the node first and then
-      at the top of the tree file. The object form says the source is unsure
-      that the specimen came from this context.
-    oneOf:
-    - $ref: "#/$defs/contextKey"
-    - type: object
-      additionalProperties: false
-      required: [key]
-      properties:
-        key:
-          $ref: "#/$defs/contextKey"
-        tentative:
-          type: boolean
-          default: false
-  contextKey:
+      The key of a horizon or of a locality, looked up on the node first
+      and then at the top of the tree file.
     type: string
     pattern: "^[a-z0-9][a-z0-9-]*$"
+  occurrenceTentative:
+    description: |
+      The fields of this same object the source queries, for now `horizon`
+      or `locality`: the source is unsure the specimen, or the taxon, came
+      from that horizon or that locality.
+    type: array
+    minItems: 1
+    uniqueItems: true
+    items:
+      type: string
+      enum: [horizon, locality]
   entryRefFields:
     description: |
       The fields that name one material entry: its `label`, or one of its
@@ -1807,14 +1830,30 @@ $defs:
       collectedDate:
         description: When this specimen was collected or found, as printed.
         type: string
-      context:
-        $ref: "#/$defs/contextRef"
+      horizon:
+        description: |
+          The horizon this specimen came from, a key of `horizons`; `null`
+          when the source gives no horizon for the specimen (an auditor's
+          statement, roadmap G11). Absent, none has been entered.
+        oneOf:
+        - $ref: "#/$defs/occurrenceKey"
+        - type: "null"
+      locality:
+        description: |
+          The locality this specimen came from, a key of `localities`;
+          `null` when the source gives no locality for the specimen (an
+          auditor's statement, roadmap G11). Absent, none has been entered.
+        oneOf:
+        - $ref: "#/$defs/occurrenceKey"
+        - type: "null"
+      tentative:
+        $ref: "#/$defs/occurrenceTentative"
       localityNumbers:
         description: |
           Locality register numbers printed against this specimen, as
-          printed, each resolved the way a context's are (`localityNumber`).
-          They say where this specimen came from within the context it refers
-          to; the context keeps only the numbers that identify it as a whole.
+          printed, each resolved the way a locality's are (`localityNumber`).
+          They say where this specimen came from within the locality it refers
+          to; the locality keeps only the numbers that identify it as a whole.
           Equivalences the source prints are kept as several numbers on one
           entry.
         type: array
@@ -1914,28 +1953,14 @@ $defs:
         $ref: "#/$defs/localStageRange"
       localStageModifier:
         $ref: "#/$defs/stageModifier"
-  inferredContext:
+  horizon:
     description: |
-      An editorial or later source's translation of a regional age to the
-      global scale; `basis` or `sources` says whose (roadmap E5).
-    type: object
-    $ref: "#/$defs/timeFields"
-    unevaluatedProperties: false
-    properties:
-      paleocontinent:
-        type: string
-      basis:
-        type: string
-      sources:
-        type: array
-        items:
-          $ref: "#/$defs/sourceId"
-  context:
-    description: |
-      One geological and geographical context a specimen came from, as the
-      source prints it. `unit` lists lithostratigraphic names most specific
-      first, words like "Formation" kept; `location` likewise from the place
-      outward. Keyed by the node or the tree file; specimens refer to it.
+      One stratigraphic level specimens came from, as the source prints it:
+      the rock unit, its age and its zone. `unit` lists lithostratigraphic
+      names most specific first, a bed before its formation, words like
+      "Formation" kept. Keyed by the node or the tree file; material entries
+      and occurrences refer to it, so that one horizon serves every locality
+      it is collected at.
     type: object
     allOf:
     - $ref: "#/$defs/timeFields"
@@ -1965,20 +1990,52 @@ $defs:
         type: array
         items:
           type: string
-      paleocontinent:
+      tentative:
+        description: |
+          The source queries this horizon: `true` queries the whole statement,
+          a list queries the values of the fields it names, which are fields
+          of this same horizon ("Middle Ordovician(?)" is `series` named in
+          the list). Roadmap E8.
+        oneOf:
+        - const: true
+        - type: array
+          minItems: 1
+          uniqueItems: true
+          items:
+            type: string
+      editorial:
+        description: |
+          The editor's layer for this horizon: `inferred` names the fields
+          that are the editor's reading and not the source's words (a
+          regional age translated to the global scale), with the `basis`.
+        $ref: "#/$defs/editorialObject"
+      sources:
+        type: array
+        items:
+          $ref: "#/$defs/sourceId"
+      notes:
         type: string
+  locality:
+    description: |
+      One place specimens came from, as the source prints it. `location`
+      lists the place names from the spot outward. Keyed by the node or the
+      tree file; material entries and occurrences refer to it, so that one
+      locality serves every horizon collected there.
+    type: object
+    additionalProperties: false
+    properties:
       location:
         type: array
         items:
           type: string
       localityNumbers:
         description: |
-          Locality register numbers that identify this context as a whole,
+          Locality register numbers that identify this locality as a whole,
           as printed ("SH-1", "USGS 4148 CO", "NMVPL 58"). Equivalences the
-          source prints are kept as several numbers on one context. A number
+          source prints are kept as several numbers on one locality. A number
           printed against one specimen goes on that material entry's
-          `localityNumbers` instead, so that several specimens of one unit
-          and place share one context.
+          `localityNumbers` instead, so that several specimens of one place
+          share one locality.
         type: array
         items:
           $ref: "#/$defs/localityNumber"
@@ -1988,18 +2045,19 @@ $defs:
       mapSheet:
         description: The map sheet a grid reference refers to, as printed.
         type: string
+      paleocontinent:
+        type: string
       collectedBy:
-        description: The collector at this context, as printed.
+        description: The collector at this locality, as printed.
         type: string
       collectedDate:
-        description: When the collecting at this context took place, as printed.
+        description: When the collecting at this locality took place, as printed.
         type: string
       tentative:
         description: |
-          The source queries this context: `true` queries the whole statement,
-          a list queries the values of the fields it names, which are fields
-          of this same context ("Middle Ordovician(?)" is `series` named in
-          the list). Roadmap E8.
+          The source queries this locality: `true` queries the whole
+          statement, a list queries the values of the fields it names, which
+          are fields of this same locality. Roadmap E8.
         oneOf:
         - const: true
         - type: array
@@ -2007,12 +2065,36 @@ $defs:
           uniqueItems: true
           items:
             type: string
-      inferred:
-        $ref: "#/$defs/inferredContext"
+      editorial:
+        description: |
+          The editor's layer for this locality: `inferred` names the fields
+          that are the editor's reading and not the source's words, with the
+          `basis`.
+        $ref: "#/$defs/editorialObject"
       sources:
         type: array
         items:
           $ref: "#/$defs/sourceId"
+      notes:
+        type: string
+  occurrence:
+    description: |
+      One statement that the taxon occurs at a horizon, at a locality, or at
+      a horizon at a locality, which the source makes of the taxon and not
+      of a specimen. It keeps the pairing the source prints: two horizons at
+      two localities are two occurrences, each naming its own pair.
+    type: object
+    additionalProperties: false
+    anyOf:
+    - required: [horizon]
+    - required: [locality]
+    properties:
+      horizon:
+        $ref: "#/$defs/occurrenceKey"
+      locality:
+        $ref: "#/$defs/occurrenceKey"
+      tentative:
+        $ref: "#/$defs/occurrenceTentative"
       notes:
         type: string
   localityNumber:
@@ -2035,12 +2117,18 @@ $defs:
         minLength: 1
       register:
         $ref: "#/$defs/repositoryKey"
-  contexts:
-    type: [object, "null"]
+  horizons:
+    type: object
     propertyNames:
-      $ref: "#/$defs/contextKey"
+      $ref: "#/$defs/occurrenceKey"
     additionalProperties:
-      $ref: "#/$defs/context"
+      $ref: "#/$defs/horizon"
+  localities:
+    type: object
+    propertyNames:
+      $ref: "#/$defs/occurrenceKey"
+    additionalProperties:
+      $ref: "#/$defs/locality"
   range:
     description: |
       One distribution statement about the taxon (a period and the regions
@@ -2081,8 +2169,12 @@ $defs:
           uniqueItems: true
           items:
             type: string
-      inferred:
-        $ref: "#/$defs/inferredContext"
+      editorial:
+        description: |
+          The editor's layer for this range: `inferred` names the fields
+          that are the editor's reading and not the source's words (a
+          regional age translated to the global scale), with the `basis`.
+        $ref: "#/$defs/editorialObject"
       asPrinted:
         type: string
       notes:

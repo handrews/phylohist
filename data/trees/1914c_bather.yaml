@@ -28,15 +28,18 @@ taxonomies:
           role: holotype
           roleAct: designated
           repository: vmm
-          context: division-street
+          horizon: trenton-limestone
+          locality: division-street
         - label: B
           role: syntype
           repository: vmm
-          context: division-street
+          horizon: trenton-limestone
+          locality: division-street
         - label: C
           role: syntype
           holder: Walter R. Billings
-          context: division-street
+          horizon: trenton-limestone
+          locality: division-street
         illustrations:
         - plate: 15
           figures: [1, 3, 4, 6, 7]
@@ -45,11 +48,13 @@ taxonomies:
           figures: [2, 5]
           of: B
         - textFigures: [[1, 6]]
-        contexts:
-          division-street:
+        horizons:
+          trenton-limestone:
             unit:
             - Trenton Limestone
+            notes: '"The precise horizon has nowhere been stated" (p. 194).'
+        localities:
+          division-street:
             location:
             - Division Street
             - Ottawa
-            notes: '"The precise horizon has nowhere been stated" (p. 194).'

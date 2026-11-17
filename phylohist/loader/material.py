@@ -1,4 +1,5 @@
-"""Material integrity checks: contexts, material entries, casts, fragments,
+"""Material integrity checks: horizons, localities, occurrences, material
+entries, casts, fragments,
 illustrations, nulls, the repository registry and a tree file's `prefixes`
 map.
 
@@ -7,7 +8,7 @@ Pure functions over a raw node dict and the file-level maps, so
 loader (`load.py`) runs them over the corpus's own documents, both from the
 tables in `checks.py`. Each check returns a list of ``(level, message)``
 pairs, ``level`` being ``'error'`` or ``'warning'``; the caller adds the
-source key and, for a per-node check, the node path. `context_key`,
+source key and, for a per-node check, the node path. `OCCURRENCE_SIDES`,
 `flat_numbers`, `entries_named` and `same_as_matches` are exported for the
 claims extractor (`phylohist.claims`), and `in_run` for the store
 (`phylohist.store`, `specimen_history`).
@@ -35,11 +36,11 @@ def _fold(text):
   return _WHITESPACE_RE.sub(' ', text.strip()).casefold()
 
 
-def _locality_objects(contexts, entries=()):
-  """Every `localityNumbers` value on a `{key: context}` map and on each
+def _locality_objects(localities, entries=()):
+  """Every `localityNumbers` value on a `{key: locality}` map and on each
   material entry of `entries`."""
-  for context in (contexts or {}).values():
-    yield from (context or {}).get('localityNumbers') or ()
+  for locality in (localities or {}).values():
+    yield from (locality or {}).get('localityNumbers') or ()
   for entry in entries or ():
     yield from (entry or {}).get('localityNumbers') or ()
 
@@ -71,45 +72,75 @@ def registry_links(repositories):
   return messages
 
 
-def context_key(ref):
-  """The key a `contextRef` names, whichever of its two shapes it is."""
-  return ref if isinstance(ref, str) else ref.get('key')
+# The two kinds of record a material entry or an occurrence refers to by
+# key, each with the name of the map that holds it.
+OCCURRENCE_SIDES = (('horizon', 'horizons'), ('locality', 'localities'))
 
 
-def context_refs(node, node_contexts, file_contexts):
-  """Every `material[*].context` resolves in `node_contexts` first, then
-  `file_contexts`; missing from both is an error, and a node key that
-  shadows a same-named file key is a warning."""
+def _referrers(node):
+  """Everything on `node` that names a horizon or a locality: its material
+  entries, then its `occurrences`."""
+  for field in ('material', 'occurrences'):
+    for item in node.get(field) or ():
+      if isinstance(item, dict):
+        yield item
+
+
+def occurrence_refs(node, node_records, file_records):
+  """Every `horizon` and `locality` of a material entry or an occurrence
+  resolves in the node's own map first, then the file's (`node_records` and
+  `file_records` are `{'horizons': {...}, 'localities': {...}}`); missing
+  from both is an error, and a node key that shadows a same-named file key
+  is a warning. A `tentative` list that names a field its entry or
+  occurrence does not carry (a null `horizon` or `locality` carries none to
+  query) is
+  an error, and so is a horizon or locality the node defines and nothing
+  on it refers to."""
   messages = []
-  for entry in node.get('material') or ():
-    ref = entry.get('context')
-    if ref is None:
-      continue
-    key = context_key(ref)
-    if key in node_contexts:
-      if key in file_contexts:
-        messages.append(('warning', f'context "{key}" on the node shadows a file-level context'))
-    elif key not in file_contexts:
-      messages.append(('error', f'context "{key}" is not defined on the node or the file'))
+  for side, plural in OCCURRENCE_SIDES:
+    on_node, on_file = node_records[plural], file_records[plural]
+    referenced = set()
+    for item in _referrers(node):
+      key = item.get(side)
+      if key is None:
+        continue
+      referenced.add(key)
+      if key in on_node:
+        if key in on_file:
+          messages.append(('warning', f'{side} "{key}" on the node shadows a file-level {side}'))
+      elif key not in on_file:
+        messages.append(('error', f'{side} "{key}" is not defined on the node or the file'))
+    messages.extend(
+      ('error', f'{side} "{key}" is defined on the node and referred to by nothing on it')
+      for key in on_node
+      if key not in referenced
+    )
+  for item in _referrers(node):
+    for name in item.get('tentative') or ():
+      if item.get(name) is None:
+        messages.append(('error', f'`tentative` names `{name}`, which the entry does not carry'))
   return messages
 
 
-def unreferenced_file_contexts(document):
-  """A file-level context referenced by no material entry anywhere in the
-  document is a warning."""
-  file_contexts = document.get('contexts') or {}
-  if not file_contexts:
-    return []
-  referenced = set()
-  for _, node, _ in walk_document(document):
-    for entry in node.get('material') or ():
-      ref = entry.get('context')
-      if ref is not None:
-        referenced.add(context_key(ref))
-  return [
-    ('warning', f'context "{key}" is defined but referenced by no material entry')
-    for key in sorted(set(file_contexts) - referenced)
-  ]
+def unreferenced_file_records(document):
+  """A file-level horizon or locality referred to by no material entry and
+  no occurrence anywhere in the document is a warning."""
+  messages = []
+  for side, plural in OCCURRENCE_SIDES:
+    records = document.get(plural) or {}
+    if not records:
+      continue
+    referenced = {
+      item[side]
+      for _, node, _ in walk_document(document)
+      for item in _referrers(node)
+      if item.get(side) is not None
+    }
+    messages.extend(
+      ('warning', f'{side} "{key}" is defined but referred to by no entry or occurrence')
+      for key in sorted(set(records) - referenced)
+    )
+  return messages
 
 
 _NUMBER_RE = re.compile(r'^(.*?)(\d+)([A-Za-z]?)$')
@@ -327,16 +358,16 @@ def _begins_with_form(number, entry):
 
 
 def _prefixes_used(document):
-  """Every `prefix` a material entry or a locality number (on a context or
+  """Every `prefix` a material entry or a locality number (on a locality or
   an entry) in the file uses."""
   used = set()
-  scopes = [(document.get('contexts'), ())]
+  scopes = [(document.get('localities'), ())]
   for _, node, _ in walk_document(document):
     used.update(e['prefix'] for e in node.get('material') or () if e.get('prefix') is not None)
-    scopes.append((node.get('contexts'), node.get('material') or ()))
-  for contexts, entries in scopes:
+    scopes.append((node.get('localities'), node.get('material') or ()))
+  for localities, entries in scopes:
     used.update(
-      n['prefix'] for n in _locality_objects(contexts, entries) if n.get('prefix') is not None
+      n['prefix'] for n in _locality_objects(localities, entries) if n.get('prefix') is not None
     )
   return used
 
@@ -418,14 +449,14 @@ def number_entries(node, prefixes, repositories):
   return messages
 
 
-def locality_objects(contexts, prefixes, locality_register, repositories, entries=()):
-  """Checks on the locality numbers of a `{key: context}` map and of the
+def locality_objects(localities, prefixes, locality_register, repositories, entries=()):
+  """Checks on the locality numbers of a `{key: locality}` map and of the
   material `entries` beside it: a `prefix` not in the file's `prefixes` map
   is an error, a `register` that is no registry key is an error, and a
   number with neither, in a file with no `localityRegister`, is a
   warning."""
   messages = []
-  for number in _locality_objects(contexts, entries):
+  for number in _locality_objects(localities, entries):
     prefix, register = number.get('prefix'), number.get('register')
     if prefix is not None and prefix not in prefixes:
       messages.append(('error', f'prefix "{prefix}" is not in the file\'s `prefixes` map'))
@@ -438,15 +469,16 @@ def locality_objects(contexts, prefixes, locality_register, repositories, entrie
 
 # What a `tentative` list may not name: the marker itself, and the keys that
 # are not printed values (a range's regions carry their own per-element form).
-_NOT_QUERIABLE = ('tentative', 'notes', 'asPrinted', 'inferred', 'sources', 'regions')
+_NOT_QUERIABLE = ('tentative', 'notes', 'asPrinted', 'editorial', 'sources', 'regions')
 
 
 def tentative_fields(obj, kind, file_level=False):
-  """The `tentative` marker of one range or context (`kind` is "range" or
-  "context", for the messages): a name in the list that the object does not
+  """The `tentative` marker of one range, horizon or locality (`kind` names
+  which, for the messages): a name in the list that the object does not
   carry is an error, and so is one that is not a printed value
-  (`_NOT_QUERIABLE`); `tentative: true` on a file-level context is an error,
-  since the doubt belongs to the node or the specimen that uses it."""
+  (`_NOT_QUERIABLE`); `tentative: true` on a file-level horizon or locality
+  is an error, since the doubt belongs to the node or the specimen that
+  uses it."""
   tentative = (obj or {}).get('tentative')
   if tentative is None:
     return []
@@ -455,7 +487,7 @@ def tentative_fields(obj, kind, file_level=False):
       return [
         (
           'error',
-          'a file-level context cannot be `tentative: true`; the doubt belongs to the node '
+          f'a file-level {kind} cannot be `tentative: true`; the doubt belongs to the node '
           'or the specimen that uses it',
         )
       ]
@@ -469,29 +501,46 @@ def tentative_fields(obj, kind, file_level=False):
   return messages
 
 
+def inferred_fields(obj, kind):
+  """The `editorial.inferred` list of one range, horizon or locality: a
+  name the object does not carry is an error, since the editor's value sits
+  in the object's own field and the list only marks it."""
+  inferred = ((obj or {}).get('editorial') or {}).get('inferred')
+  return [
+    ('error', f'`editorial.inferred` names `{name}`, which the {kind} does not carry')
+    for name in (inferred if isinstance(inferred, list) else ())
+    if name not in obj
+  ]
+
+
 def range_tentatives(node):
-  """`tentative_fields` over every range on `node`."""
+  """`tentative_fields` and `inferred_fields` over every range on `node`."""
   return [
     message
     for rng in node.get('ranges') or ()
     if isinstance(rng, dict)
-    for message in tentative_fields(rng, 'range')
+    for message in (*tentative_fields(rng, 'range'), *inferred_fields(rng, 'range'))
   ]
 
 
-def context_tentatives(contexts, file_level=False):
-  """`tentative_fields` over every context of a `{key: context}` map (a
-  node's `contexts` or, with `file_level`, the tree file's), each message
-  naming its context."""
+def record_tentatives(records, file_level=False):
+  """`tentative_fields` and `inferred_fields` over every horizon and
+  locality of `records` (`{'horizons': {...}, 'localities': {...}}`, a
+  node's or, with `file_level`, the tree file's), each message naming its
+  record."""
   return [
-    (level, f'context "{key}": {message}')
-    for key, context in (contexts or {}).items()
-    if isinstance(context, dict)
-    for level, message in tentative_fields(context, 'context', file_level)
+    (level, f'{side} "{key}": {message}')
+    for side, plural in OCCURRENCE_SIDES
+    for key, record in (records[plural] or {}).items()
+    if isinstance(record, dict)
+    for level, message in (
+      *tentative_fields(record, side, file_level),
+      *inferred_fields(record, side),
+    )
   ]
 
 
-NULLABLE_FIELDS = ('material', 'illustrations', 'contexts', 'ranges')
+NULLABLE_FIELDS = ('material', 'illustrations', 'occurrences', 'ranges')
 # Every content field that may be null on a primary node; `synonyms` and
 # `type` are the ones that cited entries may carry as a list or a node (a
 # nested synonymy, the type of a synonym), so the cited-entry rule above
@@ -524,8 +573,8 @@ def _authorities(node):
 
 def null_material(node, is_cited):
   """A cited entry (a synonymy entry, an earlier state) locates the cited
-  work's own material, so it carries none of `material`, `contexts` or
-  `ranges`, null or not, and none of `pages` or `illustrations` either:
+  work's own material, so it carries none of `material`, `occurrences`,
+  `horizons`, `localities` or `ranges`, null or not, and none of `pages` or `illustrations` either:
   the cited work's locators go inside its `authority`, where `of` and
   `depicts` are not allowed, on any node. A primary node's own page and
   figures sit on the node, so its `authority` never carries locators
@@ -536,7 +585,7 @@ def null_material(node, is_cited):
   messages = []
   block = node.get('authority')
   if is_cited:
-    for field in NULLABLE_FIELDS:
+    for field in (*NULLABLE_FIELDS, 'horizons', 'localities'):
       if field in node and field != 'illustrations':
         messages.append(('error', f'cited entry carries `{field}`'))
     for field in ('pages', 'illustrations'):

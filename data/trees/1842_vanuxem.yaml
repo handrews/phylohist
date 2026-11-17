@@ -17,7 +17,8 @@ taxonomies:
       pages: 158
       material:
       - label: Page 306, Figure 80
-        context: upper-quarry
+        horizon: hamilton-group
+        locality: upper-quarry
         role: holotype
         notes: |
           Six organisms on the slab, but only one complete.  Three
@@ -29,11 +30,13 @@ taxonomies:
       - page: 306
         figures:
         - 80
-      contexts:
-        upper-quarry:
+      horizons:
+        hamilton-group:
           unit:
           - Hamilton group
           - New York System
+      localities:
+        upper-quarry:
           location:
           - upper quarry
           - the hill back of the Seminary
@@ -47,12 +50,17 @@ taxonomies:
     - taxon: hallii_conrad.t.a_1842
       new: true # It's a little unclear how to handle this situation
       notes: No description or figures.
-      contexts:
-        new-york:
+      horizons:
+        hamilton-group:
           unit:
           - Hamilton Group
+      localities:
+        new-york:
           location:
           - New York
+      occurrences:
+      - horizon: hamilton-group
+        locality: new-york
   - taxon: pentacrinites
     children:
     - taxon: hamptonii_unknown
@@ -61,13 +69,18 @@ taxonomies:
       - page: 65
         textFigures: 9
         figures: 3
-      contexts:
-        oswego:
+      horizons:
+        pulaski-shales:
           unit:
           - Pulaski shales
+      localities:
+        oswego:
           location:
           - Oswego
           - New York
+      occurrences:
+      - horizon: pulaski-shales
+        locality: oswego
   - taxon: lepocrinites
     children:
     - taxon: gebhardi_conrad.t.a_1840
@@ -76,11 +89,16 @@ taxonomies:
       - page: 117
         textFigures: 25
         figures: 4
-      contexts:
-        near-cherry-valley-sharon-springs-cooperstown-and-warren:
+      horizons:
+        between-two-pentamerus-galeatus-beds:
           unit:
           - between two Pentamerus galeatus beds
           - Pentamerus Limestone
+      localities:
+        near-cherry-valley-sharon-springs-cooperstown-and-warren:
           location:
           - near Cherry-Valley, Sharon Springs, Cooperstown, and Warren
           - New York
+      occurrences:
+      - horizon: between-two-pentamerus-galeatus-beds
+        locality: near-cherry-valley-sharon-springs-cooperstown-and-warren

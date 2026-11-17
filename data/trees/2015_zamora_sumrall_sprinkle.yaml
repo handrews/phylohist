@@ -16,14 +16,16 @@ taxonomies:
           material:
           - prefix: USNM
             numbers: [178555]
-            context: long-valley
+            horizon: intraformational-conglomerate-beds
+            locality: long-valley
             role: holotype
           - prefix: USNM
             numbers: [178556, 178554]
-            context: long-valley
+            horizon: intraformational-conglomerate-beds
+            locality: long-valley
             role: paratype
-          contexts:
-            long-valley:
+          horizons:
+            intraformational-conglomerate-beds:
               stage: Jiangshanian
               localStage: Sunwaptan
               localStageModifier: lower
@@ -38,6 +40,8 @@ taxonomies:
                 Zones occurs near the base of the member" but unclear which
                 zone is upper or lower
               biozoneRange: [Idahoia, Ellipsocephaloides]
+          localities:
+            long-valley:
               location:
               - Long Valley
               - 21 km (13 miles) SE of Brady
