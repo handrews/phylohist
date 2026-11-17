@@ -92,7 +92,8 @@ def occurrence_refs(node, node_records, file_records):
   `file_records` are `{'horizons': {...}, 'localities': {...}}`); missing
   from both is an error, and a node key that shadows a same-named file key
   is a warning. A `tentative` list that names a field its entry or
-  occurrence does not carry (a `locality: null` carries none to query) is
+  occurrence does not carry (a null `horizon` or `locality` carries none to
+  query) is
   an error, and so is a horizon or locality the node defines and nothing
   on it refers to."""
   messages = []

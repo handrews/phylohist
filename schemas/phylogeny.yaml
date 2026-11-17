@@ -1831,8 +1831,13 @@ $defs:
         description: When this specimen was collected or found, as printed.
         type: string
       horizon:
-        description: The horizon this specimen came from, a key of `horizons`.
-        $ref: "#/$defs/occurrenceKey"
+        description: |
+          The horizon this specimen came from, a key of `horizons`; `null`
+          when the source gives no horizon for the specimen (an auditor's
+          statement, roadmap G11). Absent, none has been entered.
+        oneOf:
+        - $ref: "#/$defs/occurrenceKey"
+        - type: "null"
       locality:
         description: |
           The locality this specimen came from, a key of `localities`;

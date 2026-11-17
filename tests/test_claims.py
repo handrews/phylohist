@@ -1755,9 +1755,11 @@ def test_an_occurrence_with_no_specimen_gives_a_claim_and_counts_as_present(reco
   no_locality = {'taxon': _SISTER, 'material': [{'label': 'A', 'locality': None}]}
   assert coverage({'taxon': _SPECIES, **data}, no_locality) == 'all'
   assert coverage({'taxon': _SPECIES}, no_locality) == 'partly'
+  no_horizon = {'taxon': _SISTER, 'material': [{'label': 'A', 'horizon': None}]}
+  assert coverage({'taxon': _SPECIES, **data}, no_horizon) == 'all'
 
 
-def test_a_null_locality_reaches_the_specimen_claim_and_makes_no_occurrence(records, store):
+def test_a_null_horizon_or_locality_reaches_the_specimen_claim_and_names_no_record(records, store):
   data = {
     'horizons': {'bed': {'unit': ['Wheeler Shale']}},
     'material': [
@@ -1779,6 +1781,24 @@ def test_a_null_locality_reaches_the_specimen_claim_and_makes_no_occurrence(reco
   [occurrence] = [c for c in claims if c.get('materialKind') == 'occurrence']
   assert occurrence['horizonKey'] == 'bed' and 'localityKey' not in occurrence
   assert occurrence['occurrence'] == {'horizon': {'unit': ['Wheeler Shale']}}
+  # A null horizon is kept the same way, and both may be null.
+  data = {
+    'localities': {'quarry': {'location': ['Quarry Road']}},
+    'material': [
+      {'prefix': 'GSC', 'numbers': [4], 'horizon': None, 'locality': 'quarry'},
+      {'prefix': 'GSC', 'numbers': [5], 'horizon': None, 'locality': None},
+    ],
+  }
+  claims = _claims_of(records, {'taxon': _SPECIES, **data}, 323, file_prefixes={'GSC': 'gsc'})
+  locality_only, nothing = [c for c in claims if c.get('materialKind') == 'specimen']
+  assert locality_only['horizonKey'] is None and locality_only['localityKey'] == 'quarry'
+  assert nothing['horizonKey'] is None and nothing['localityKey'] is None
+  assert store.words.claim_words(locality_only) == 'specimens: GSC 4 (no horizon given)'
+  assert (
+    store.words.claim_words(nothing) == 'specimens: GSC 5 (no horizon given) (no locality given)'
+  )
+  [occurrence] = [c for c in claims if c.get('materialKind') == 'occurrence']
+  assert occurrence['localityKey'] == 'quarry' and 'horizonKey' not in occurrence
   # A node's `occurrences: null` still stands beside a null locality alone.
   alone = {'taxon': _SPECIES, 'occurrences': None, 'material': [{'label': 'A', 'locality': None}]}
   assert _absences(_claims_of(records, alone, 322)) == [('occurrences', ['occurrences'])]

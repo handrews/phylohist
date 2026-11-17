@@ -319,8 +319,8 @@ nothing. One node emits them in a fixed order, which fixes the claim ids
   `collectedBy`, `collectedDate`, `localityNumbers`, `uncertain` (the specimen is doubtfully assigned to the
   taxon), `roleUncertain` (the role word is queried in the source),
   `horizonKey` and `localityKey` (the entry's `horizon` and `locality`; a
-  `localityKey` of `null` is the entry's `locality: null`, the source giving
-  no locality for the specimen, and such an entry adds no locality to a
+  key of `null` is the entry's `horizon: null` or `locality: null`, the
+  source giving none for the specimen, and such an entry adds none to a
   pairing),
   `tentativeFields` (the entry's `tentative`, naming `horizon`, `locality`
   or both), and the entry's `notes` as `materialNotes`.
@@ -513,8 +513,8 @@ species-level nodes (species, subspecies, variety) are counted, since
 specimens are cited and figures drawn for species; `occurrences` counts
 every named
 node, and a node whose `material` entry has a `horizon` or a `locality` counts as
-carrying it; an entry's `locality: null` counts too, and writes a null for
-the kind. `synonymy` counts every named node of every rank: a node carrying
+carrying it; an entry's `horizon: null` or `locality: null` counts too, and
+writes a null for the kind. `synonymy` counts every named node of every rank: a node carrying
 `synonyms` or `non`, as a value or a null, is present (a `non` list is a
 synonymy of rejected names), and only `synonyms: null` writes a null (the
 loader rejects it beside a `non` list). `types` counts the named genus

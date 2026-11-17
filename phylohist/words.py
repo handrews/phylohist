@@ -725,8 +725,9 @@ class Words:
     for side in claim.get('tentativeFields') or ():
       if claim.get(f'{side}Key'):
         words += f' ({side} {claim[f"{side}Key"]}?)'
-    if claim.get('localityKey', '') is None:
-      words += ' (no locality given)'
+    for side in ('horizon', 'locality'):
+      if claim.get(f'{side}Key', '') is None:
+        words += f' (no {side} given)'
     if claim.get('localityNumbers'):
       words += f' (locality {", ".join(_flat_words(claim["localityNumbers"]))})'
     if claim.get('uncertain'):

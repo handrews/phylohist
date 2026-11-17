@@ -156,8 +156,8 @@ _MATERIAL_FIELDS = (
 # open taxon); `via`: a field whose entries carry a key, any of those named,
 # that also counts as presence (a material entry's `horizon` or `locality`
 # is an occurrence, a child's `isType` the type statement); a null under
-# one of those keys (an entry's `locality: null`) is the audit's statement
-# too.
+# one of those keys (an entry's `horizon: null` or `locality: null`) is the
+# audit's statement too.
 DERIVED_KINDS = {
   'material': {'fields': ('material',), 'ranks': SPECIES_GROUP},
   'occurrences': {
@@ -800,8 +800,8 @@ class _NodeClaims:
           claim[field] = entry[field]
       if 'notes' in entry:
         claim['materialNotes'] = entry['notes']
-      # A `locality: null` is kept as a null `localityKey`: the source
-      # gives no locality for the specimen.
+      # A `horizon: null` or `locality: null` is kept as a null key: the
+      # source gives none for the specimen.
       for side, _ in OCCURRENCE_SIDES:
         if side in entry:
           claim[f'{side}Key'] = entry[side]
@@ -950,8 +950,8 @@ class _NodeClaims:
 def _node_writes(data, fields, via=(None, ())):
   """`(present, null)`: whether the node carries any of `fields`, or an
   entry of the `via` field carries one of its keys, and whether any of
-  those it carries is an explicit null (an entry's `locality: null`
-  included)."""
+  those it carries is an explicit null (an entry's `horizon: null` or
+  `locality: null` included)."""
   via_field, via_keys = via
   linked = [
     entry[key]
@@ -978,7 +978,8 @@ def derived_coverage(roots):
   are cited and figures drawn for species, and a genus or higher node
   without either is not an uncaptured field. A node whose `material` entry
   has a `horizon` or a `locality` carries `occurrences` through that link, whatever else it
-  writes, and an entry's `locality: null` is a null written for the kind.
+  writes, and an entry's `horizon: null` or `locality: null` is a null
+  written for the kind.
   For `synonymy` a node's `synonyms` or `non`, value or null,
   counts it as present; only `synonyms: null` writes a null. For `types`
   only the named genus and subgenus nodes are counted (a family's `type`
