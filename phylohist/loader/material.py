@@ -92,8 +92,9 @@ def occurrence_refs(node, node_records, file_records):
   `file_records` are `{'horizons': {...}, 'localities': {...}}`); missing
   from both is an error, and a node key that shadows a same-named file key
   is a warning. A `tentative` list that names a field its entry or
-  occurrence does not carry is an error, and so is a horizon or locality
-  the node defines and nothing on it refers to."""
+  occurrence does not carry (a `locality: null` carries none to query) is
+  an error, and so is a horizon or locality the node defines and nothing
+  on it refers to."""
   messages = []
   for side, plural in OCCURRENCE_SIDES:
     on_node, on_file = node_records[plural], file_records[plural]
@@ -115,7 +116,7 @@ def occurrence_refs(node, node_records, file_records):
     )
   for item in _referrers(node):
     for name in item.get('tentative') or ():
-      if name not in item:
+      if item.get(name) is None:
         messages.append(('error', f'`tentative` names `{name}`, which the entry does not carry'))
   return messages
 

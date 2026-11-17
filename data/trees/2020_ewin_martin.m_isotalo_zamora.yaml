@@ -169,7 +169,7 @@ taxonomies:
                 role: paratype
               - prefix: MPEP
                 numbers: ['1143.1']
-                locality: ctx-2
+                locality: null
               illustrations:
               - figures:
                 - 2
@@ -199,8 +199,6 @@ taxonomies:
                   - Anticosti Island
                   - Québec
                   - Canada
-                ctx-2:
-                  notes: No locality information given for this specimen
               new: true
             - openTaxon: rhenopyrgus-sp-1_ewin_martin.m_isotalo_zamora_2020
               material:

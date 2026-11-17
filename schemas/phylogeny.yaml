@@ -1160,6 +1160,7 @@ $defs:
           auditor's statement, roadmap G11). A specimen's own horizon and
           locality sit on its material entry.
         type: [array, "null"]
+        minItems: 1
         items:
           $ref: "#/$defs/occurrence"
       ranges:
@@ -1833,8 +1834,13 @@ $defs:
         description: The horizon this specimen came from, a key of `horizons`.
         $ref: "#/$defs/occurrenceKey"
       locality:
-        description: The locality this specimen came from, a key of `localities`.
-        $ref: "#/$defs/occurrenceKey"
+        description: |
+          The locality this specimen came from, a key of `localities`;
+          `null` when the source gives no locality for the specimen (an
+          auditor's statement, roadmap G11). Absent, none has been entered.
+        oneOf:
+        - $ref: "#/$defs/occurrenceKey"
+        - type: "null"
       tentative:
         $ref: "#/$defs/occurrenceTentative"
       localityNumbers:

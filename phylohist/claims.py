@@ -155,7 +155,9 @@ _MATERIAL_FIELDS = (
 # those of these ranks; `named`: leave out the placeholders (an unnamed or
 # open taxon); `via`: a field whose entries carry a key, any of those named,
 # that also counts as presence (a material entry's `horizon` or `locality`
-# is an occurrence, a child's `isType` the type statement).
+# is an occurrence, a child's `isType` the type statement); a null under
+# one of those keys (an entry's `locality: null`) is the audit's statement
+# too.
 DERIVED_KINDS = {
   'material': {'fields': ('material',), 'ranks': SPECIES_GROUP},
   'occurrences': {
@@ -798,6 +800,8 @@ class _NodeClaims:
           claim[field] = entry[field]
       if 'notes' in entry:
         claim['materialNotes'] = entry['notes']
+      # A `locality: null` is kept as a null `localityKey`: the source
+      # gives no locality for the specimen.
       for side, _ in OCCURRENCE_SIDES:
         if side in entry:
           claim[f'{side}Key'] = entry[side]
@@ -943,12 +947,21 @@ class _NodeClaims:
       claim['id'] = claim_id
 
 
-def _node_writes(data, fields, linked=False):
-  """`(present, null)`: whether the node carries any of `fields` (or
-  `linked`, a value reached some other way), and whether any of those it
-  carries is an explicit null."""
-  present = [field for field in fields if field in data]
-  return bool(present) or linked, any(data[field] is None for field in present)
+def _node_writes(data, fields, via=(None, ())):
+  """`(present, null)`: whether the node carries any of `fields`, or an
+  entry of the `via` field carries one of its keys, and whether any of
+  those it carries is an explicit null (an entry's `locality: null`
+  included)."""
+  via_field, via_keys = via
+  linked = [
+    entry[key]
+    for entry in data.get(via_field) or ()
+    if isinstance(entry, dict)
+    for key in via_keys
+    if key in entry and entry[key] is not False
+  ]
+  present = [data[field] for field in fields if field in data]
+  return bool(present) or bool(linked), any(value is None for value in present + linked)
 
 
 def derived_coverage(roots):
@@ -965,7 +978,8 @@ def derived_coverage(roots):
   are cited and figures drawn for species, and a genus or higher node
   without either is not an uncaptured field. A node whose `material` entry
   has a `horizon` or a `locality` carries `occurrences` through that link, whatever else it
-  writes. For `synonymy` a node's `synonyms` or `non`, value or null,
+  writes, and an entry's `locality: null` is a null written for the kind.
+  For `synonymy` a node's `synonyms` or `non`, value or null,
   counts it as present; only `synonyms: null` writes a null. For `types`
   only the named genus and subgenus nodes are counted (a family's `type`
   may be written and is not, and a placeholder has no type); a node
@@ -1003,17 +1017,8 @@ def derived_coverage(roots):
         counted = [node for node in counted if fold_rank(node.rank) not in spec['excludeRanks']]
       if spec.get('named'):
         counted = [node for node in counted if placeholder_kind(node.taxon) is None]
-      via_field, via_keys = spec.get('via', (None, ()))
-      states = [
-        _node_writes(
-          node.data,
-          fields,
-          linked=any(
-            entry.get(key) for entry in node.data.get(via_field) or () for key in via_keys
-          ),
-        )
-        for node in counted
-      ]
+      via = spec.get('via', (None, ()))
+      states = [_node_writes(node.data, fields, via) for node in counted]
       if not any(null for _, null in states):
         values[kind] = None
       elif not all(present for present, _ in states):

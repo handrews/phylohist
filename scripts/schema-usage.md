@@ -217,15 +217,15 @@ property.
 | `localStageModifier` | 1 | 0.6% |
 | `localStageBoundary` | 0 | 0.0% |
 
-### `locality` -- 116 instances in `data/`
+### `locality` -- 115 instances in `data/`
 
 | property | data | data % |
 |---|---|---|
-| `location` | 115 | 99.1% |
-| `localityNumbers` | 46 | 39.7% |
-| `mapSheet` | 30 | 25.9% |
-| `coordinatesAsPrinted` | 12 | 10.3% |
-| `notes` | 8 | 6.9% |
+| `location` | 115 | 100.0% |
+| `localityNumbers` | 46 | 40.0% |
+| `mapSheet` | 30 | 26.1% |
+| `coordinatesAsPrinted` | 12 | 10.4% |
+| `notes` | 7 | 6.1% |
 | `collectedBy` | 2 | 1.7% |
 | `editorial` | 1 | 0.9% |
 | `paleocontinent` | 1 | 0.9% |
@@ -554,29 +554,29 @@ property.
 
 ### `phylogeny#/$defs/article/properties/audit/properties/coverage/additionalProperties`
 
-4 of 4 members used, 240 occurrences.
+4 of 4 members used, 239 occurrences.
 
 | value | count |
 |---|---|
 | `'none'` | 75 |
 | `'all'` | 70 |
-| `'partly'` | 50 |
+| `'partly'` | 49 |
 | `'na'` | 45 |
 
 ### `phylogeny#/$defs/article/properties/audit/properties/coverage/propertyNames`
 
-8 of 8 members used, 240 occurrences.
+8 of 8 members used, 239 occurrences.
 
 | value | count |
 |---|---|
 | `'phylogeny'` | 30 |
 | `'illustrations'` | 30 |
-| `'occurrences'` | 30 |
 | `'material'` | 30 |
 | `'synonymy'` | 30 |
 | `'types'` | 30 |
 | `'newTaxa'` | 30 |
 | `'skeleton'` | 30 |
+| `'occurrences'` | 29 |
 
 ### `phylogeny#/$defs/article/properties/audit/properties/state`
 

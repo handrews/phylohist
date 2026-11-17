@@ -181,6 +181,9 @@ def test_occurrence_refs_tentative_naming_a_field_the_entry_lacks_is_error():
     'material': [
       {'label': 'A', 'horizon': 'h', 'tentative': ['horizon', 'locality']},
       {'label': 'B', 'horizon': 'h', 'locality': 'l', 'tentative': ['locality']},
+      # A null locality is the statement that the source gives none, so
+      # there is nothing to query.
+      {'label': 'C', 'horizon': 'h', 'locality': None, 'tentative': ['locality']},
     ],
     'occurrences': [{'horizon': 'h', 'tentative': ['locality']}],
   }
@@ -188,7 +191,18 @@ def test_occurrence_refs_tentative_naming_a_field_the_entry_lacks_is_error():
   assert material.occurrence_refs(node, records, _records()) == [
     ('error', '`tentative` names `locality`, which the entry does not carry'),
     ('error', '`tentative` names `locality`, which the entry does not carry'),
+    ('error', '`tentative` names `locality`, which the entry does not carry'),
   ]
+
+
+def test_occurrence_refs_reads_a_null_locality_as_no_reference():
+  node = {
+    'material': [
+      {'label': 'A', 'locality': None},
+      {'label': 'B', 'horizon': 'h', 'locality': None, 'tentative': ['horizon']},
+    ]
+  }
+  assert material.occurrence_refs(node, _records({'h': {}}), _records()) == []
 
 
 # -- tentative_fields and inferred_fields -------------------------------------
@@ -1691,6 +1705,8 @@ def test_schema_accepts_horizons_localities_occurrences_and_tentative_lists():
   assert _schema_accepts(document)
   assert _schema_accepts(_node_document({'occurrences': None}))
   assert _schema_accepts(_node_document({'material': [{'label': 'A'}]}, unused=['occurrences']))
+  # An entry's `locality: null`: the source gives no locality for the specimen.
+  assert _schema_accepts(_node_document({'material': [{'label': 'A', 'locality': None}]}))
 
 
 @pytest.mark.parametrize(
@@ -1703,6 +1719,11 @@ def test_schema_accepts_horizons_localities_occurrences_and_tentative_lists():
     _node_document({'contexts': None}),
     _node_document({}, contexts={'x': {'unit': ['A']}}),
     _node_document({}, unused=['contexts']),
+    # `occurrences` holds at least one statement; none is `null`.
+    _node_document({'occurrences': []}),
+    # Only an entry's locality may be null.
+    _node_document({'material': [{'label': 'A', 'horizon': None}]}),
+    _node_document({'occurrences': [{'horizon': 'h', 'locality': None}]}),
     # An occurrence names a horizon, a locality or both.
     _node_document({'occurrences': [{}]}),
     _node_document({'occurrences': [{'notes': 'x'}]}),
