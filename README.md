@@ -4,7 +4,7 @@ Science is always in motion.  Most online taxonomy or phylogeny
 databases attempt to show a consensus or accepted view, with
 each site having its own editorial policy for what gets included.
 Some include historical information, but do not make it a central
-or easily-accessible part of the sysetm.
+or easily-accessible part of the system.
 
 The `phylohist` project instead provides access to trees as published,
 over time, while leaving the judgement of what to accept or reject to
@@ -23,16 +23,18 @@ been entered and reviewed.
 This repository began as a place to store my notes, and gradually evolved
 into a software package, featuring more and more modern software engineering
 best practices as I have found time to add them.  However, it remains
-a solo, unfunded project that I work on whenever I can.
+a solo, unfunded project that I work on whenever I can.  In terms of data
+modeling, there are other philosophically similar projects out there with
+a larger community of support.
 
 The package is published on PyPI as `phylohist` from version 0.1.0.
 Next steps include writing human-user-friendly documentation,
-continuing to improve the software development methodology, curating
+improving the AI evaluation process and overall architecture, curating
 additional data and adding more features.
 
-A data model for capturing specimen information has recenlty been
+A data model for capturing specimen information has recently been
 designed but data entry for this area is in its infancy.  Additional
-areas of fuure work are proper support for cladograms (currently
+areas of future work are proper support for cladograms (currently
 allowed in the data but treated more-or-less like systematic trees)
 and data visualization.
 
