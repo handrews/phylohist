@@ -1,0 +1,100 @@
+balang-fm:
+  name: Balang
+  rank: Formation
+  craton: South China
+  paleocontinent: Gondwana
+beelte creek-fm:
+  name: Beetle Creek
+  rank: Formation
+  craton: North Australia
+  paleocontinent: Gondwana
+  margin: Panthalassic Ocean
+chengjiang-fm:
+  name: Chengjiang
+  rank: Formation
+  craton: South China
+  paleocontinent: Gondwana
+issafen-fm:
+  name: Issafen
+  rank: Formation
+  craton: West Africa
+  paleocontinent: Gondwana
+  margin: Proto-Rheic Ocean
+  countries:
+  - MA
+  regions:
+  - Anti-Atlas Mountains
+jbel wawrmast-fm:
+  name: Jbel Wawrmast
+  rank: Formation
+  craton: West Africa
+  paleocontinent: Gondwana
+  margin: Proto-Rheic Ocean
+  countries:
+  - MA
+  regions:
+  - Anti-Atlas Mountains
+kinzers-fm:
+  name: Kinzers
+  rank: Formation
+  craton: North America
+  paleocontinent: Laurentia
+  margin: Iapetus Ocean
+langston-fm:
+  name: Langston
+  rank: Formation
+  craton: North America
+  paleocontinent: Laurentia
+  margin: Panthalassic Ocean
+mantou-fm:
+  name: Mantou
+  rank: Formation
+  craton: North China
+  paleocontinent: Gondwana
+poleta-fm:
+  name: Poleta
+  rank: Formation
+  craton: North America
+  paleocontinent: Laurentia
+  margin: Panthalassic Ocean
+puerto blanco-fm:
+  name: Puerto Blanco
+  rank: Formation
+  craton: North America
+  paleocontinent: Laurentia
+  margin: Panthalassic Ocean
+  countries:
+  - MX
+  regions:
+  - Sonora Desert
+qiongzhusi-fm:
+  name: Qiongzhusi
+  rank: Formation
+  craton: South China
+  paleocontinent: Gondwana
+spence-mb:
+  name: Spence
+  rock: shale
+  rank: Member
+  parent: langston-fm
+stephen-fm:
+  name: Stephen
+  rank: Formation
+  craton: North America
+  paleocontinent: Laurentia
+  margin: Panthalassic Ocean
+valdemiedes-fm:
+  name: Valdemiedes
+  rank: Formation
+  craton: Iberia
+  paleocontinent: Gondwana
+wulongqing-fm:
+  name: Wulongqing
+  rank: Formation
+  craton: South China
+  paleocontinent: Gondwana
+yanjiahe-fm:
+  name: Yanjiahe
+  rank: Formation
+  craton: South China
+  paleocontinent: Gondwana
