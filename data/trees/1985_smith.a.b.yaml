@@ -58,7 +58,8 @@ taxonomies:
   - taxon: stromatocystites
   - taxon: edrioasteroidea
     citedAs: Plesion (Class) EDRIOASTEROIDEA Billings, 1858
-    rank: Plesion
+    rank: Class
+    term: plesion
     mutable: true
     pages: 734
     children:

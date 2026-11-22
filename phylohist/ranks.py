@@ -9,7 +9,7 @@ in its order and casing, held equal by a test; `SPECIES_GROUP`;
 `GENUS_GROUP`); a load reads its own copy into a `RankTable`, which the lint
 runs over. Every comparison reads a rank through `fold_rank`, and
 `rank_order` sorts by the table's order. A record written `rank: null`
-(the source prints no rank word and no cladistic term) has no rank: its
+(the source prints no rank word) has no rank: its
 `rank` is `None`. An installed package ships no `data/`, so
 `scripts/claims.py` copies the table into `phylohist/table/ranks.yaml`,
 which this module reads when the data file is not beside the package.

@@ -651,8 +651,12 @@ class Words:
       flags = [f for f in ('provisional', 'questionable', 'quoted') if claim.get(f)]
       if claim.get('quotedParent'):
         flags.append('genus in quotes')
-      if claim.get('nonMonophyletic'):
-        flags.append(blocks.non_monophyly_words(claim['nonMonophyletic']))
+      if claim.get('group'):
+        flags.append(blocks.GROUP_WORDS[claim['group']])
+      if claim.get('term'):
+        flags.append(claim['term'])
+      if claim.get('monophyly'):
+        flags.append(blocks.monophyly_words(claim['monophyly']))
       if claim.get('mutable'):
         flags.append('sedis mutabilis')
       words = f'places it under {where}'

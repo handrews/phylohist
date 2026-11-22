@@ -43,7 +43,6 @@ even when its parent is also unreached, so read parents first.
 | `taxonRecord` | `phylogeny#/$defs/taxonRecord/else/oneOf/3`<br>`phylogeny#/$defs/taxonRecord/else/oneOf/4`<br>`phylogeny#/$defs/taxonRecord/properties/altGenderOf`<br>`phylogeny#/$defs/taxonRecord/properties/authority/not`<br>`phylogeny#/$defs/taxonRecord/properties/holotype/additionalProperties/items/items`<br>`phylogeny#/$defs/taxonRecord/properties/latinSpellingOf` |
 | `timeFields` | `phylogeny#/$defs/timeFields/properties/eon`<br>`phylogeny#/$defs/timeFields/properties/era`<br>`phylogeny#/$defs/timeFields/properties/seriesBoundary`<br>`phylogeny#/$defs/timeFields/properties/stageBoundary`<br>`phylogeny#/$defs/timeFields/properties/stageRange` |
 | `typeNode` | `phylogeny#/$defs/typeNode/properties/fixedBy` |
-| `uncertaintyFields` | `phylogeny#/$defs/uncertaintyFields/properties/nonMonophyletic/oneOf/1` |
 
 ## 2. Property frequency by `$defs`
 
@@ -62,8 +61,9 @@ property.
 | `emendedBy` | 9 | 0.2% |
 | `nudum` | 7 | 0.1% |
 | `recombined` | 3 | 0.1% |
+| `term` | 3 | 0.1% |
+| `group` | 2 | 0.0% |
 | `restricted` | 1 | 0.0% |
-| `stem` | 1 | 0.0% |
 | `restrictedBy` | 0 | 0.0% |
 
 ### `article` -- 406 instances in `data/`
@@ -144,13 +144,13 @@ property.
 | `bootstrap` | 6 | 0.8% |
 | `data` | 0 | 0.0% |
 
-### `editorialObject` -- 91 instances in `data/`
+### `editorialObject` -- 92 instances in `data/`
 
 | property | data | data % |
 |---|---|---|
-| `basis` | 91 | 100.0% |
-| `inferred` | 76 | 83.5% |
-| `corrections` | 15 | 16.5% |
+| `basis` | 92 | 100.0% |
+| `inferred` | 77 | 83.7% |
+| `corrections` | 15 | 16.3% |
 | `corrections.authority` | 11 | 73.3% |
 | `corrections.authority.source` | 9 | 81.8% |
 | `corrections.authority.auth` | 8 | 72.7% |
@@ -295,7 +295,7 @@ property.
 | property | data | data % |
 |---|---|---|
 | `notes` | 526 | 7.8% |
-| `editorial` | 87 | 1.3% |
+| `editorial` | 88 | 1.3% |
 
 ### `modularDate` -- 405 instances in `data/`
 
@@ -369,16 +369,16 @@ property.
 
 | property | data | data % |
 |---|---|---|
-| `ranks/items.name` | 34 | 100.0% |
-| `ranks/items.informal` | 11 | 32.4% |
+| `ranks/items.name` | 31 | 100.0% |
+| `ranks/items.informal` | 8 | 25.8% |
 | `exceptions/items.name` | 7 | 100.0% |
 | `exceptions/items.note` | 7 | 100.0% |
 | `exceptions/items.rank` | 7 | 100.0% |
 | `suffixes/items.ranks` | 6 | 100.0% |
 | `suffixes/items.suffix` | 6 | 100.0% |
-| `ranks/items.group` | 5 | 14.7% |
+| `ranks/items.group` | 5 | 16.1% |
 | `ranks/items.endings/items.suffix` | 4 | 100.0% |
-| `ranks/items.endings` | 3 | 8.8% |
+| `ranks/items.endings` | 3 | 9.7% |
 | `checkedFrom` | 1 | 100.0% |
 | `exceptions` | 1 | 100.0% |
 | `ranks` | 1 | 100.0% |
@@ -463,7 +463,7 @@ property.
 | `authority` | 2677 | 92.3% |
 | `/if.authority` | 2676 | 100.0% |
 | `rank` | 1046 | 36.1% |
-| `notes` | 253 | 8.7% |
+| `notes` | 252 | 8.7% |
 | `altSpellingOf` | 149 | 5.1% |
 | `lang` | 76 | 2.6% |
 | `originalParent` | 71 | 2.4% |
@@ -507,7 +507,7 @@ property.
 |---|---|---|
 | `children` | 2260 | 33.4% |
 | `pages` | 1247 | 18.4% |
-| `rank` | 658 | 9.7% |
+| `rank` | 657 | 9.7% |
 | `authority` | 347 | 5.1% |
 | `parents` | 335 | 4.9% |
 | `bracketEnd` | 28 | 0.4% |
@@ -546,10 +546,31 @@ property.
 | `quotedParent` | 14 | 0.2% |
 | `sensu` | 8 | 0.1% |
 | `mutable` | 3 | 0.0% |
-| `nonMonophyletic` | 1 | 0.0% |
-| `quoted` | 1 | 0.0% |
+| `quoted` | 2 | 0.0% |
+| `monophyly` | 1 | 0.0% |
 
 ## 3. Enum member usage
+
+### `phylogeny#/$defs/actAndModifierFields/properties/group`
+
+2 of 3 members used, 2 occurrences.
+
+| value | count |
+|---|---|
+| `'stem'` | 1 |
+| `'total'` | 1 |
+
+**Never used (1):** `'crown'`
+
+### `phylogeny#/$defs/actAndModifierFields/properties/term`
+
+1 of 3 members used, 3 occurrences.
+
+| value | count |
+|---|---|
+| `'plesion'` | 3 |
+
+**Never used (2):** `'scion'`, `'clade'`
 
 ### `phylogeny#/$defs/article/properties/audit/properties/coverage/additionalProperties`
 
@@ -678,12 +699,12 @@ property.
 
 ### `phylogeny#/$defs/rank`
 
-26 of 34 members used, 1645 occurrences.
+25 of 31 members used, 1643 occurrences.
 
 | value | count |
 |---|---|
 | `'Order'` | 312 |
-| `'Class'` | 291 |
+| `'Class'` | 292 |
 | `'species'` | 280 |
 | `'Family'` | 228 |
 | `'genus'` | 152 |
@@ -703,13 +724,12 @@ property.
 | `'Subtypus'` | 5 |
 | `'Superorder'` | 4 |
 | `'Subkingdom'` | 3 |
-| `'Plesion'` | 3 |
 | `'Typus'` | 2 |
 | `'Branch'` | 2 |
 | `'Parvclass'` | 1 |
 | `'Superphylum'` | 1 |
 
-**Never used (8):** `'Domain'`, `'Infraphylum'`, `'Superclass'`, `'Infraclass'`, `'subspecies'`, `'Clade'`, `'Scion'`, `'Embranchement'`
+**Never used (6):** `'Domain'`, `'Infraphylum'`, `'Superclass'`, `'Infraclass'`, `'subspecies'`, `'Embranchement'`
 
 ### `phylogeny#/$defs/ranks/properties/ranks/items/properties/group`
 
@@ -841,11 +861,15 @@ property.
 
 **Never used (7):** `'monotypy'`, `'subsequentDesignation'`, `'subsequentMonotypy'`, `'objectiveSynonymy'`, `'tautonymy'`, `'typus'`, `'iczn'`
 
-### `phylogeny#/$defs/uncertaintyFields/properties/nonMonophyletic/oneOf/1`
+### `phylogeny#/$defs/uncertaintyFields/properties/monophyly`
 
-0 of 2 members used, 0 occurrences.
+1 of 4 members used, 1 occurrences.
 
-**Never used (2):** `'paraphyletic'`, `'polyphyletic'`
+| value | count |
+|---|---|
+| `'nonMonophyletic'` | 1 |
+
+**Never used (3):** `'monophyletic'`, `'paraphyletic'`, `'polyphyletic'`
 
 ### `phylogeny#/$defs/uncertaintyFields/properties/sensu`
 
@@ -875,7 +899,7 @@ Tests whether each multi-type declaration is actually needed.
 | `phylogeny#/$defs/citationNumber` | integer/string | intx2875, strx406 | `5f`, `IV`, `X`, `VII` | - |
 | `phylogeny#/$defs/cladisticFields/properties/matrix/items` | integer/string | intx139, strx5 | `?` | - |
 | `phylogeny#/$defs/editorialObject/properties/corrections/properties/authority/properties/auth` | array/null | nullx7, listx1 | - | - |
-| `phylogeny#/$defs/editorialObject/properties/inferred` | boolean/array | boolx42, listx34 | - | - |
+| `phylogeny#/$defs/editorialObject/properties/inferred` | boolean/array | boolx42, listx35 | - | - |
 | `phylogeny#/$defs/locationFields/properties/illustrations` | array/null | listx197, nullx13 | - | - |
 | `phylogeny#/$defs/materialsFields/properties/material` | array/null | listx124, nullx9 | - | - |
 | `phylogeny#/$defs/materialsFields/properties/occurrences` | array/null | nullx41, listx28 | - | - |

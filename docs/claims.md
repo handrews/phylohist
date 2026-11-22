@@ -106,7 +106,7 @@ Emitted for every child under its parent in a taxonomy. Fields added:
   named ancestor is further up, `parentPath` says so too.
 - `rank`: the rank the source places the taxon at: the word the node
   writes, null for a node written `rank: null` (the source places the
-  taxon with no rank word and no cladistic term), else the record's (null
+  taxon with no rank word), else the record's (null
   for a record written `rank: null`). `rankAsPrinted` is present exactly
   when the node writes `rank`, with the same word or null; a root, which
   has no placement claim, carries it on its usage claim. The listings,
@@ -116,11 +116,32 @@ Emitted for every child under its parent in a taxonomy. Fields added:
 - Flags copied from the node: `provisional`, `mutable` (the source
   prints "sedis mutabilis"), `questionable`, `quoted`,
   `quotedParent` (the genus is printed in quotation marks in this
-  combination), `nonMonophyletic` (`true`, `paraphyletic` or `polyphyletic`,
-  copied with its value: the source says the group is not monophyletic;
-  absent says nothing), `pars`, `tentative`, `outgroup`, `stem`;
-  `altPlacements` as a list of keys. (`listHedged`, `listComplete` (B16) are
-  not in the schema yet.)
+  combination), `pars`, `tentative`, `outgroup`; `altPlacements` as a list
+  of keys. (`listHedged`, `listComplete` (B16) are not in the schema yet.)
+- Fields copied from the node with their values: `group` (`stem`, `crown`
+  or `total`: the source prints the name as that part of its total group),
+  `term` (`plesion`, `scion` or `clade`: the cladistic term the source
+  prints, beside a rank word or with none) and `monophyly`
+  (`monophyletic`, `paraphyletic`, `polyphyletic` or `nonMonophyletic`:
+  what the source says about the taxon's monophyly). Absent says nothing.
+  A root has no placement claim, so it carries them on its usage claim,
+  as it carries `rankAsPrinted`.
+
+What the cladistic words do not say. Each field records the word or device
+the source prints, and no monophyly, stem membership or sister relation is
+derived from it.
+
+| field | records | does not say |
+|---|---|---|
+| `term: plesion` | the source prints "Plesion" for the taxon | that the taxon is a stem group, paraphyletic or monophyletic |
+| `term: clade`, `term: scion` | the source prints "Clade" or "Scion" for the taxon | that the taxon is monophyletic |
+| `rank: Grade` | the source prints "Grade" in the place of a rank word | that the taxon is paraphyletic or polyphyletic |
+| `quoted` | the name is printed in quotation marks | that the group is non-monophyletic |
+| `group` | the name is printed as a stem, crown or total group | that its children are the group's only members, or which clade is its sister |
+
+`monophyly` holds only a statement the source makes about the taxon in its
+classification or systematic section. An editor's reading of a device such
+as quotation marks is marked `editorial.inferred: [monophyly]` on the node.
 
 A phylogeny's nesting produces placements too, marked
 `tree: cladogram | diagram | other` with the phylogeny's `notes`, and a
@@ -252,7 +273,7 @@ entries.
 ### `certainty`
 
 Not a kind of its own. The C-axis markers (`provisional`, `mutable`,
-`questionable`, `quotedParent`, `quoted`, `nonMonophyletic`, `tentative`,
+`questionable`, `quotedParent`, `quoted`, `monophyly`, `tentative`,
 `pars`, the `compared` link of a cf. or aff. form, `uncertain` and
 `roleUncertain` on a specimen, `illustration.uncertain`) ride on the claim
 they qualify, as fields. No separate table.

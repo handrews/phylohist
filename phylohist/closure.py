@@ -126,7 +126,7 @@ class Closure:
     names its key, path, the claim that puts it there (the root's usage
     claim), whether it is a placeholder, the alternative placements the
     source offers at that step, and the provisional and questionable
-    flags, and the `nonMonophyletic` word where the source gives one."""
+    flags, and the `monophyly` word where the source gives one."""
     out = []
     for claim in self.placements_of.get(record, ()):
       if not self._wanted(claim, trees, years):
@@ -144,8 +144,9 @@ class Closure:
           'provisional': bool(current.get('provisional')),
           'questionable': bool(current.get('questionable')),
         }
-        if current.get('nonMonophyletic'):
-          node['nonMonophyletic'] = current['nonMonophyletic']
+        for name in ('group', 'term', 'monophyly'):
+          if current.get(name):
+            node[name] = current[name]
         if current.get('mutable'):
           node['mutable'] = True
         if current.get('via') == 'type':
@@ -167,6 +168,7 @@ class Closure:
               'alternatives': [],
               'provisional': False,
               'questionable': False,
+              **{n: usage[n] for n in ('group', 'term', 'monophyly') if usage and usage.get(n)},
             }
           )
         current = above

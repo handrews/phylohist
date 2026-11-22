@@ -428,9 +428,10 @@ class ClaimStore:
       return None
     key = base['subject']
     flags = {f: True for f in _NODE_FLAGS if placement and placement.get(f)}
-    if placement and placement.get('nonMonophyletic'):
-      # The one flag that carries its value: `True`, or what the source says.
-      flags['nonMonophyletic'] = placement['nonMonophyletic']
+    for name in ('group', 'term', 'monophyly'):
+      # The flags that carry their value: what the source prints or says.
+      if base.get(name):
+        flags[name] = base[name]
     for act in acts:
       if act['actKind'] in ('new', 'placeholder'):
         flags['new'] = True
@@ -819,7 +820,7 @@ class ClaimStore:
           'alternatives': [self.words.display(a) for a in n['alternatives']],
           'provisional': n['provisional'],
           'questionable': n['questionable'],
-          **({'nonMonophyletic': n['nonMonophyletic']} if n.get('nonMonophyletic') else {}),
+          **{k: n[k] for k in ('group', 'term', 'monophyly') if n.get(k)},
           **({'mutable': True} if n.get('mutable') else {}),
           **(
             {'via': 'type', 'mark': self.words.type_mark(n['key'])}

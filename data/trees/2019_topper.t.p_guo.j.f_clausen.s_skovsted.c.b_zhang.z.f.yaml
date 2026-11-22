@@ -19,6 +19,7 @@ localities:
 taxonomies:
 - taxon: echinodermata
   citedAs: Total-group Echinodermata
+  group: total
   rank: Phylum
   authority: null
   pages: 2

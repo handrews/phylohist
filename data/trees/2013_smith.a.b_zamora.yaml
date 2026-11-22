@@ -4,7 +4,7 @@ prefixes:
 taxonomies:
 - taxon: echinodermata
   citedAs: Stem group Echinodermata
-  stem: true
+  group: stem
   rank: null
   authority: null
   pages: 5

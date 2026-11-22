@@ -67,7 +67,20 @@ def node_label(node):
   if node.get('or'):
     name += ' or ' + ' or '.join(node['or'])
   rank_word = node.get('rankWord')
-  if rank_word and fold_rank(rank_word) not in SPECIES_GROUP and not node.get('placeholder'):
+  flags = node.get('flags') or {}
+  shown = bool(
+    rank_word and fold_rank(rank_word) not in SPECIES_GROUP and not node.get('placeholder')
+  )
+  # The group and the cladistic term come before the rank, which they put
+  # in parentheses: "Plesion (Class) Edrioasteroidea".
+  words = [blocks.GROUP_WORDS[flags['group']]] if flags.get('group') else []
+  if flags.get('term'):
+    words.append(flags['term'])
+  if words:
+    head = ' '.join(words)
+    head = head[:1].upper() + head[1:]
+    name = f'{head} ({rank_word}) {name}' if shown else f'{head} {name}'
+  elif shown:
     name = f'{rank_word} {name}'
   if (node.get('flags') or {}).get('new') and not node.get('compared'):
     mark = node.get('newMark') or blocks.new_mark(rank_word)
@@ -77,8 +90,8 @@ def node_label(node):
     name += ' ' + mark
   if (node.get('flags') or {}).get('questionable'):
     name += ' ?'
-  if (node.get('flags') or {}).get('nonMonophyletic'):
-    name += f' ({blocks.non_monophyly_words(node["flags"]["nonMonophyletic"])})'
+  if (node.get('flags') or {}).get('monophyly'):
+    name += f' ({blocks.monophyly_words(node["flags"]["monophyly"])})'
   if (node.get('flags') or {}).get('mutable'):
     name += ' (sedis mutabilis)'
   if node.get('sensu'):
@@ -370,14 +383,19 @@ def _chain_text(chain):
   parts = []
   for node in chain:
     label = node['label']
+    words = [blocks.GROUP_WORDS[node['group']]] if node.get('group') else []
+    if node.get('term'):
+      words.append(node['term'])
+    if words:
+      label = ' '.join(words).capitalize() + ' ' + label
     if node.get('mark'):
       label += ' ' + node['mark']
     if node.get('provisional'):
       label = '? ' + label
     if node.get('questionable'):
       label += ' ?'
-    if node.get('nonMonophyletic'):
-      label += f' ({blocks.non_monophyly_words(node["nonMonophyletic"])})'
+    if node.get('monophyly'):
+      label += f' ({blocks.monophyly_words(node["monophyly"])})'
     if node.get('mutable'):
       label += ' (sedis mutabilis)'
     if node.get('alternatives'):

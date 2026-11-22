@@ -433,7 +433,7 @@ $defs:
       holds the two equal): the formal ranks, capitalised above the genus
       group and lower-case from the genus down, then the informal words a
       source prints in a rank's place. A record or node whose source prints
-      no rank word and no cladistic term writes `null`.
+      no rank word writes `null`; a cladistic term it prints is `term`.
     type: string
     enum:
     - Domain
@@ -463,9 +463,6 @@ $defs:
     - section
     - Group
     - Grade
-    - Clade
-    - Plesion
-    - Scion
     - Typus
     - Subtypus
     - Embranchement
@@ -587,8 +584,8 @@ $defs:
           Explicit on a record that gives its protologue page
           (`authority.pages`), where the tree node leaves a genus or
           species implicit; `null` says the protologue prints no rank word
-          and no cladistic term for the taxon, and the loader reads it as
-          no rank (a modern unranked clade is `Clade`). An unnamed record
+          for the taxon, and the loader reads it as no rank (a cladistic
+          term it prints is `term`, on a tree node). An unnamed record
           spells its rank, and a node under a genus, subgenus or species
           is at a rank below its parent's, each at the word it writes,
           else at its record's; a node written `rank: null` stands outside
@@ -838,8 +835,8 @@ $defs:
           wherever a node's rank matters: the placement claim, the rank
           order under a genus or species, the open-nomenclature checks,
           the listings and the history. A node that writes none sits at
-          its record's rank. `null`: the source prints no rank word and no
-          cladistic term for the taxon (one it calls a clade is `Clade`).
+          its record's rank. `null`: the source prints no rank word for the
+          taxon (a cladistic term it prints is `term`).
         oneOf:
         - $ref: "phylogeny#/$defs/rank"
         - type: "null"
@@ -960,15 +957,15 @@ $defs:
           assignment to its genus, like `provisional`.
         type: boolean
         default: false
-      nonMonophyletic:
+      monophyly:
         description: |
-          The source says the group is not monophyletic: `true`, or
-          `paraphyletic` or `polyphyletic` when it says which. Present is a
-          statement; absent says nothing.
-        oneOf:
-        - const: true
-        - type: string
-          enum: [paraphyletic, polyphyletic]
+          What the source says about the taxon's monophyly, in its
+          classification or systematic section and not in its general
+          discussion: `monophyletic`, `paraphyletic`, `polyphyletic`, or
+          `nonMonophyletic` when it says only that the group is not
+          monophyletic. Present is a statement; absent says nothing.
+        type: string
+        enum: [monophyletic, paraphyletic, polyphyletic, nonMonophyletic]
       sensu:
         description: |
           A printed "s. s." / "s. l." / "s. em." / "s. ext." qualifying the
@@ -1019,9 +1016,19 @@ $defs:
         $comment: The cited usage is a nomen nudum, as this source says.
         type: boolean
         default: false
-      stem:
-        type: boolean
-        default: false
+      group:
+        description: |
+          The source prints the name as that part of its total group
+          ("Stem group Echinodermata"). Absent says nothing.
+        type: string
+        enum: [stem, crown, total]
+      term:
+        description: |
+          The cladistic term the source prints for the taxon, beside a rank
+          word or with none. Records the word only: it says nothing of
+          monophyly or position.
+        type: string
+        enum: [plesion, scion, clade]
       emended:
         description: |
           This source emends the diagnosis. An emendation it follows from

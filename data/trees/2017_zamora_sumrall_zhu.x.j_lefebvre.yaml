@@ -14,7 +14,13 @@ taxonomies:
     children:
     - taxon: rhombifera_zittel_1879
       rank: Class
-      nonMonophyletic: true
+      quoted: true
+      monophyly: nonMonophyletic
+      editorial:
+        inferred: [monophyly]
+        basis: >
+          The name is printed in single quotation marks (p. 468), and the
+          paper does not say in words that the group is not monophyletic.
       children:
       - taxon: glyptocystitida
         rank: Order

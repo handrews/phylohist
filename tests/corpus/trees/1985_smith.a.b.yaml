@@ -42,7 +42,8 @@ taxonomies:
   children:
   - taxon: stromatocystites
   - taxon: edrioasteroidea
-    rank: Plesion
+    rank: Class
+    term: plesion
     children:
     - taxon: edrioasterida
       children:
