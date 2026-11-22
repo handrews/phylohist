@@ -2,6 +2,8 @@ abh-k-akad-wiss-berlin:
   name: Abhandlungen der Königlichen Akademie der Wissenschaften zu Berlin
 ac-st-p-bulletin:
   name: Académie Impériale des Sciences de Saint Petersbourg Bulletin
+acta-g-sinica-eng:
+  name: Acta Geologica Sinica (English Edition)
 acta-p-polonica:
   name: Acta Palaeontologica Polonica
 acta-p-sinica:
@@ -92,6 +94,8 @@ cl-olandska:
   name: Carl von Linnés öländska resa, förrättad 1741
 coloquios:
   name: Coloquios de Paleontología
+curr-bio:
+  name: Current Biology
 die-klassen:
   name: >
     Die Klassen und Ordnungen des Thier-Reichs, wissenschaftlich dargestellt
@@ -434,5 +438,7 @@ zeitschrift:
   name: Zeitschrift der Deutschen Geologischen Gesellschaft
 zoo-dan:
   name: Zoologiæ Danicæ prodromus, seu animalium Daniæ et Norvegiæ indigenarum characteres, nomina, et synonyma imprimis popularium
+zool-a:
+  name: Zoologischer Anzeiger
 zoolj:
   name: The Zoological Journal

@@ -470,6 +470,41 @@ ambigena_lamarck_1816:
   name: ambigena
   authority:
     source: 1816b_lamarck
+ambulacraria:
+  name: Ambulacraria
+  rank: Typus
+  authority:
+    source: 1881b_metschnikoff
+    pages: 156
+  citedAs: Typus Ambulacraria
+ambulacraria-indeterminate-phylum_he.k.y_mussini_han.j_reich.m_ou.q_cheng.m.r_shu.d_2026:
+  name: null
+  rank: Phylum
+  authority:
+    source: 2026_he.k.y_mussini_han.j_reich.m_ou.q_cheng.m.r_shu.d
+    pages: 2
+  citedAs: Phylum, Class, Order, Family indet.
+ambulacraria-indeterminate-class_he.k.y_mussini_han.j_reich.m_ou.q_cheng.m.r_shu.d_2026:
+  name: null
+  rank: Class
+  authority:
+    source: 2026_he.k.y_mussini_han.j_reich.m_ou.q_cheng.m.r_shu.d
+    pages: 2
+  citedAs: Phylum, Class, Order, Family indet.
+ambulacraria-indeterminate-order_he.k.y_mussini_han.j_reich.m_ou.q_cheng.m.r_shu.d_2026:
+  name: null
+  rank: Order
+  authority:
+    source: 2026_he.k.y_mussini_han.j_reich.m_ou.q_cheng.m.r_shu.d
+    pages: 2
+  citedAs: Phylum, Class, Order, Family indet.
+ambulacraria-indeterminate-family_he.k.y_mussini_han.j_reich.m_ou.q_cheng.m.r_shu.d_2026:
+  name: null
+  rank: Family
+  authority:
+    source: 2026_he.k.y_mussini_han.j_reich.m_ou.q_cheng.m.r_shu.d
+    pages: 2
+  citedAs: Phylum, Class, Order, Family indet.
 amecystis:
   name: Amecystis
   authority:
@@ -600,6 +635,26 @@ anatiformis_hall_1847:
   name: anatiformis
   authority:
     source: 1847_hall
+ancarpa_guo.j.f_li.y_han.h.p_ou.q_zhou.j.r_zheng.y.j_2012:
+  name: ancarpa
+  rank: species
+  citedAs: Yanjiahella ancarpa gen. et sp. nov.
+  authority:
+    source: 2012_guo.j.f_li.y_han.h.p_ou.q_zhou.j.r_zheng.y.j
+    pages: 793
+    illustrations:
+    - page: 794
+      figures: [2a, 2c]
+      of: HS7A
+      depicts: specimen
+    - page: 794
+      figures: 2b
+      of: HS7B
+      depicts: specimen
+    - page: 795
+      figures: 3a
+      of: HS7A
+      depicts: drawing
 ancylus:
   name: Ancylus
   authority:
@@ -1631,6 +1686,13 @@ bigsbyi_billings_1857:
   name: bigsbyi
   authority:
     source: 1857_billings
+bilateralia:
+  name: Bilateralia
+  rank: Subtypus
+  authority:
+    source: 1881b_metschnikoff
+    pages: 156
+  citedAs: 2. - Subtypus Bilateralia s. Enteropneusta
 billingsi_chapman.e.j_1860:
   name: billingsi
   authority:
@@ -1644,13 +1706,33 @@ biperforatus_leske_1778:
   name: biperforatus
   authority:
     source: 1778_leske
-bis perforatus_leske_1778:
-  name: bis perforatus
-  altSpellingOf: biperforatus_leske_1778
 biphora:
   name: Biphora
   authority:
     source: 1789a_bruguière
+bis perforatus_leske_1778:
+  name: bis perforatus
+  altSpellingOf: biperforatus_leske_1778
+biscarpa_guo.j.f_li.y_han.h.p_ou.q_zhou.j.r_zheng.y.j_2012:
+  name: biscarpa
+  rank: species
+  citedAs: Yanjiahella biscarpa gen. et sp. nov.
+  authority:
+    source: 2012_guo.j.f_li.y_han.h.p_ou.q_zhou.j.r_zheng.y.j
+    pages: 795
+    illustrations:
+    - page: 794
+      figures: [2k, 2l]
+      of: HS722
+      depicts: specimen
+    - page: 794
+      figures: 2m
+      of: HS998A
+      depicts: specimen
+    - page: 795
+      figures: 3c
+      of: HS722
+      depicts: drawing
 bispinosa_lamarck_1816:
   name: bispinosa
   authority:
@@ -4445,6 +4527,24 @@ echinodermata-incertae-sedis_ubaghs_1999:
   rank: Class
   authority:
     source: 1999_ubaghs
+echinodermata-class-uncertain_topper.t.p_guo.j.f_clausen.s_skovsted.c.b_zhang.z.f_2019:
+  name: null
+  rank: Class
+  authority:
+    source: 2019_topper.t.p_guo.j.f_clausen.s_skovsted.c.b_zhang.z.f
+    pages: 2
+echinodermata-order-uncertain_topper.t.p_guo.j.f_clausen.s_skovsted.c.b_zhang.z.f_2019:
+  name: null
+  rank: Order
+  authority:
+    source: 2019_topper.t.p_guo.j.f_clausen.s_skovsted.c.b_zhang.z.f
+    pages: 2
+echinodermata-family-uncertain_topper.t.p_guo.j.f_clausen.s_skovsted.c.b_zhang.z.f_2019:
+  name: null
+  rank: Family
+  authority:
+    source: 2019_topper.t.p_guo.j.f_clausen.s_skovsted.c.b_zhang.z.f
+    pages: 2
 echinodermen:
   name: Echinodermen
   lang: DE
@@ -5006,6 +5106,12 @@ enterocoelia:
 enterocoela:
   name: Enterocoela
   altSpellingOf: enterocoelia
+enteropneusta:
+  name: Enteropneusta
+  rank: Order
+  authority:
+    auth: [gegenbaur]
+    year: 1870
 enterozoa:
   name: Enterozoa
   rank: Grade
@@ -5976,6 +6082,13 @@ glutinosa_linnaeus_1758:
     source: 1758_linnaeus
     pages: 650
   citedAs: glutinoſa. 1.
+glutenotunica_he.k.y_mussini_han.j_reich.m_ou.q_cheng.m.r_shu.d_2026:
+  name: glutenotunica
+  rank: species
+  authority:
+    source: 2026_he.k.y_mussini_han.j_reich.m_ou.q_cheng.m.r_shu.d
+    pages: 2
+  citedAs: Yujingia glutenotunica gen. et sp. nov.
 glyptaster:
   name: Glyptaster
   authority:
@@ -8686,6 +8799,49 @@ metazoa:
   authority:
     auth: [haeckel]
     year: 1874
+metazoa-phylum-uncertain_guo.j.f_li.y_han.h.p_ou.q_zhou.j.r_zheng.y.j_2012:
+  name: null
+  rank: Phylum
+  authority:
+    source: 2012_guo.j.f_li.y_han.h.p_ou.q_zhou.j.r_zheng.y.j
+    pages: 793
+metazoa-class-uncertain_guo.j.f_li.y_han.h.p_ou.q_zhou.j.r_zheng.y.j_2012:
+  name: null
+  rank: Class
+  authority:
+    source: 2012_guo.j.f_li.y_han.h.p_ou.q_zhou.j.r_zheng.y.j
+    pages: 793
+metazoa-order-uncertain_guo.j.f_li.y_han.h.p_ou.q_zhou.j.r_zheng.y.j_2012:
+  name: null
+  rank: Order
+  authority:
+    source: 2012_guo.j.f_li.y_han.h.p_ou.q_zhou.j.r_zheng.y.j
+    pages: 793
+metazoa-family-uncertain_guo.j.f_li.y_han.h.p_ou.q_zhou.j.r_zheng.y.j_2012:
+  name: null
+  rank: Family
+  authority:
+    source: 2012_guo.j.f_li.y_han.h.p_ou.q_zhou.j.r_zheng.y.j
+    pages: 793
+metazoa-genus_guo.j.f_li.y_han.j_zhang.x.l_zhang.z.f_ou.q_liu.j.n_shu.d_maruyama.s_komiya.t_2008:
+  name: null
+  rank: genus
+  authority:
+    source: 2008_guo.j.f_li.y_han.j_zhang.x.l_zhang.z.f_ou.q_liu.j.n_shu.d_maruyama.s_komiya.t
+    pages: 1130
+metazoa-genus-sp_guo.j.f_li.y_han.j_zhang.x.l_zhang.z.f_ou.q_liu.j.n_shu.d_maruyama.s_komiya.t_2008:
+  name: null
+  rank: species
+  authority:
+    source: 2008_guo.j.f_li.y_han.j_zhang.x.l_zhang.z.f_ou.q_liu.j.n_shu.d_maruyama.s_komiya.t
+    pages: 1130
+    illustrations:
+    - page: 1130
+      figures:
+      - [5h, 5j]
+      of: HS18
+      depicts: specimen
+  citedAs: a probable metazoan
 metularia_lamarck_1816:
   name: metularia
   authority:
@@ -8746,6 +8902,12 @@ minervaecystis-sp_sumrall_sprinkle_guensburg_1997:
   rank: species
   authority:
     source: 1997_sumrall_sprinkle_guensburg
+minor_chen.m.g_xiao.z.z_yuan.x.l_1994:
+  name: minor
+  rank: species
+  authority:
+    auth: [chen.m.g, xiao.z.z, yuan.x.l]
+    year: 1994
 minor_leske_1778_angulosa_leske_1778_cidaris:
   name: minor
   rank: variety
@@ -8933,6 +9095,35 @@ monobrachiolata_paul.c.r.c_1967:
   authority:
     auth: [paul.c.r.c]
     year: 1967  # Not the current 1967_paul.c.r.c
+monocarpa_guo.j.f_li.y_han.h.p_ou.q_zhou.j.r_zheng.y.j_2012:
+  name: monocarpa
+  rank: species
+  citedAs: Yanjiahella monocarpa gen. et sp. nov.
+  authority:
+    source: 2012_guo.j.f_li.y_han.h.p_ou.q_zhou.j.r_zheng.y.j
+    pages: 795
+    illustrations:
+    - page: 794
+      figures:
+      - [2d, 2f]
+      of: HS18
+      depicts: specimen
+    - page: 794
+      figures: 2g
+      of: HS84A
+      depicts: specimen
+    - page: 794
+      figures: 2h
+      of: HS84B
+      depicts: specimen
+    - page: 794
+      figures: [2i, 2j]
+      of: HS734A
+      depicts: specimen
+    - page: 795
+      figures: 3b
+      of: HS18
+      depicts: drawing
 monocyclica:
   name: monocyclica
   authority:
@@ -10922,6 +11113,12 @@ protoblastoidea:
   rank: Grade
   authority:
     source: 1899_bather
+protoconites:
+  name: Protoconites
+  rank: genus
+  authority:
+    auth: [chen.m.g, xiao.z.z, yuan.x.l]
+    year: 1994
 protocrinidae:
   name: Protocrinidae
   rank: Family
@@ -11362,7 +11559,7 @@ rarus_hu.s.x_luo.h.l_2008:
   name: rarus
   authority:
     attributedTo: [hu.s.x, luo.h.l]
-    source: 2008_luo.h.l_li.y_hu.s.x_fu.x.p_hou.s.g_liu.x.r_chen.l.z_li.j.f_pang.j.y_liu.q
+    source: 2008_luo.h.l_li.y_hu.s.x_fu.x.p_hou.s.g_liu.x.y_chen.l.z_li.f.j_pang.j.y_liu.q
 raymondi_foerste_1920:
   name: raymondi
   authority:
@@ -14367,7 +14564,7 @@ wudingeocrinus:
   name: Wudingeocrinus
   authority:
     attributedTo: [hu.s.x, luo.h.l]
-    source: 2008_luo.h.l_li.y_hu.s.x_fu.x.p_hou.s.g_liu.x.r_chen.l.z_li.j.f_pang.j.y_liu.q
+    source: 2008_luo.h.l_li.y_hu.s.x_fu.x.p_hou.s.g_liu.x.y_chen.l.z_li.f.j_pang.j.y_liu.q
 ###################### X
 xenocystites:
   name: Xenocystites
@@ -14397,6 +14594,13 @@ xystriduridae:
     auth: [whitehouse]
     year: 1939
 ###################### Y
+yanjiahella:
+  name: Yanjiahella
+  rank: genus
+  authority:
+    source: 2012_guo.j.f_li.y_han.h.p_ou.q_zhou.j.r_zheng.y.j
+    pages: 793
+  citedAs: Genus Yanjiahella gen. nov.
 yini_zhao.y.l_peng.j_wu.m.y_2015:
   name: yini
   authority:
@@ -14420,6 +14624,31 @@ yui_zhao.y.l_parsley_peng.j_2007:
   name: yui
   authority:
     source: 2007_zhao.y.l_parsley_peng.j
+yujingia:
+  name: Yujingia
+  rank: genus
+  authority:
+    source: 2026_he.k.y_mussini_han.j_reich.m_ou.q_cheng.m.r_shu.d
+    pages: 2
+  citedAs: Yujingia glutenotunica gen. et sp. nov.
+yuknessia:
+  name: Yuknessia
+  rank: genus
+  authority:
+    auth: [walcott]
+    year: 1919
+yuknessia-sp_guo.j.f_li.y_han.j_zhang.x.l_zhang.z.f_ou.q_liu.j.n_shu.d_maruyama.s_komiya.t_2008:
+  name: null
+  rank: species
+  authority:
+    source: 2008_guo.j.f_li.y_han.j_zhang.x.l_zhang.z.f_ou.q_liu.j.n_shu.d_maruyama.s_komiya.t
+    pages: 1130
+    illustrations:
+    - page: 1130
+      figures: 5f
+      of: HS81
+      depicts: specimen
+  citedAs: '?Yuknessia sp.'
 ###################### Z
 zagoraensis_chauvel_1971:
   name: zagoraensis

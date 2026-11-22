@@ -50,6 +50,11 @@ baster:
   given: Job
   birth: 1711
   death: 1775
+bateson.w:
+  surname: Bateson
+  given: William
+  birth: 1861
+  death: 1926
 bather:
   surname: Bather
   given: F. A.
@@ -182,7 +187,13 @@ chen.j.y:
   given: Jun-Yuan
 chen.l.z:
   surname: Chen
-  given: L.-Z.
+  given: Liang-Zhong
+chen.m.g:
+  surname: Chen
+  given: M.-G.
+cheng.m.r:
+  surname: Cheng
+  given: Mei-Rong
 clark.a.h:
   surname: Clark
   given: Austin Hobart
@@ -212,6 +223,9 @@ clarke.j.m:
   given: John Mason
   birth: 1857
   death: 1925
+clausen.s:
+  surname: Clausen
+  given: Sébastien
 clement.c.r:
   surname: Clement
   given: Craig R.
@@ -357,7 +371,7 @@ frizzell:
   given: Don L.
 fu.x.p:
   surname: Fu
-  given: X.-P.
+  given: Xiao-Ping
 gaertner:
   surname: Gaertner
   given: Joseph
@@ -369,6 +383,11 @@ gahn:
 garbisch:
   surname: Garbisch
   given: Jon
+gegenbaur:
+  surname: Gegenbaur
+  given: Carl
+  birth: 1826
+  death: 1903
 gehling:
   surname: Gehling
   given: J. G.
@@ -436,6 +455,9 @@ gunnerus:
 guo.j:
   surname: Guo
   given: Jin
+guo.j.f:
+  surname: Guo
+  given: Jun-Feng
 guo.q.j:
   surname: Guo
   given: Qing-Jun
@@ -463,12 +485,21 @@ hall:
   given: James
   birth: 1811
   death: 1898
+han.h.p:
+  surname: Han
+  given: Hui-Ping
+han.j:
+  surname: Han
+  given: Jian
 han.n.r:
   surname: Han
   given: N.-R.
 harland:
   surname: Harland
   given: W. B.
+he.k.y:
+  surname: He
+  given: Kai-Yue
 heredia:
   surname: Heredia
   given: S
@@ -489,18 +520,12 @@ hoşgör:
 hou.s.g:
   surname: Hou
   given: Shu-Guang
-  notes: |
-    In 2008_luo.h.l_li.y_hu.s.x_fu.x.p_hou.s.g_liu.x.r_chen.l.z_li.j.f_pang.j.y_liu.q,
-    no given names are spelled out, unclear if this is the same Hou S.-G.
 house:
   surname: House
   given: M. R.
 hu.s.x:
   surname: Hu
   given: Shi-Xue
-  notes: |
-    In 2008_luo.h.l_li.y_hu.s.x_fu.x.p_hou.s.g_liu.x.r_chen.l.z_li.j.f_pang.j.y_liu.q,
-    no given names are spelled out, unclear if this is the same Hu S.-X.
 huang.y.l:
   surname: Huang
   given: Y.-L.
@@ -562,6 +587,9 @@ klein:
 kolata:
   surname: Kolata
   given: Dennis R.
+komiya.t:
+  surname: Komiya
+  given: Tsuyoshi
 kordule:
   surname: Kordule
   given: Vratislav
@@ -602,12 +630,12 @@ leuckart:
 lewis.r.d:
   surname: Lewis
   given: Ronald D.
-li.j.f:
+li.f.j:
   surname: Li
-  given: J.-F.
+  given: Feng-Jun
 li.y:
   surname: Li
-  given: Y.
+  given: Yong
 li.y.j:
   surname: Li
   given: Yu-Jing
@@ -622,12 +650,15 @@ linnaeus:
 liñán:
   surname: Liñán
   given: Eladio
+liu.j.n:
+  surname: Liu
+  given: Jian-Ni
 liu.q:
   surname: Liu
   given: Qi
-liu.x.r:
+liu.x.y:
   surname: Liu
-  given: X.-R.
+  given: Xing-Yao
 liu.y.j:
   surname: Liu
   given: Yu-Juan
@@ -637,9 +668,6 @@ longman:
 luo.h.l:
   surname: Luo
   given: Hui-Lin
-  notes:
-    In 2008_luo.h.l_li.y_hu.s.x_fu.x.p_hou.s.g_liu.x.r_chen.l.z_li.j.f_pang.j.y_liu.q,
-    no given names are spelled out, unclear if this is the same Luo H.-L.
 luo.x.c:
   surname: Luo
   given: Xiu-Chun
@@ -669,6 +697,9 @@ martin.m:
 martin.w:
   surname: Martin
   given: William
+maruyama.s:
+  surname: Maruyama
+  given: Shigenori
 matsumoto:
   surname: Matsumoto
   given: Hikoshichirō
@@ -699,6 +730,15 @@ meng.x.y:
 mestre:
   surname: Mestre
   given: Ana I.
+metschnikoff:
+  surname: Metschnikoff
+  given: Élie
+  birth: 1845
+  death: 1916
+  notes: >
+    Born Ilya Ilyich Mechnikof (Russian name with patronymic).
+    Gallicised surname often spelled Metchnikoff, but is Metschnikoff
+    in the one source indexed here to date.
 meyer:
   surname: Meyer
   given: Hermann von
@@ -755,6 +795,9 @@ münster:
 murchison:
   surname: Murchison
   given: Roderick Impey
+mussini:
+  surname: Mussini
+  given: Giovanni
 nardin:
   surname: Nardin
   given: Elise
@@ -780,6 +823,9 @@ norman:
 orłowski:
   surname: Orłowski
   given: S.
+ou.q:
+  surname: Ou
+  given: Qiang
 owen:
   surname: Owen
   given: Alan W.
@@ -799,7 +845,7 @@ pander:
   notes: Also known as Christian Heinrich
 pang.j.y:
   surname: Pang
-  given: J.-Y.
+  given: Ji-Yuan
 parkinson:
   surname: Parkinson
   given: James
@@ -852,6 +898,9 @@ regnéll:
   given: Gerhard
   birth: 1915
   death: 2002
+reich.m:
+  surname: Reich
+  given: Mike
 reynolds:
   surname: Reynolds
   given: A. B.
@@ -926,6 +975,12 @@ seibert.r:
 selden:
   surname: Selden
   given: Paul A.
+shu.d:
+  surname: Shu
+  given: Degan
+  notes: >
+    Shu apparently intentionally treats his given name as needing only
+    one initial, and never uses the D.-G. style in international publications.
 siebold:
   surname: Siebold
   given: carl Theodor Ernst von
@@ -938,6 +993,9 @@ siveter.da.j:
 siveter.de.j:
   surname: Siveter
   given: Derek J.
+skovsted.c.b:
+  surname: Skovsted
+  given: Christian B.
 smith.a.b:
   surname: Smith
   given: Andrew B.
@@ -1016,6 +1074,9 @@ tilas:
   given: Daniel
   birth: 1712
   death: 1772
+topper.t.p:
+  surname: Topper
+  given: Timothy P
 ubaghs:
   surname: Ubaghs
   given: Georges
@@ -1128,6 +1189,9 @@ wu.m.y:
 wu.y.s:
   surname: Wu
   given: Yi-Shan
+xiao.z.z:
+  surname: Xiao
+  given: Z.-Z.
 yang.r.d:
   surname: Yang
   given: Rui-Dong
@@ -1143,18 +1207,30 @@ young.t.p:
 yuan.j.l:
   surname: Yuan
   given: Jin-Liang
+yuan.x.l:
+  surname: Yuan
+  given: X.-L.
 zamora:
   surname: Zamora
   given: Samuel
 zeng.h:
   surname: Zeng
   given: Han
+zhang.x.l:
+  surname: Zhang
+  given: Xing-Liang
 zhang.y.p:
   surname: Zhang
   given: Yao-Ping
 zhang.z:
   surname: Zhang
   given: Ze
+zhang.z.f:
+  surname: Zhang
+  given: Zhi-Fei
+zheng.y.j:
+  surname: Zheng
+  given: Ya-Juan
 zhao.f.c:
   surname: Zhao
   given: Fang-Chen
@@ -1164,6 +1240,9 @@ zhao.j:
 zhao.y.l:
   surname: Zhao
   given: Yuan-Long
+zhou.j.r:
+  surname: Zhou
+  given: Jian-Ren
 zhu.m.y:
   surname: Zhu
   given: Mao-Yan

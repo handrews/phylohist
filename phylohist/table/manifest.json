@@ -13,6 +13,7 @@
   "barrande": "Barrande",
   "bassler": "Bassler",
   "baster": "Baster",
+  "bateson.w": "Bateson",
   "bather": "Bather",
   "beecher": "Beecher",
   "bell.b.m": "Bell",
@@ -46,12 +47,15 @@
   "chen.g.y": "Chen",
   "chen.j.y": "Chen",
   "chen.l.z": "Chen",
+  "chen.m.g": "Chen",
+  "cheng.m.r": "Cheng",
   "clark.a.h": "Clark",
   "clark.a.m": "Clark",
   "clark.b.l": "Clark",
   "clark.h.e.s": "Clark",
   "clark.h.l": "Clark",
   "clarke.j.m": "Clarke",
+  "clausen.s": "Clausen",
   "clement.c.r": "Clement",
   "collins.d": "Collins",
   "cong.p.y": "Cong",
@@ -96,6 +100,7 @@
   "gaertner": "Gaertner",
   "gahn": "Gahn",
   "garbisch": "Garbisch",
+  "gegenbaur": "Gegenbaur",
   "gehling": "Gehling",
   "gekker": "Gekker",
   "gibson": "Gibson",
@@ -114,14 +119,18 @@
   "guensburg": "Guensburg",
   "gunnerus": "Gunnerus",
   "guo.j": "Guo",
+  "guo.j.f": "Guo",
   "guo.q.j": "Guo",
   "gurley": "Gurley",
   "gyllenhaal": "Gyllenhaal",
   "haeckel": "Haeckel",
   "hahn": "Hahn",
   "hall": "Hall",
+  "han.h.p": "Han",
+  "han.j": "Han",
   "han.n.r": "Han",
   "harland": "Harland",
+  "he.k.y": "He",
   "heredia": "Heredia",
   "hisinger": "Hisinger",
   "holland": "Holland",
@@ -147,6 +156,7 @@
   "kier": "Kier",
   "klein": "Klein",
   "kolata": "Kolata",
+  "komiya.t": "Komiya",
   "kordule": "Kordule",
   "lamarck": "Lamarck",
   "lankester": "Lankester",
@@ -157,13 +167,14 @@
   "leske": "Leske",
   "leuckart": "Leuckart",
   "lewis.r.d": "Lewis",
-  "li.j.f": "Li",
+  "li.f.j": "Li",
   "li.y": "Li",
   "li.y.j": "Li",
   "lin.j.p": "Lin",
   "linnaeus": "Linnaeus",
+  "liu.j.n": "Liu",
   "liu.q": "Liu",
-  "liu.x.r": "Liu",
+  "liu.x.y": "Liu",
   "liu.y.j": "Liu",
   "liñán": "Liñán",
   "longman": "Longman",
@@ -176,6 +187,7 @@
   "martin.e.l.o": "Martin",
   "martin.m": "Martin",
   "martin.w": "Martin",
+  "maruyama.s": "Maruyama",
   "matsumoto": "Matsumoto",
   "mccoy": "McCoy",
   "mckinney": "McKinney",
@@ -183,6 +195,7 @@
   "melville": "Melville",
   "meng.x.y": "Meng",
   "mestre": "Mestre",
+  "metschnikoff": "Metschnikoff",
   "meyer": "Meyer",
   "miller.j.s": "Miller",
   "miller.s.a": "Miller",
@@ -191,6 +204,7 @@
   "mooi": "Mooi",
   "moore": "Moore",
   "murchison": "Murchison",
+  "mussini": "Mussini",
   "müller.j.p": "Müller",
   "müller.o.f": "Müller",
   "müller.p": "Müller",
@@ -203,6 +217,7 @@
   "nohejlová": "Nohejlová",
   "norman": "Norman",
   "orłowski": "Orłowski",
+  "ou.q": "Ou",
   "owen": "Owen",
   "pallas": "Pallas",
   "pan.y": "Pan",
@@ -223,6 +238,7 @@
   "rahman": "Rahman",
   "ramsbottom": "Ramsbottom",
   "regnéll": "Regnéll",
+  "reich.m": "Reich",
   "reynolds": "Reynolds",
   "rhenberg": "Rhenberg",
   "richter.r": "Richter",
@@ -243,9 +259,11 @@
   "schuchert": "Schuchert",
   "seibert.r": "Seibert",
   "selden": "Selden",
+  "shu.d": "Shu",
   "siebold": "Siebold",
   "siveter.da.j": "Siveter",
   "siveter.de.j": "Siveter",
+  "skovsted.c.b": "Skovsted",
   "smith.a.b": "Smith",
   "sollas": "Sollas",
   "sowerby.g.b": "Sowerby",
@@ -266,6 +284,7 @@
   "tarlo": "Tarlo",
   "thompson": "Thompson",
   "tilas": "Tilas",
+  "topper.t.p": "Topper",
   "ubaghs": "Ubaghs",
   "ulrich": "Ulrich",
   "van phelsum": "van Phelsum",
@@ -293,18 +312,24 @@
   "wright.d.f": "Wright",
   "wu.m.y": "Wu",
   "wu.y.s": "Wu",
+  "xiao.z.z": "Xiao",
   "yang.r.d": "Yang",
   "yang.x.l": "Yang",
   "yang.z.c": "Yang",
   "young.t.p": "Young",
   "yuan.j.l": "Yuan",
+  "yuan.x.l": "Yuan",
   "zamora": "Zamora",
   "zeng.h": "Zeng",
+  "zhang.x.l": "Zhang",
   "zhang.y.p": "Zhang",
   "zhang.z": "Zhang",
+  "zhang.z.f": "Zhang",
   "zhao.f.c": "Zhao",
   "zhao.j": "Zhao",
   "zhao.y.l": "Zhao",
+  "zheng.y.j": "Zheng",
+  "zhou.j.r": "Zhou",
   "zhu.m.y": "Zhu",
   "zhu.x.j": "Zhu",
   "zittel": "Zittel",
@@ -7171,6 +7196,97 @@
    "inconsistencies": [],
    "material": {},
    "tree": false
+  },
+  "1881a_metschnikoff": {
+   "acts": {},
+   "audit": {
+    "state": "unaudited"
+   },
+   "citation": {
+    "authors": [
+     "Metschnikoff"
+    ],
+    "in": "Zoologischer Anzeiger",
+    "number": 78,
+    "pages": [
+     139,
+     143
+    ],
+    "title": "Über die systematische Stellung von Balanoglossus",
+    "volume": 4,
+    "year": 1881
+   },
+   "claims": {},
+   "coverage": {
+    "illustrations": null,
+    "material": null,
+    "newTaxa": null,
+    "occurrences": null,
+    "phylogeny": null,
+    "skeleton": null,
+    "synonymy": null,
+    "types": null
+   },
+   "derived": {},
+   "derivedCoverage": {},
+   "inconsistencies": [],
+   "material": {},
+   "tree": false
+  },
+  "1881b_metschnikoff": {
+   "acts": {
+    "emended": 1,
+    "new": 2
+   },
+   "audit": {
+    "state": "unaudited"
+   },
+   "citation": {
+    "authors": [
+     "Metschnikoff"
+    ],
+    "in": "Zoologischer Anzeiger",
+    "number": 79,
+    "pages": [
+     153,
+     157
+    ],
+    "title": "Über die systematische Stellung von Balanoglossus (Schluss.)",
+    "volume": 4,
+    "year": 1881
+   },
+   "claims": {
+    "absence": 2,
+    "act": 3,
+    "editorial": 1,
+    "placement": 2,
+    "usage": 5
+   },
+   "coverage": {
+    "illustrations": null,
+    "material": null,
+    "newTaxa": null,
+    "occurrences": null,
+    "phylogeny": null,
+    "skeleton": "all",
+    "synonymy": null,
+    "types": null
+   },
+   "derived": {
+    "newTaxa": 2,
+    "skeleton": 7
+   },
+   "derivedCoverage": {
+    "illustrations": null,
+    "material": null,
+    "occurrences": null,
+    "skeleton": "all",
+    "synonymy": null,
+    "types": null
+   },
+   "inconsistencies": [],
+   "material": {},
+   "tree": true
   },
   "1883_miller.s.a": {
    "aliasOf": "1883_worthen_st. john_miller.s.a",
@@ -15763,7 +15879,76 @@
    "material": {},
    "tree": true
   },
-  "2008_luo.h.l_li.y_hu.s.x_fu.x.p_hou.s.g_liu.x.r_chen.l.z_li.j.f_pang.j.y_liu.q": {
+  "2008_guo.j.f_li.y_han.j_zhang.x.l_zhang.z.f_ou.q_liu.j.n_shu.d_maruyama.s_komiya.t": {
+   "acts": {
+    "placeholder": 3
+   },
+   "audit": {
+    "state": "unaudited"
+   },
+   "citation": {
+    "authors": [
+     "Guo",
+     "Li",
+     "Han",
+     "Zhang",
+     "Zhang",
+     "Ou",
+     "Liu",
+     "Shu",
+     "Maruyama",
+     "Komiya"
+    ],
+    "in": "Acta Geologica Sinica (English Edition)",
+    "number": 6,
+    "pages": [
+     1124,
+     1132
+    ],
+    "title": "Fossil Association from the Lower Cambrian Yanjiahe Formation in the Yangtze Gorges Area, Hubei, South China\n",
+    "volume": 82,
+    "year": 2008
+   },
+   "claims": {
+    "act": 3,
+    "material": 11,
+    "placement": 4,
+    "usage": 7
+   },
+   "coverage": {
+    "illustrations": null,
+    "material": null,
+    "newTaxa": null,
+    "occurrences": null,
+    "phylogeny": null,
+    "skeleton": null,
+    "synonymy": null,
+    "types": null
+   },
+   "derived": {
+    "illustrations": 5,
+    "material": 3,
+    "newTaxa": 3,
+    "occurrences": 3,
+    "skeleton": 11
+   },
+   "derivedCoverage": {
+    "illustrations": null,
+    "material": null,
+    "occurrences": null,
+    "skeleton": null,
+    "synonymy": null,
+    "types": null
+   },
+   "inconsistencies": [],
+   "material": {
+    "illustration": 5,
+    "occurrence": 3,
+    "specimen": 3
+   },
+   "tree": true
+  },
+  "2008_luo.h.l_li.y_hu.s.x_fu.x.p_hou.s.g_liu.x.y_chen.l.z_li.f.j_pang.j.y_liu.q": {
    "acts": {
     "new": 2,
     "type": 1
@@ -16685,6 +16870,74 @@
    },
    "inconsistencies": [],
    "material": {},
+   "tree": true
+  },
+  "2012_guo.j.f_li.y_han.h.p_ou.q_zhou.j.r_zheng.y.j": {
+   "acts": {
+    "new": 4,
+    "placeholder": 4,
+    "type": 1
+   },
+   "audit": {
+    "state": "unaudited"
+   },
+   "citation": {
+    "authors": [
+     "Guo",
+     "Li",
+     "Han",
+     "Ou",
+     "Zhou",
+     "Zheng"
+    ],
+    "in": "Acta Geologica Sinica (English Edition)",
+    "number": 4,
+    "pages": [
+     791,
+     798
+    ],
+    "title": "New Macroscopic Problematic Fossil from the Early Cambrian Yanjiahe Biota, Yichang, Hubei, China",
+    "volume": 86,
+    "year": 2012
+   },
+   "claims": {
+    "act": 9,
+    "material": 20,
+    "placement": 7,
+    "usage": 9
+   },
+   "coverage": {
+    "illustrations": null,
+    "material": null,
+    "newTaxa": null,
+    "occurrences": null,
+    "phylogeny": null,
+    "skeleton": null,
+    "synonymy": null,
+    "types": null
+   },
+   "derived": {
+    "illustrations": 11,
+    "material": 6,
+    "newTaxa": 8,
+    "occurrences": 3,
+    "skeleton": 16,
+    "types": 1
+   },
+   "derivedCoverage": {
+    "illustrations": null,
+    "material": null,
+    "occurrences": null,
+    "skeleton": null,
+    "synonymy": null,
+    "types": null
+   },
+   "inconsistencies": [],
+   "material": {
+    "illustration": 11,
+    "occurrence": 3,
+    "specimen": 6
+   },
    "tree": true
   },
   "2012_zamora_rahman_smith.a.b": {
@@ -18259,6 +18512,76 @@
    "material": {},
    "tree": true
   },
+  "2019_topper.t.p_guo.j.f_clausen.s_skovsted.c.b_zhang.z.f": {
+   "acts": {
+    "placeholder": 3,
+    "type": 1
+   },
+   "audit": {
+    "state": "unaudited"
+   },
+   "citation": {
+    "authors": [
+     "Topper",
+     "Guo",
+     "Clausen",
+     "Skovsted",
+     "Zhang"
+    ],
+    "in": "Nature Communications",
+    "pages": [
+     1,
+     8,
+     "supplementary 1",
+     "supplementary 17"
+    ],
+    "title": "A stem group echinoderm from the basal Cambrian of China and the origins of Ambulacraria",
+    "volume": 10,
+    "year": 2019
+   },
+   "claims": {
+    "acceptance": 5,
+    "act": 4,
+    "editorial": 6,
+    "material": 23,
+    "placement": 5,
+    "usage": 12
+   },
+   "coverage": {
+    "illustrations": null,
+    "material": null,
+    "newTaxa": null,
+    "occurrences": null,
+    "phylogeny": null,
+    "skeleton": null,
+    "synonymy": null,
+    "types": null
+   },
+   "derived": {
+    "illustrations": 20,
+    "material": 2,
+    "newTaxa": 3,
+    "occurrences": 1,
+    "skeleton": 17,
+    "synonymy": 5,
+    "types": 1
+   },
+   "derivedCoverage": {
+    "illustrations": null,
+    "material": null,
+    "occurrences": null,
+    "skeleton": null,
+    "synonymy": null,
+    "types": null
+   },
+   "inconsistencies": [],
+   "material": {
+    "illustration": 20,
+    "occurrence": 1,
+    "specimen": 2
+   },
+   "tree": true
+  },
   "2019_wen.r.q_babcock_peng.j_robison": {
    "acts": {
     "new": 1,
@@ -19029,6 +19352,72 @@
    "material": {},
    "tree": false
   },
+  "2026_he.k.y_mussini_han.j_reich.m_ou.q_cheng.m.r_shu.d": {
+   "acts": {
+    "new": 2,
+    "placeholder": 4,
+    "type": 1
+   },
+   "audit": {
+    "state": "unaudited"
+   },
+   "citation": {
+    "authors": [
+     "He",
+     "Mussini",
+     "Han",
+     "Reich",
+     "Ou",
+     "Cheng",
+     "Shu"
+    ],
+    "in": "Current Biology",
+    "pages": [
+     1,
+     11
+    ],
+    "title": "Cambrian fossils illuminate the ambulacrarian common ancestor",
+    "volume": 36,
+    "year": 2026
+   },
+   "claims": {
+    "act": 7,
+    "editorial": 1,
+    "material": 4,
+    "placement": 6,
+    "usage": 8
+   },
+   "coverage": {
+    "illustrations": null,
+    "material": null,
+    "newTaxa": null,
+    "occurrences": null,
+    "phylogeny": null,
+    "skeleton": null,
+    "synonymy": null,
+    "types": null
+   },
+   "derived": {
+    "material": 2,
+    "newTaxa": 6,
+    "occurrences": 2,
+    "skeleton": 13
+   },
+   "derivedCoverage": {
+    "illustrations": null,
+    "material": null,
+    "occurrences": null,
+    "skeleton": null,
+    "synonymy": null,
+    "types": null
+   },
+   "inconsistencies": [],
+   "material": {
+    "occurrence": 2,
+    "specimen": 2
+   },
+   "tree": true
+  },
   "inprep_sprinkle_strimple": {
    "acts": {},
    "audit": {
@@ -19380,6 +19769,22 @@
   "ambigena_lamarck_1816": [
    "1816b_lamarck"
   ],
+  "ambulacraria": [
+   "1881b_metschnikoff",
+   "2026_he.k.y_mussini_han.j_reich.m_ou.q_cheng.m.r_shu.d"
+  ],
+  "ambulacraria-indeterminate-class_he.k.y_mussini_han.j_reich.m_ou.q_cheng.m.r_shu.d_2026": [
+   "2026_he.k.y_mussini_han.j_reich.m_ou.q_cheng.m.r_shu.d"
+  ],
+  "ambulacraria-indeterminate-family_he.k.y_mussini_han.j_reich.m_ou.q_cheng.m.r_shu.d_2026": [
+   "2026_he.k.y_mussini_han.j_reich.m_ou.q_cheng.m.r_shu.d"
+  ],
+  "ambulacraria-indeterminate-order_he.k.y_mussini_han.j_reich.m_ou.q_cheng.m.r_shu.d_2026": [
+   "2026_he.k.y_mussini_han.j_reich.m_ou.q_cheng.m.r_shu.d"
+  ],
+  "ambulacraria-indeterminate-phylum_he.k.y_mussini_han.j_reich.m_ou.q_cheng.m.r_shu.d_2026": [
+   "2026_he.k.y_mussini_han.j_reich.m_ou.q_cheng.m.r_shu.d"
+  ],
   "amecystis": [
    "1968b_paul.c.r.c",
    "1975_broadhead_strimple",
@@ -19468,6 +19873,10 @@
   ],
   "anatiformis_hall_1847": [
    "1847_hall"
+  ],
+  "ancarpa_guo.j.f_li.y_han.h.p_ou.q_zhou.j.r_zheng.y.j_2012": [
+   "2012_guo.j.f_li.y_han.h.p_ou.q_zhou.j.r_zheng.y.j",
+   "2019_topper.t.p_guo.j.f_clausen.s_skovsted.c.b_zhang.z.f"
   ],
   "ancylus": [
    "1774b_müller.o.f",
@@ -20234,6 +20643,9 @@
    "1975_kolata",
    "1976_bell.b.m"
   ],
+  "bilateralia": [
+   "1881b_metschnikoff"
+  ],
   "billingsi_chapman.e.j_1860": [
    "1935_bassler",
    "1936_bassler",
@@ -20250,6 +20662,10 @@
   ],
   "bis perforatus_leske_1778": [
    "1778_leske"
+  ],
+  "biscarpa_guo.j.f_li.y_han.h.p_ou.q_zhou.j.r_zheng.y.j_2012": [
+   "2012_guo.j.f_li.y_han.h.p_ou.q_zhou.j.r_zheng.y.j",
+   "2019_topper.t.p_guo.j.f_clausen.s_skovsted.c.b_zhang.z.f"
   ],
   "bispinosa_lamarck_1816": [
    "1816b_lamarck"
@@ -22363,6 +22779,7 @@
    "1854c_billings",
    "1857_billings",
    "1858_salter_billings",
+   "1881b_metschnikoff",
    "1941_whitehouse",
    "1960_gill_caster",
    "1963_brown.i.a",
@@ -22406,6 +22823,7 @@
    "2017_zamora_sumrall_zhu.x.j_lefebvre",
    "2018_lefebvre_lerosey-aubril",
    "2019_nohejlová_nardin_fatka_kašiča_szabad",
+   "2019_topper.t.p_guo.j.f_clausen.s_skovsted.c.b_zhang.z.f",
    "2020_ewin_martin.m_isotalo_zamora",
    "2020_zamora_sprinkle_sumrall",
    "2021_jell_sprinkle",
@@ -22415,6 +22833,12 @@
    "2024_wang.d.z_nohejlová_sun.z.x_zeng.h_lefebvre_yang.x.l_zhao.f.c",
    "2024_zamora_guensburg_sprinkle"
   ],
+  "echinodermata-class-uncertain_topper.t.p_guo.j.f_clausen.s_skovsted.c.b_zhang.z.f_2019": [
+   "2019_topper.t.p_guo.j.f_clausen.s_skovsted.c.b_zhang.z.f"
+  ],
+  "echinodermata-family-uncertain_topper.t.p_guo.j.f_clausen.s_skovsted.c.b_zhang.z.f_2019": [
+   "2019_topper.t.p_guo.j.f_clausen.s_skovsted.c.b_zhang.z.f"
+  ],
   "echinodermata-incertae-sedis": [
    "1967e_ubaghs"
   ],
@@ -22423,6 +22847,9 @@
   ],
   "echinodermata-indeterminate-subphylum_bell.b.m_1982": [
    "1982_bell.b.m"
+  ],
+  "echinodermata-order-uncertain_topper.t.p_guo.j.f_clausen.s_skovsted.c.b_zhang.z.f_2019": [
+   "2019_topper.t.p_guo.j.f_clausen.s_skovsted.c.b_zhang.z.f"
   ],
   "echinodermata-unnamed-family_hisinger_1828": [
    "1828_hisinger",
@@ -22943,6 +23370,9 @@
   "enterocoela": [
    "1900_bather"
   ],
+  "enteropneusta": [
+   "1881b_metschnikoff"
+  ],
   "enterozoa": [
    "1900_bather"
   ],
@@ -23061,7 +23491,7 @@
   ],
   "eocrinoidea-sp_hu.s.x_luo.h.l_hou.s.g_erdtmann_2007": [
    "2007_hu.s.x_luo.h.l_hou.s.g_erdtmann",
-   "2008_luo.h.l_li.y_hu.s.x_fu.x.p_hou.s.g_liu.x.r_chen.l.z_li.j.f_pang.j.y_liu.q"
+   "2008_luo.h.l_li.y_hu.s.x_fu.x.p_hou.s.g_liu.x.y_chen.l.z_li.f.j_pang.j.y_liu.q"
   ],
   "eocrinoidea-uncertain-family_parsley_zhao.y.l_2006": [
    "2006_parsley_zhao.y.l"
@@ -23648,6 +24078,9 @@
    "1999_zhao.y.l_yuan.j.l_zhu.m.y_yang.r.d_guo.q.j_qian.y_huang.y.z_pan.y",
    "2008_zhao.y.l_parsley_peng.j"
   ],
+  "glutenotunica_he.k.y_mussini_han.j_reich.m_ou.q_cheng.m.r_shu.d_2026": [
+   "2026_he.k.y_mussini_han.j_reich.m_ou.q_cheng.m.r_shu.d"
+  ],
   "glutinosa_lamarck_1816": [
    "1816b_lamarck"
   ],
@@ -23755,7 +24188,7 @@
    "2006_parsley_zhao.y.l",
    "2006_sprinkle_collins.d",
    "2007_zhao.y.l_parsley_peng.j",
-   "2008_luo.h.l_li.y_hu.s.x_fu.x.p_hou.s.g_liu.x.r_chen.l.z_li.j.f_pang.j.y_liu.q",
+   "2008_luo.h.l_li.y_hu.s.x_fu.x.p_hou.s.g_liu.x.y_chen.l.z_li.f.j_pang.j.y_liu.q",
    "2008_zhao.y.l_parsley_peng.j",
    "2009_zamora_gozalo_liñán",
    "2010_liu.q_hu.s.x_zhang.z_cuevas-castell_gong.y.m_tao.j.l",
@@ -25746,7 +26179,29 @@
    "1983_brett_frest_sprinkle_clement.c.r"
   ],
   "metazoa": [
-   "1900_bather"
+   "1900_bather",
+   "2008_guo.j.f_li.y_han.j_zhang.x.l_zhang.z.f_ou.q_liu.j.n_shu.d_maruyama.s_komiya.t"
+  ],
+  "metazoa-class-uncertain_guo.j.f_li.y_han.h.p_ou.q_zhou.j.r_zheng.y.j_2012": [
+   "2012_guo.j.f_li.y_han.h.p_ou.q_zhou.j.r_zheng.y.j",
+   "2019_topper.t.p_guo.j.f_clausen.s_skovsted.c.b_zhang.z.f"
+  ],
+  "metazoa-family-uncertain_guo.j.f_li.y_han.h.p_ou.q_zhou.j.r_zheng.y.j_2012": [
+   "2012_guo.j.f_li.y_han.h.p_ou.q_zhou.j.r_zheng.y.j",
+   "2019_topper.t.p_guo.j.f_clausen.s_skovsted.c.b_zhang.z.f"
+  ],
+  "metazoa-genus-sp_guo.j.f_li.y_han.j_zhang.x.l_zhang.z.f_ou.q_liu.j.n_shu.d_maruyama.s_komiya.t_2008": [
+   "2008_guo.j.f_li.y_han.j_zhang.x.l_zhang.z.f_ou.q_liu.j.n_shu.d_maruyama.s_komiya.t"
+  ],
+  "metazoa-genus_guo.j.f_li.y_han.j_zhang.x.l_zhang.z.f_ou.q_liu.j.n_shu.d_maruyama.s_komiya.t_2008": [
+   "2008_guo.j.f_li.y_han.j_zhang.x.l_zhang.z.f_ou.q_liu.j.n_shu.d_maruyama.s_komiya.t"
+  ],
+  "metazoa-order-uncertain_guo.j.f_li.y_han.h.p_ou.q_zhou.j.r_zheng.y.j_2012": [
+   "2012_guo.j.f_li.y_han.h.p_ou.q_zhou.j.r_zheng.y.j",
+   "2019_topper.t.p_guo.j.f_clausen.s_skovsted.c.b_zhang.z.f"
+  ],
+  "metazoa-phylum-uncertain_guo.j.f_li.y_han.h.p_ou.q_zhou.j.r_zheng.y.j_2012": [
+   "2012_guo.j.f_li.y_han.h.p_ou.q_zhou.j.r_zheng.y.j"
   ],
   "metularia_lamarck_1816": [
    "1816b_lamarck"
@@ -25794,6 +26249,9 @@
   ],
   "minervaecystis-sp_sumrall_sprinkle_guensburg_1997": [
    "1997_sumrall_sprinkle_guensburg"
+  ],
+  "minor_chen.m.g_xiao.z.z_yuan.x.l_1994": [
+   "2008_guo.j.f_li.y_han.j_zhang.x.l_zhang.z.f_ou.q_liu.j.n_shu.d_maruyama.s_komiya.t"
   ],
   "minor_leske_1778_angulosa_leske_1778_cidaris": [
    "1778_leske",
@@ -25930,6 +26388,10 @@
   ],
   "monobrachiolata_paul.c.r.c_1967": [
    "1968b_paul.c.r.c"
+  ],
+  "monocarpa_guo.j.f_li.y_han.h.p_ou.q_zhou.j.r_zheng.y.j_2012": [
+   "2012_guo.j.f_li.y_han.h.p_ou.q_zhou.j.r_zheng.y.j",
+   "2019_topper.t.p_guo.j.f_clausen.s_skovsted.c.b_zhang.z.f"
   ],
   "monodon": [
    "1758_linnaeus"
@@ -27373,6 +27835,9 @@
    "1900_bather",
    "1936_bassler"
   ],
+  "protoconites": [
+   "2008_guo.j.f_li.y_han.j_zhang.x.l_zhang.z.f_ou.q_liu.j.n_shu.d_maruyama.s_komiya.t"
+  ],
   "protocrinidae": [
    "1900_bather"
   ],
@@ -27656,7 +28121,8 @@
   ],
   "radiata": [
    "1825i_gray.j.e",
-   "1857_billings"
+   "1857_billings",
+   "1881b_metschnikoff"
   ],
   "radiata-phylum": [
    "1821_macleay"
@@ -27716,7 +28182,7 @@
    "1975_kolata"
   ],
   "rarus_hu.s.x_luo.h.l_2008": [
-   "2008_luo.h.l_li.y_hu.s.x_fu.x.p_hou.s.g_liu.x.r_chen.l.z_li.j.f_pang.j.y_liu.q"
+   "2008_luo.h.l_li.y_hu.s.x_fu.x.p_hou.s.g_liu.x.y_chen.l.z_li.f.j_pang.j.y_liu.q"
   ],
   "raymondi_foerste_1920": [
    "1966_kesling"
@@ -29950,12 +30416,16 @@
    "1966_kesling"
   ],
   "wudingeocrinus": [
-   "2008_luo.h.l_li.y_hu.s.x_fu.x.p_hou.s.g_liu.x.r_chen.l.z_li.j.f_pang.j.y_liu.q"
+   "2008_luo.h.l_li.y_hu.s.x_fu.x.p_hou.s.g_liu.x.y_chen.l.z_li.f.j_pang.j.y_liu.q"
   ],
   "xenocystites": [
    "1936_bassler",
    "1966_regnéll",
    "1980_bell.b.m"
+  ],
+  "yanjiahella": [
+   "2012_guo.j.f_li.y_han.h.p_ou.q_zhou.j.r_zheng.y.j",
+   "2019_topper.t.p_guo.j.f_clausen.s_skovsted.c.b_zhang.z.f"
   ],
   "yini_zhao.y.l_peng.j_wu.m.y_2015": [
    "2015_zhao.y.l_peng.j_wu.m.y_luo.x.c_wen.r.q_liu.y.j"
@@ -29973,6 +30443,15 @@
   ],
   "yui_zhao.y.l_parsley_peng.j_2007": [
    "2007_zhao.y.l_parsley_peng.j"
+  ],
+  "yujingia": [
+   "2026_he.k.y_mussini_han.j_reich.m_ou.q_cheng.m.r_shu.d"
+  ],
+  "yuknessia": [
+   "2008_guo.j.f_li.y_han.j_zhang.x.l_zhang.z.f_ou.q_liu.j.n_shu.d_maruyama.s_komiya.t"
+  ],
+  "yuknessia-sp_guo.j.f_li.y_han.j_zhang.x.l_zhang.z.f_ou.q_liu.j.n_shu.d_maruyama.s_komiya.t_2008": [
+   "2008_guo.j.f_li.y_han.j_zhang.x.l_zhang.z.f_ou.q_liu.j.n_shu.d_maruyama.s_komiya.t"
   ],
   "zagoraensis_chauvel_1971": [
    "2017_allaire_lefebvre_nardin_martin.e.l.o_vaucher_escarguel"

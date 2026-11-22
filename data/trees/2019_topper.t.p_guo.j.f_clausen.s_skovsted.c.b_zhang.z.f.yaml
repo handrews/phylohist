@@ -1,0 +1,246 @@
+prefixes:
+  ELI: nwu-eli
+horizons:
+  yanjiahe:
+    unit:
+    - Bed III
+    - Yanjiahe Formation
+    series: Terrenuevian
+    stage: Fortunian
+    biota: Yanjiahe
+localities:
+  gunziao:
+    location:
+    - Gunziao section
+    - Sandouping
+    - Yichang
+    - Hubei province
+    - China
+taxonomies:
+- taxon: echinodermata
+  citedAs: Total-group Echinodermata
+  rank: Phylum
+  authority: null
+  pages: 2
+  editorial:
+    inferred: [rank]
+    basis: Described as phylum in text.
+  children:
+  - openTaxon: echinodermata-class-uncertain_topper.t.p_guo.j.f_clausen.s_skovsted.c.b_zhang.z.f_2019
+    rank: Class
+    new: true
+    pages: 2
+    synonyms:
+    - openTaxon: metazoa-class-uncertain_guo.j.f_li.y_han.h.p_ou.q_zhou.j.r_zheng.y.j_2012
+    editorial:
+      inferred: [synonyms]
+      basis: Matching the only previous paper addressing these taxa.
+    children:
+    - openTaxon: echinodermata-order-uncertain_topper.t.p_guo.j.f_clausen.s_skovsted.c.b_zhang.z.f_2019
+      rank: Order
+      new: true
+      pages: 2
+      synonyms:
+      - openTaxon: metazoa-order-uncertain_guo.j.f_li.y_han.h.p_ou.q_zhou.j.r_zheng.y.j_2012
+      editorial:
+        inferred: [synonyms]
+        basis: Matching the only previous paper addressing these taxa.
+      children:
+      - openTaxon: echinodermata-family-uncertain_topper.t.p_guo.j.f_clausen.s_skovsted.c.b_zhang.z.f_2019
+        rank: Family
+        new: true
+        pages: 2
+        synonyms:
+        - openTaxon: metazoa-family-uncertain_guo.j.f_li.y_han.h.p_ou.q_zhou.j.r_zheng.y.j_2012
+        editorial:
+          inferred: [synonyms]
+          basis: Matching the only previous paper addressing these taxa.
+        children:
+        - taxon: yanjiahella
+          citedAs: Yanjiahella biscarpa Guo, Li, Han, Ou, Zhou and Zheng (2012)
+          authority:
+            source: 2012_guo.j.f_li.y_han.h.p_ou.q_zhou.j.r_zheng.y.j
+          pages: 2
+          editorial:
+            inferred: [authority]
+            basis: >
+              Implied by text, despite genus not being separately attributed
+          type:
+            taxon: biscarpa_guo.j.f_li.y_han.h.p_ou.q_zhou.j.r_zheng.y.j_2012
+          children:
+          - taxon: biscarpa_guo.j.f_li.y_han.h.p_ou.q_zhou.j.r_zheng.y.j_2012
+            citedAs: >
+              Yanjiahella biscarpa; Guo et al. (2012), p. 793, Figs. 2k–m, 3c
+            authority:
+              source: 2012_guo.j.f_li.y_han.h.p_ou.q_zhou.j.r_zheng.y.j
+              pages: 793
+              illustrations:
+              - figures:
+                - [2k, 2m]
+                - 3c
+            pages: 2
+            editorial:
+              corrections:
+                authority:
+                  pages: 795
+              basis: Verified in the cited source
+            synonyms:
+            - taxon: ancarpa_guo.j.f_li.y_han.h.p_ou.q_zhou.j.r_zheng.y.j_2012
+              citedAs: >
+                Yanjiahella ancarpa; Guo et al. (2012), p. 793, Figs. 2a–c, 3a
+              authority:
+                source: 2012_guo.j.f_li.y_han.h.p_ou.q_zhou.j.r_zheng.y.j
+                pages: 793
+                illustrations:
+                - figures:
+                  - [2a, 2c]
+                  - 3a
+            - taxon: monocarpa_guo.j.f_li.y_han.h.p_ou.q_zhou.j.r_zheng.y.j_2012
+              citedAs: >
+                Yanjiahella monocarpa; Guo et al. (2012), p. 795, Figs. 2d–j, 3b
+              authority:
+                source: 2012_guo.j.f_li.y_han.h.p_ou.q_zhou.j.r_zheng.y.j
+                pages: 795
+                illustrations:
+                - figures:
+                  - [2d, 2j]
+                  - 3b
+            material:
+            - role: holotype
+              prefix: ELI
+              numbers: [HS722]
+              asPrinted: ELI-HS722
+              horizon: yanjiahe
+              locality: gunziao
+            - role: paratype
+              prefix: ELI
+              notes: >
+                The caption for figure 2 (page 4) is garbled, providing multiple
+                captions for figures 2e and 2f but none for figure 2g.  However,
+                Supplementary figure 5 covers some of the same speciments and
+                offers some clarity:  HS99 is figure 2f, and "HS999" appears to
+                be an error.  HS998B is figure 2g.  G21 is given without an
+                "ELI-" prefix, but in the supplemental figures G102 has the
+                prefix, so it seems reasonable to assume that the omission was
+                an error given the other errors in the same caption.
+              numbers: 
+              - G21
+              - G102
+              - HS7B
+              - HS18
+              - HS25B
+              - HS26B
+              - HS69
+              - HS84
+              - HS99
+              - HS205
+              - HS998A
+              - HS998B
+              horizon: yanjiahe
+              locality: gunziao
+            illustrations:
+            - page: 3
+              figures:
+              - 1a
+              - [1c, 1g]
+              of: HS18
+              depicts: specimen
+            - page: 3
+              figures: 1b
+              of: HS18
+              depicts: drawing
+            - page: 4
+              figures:
+              - 2a
+              - 2c
+              of: HS84
+              depicts: specimen
+            - page: 4
+              figures: 2b
+              of: HS84
+              depicts: drawing
+            - page: 4
+              figures:
+              - [2d, 2e]
+              of: G21
+              depicts: specimen
+              notes: >
+                Figure 2 caption is garbled, but 2d is clear, and figure 2e
+                is clearly related to 2d rather than 2f or 2g.
+            - page: 4
+              figures: 2f
+              of: HS99
+              depicts: specimen
+              notes: >
+                Figure 2 caption is garbled, but this matches HS99 which is
+                named twice in Supplementary Fig. 5.  The designation "HS999"
+                appears to be an error.
+            - page: 4
+              figures: 2g
+              of: HS998B
+              depicts: specimen
+              notes: >
+                Figure 2 caption is garbled, but this matches HS998B in
+                Supplementary Fig. 5.
+            - page: 7
+              figures: 4
+              depicts: reconstruction
+            - page: Supplementary 3
+              figures: Supplementary 2
+              of: HS18
+              depicts: specimen
+            - page: Supplementary 4
+              figures: Supplementary 3
+              of: HS84
+              depicts: specimen
+            - page: Supplementary 5
+              figures: Supplementary 4a
+              of: HS25B
+              depicts: specimen
+            - page: Supplementary 5
+              figures: Supplementary 4b
+              of: HS205
+              depicts: specimen
+            - page: Supplementary 5
+              figures:
+              - Supplementary 4c
+              - Supplementary 4d
+              of: HS26B
+              depicts: specimen
+            - page: Supplementary 5
+              figures:
+              - Supplementary 4e
+              - Supplementary 4f
+              of: HS7B
+              depicts: specimen
+            - page: Supplementary 5
+              figures: Supplementary 4g
+              of: HS69
+              depicts: specimen
+            - page: Supplementary 5
+              figures:
+              - Supplementary 4h
+              - Supplementary 4i
+              of: G102
+              depicts: specimen
+            - page: Supplementary 6
+              figures:
+              - Supplementary 5a
+              - Supplementary 5c
+              - Supplementary 5d
+              of: HS99
+              depicts: specimen
+            - page: Supplementary 6
+              figures: Supplementary 5b
+              of: HS99
+              depicts: drawing
+            - page: Supplementary 6
+              figures:
+              - [Supplementary 5e, Supplementary 5h]
+              of: HS998A
+              depicts: specimen
+            - page: Supplementary 6
+              figures:
+              - [Supplementary 5i, Supplementary 5l]
+              of: HS998B
+              depicts: specimen
