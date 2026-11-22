@@ -18514,6 +18514,7 @@
   },
   "2019_topper.t.p_guo.j.f_clausen.s_skovsted.c.b_zhang.z.f": {
    "acts": {
+    "placeholder": 3,
     "type": 1
    },
    "audit": {
@@ -18539,12 +18540,12 @@
     "year": 2019
    },
    "claims": {
-    "acceptance": 2,
-    "act": 1,
-    "editorial": 3,
+    "acceptance": 5,
+    "act": 4,
+    "editorial": 6,
     "material": 23,
     "placement": 5,
-    "usage": 9
+    "usage": 12
    },
    "coverage": {
     "illustrations": null,
@@ -18559,9 +18560,10 @@
    "derived": {
     "illustrations": 20,
     "material": 2,
+    "newTaxa": 3,
     "occurrences": 1,
-    "skeleton": 14,
-    "synonymy": 2,
+    "skeleton": 17,
+    "synonymy": 5,
     "types": 1
    },
    "derivedCoverage": {
@@ -22831,6 +22833,12 @@
    "2024_wang.d.z_nohejlová_sun.z.x_zeng.h_lefebvre_yang.x.l_zhao.f.c",
    "2024_zamora_guensburg_sprinkle"
   ],
+  "echinodermata-class-uncertain_topper.t.p_guo.j.f_clausen.s_skovsted.c.b_zhang.z.f_2019": [
+   "2019_topper.t.p_guo.j.f_clausen.s_skovsted.c.b_zhang.z.f"
+  ],
+  "echinodermata-family-uncertain_topper.t.p_guo.j.f_clausen.s_skovsted.c.b_zhang.z.f_2019": [
+   "2019_topper.t.p_guo.j.f_clausen.s_skovsted.c.b_zhang.z.f"
+  ],
   "echinodermata-incertae-sedis": [
    "1967e_ubaghs"
   ],
@@ -22839,6 +22847,9 @@
   ],
   "echinodermata-indeterminate-subphylum_bell.b.m_1982": [
    "1982_bell.b.m"
+  ],
+  "echinodermata-order-uncertain_topper.t.p_guo.j.f_clausen.s_skovsted.c.b_zhang.z.f_2019": [
+   "2019_topper.t.p_guo.j.f_clausen.s_skovsted.c.b_zhang.z.f"
   ],
   "echinodermata-unnamed-family_hisinger_1828": [
    "1828_hisinger",

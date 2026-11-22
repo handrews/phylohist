@@ -21,23 +21,46 @@ taxonomies:
   citedAs: Total-group Echinodermata
   rank: Phylum
   authority: null
+  pages: 2
   editorial:
     inferred: [rank]
     basis: Described as phylum in text.
   children:
-  - openTaxon: metazoa-class-uncertain_guo.j.f_li.y_han.h.p_ou.q_zhou.j.r_zheng.y.j_2012
+  - openTaxon: echinodermata-class-uncertain_topper.t.p_guo.j.f_clausen.s_skovsted.c.b_zhang.z.f_2019
     rank: Class
+    new: true
+    pages: 2
+    synonyms:
+    - openTaxon: metazoa-class-uncertain_guo.j.f_li.y_han.h.p_ou.q_zhou.j.r_zheng.y.j_2012
+    editorial:
+      inferred: [synonyms]
+      basis: Matching the only previous paper addressing these taxa.
     children:
-    - openTaxon: metazoa-order-uncertain_guo.j.f_li.y_han.h.p_ou.q_zhou.j.r_zheng.y.j_2012
+    - openTaxon: echinodermata-order-uncertain_topper.t.p_guo.j.f_clausen.s_skovsted.c.b_zhang.z.f_2019
       rank: Order
+      new: true
+      pages: 2
+      synonyms:
+      - openTaxon: metazoa-order-uncertain_guo.j.f_li.y_han.h.p_ou.q_zhou.j.r_zheng.y.j_2012
+      editorial:
+        inferred: [synonyms]
+        basis: Matching the only previous paper addressing these taxa.
       children:
-      - openTaxon: metazoa-family-uncertain_guo.j.f_li.y_han.h.p_ou.q_zhou.j.r_zheng.y.j_2012
+      - openTaxon: echinodermata-family-uncertain_topper.t.p_guo.j.f_clausen.s_skovsted.c.b_zhang.z.f_2019
         rank: Family
+        new: true
+        pages: 2
+        synonyms:
+        - openTaxon: metazoa-family-uncertain_guo.j.f_li.y_han.h.p_ou.q_zhou.j.r_zheng.y.j_2012
+        editorial:
+          inferred: [synonyms]
+          basis: Matching the only previous paper addressing these taxa.
         children:
         - taxon: yanjiahella
           citedAs: Yanjiahella biscarpa Guo, Li, Han, Ou, Zhou and Zheng (2012)
           authority:
             source: 2012_guo.j.f_li.y_han.h.p_ou.q_zhou.j.r_zheng.y.j
+          pages: 2
           editorial:
             inferred: [authority]
             basis: >
@@ -55,6 +78,7 @@ taxonomies:
               - figures:
                 - [2k, 2m]
                 - 3c
+            pages: 2
             editorial:
               corrections:
                 authority:

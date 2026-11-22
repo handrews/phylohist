@@ -4527,6 +4527,24 @@ echinodermata-incertae-sedis_ubaghs_1999:
   rank: Class
   authority:
     source: 1999_ubaghs
+echinodermata-class-uncertain_topper.t.p_guo.j.f_clausen.s_skovsted.c.b_zhang.z.f_2019:
+  name: null
+  rank: Class
+  authority:
+    source: 2019_topper.t.p_guo.j.f_clausen.s_skovsted.c.b_zhang.z.f
+    pages: 2
+echinodermata-order-uncertain_topper.t.p_guo.j.f_clausen.s_skovsted.c.b_zhang.z.f_2019:
+  name: null
+  rank: Order
+  authority:
+    source: 2019_topper.t.p_guo.j.f_clausen.s_skovsted.c.b_zhang.z.f
+    pages: 2
+echinodermata-family-uncertain_topper.t.p_guo.j.f_clausen.s_skovsted.c.b_zhang.z.f_2019:
+  name: null
+  rank: Family
+  authority:
+    source: 2019_topper.t.p_guo.j.f_clausen.s_skovsted.c.b_zhang.z.f
+    pages: 2
 echinodermen:
   name: Echinodermen
   lang: DE
