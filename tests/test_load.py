@@ -696,12 +696,15 @@ def test_the_ranks_are_the_tables_and_the_schemas():
   assert ranks.TABLE.informal == {
     'division',
     'section',
-    'branch',
     'group',
     'grade',
     'clade',
     'plesion',
     'scion',
+    'typus',
+    'subtypus',
+    'embranchement',
+    'branch',
   }
   assert ranks.SPECIES_GROUP == ('species', 'subspecies', 'variety')
   assert ranks.GENUS_GROUP == ('genus', 'subgenus')

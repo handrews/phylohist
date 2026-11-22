@@ -461,14 +461,15 @@ $defs:
     - variety
     - Division
     - section
-    - Typus
-    - Subtypus
-    - Branch
     - Group
     - Grade
     - Clade
     - Plesion
     - Scion
+    - Typus
+    - Subtypus
+    - Embranchement
+    - Branch
 
   citationFields:
     $comment: |

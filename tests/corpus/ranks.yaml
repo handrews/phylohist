@@ -50,8 +50,6 @@ ranks:
   informal: true
 - name: section
   informal: true
-- name: Branch
-  informal: true
 - name: Group
   informal: true
 - name: Grade
@@ -61,6 +59,20 @@ ranks:
 - name: Plesion
   informal: true
 - name: Scion
+  informal: true
+# TODO: These are historical rather than informal, but that requires
+# a larger design change and we need more data on the historical use
+# to figure out how to relate them to standard ranks.  Typus was
+# essentially equivalent to Phylum, but philosophically a bit different.
+# Embranchment or Branch was initially similar (and predates both),
+# but Bather 1900 uses Branch as a rank above Phylum.
+- name: Typus
+  informal: true
+- name: Subtypus
+  informal: true
+- name: Embranchement
+  informal: true
+- name: Branch
   informal: true
 
 # The suffix lint checks a named record above the genus group, at a formal
