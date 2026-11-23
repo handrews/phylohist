@@ -1683,6 +1683,10 @@ def test_schema_accepts_horizons_localities_occurrences_and_tentative_lists():
         'l': {
           'location': ['Quarry Road'],
           'localityNumbers': [{'number': 'SH-1'}],
+          # A land-survey description and a position are separate statements.
+          'landSurvey': 'SE¼ NE¼ sec. 20, T15S, R10 W',
+          'mapSheet': 'Drum Mountains Well, 7.5′ quadrangle',
+          'coordinatesAsPrinted': 'near 39° 30′ 12.8″ N, 112° 59′ 24.0″ W',
           'tentative': True,
           'editorial': {'inferred': ['location'], 'basis': 'The map sheet names it.'},
         }
@@ -1751,6 +1755,9 @@ def test_schema_accepts_horizons_localities_occurrences_and_tentative_lists():
     ),
     _node_document({'horizons': {'h': {'unit': ['A'], 'inferred': {'stage': 'Drumian'}}}}),
     _node_document({'localities': {'l': {'location': ['A'], 'inferred': {'location': ['B']}}}}),
+    # A land-survey description is one string as printed.
+    _node_document({'localities': {'l': {'landSurvey': ['sect. 2', 'T. 17 S']}}}),
+    _node_document({'localities': {'l': {'landSurvey': {'section': 2}}}}),
     # A horizon has no place and a locality has no unit.
     _node_document({'horizons': {'h': {'location': ['A']}}}),
     _node_document({'localities': {'l': {'unit': ['A']}}}),

@@ -223,9 +223,10 @@ property.
 | `location` | 120 | 100.0% |
 | `localityNumbers` | 46 | 38.3% |
 | `mapSheet` | 30 | 25.0% |
-| `coordinatesAsPrinted` | 12 | 10.0% |
+| `landSurvey` | 11 | 9.2% |
 | `notes` | 7 | 5.8% |
 | `collectedBy` | 2 | 1.7% |
+| `coordinatesAsPrinted` | 1 | 0.8% |
 | `editorial` | 1 | 0.8% |
 | `paleocontinent` | 1 | 0.8% |
 | `collectedDate` | 0 | 0.0% |

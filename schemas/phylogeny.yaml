@@ -2051,10 +2051,21 @@ $defs:
         items:
           $ref: "#/$defs/localityNumber"
       coordinatesAsPrinted:
-        description: Coordinates or a grid reference exactly as printed ("GR538142 (yards)").
+        description: |
+          The locality's position in a coordinate system, exactly as
+          printed: latitude and longitude ("near 52° 14′ 30″ N, 117° 17′ W")
+          or a grid reference ("GR538142 (yards)"), with any qualifier the
+          source prints.
+        type: string
+      landSurvey:
+        description: |
+          The locality's description in a land survey, exactly as printed,
+          with any qualifier the source prints: a township, range and
+          section ("near middle of sect. 2, T. 17 S, R. 13 W"), or a parish
+          and portion.
         type: string
       mapSheet:
-        description: The map sheet a grid reference refers to, as printed.
+        description: The map sheet the locality is given on, as printed.
         type: string
       paleocontinent:
         type: string

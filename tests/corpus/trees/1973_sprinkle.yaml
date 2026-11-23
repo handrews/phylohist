@@ -132,7 +132,7 @@ localities:
     - W of Delta
     - W. Utah
     localityNumbers: [{number: AS-1}]
-    coordinatesAsPrinted: near middle of sect. 2, T. 17 S, R. 13 W
+    landSurvey: near middle of sect. 2, T. 17 S, R. 13 W
     mapSheet: Delta, Utah 1:250,000 topo. sheet
   as-2:
     location:
@@ -141,7 +141,7 @@ localities:
     - W of Delta
     - W. Utah
     localityNumbers: [{number: AS-2}]
-    coordinatesAsPrinted: near boundary between sect. 1 and 2, T. 17 S, R. 13 W
+    landSurvey: near boundary between sect. 1 and 2, T. 17 S, R. 13 W
     mapSheet: Delta, Utah 1:250,000 topo. sheet
   cf-1:
     location:
@@ -150,7 +150,7 @@ localities:
     - Box Elder Co.
     - N. Utah
     localityNumbers: [{number: CF-1}]
-    coordinatesAsPrinted: near center of sect. 14, T. 10 N, R. 2 W
+    landSurvey: near center of sect. 14, T. 10 N, R. 2 W
     mapSheet: Brigham City 7½′ Quad.
   cl-1:
     location:
@@ -159,7 +159,7 @@ localities:
     - about 7½ mi. NW of Clayton
     - central Idaho
     localityNumbers: [{number: CL-1}, {prefix: USGS locality, number: 5462}]
-    coordinatesAsPrinted: T. 12 N, R. 17 E (unsurveyed)
+    landSurvey: T. 12 N, R. 17 E (unsurveyed)
     mapSheet: Clayton 7½′ Quad.
   dt-3:
     location:
@@ -178,7 +178,7 @@ localities:
     - Bear Lake Co.
     - SE Idaho
     localityNumbers: [{number: EC-1}, {prefix: USGS locality, number: 6201}]
-    coordinatesAsPrinted: SE¼, sect. 15, T. 12 S, R. 41 E (unsurveyed)
+    landSurvey: SE¼, sect. 15, T. 12 S, R. 41 E (unsurveyed)
     mapSheet: Preston, Idaho 1:250,000 topo. sheet
   em-1:
     location:
@@ -195,7 +195,7 @@ localities:
     - Death Valley National Park
     - E. Calif.
     localityNumbers: [{number: FC-1}, {prefix: USGS locality, number: 4148 CO}]
-    coordinatesAsPrinted: E½, NW¼, sect. 15, T. 27 N, R. 2 E
+    landSurvey: E½, NW¼, sect. 15, T. 27 N, R. 2 E
     mapSheet: Furnace Creek 15′ Quad.
   gg-1:
     location:
@@ -248,7 +248,7 @@ localities:
     - about 9.5 mi. NE of Logan
     - N. Utah
     localityNumbers: [{number: LO-1}]
-    coordinatesAsPrinted: W½, NW¼, sect. 17, T. 12 N, R. 3 E
+    landSurvey: W½, NW¼, sect. 17, T. 12 N, R. 3 E
     mapSheet: old Logan, Utah-Idaho 30′ map
   lv-2:
     location:
@@ -265,7 +265,7 @@ localities:
     - Nye Co.
     - W. Nev.
     localityNumbers: [{number: MJ-1}]
-    coordinatesAsPrinted: NE¼, sect. 24, T. 12 S, R. 47 E
+    landSurvey: NE¼, sect. 24, T. 12 S, R. 47 E
     mapSheet: Bare Mountain 15′ Quad. (U.S.G.S. map GQ-157)
   pi-1:
     location:
@@ -275,7 +275,7 @@ localities:
     - Lincoln Co.
     - E. Nev.
     localityNumbers: [{number: PI-1}]
-    coordinatesAsPrinted: E½, sect. 20, T. 1 N, R. 67 E
+    landSurvey: E½, sect. 20, T. 1 N, R. 67 E
     mapSheet: Pioche 7½′ Quad.
   pi-2:
     location:
@@ -352,7 +352,7 @@ localities:
     - about 1.5 mi. WSW of Eureka
     - central Nev.
     localityNumbers: [{number: SC-1}]
-    coordinatesAsPrinted: NW¼, SW¼, NE¼, NW¼, sect. 22, T. 19 N, R. 53 E
+    landSurvey: NW¼, SW¼, NE¼, NW¼, sect. 22, T. 19 N, R. 53 E
     mapSheet: 'Nolan, 1962: Plate 1—Geologic Map of the Eureka Mining District, Nevada'
   sc-3:
     location:
@@ -361,7 +361,7 @@ localities:
     - about 2.5 mi. SSW of Eureka
     - central Nev.
     localityNumbers: [{number: SC-3}]
-    coordinatesAsPrinted: NE¼, SE¼, SE¼, sect. 34, T. 19 N, R. 53 E
+    landSurvey: NE¼, SE¼, SE¼, sect. 34, T. 19 N, R. 53 E
     mapSheet: 'Nolan, 1962: Plate 1—Geologic Map of the Eureka Mining District, Nevada'
   sc-4:
     location:
