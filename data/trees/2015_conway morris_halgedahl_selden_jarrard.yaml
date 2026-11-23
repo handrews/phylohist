@@ -8,47 +8,41 @@ horizons:
     - from about the top third of unit
     - Spence Shale Member
     - Langston Formation
-    - Wellsville Mountains
-    series: Miaolingian # Cambrian Series 3
-    stage: Drumian
-    biozone: polymerid Glossopleura Assemblage Zone (Robison, 1976)
-    notes: Written as Stage 5 but Drumian used interchangeably in paper.
+    series: Cambrian Series 3
+    stage: Cambrian Stage 5
+    biozone: polymerid Glossopleura Assemblage Zone
   spence-float:
     unit:
     - from float
     - Spence Shale Member
     - Langston Formation
-    - Wellsville Mountains
-    series: Miaolingian # Cambrian Series 3
-    stage: Drumian
-    biozone: polymerid Glossopleura Assemblage Zone (Robison, 1976)
+    series: Cambrian Series 3
+    stage: Cambrian Stage 5
+    biozone: polymerid Glossopleura Assemblage Zone
   spence-160:
     unit:
     - ~160 foot level
     - Spence Shale Member
     - Langston Formation
-    - Wellsville Mountains
-    series: Miaolingian # Cambrian Series 3
-    stage: Drumian
-    biozone: polymerid Glossopleura Assemblage Zone (Robison, 1976)
+    series: Cambrian Series 3
+    stage: Cambrian Stage 5
+    biozone: polymerid Glossopleura Assemblage Zone
   spence-150:
     unit:
     - 150 foot level (above base of section)
     - Spence Shale Member
     - Langston Formation
-    - Wellsville Mountains
-    series: Miaolingian # Cambrian Series 3
-    stage: Drumian
-    biozone: polymerid Glossopleura Assemblage Zone (Robison, 1976)
+    series: Cambrian Series 3
+    stage: Cambrian Stage 5
+    biozone: polymerid Glossopleura Assemblage Zone
   spence-110:
     unit:
     - 110 foot level ("trilobite layer")
     - Spence Shale Member
     - Langston Formation
-    - Wellsville Mountains
-    series: Miaolingian # Cambrian Series 3
-    stage: Drumian
-    biozone: polymerid Glossopleura Assemblage Zone (Robison, 1976)
+    series: Cambrian Series 3
+    stage: Cambrian Stage 5
+    biozone: polymerid Glossopleura Assemblage Zone
   wheeler:
     unit:
     - >
@@ -56,16 +50,16 @@ horizons:
       Swasey Limestone and ~37 m below the base of a limestone identified as
       the boundary between the Wheeler and overlying Pierson Cove Formation
     - Wheeler Formation
-    - Drum Mountains
-    series: Miaolingian # Cambrian Series 3
-    stage: Drumian
+    series: Cambrian Series 3
+    stageBoundary: [Cambrian Stage 5, Drumian]
     biozone: Ptychagnostus atavus
     notes: >
-      Written as Series 2 in one place but Series 3 everywhere else.
-      Written as Stage 5/Drumian.
+      Written as Series 2 in one place but Series 3 everywhere else, which
+      matches the stages.  Written as Stage 5/Drumian.
 localities:
   hollow:
     location:
+    - Wellsville Mountains
     - Miners Hollow
     - Utah
   drum:
@@ -73,39 +67,44 @@ localities:
     mapSheet: Drum Mountains Well, 7.5′ quadrangle
     coordinatesAsPrinted: 39° 30′ 12.8″ N, 112° 59′ 24.0″ W
     location:
+    - Drum Mountains
     - Millard County
     - Utah
 taxonomies:
 - taxon: deuterostomia
   rank: null
-  pages: 3
+  authority: null
+  pages: 633
+  editorial:
+    inferred: true
+    basis: printed text "?Stem-group deuterostome Vetulicolia Shu et al., 2001"
   children:
   - taxon: vetulicolia
-    citedAs: ?Stem-group deuterostome Vetulicolia Shu et al., 2001
+    citedAs: "?Stem-group deuterostome Vetulicolia Shu et al., 2001"
     group: stem
     rank: null
     provisional: true
-    pages: 3
+    pages: 633
     authority:
       source: 2001_shu.d_conway morris_han.j_chen.l_zhang.x.l_liu.h.q_li.y_liu.j.n
     children:
     - taxon: banffozoa
       citedAs: Class Banffozoa Caron, 2006
       rank: Class
-      pages: 3
+      pages: 633
       authority:
         source: 2006_caron
       children:
       - taxon: banffiidae
-        citedAs: Family Banfiidae Caron, 2006
+        citedAs: Family Banffiidae Caron, 2006
         rank: Family
-        pages: 3
+        pages: 633
         authority:
           source: 2006_caron
         children:
         - taxon: banffia
           citedAs: Genus Banffia Walcott, 1911
-          pages: 3
+          pages: 633
           authority:
             source: 1911d_walcott
           type:
@@ -117,37 +116,32 @@ taxonomies:
           - taxon: episoma_conway morris_selden_2015
             citedAs: Banffia episoma Conway Morris and Selden, new species
             new: true
-            pages: 3
+            pages: 633
             material:
             - role: holotype
               prefix: ROM
               numbers: [59645]
               horizon: spence-150
               locality: hollow
-            - role: paratype
-              prefix: ROM
+            - prefix: ROM
               numbers:
               - [59646, 59648]
               horizon: spence-150
               locality: hollow
-            - role: paratype
-              prefix: ROM
+            - prefix: ROM
               numbers: [59649]
               horizon: spence-110
               locality: hollow
-            - role: paratype
-              prefix: KUMIP
+            - prefix: KUMIP
               numbers:
               - [314017, 314018]
               horizon: spence-160
               locality: hollow
-            - role: paratype
-              prefix: KUMIP
+            - prefix: KUMIP
               numbers: [314019]
               horizon: spence-float
               locality: hollow
-            - role: paratype
-              prefix: KUMIP
+            - prefix: KUMIP
               numbers: [314021]
               horizon: spence-top-third
               locality: hollow
@@ -185,29 +179,27 @@ taxonomies:
     group: total
     authority:
       source: 1881b_metschnikoff
-    pages: 4
+    pages: 634
     children:
     - taxon: vetulocystids
       citedAs: Stem group Vetulocystids Shu et al., 2002
       rank: null
       group: stem
       provisional: true
-      pages: 4
+      pages: 634
       authority:
         source: 2004_shu.d_conway morris_han.j_zhang.z.f_liu.j.n
-      notes: >
-        Shu et al. is from 2004 but the original printing misprinted the
-        year as 2002 in the footer.
-      synonyms:
-      - taxon: vetulocystida
       editorial:
-        inferred: [synonyms]
-        basis: The actual taxon the cited paper gives.
+        corrections:
+          citedAs: Stem group Vetulocystids Shu et al., 2004
+        basis: >
+          Shu et al. is from 2004 but the original printing misprinted the
+          year as 2002 in the footer.
       children:
       - taxon: vetulocystidae
         citedAs: ?Family Vetulocystidae Shu et al., 2002
         rank: Family
-        pages: 4
+        pages: 634
         authority:
           source: 2004_shu.d_conway morris_han.j_zhang.z.f_liu.j.n
         notes: As above re 2002 vs 2004 for Shu et al.
@@ -217,16 +209,16 @@ taxonomies:
             Genus Thylacocercus Halgedahl, Jarrard and Conway Morris, new genus
           new: true
           provisional: true
-          pages: 4
+          pages: 634
           type:
-            taxon: ignotus_halgedahl_jarrard_conway morris_2015
+            taxon: ignota_halgedahl_jarrard_conway morris_2015
           children:
-          - taxon: ignotus_halgedahl_jarrard_conway morris_2015
+          - taxon: ignota_halgedahl_jarrard_conway morris_2015
             citedAs: >-
               Thylacocercus ignota Halgedahl, Jarrard, and Conway Morris,
               new species
             new: true
-            pages: 4
+            pages: 634
             material:
             - role: holotype
               prefix: UU
@@ -235,11 +227,11 @@ taxonomies:
               horizon: wheeler
               locality: drum
             illustrations:
-            - page: 4
+            - page: 634
               figures: ["5.1", "5.2"]
               of: "14011.01 a"
               depicts: specimen
-            - page: 4
+            - page: 634
               figures: "5.3"
               of: "14011.01 a"
               depicts: drawing

@@ -57,8 +57,7 @@ taxonomies:
             numbers: [Ech-04-001]
             horizon: yuanshan
             locality: shankou
-          - role: paratype
-            prefix: ELI
+          - prefix: ELI
             numbers: [Ech-04-002]
             horizon: yuanshan
             locality: shankou
@@ -96,8 +95,7 @@ taxonomies:
             numbers: [Ech-04-003]
             horizon: yuanshan
             locality: jianshan
-          - role: paratype
-            prefix: ELI
+          - prefix: ELI
             numbers:
             - [Ech-04-004, Ech-04-006]
             horizon: yuanshan
@@ -144,18 +142,29 @@ taxonomies:
       - openTaxon: vetulocystidae-form-a_shu.d_conway morris_han.j_zhang.z.f_liu.j.n_2004
         citedAs: Form A
         new: true
-        pages: 425
+        pages: 422
         editorial:
           inferred: true
-          basis: Specimen illustrations (Fig. 3 p. 425)
+          basis: >
+            Specimen assignment on page 422,
+            specimen illustrations (Fig. 3 p. 425)
         children:
         - openTaxon: vetulocystidae-form-a-sp_shu.d_conway morris_han.j_zhang.z.f_liu.j.n_2004
           citedAs: Form A
           new: true
-          pages: 425
+          pages: 422
           editorial:
             inferred: true
-            basis: Specimen illustrations (Fig. 3 p. 425)
+            basis: >
+              Specimen assignment on page 422,
+              specimen illustrations (Fig. 3 p. 425)
+          notes: >
+            Material said to be "from the Haikou locality" which is assumed
+            to mean the locality defined for Dianchicystis, which is the
+            only one of the two localities to be near Haikou.  There is no
+            indication of a second locality near Haikou.
+            The horizon is not given, but is assumed to be the same as
+            all other specimens from both localities.
           material:
           - prefix: ELI
             numbers:
@@ -183,18 +192,29 @@ taxonomies:
       - openTaxon: vetulocystidae-form-b_shu.d_conway morris_han.j_zhang.z.f_liu.j.n_2004
         citedAs: Form B
         new: true
-        pages: 425
+        pages: 422
         editorial:
           inferred: true
-          basis: Specimen illustrations (Fig. 3 p. 425)
+          basis: >
+            Specimen assignment on page 422,
+            specimen illustrations (Fig. 3 p. 425)
         children:
         - openTaxon: vetulocystidae-form-b-sp_shu.d_conway morris_han.j_zhang.z.f_liu.j.n_2004
           citedAs: Form B
           new: true
-          pages: 425
+          pages: 422
           editorial:
             inferred: true
-            basis: Specimen illustrations (Fig. 3 p. 425)
+            basis: >
+              Specimen assignment on page 422,
+              specimen illustrations (Fig. 3 p. 425)
+          notes: >
+            Material said to be "from the Haikou locality" which is assumed
+            to mean the locality defined for Dianchicystis, which is the
+            only one of the two localities to be near Haikou.  There is no
+            indication of a second locality near Haikou.
+            The horizon is not given, but is assumed to be the same as
+            all other specimens from both localities.
           material:
           - prefix: ELI
             numbers: [Ech-04-009]

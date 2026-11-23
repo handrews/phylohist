@@ -5382,7 +5382,7 @@ episoma_conway morris_selden_2015:
   authority:
     source: 2015_conway morris_halgedahl_selden_jarrard
     attributedTo: [conway morris, selden]
-    pages: 3
+    pages: 633
     illustrations:
     - page: 2
       figures: 1
@@ -7323,19 +7323,19 @@ icosidactylus_phillips.j_1839:
 icthyocrinus:
   name: Icthyocrinus
   altSpellingOf: ichthyocrinus
-ignotus_halgedahl_jarrard_conway morris_2015:
-  name: ignotus
+ignota_halgedahl_jarrard_conway morris_2015:
+  name: ignota
   rank: species
   authority:
     source: 2015_conway morris_halgedahl_selden_jarrard
     attributedTo: [halgedahl, jarrard, conway morris]
-    pages: 4
+    pages: 634
     illustrations:
-    - page: 4
+    - page: 634
       figures: ["5.1", "5.2"]
       of: "14011.01 a"
       depicts: specimen
-    - page: 4
+    - page: 634
       figures: "5.3"
       of: "14011.01 a"
       depicts: drawing
@@ -13828,7 +13828,7 @@ thylacocercus:
   authority:
     source: 2015_conway morris_halgedahl_selden_jarrard
     attributedTo: [halgedahl, jarrard, conway morris]
-    pages: 4
+    pages: 634
   citedAs: Genus Thylacocercus Halgedahl, Jarrard and Conway Morris, new genus
 thyroidea:
   name: Thyroidea
@@ -14502,7 +14502,7 @@ vetulicolia:
   name: Vetulicolia
   rank: Phylum
   authority:
-    source: 2004_shu.d_conway morris_han.j_zhang.z.f_liu.j.n
+    source: 2001_shu.d_conway morris_han.j_chen.l_zhang.x.l_liu.h.q_li.y_liu.j.n
     pages: 419
   citedAs: Phylum Vetulicolia nov.
 vetulocystida:
@@ -14528,16 +14528,16 @@ vetulocystidae-form-a_shu.d_conway morris_han.j_zhang.z.f_liu.j.n_2004:
   rank: genus
   authority:
     source: 2004_shu.d_conway morris_han.j_zhang.z.f_liu.j.n
-    pages: 425
+    pages: 422
   citedAs: Form A
-  notes: From figure captions, not included in formal tree.
+  notes: From text and figure captions, not included in formal tree.
 vetulocystidae-form-a-sp_shu.d_conway morris_han.j_zhang.z.f_liu.j.n_2004:
   name: null
   designation: Form A
   rank: species
   authority:
     source: 2004_shu.d_conway morris_han.j_zhang.z.f_liu.j.n
-    pages: 425
+    pages: 422
     illustrations:
     - page: 425
       figures:
@@ -14557,22 +14557,22 @@ vetulocystidae-form-a-sp_shu.d_conway morris_han.j_zhang.z.f_liu.j.n_2004:
       of: Ech-04-008
       depicts: drawing
   citedAs: Form A
-  notes: From figure captions, not included in formal tree.
+  notes: From text and figure captions, not included in formal tree.
 vetulocystidae-form-b_shu.d_conway morris_han.j_zhang.z.f_liu.j.n_2004:
   name: null
   rank: genus
   authority:
     source: 2004_shu.d_conway morris_han.j_zhang.z.f_liu.j.n
-    pages: 425
+    pages: 422
   citedAs: Form B
-  notes: From figure captions, not included in formal tree.
+  notes: From text and figure captions, not included in formal tree.
 vetulocystidae-form-b-sp_shu.d_conway morris_han.j_zhang.z.f_liu.j.n_2004:
   name: null
   designation: Form B
   rank: species
   authority:
     source: 2004_shu.d_conway morris_han.j_zhang.z.f_liu.j.n
-    pages: 425
+    pages: 422
     illustrations:
     - page: 425
       figures: 3d
@@ -14583,7 +14583,7 @@ vetulocystidae-form-b-sp_shu.d_conway morris_han.j_zhang.z.f_liu.j.n_2004:
       of: Ech-04-009
       depicts: drawing
   citedAs: Form B
-  notes: From figure captions, not included in formal tree.
+  notes: From text and figure captions, not included in formal tree.
 vetulocystis:
   name: Vetulocystis
   rank: genus
