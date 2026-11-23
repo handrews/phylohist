@@ -20,12 +20,8 @@ taxonomies:
 - taxon: echinodermata
   citedAs: Total-group Echinodermata
   group: total
-  rank: Phylum
   authority: null
   pages: 2
-  editorial:
-    inferred: [rank]
-    basis: Described as phylum in text.
   children:
   - openTaxon: echinodermata-class-uncertain_topper.t.p_guo.j.f_clausen.s_skovsted.c.b_zhang.z.f_2019
     rank: Class

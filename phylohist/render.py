@@ -71,14 +71,13 @@ def node_label(node):
   shown = bool(
     rank_word and fold_rank(rank_word) not in SPECIES_GROUP and not node.get('placeholder')
   )
-  # The group and the cladistic term come before the rank, which they put
-  # in parentheses: "Plesion (Class) Edrioasteroidea".
-  words = [blocks.GROUP_WORDS[flags['group']]] if flags.get('group') else []
-  if flags.get('term'):
-    words.append(flags['term'])
-  if words:
-    head = ' '.join(words)
-    head = head[:1].upper() + head[1:]
+  # A group stands with no rank word: "Stem group Echinodermata". A cladistic
+  # term puts the rank in parentheses: "Plesion (Class) Edrioasteroidea".
+  if flags.get('group'):
+    head = blocks.GROUP_WORDS[flags['group']]
+    name = f'{head[:1].upper()}{head[1:]} {name}'
+  elif flags.get('term'):
+    head = flags['term'].capitalize()
     name = f'{head} ({rank_word}) {name}' if shown else f'{head} {name}'
   elif shown:
     name = f'{rank_word} {name}'

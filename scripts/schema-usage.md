@@ -144,13 +144,13 @@ property.
 | `bootstrap` | 6 | 0.8% |
 | `data` | 0 | 0.0% |
 
-### `editorialObject` -- 92 instances in `data/`
+### `editorialObject` -- 91 instances in `data/`
 
 | property | data | data % |
 |---|---|---|
-| `basis` | 92 | 100.0% |
-| `inferred` | 77 | 83.7% |
-| `corrections` | 15 | 16.3% |
+| `basis` | 91 | 100.0% |
+| `inferred` | 76 | 83.5% |
+| `corrections` | 15 | 16.5% |
 | `corrections.authority` | 11 | 73.3% |
 | `corrections.authority.source` | 9 | 81.8% |
 | `corrections.authority.auth` | 8 | 72.7% |
@@ -295,7 +295,7 @@ property.
 | property | data | data % |
 |---|---|---|
 | `notes` | 526 | 7.8% |
-| `editorial` | 88 | 1.3% |
+| `editorial` | 87 | 1.3% |
 
 ### `modularDate` -- 405 instances in `data/`
 
@@ -507,7 +507,7 @@ property.
 |---|---|---|
 | `children` | 2260 | 33.4% |
 | `pages` | 1247 | 18.4% |
-| `rank` | 657 | 9.7% |
+| `rank` | 656 | 9.7% |
 | `authority` | 347 | 5.1% |
 | `parents` | 335 | 4.9% |
 | `bracketEnd` | 28 | 0.4% |
@@ -699,7 +699,7 @@ property.
 
 ### `phylogeny#/$defs/rank`
 
-25 of 31 members used, 1643 occurrences.
+25 of 31 members used, 1642 occurrences.
 
 | value | count |
 |---|---|
@@ -709,7 +709,7 @@ property.
 | `'Family'` | 228 |
 | `'genus'` | 152 |
 | `'variety'` | 65 |
-| `'Phylum'` | 64 |
+| `'Phylum'` | 63 |
 | `'Subphylum'` | 52 |
 | `'Superfamily'` | 33 |
 | `'Subfamily'` | 26 |
@@ -899,7 +899,7 @@ Tests whether each multi-type declaration is actually needed.
 | `phylogeny#/$defs/citationNumber` | integer/string | intx2875, strx406 | `5f`, `IV`, `X`, `VII` | - |
 | `phylogeny#/$defs/cladisticFields/properties/matrix/items` | integer/string | intx139, strx5 | `?` | - |
 | `phylogeny#/$defs/editorialObject/properties/corrections/properties/authority/properties/auth` | array/null | nullx7, listx1 | - | - |
-| `phylogeny#/$defs/editorialObject/properties/inferred` | boolean/array | boolx42, listx35 | - | - |
+| `phylogeny#/$defs/editorialObject/properties/inferred` | boolean/array | boolx42, listx34 | - | - |
 | `phylogeny#/$defs/locationFields/properties/illustrations` | array/null | listx197, nullx13 | - | - |
 | `phylogeny#/$defs/materialsFields/properties/material` | array/null | listx124, nullx9 | - | - |
 | `phylogeny#/$defs/materialsFields/properties/occurrences` | array/null | nullx41, listx28 | - | - |

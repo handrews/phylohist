@@ -494,7 +494,8 @@ def test_the_labels_put_the_group_and_term_before_the_rank():
   assert label('Class', term='plesion') == 'Plesion (Class) Xus'
   assert label(None, term='plesion') == 'Plesion Xus'
   assert label(None, group='stem') == 'Stem group Xus'
-  assert label('Phylum', group='total') == 'Total group (Phylum) Xus'
+  # No source prints a rank word beside a group, so the label shows none.
+  assert label('Phylum', group='total') == 'Total group Xus'
   assert label('Class', monophyly='monophyletic') == 'Class Xus (monophyletic)'
   assert label('Class', monophyly='nonMonophyletic') == 'Class Xus (non-monophyletic)'
 
