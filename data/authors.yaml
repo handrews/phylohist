@@ -161,6 +161,9 @@ calvin.s:
 candia carnevali:
   surname: Candia Carnevali
   given: M. D.
+caron:
+  surname: Caron
+  given: Jean-Bernard
 caster:
   surname: Caster
   given: Kenneth E.
@@ -185,6 +188,9 @@ chen.g.y:
 chen.j.y:
   surname: Chen
   given: Jun-Yuan
+chen.l:
+  surname: Chen
+  given: L.
 chen.l.z:
   surname: Chen
   given: Liang-Zhong
@@ -238,6 +244,9 @@ cong.p.y:
 conrad.t.a:
   surname: Conrad
   given: T. A.
+conway morris:
+  surname: Conway Morris
+  given: Simon
 cooper:
   surname: Cooper
   given: G. Arthur
@@ -446,6 +455,11 @@ gray.j.e:
 grigo:
   surname: Grigo
   given: Michael
+grobben:
+  surname: Grobben
+  given: Karl
+  birth: 1854
+  death: 1945
 guensburg:
   surname: Guensburg
   given: Thomas E.
@@ -480,6 +494,9 @@ haeckel:
 hahn:
   surname: Hahn
   given: Gerhard
+halgedahl:
+  surname: Halgedahl
+  given: Susan L.
 hall:
   surname: Hall
   given: James
@@ -556,6 +573,9 @@ jaekel:
   given: Otto
   birth: 1863
   death: 1929
+jarrard:
+  surname: Jarrard
+  given: Richard D.
 jeffries:
   surname: Jeffries
   given: R. P. S.
@@ -650,6 +670,9 @@ linnaeus:
 liñán:
   surname: Liñán
   given: Eladio
+liu.h.q:
+  surname: Liu
+  given: H.-Q.
 liu.j.n:
   surname: Liu
   given: Jian-Ni

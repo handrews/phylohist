@@ -2495,6 +2495,19 @@
   authors:
   - bather
   notes: '"Decade V" is recorded as the series.'
+1908_grobben:
+  title: Die systematische Einteilung des Tierreiches
+  journal: ver-k-k
+  volume: 58
+  pages:
+  - 491
+  - 511
+  pubDate:
+    year: 1908
+  authors:
+  - grobben
+  identifiers:
+    url: https://www.biodiversitylibrary.org/part/201613
 1911b_walcott:
   title: Middle Cambrian Holothurians and Medusaæ
   journal: smith-misc
@@ -3703,6 +3716,24 @@
     year: 1980
   authors:
   - sprinkle
+2015_conway morris_halgedahl_selden_jarrard:
+  title: Rare primitive deuterostomes from the Cambrian (Series 3) of Utah
+  journal: jofpaleo
+  volume: 89
+  number: 4
+  pages:
+  - 631
+  - 636
+  pubDate:
+    year: 2015
+    month: 7
+  processDates:
+    accepted: 2015-07-30
+  authors:
+  - conway morris
+  - halgedahl
+  - selden
+  - jarrard
 2015_zamora_lefebvre_hoşgör_franzen_nardin_fatka_álvaro:
   title: "The Cambrian edrioasteroid Stromatocystites (Echinodermata): Systematics, palaeogeography, and palaeoecology"
   journal: geobios
@@ -4586,6 +4617,25 @@ inprep_sprinkle_strimple:
   - rozhnov
   - fedorov
   notes: Translated from Paleontologicheskii Zhurnal, No. 6, 2001, pp. 42-49.
+2001_shu.d_conway morris_han.j_chen.l_zhang.x.l_liu.h.q_li.y_liu.j.n:
+  title: >
+    Primitive deuterostomes from the Chengjiang Lagerstätte
+    (Lower Cambrian, China)
+  journal: nature
+  volume: 414
+  pubDate:
+    year: 2001
+  authors:
+  - shu.d
+  - conway morris
+  - han.j
+  - chen.l
+  - zhang.x.l
+  - liu.h.q
+  - li.y
+  - liu.j.n
+  identifiers:
+    doi: 10.1038/35106514
 2001_sumrall:
   title: Paleoecology and Taphonomy of Two New Edrioasteroids from a Mississippian Hardground in Kentucky
   journal: jofpaleo
@@ -4694,6 +4744,31 @@ inprep_sprinkle_strimple:
   authors:
   - sumrall
   - parsley
+2004_shu.d_conway morris_han.j_zhang.z.f_liu.j.n:
+  title: Ancestral echinoderms from the Chengjiang deposits of China
+  journal: nature
+  volume: 430
+  pages:
+  - 422
+  - 428
+  pubDate:
+    year: 2004
+    month: 7
+    day: 22
+  processDates:
+    received: 2004-01-09
+    accepted: 2004-04-14
+  authors:
+  - shu.d
+  - conway morris
+  - han.j
+  - zhang.z.f
+  - liu.j.n
+  identifiers:
+    doi: 10.1038/nature02648
+  notes: >
+    Footer gives year as 2002 in error; 2004 is correct.
+    Degan Shu is crediged as D.-G. Shu, a form he only rarely uses.
 2004_parsley_prokop:
   title: Functional morphology and paleoecology of some sessile Middle Cambrian echinoderms from the Barrandian region of Bohemia
   journal: bullgeo
@@ -4722,6 +4797,24 @@ inprep_sprinkle_strimple:
   - frest
   identifiers:
     doi: 10.1002/gj.1017
+2006_caron:
+  title: >
+    Banffia constricta, a putative vetulicolid from the Middle Cambrian
+    Burgess Shale
+  journal: trans-r-soc-ed-earth
+  volume: 96
+  pages:
+  - 95
+  - 111
+  pubDate:
+    year: 2006
+  processDates:
+    received: 2004-07-28
+    accepted: 2005-05-06
+  authors:
+  - caron
+  identifiers:
+    doi: 10.1017/S0263593300001255
 2006_parsley_zhao.y.l:
   title: Long stalked eocrinoids in the basal Middle Cambrian Kaili Biota, Taijiang County, Guizhou Province, China
   journal: jofpaleo

@@ -331,6 +331,14 @@
   ],
   "type": "person"
  },
+ "rom": {
+  "name": "Royal Ontario Museum",
+  "place": "Toronto",
+  "prefixes": [
+   "ROM"
+  ],
+  "type": "institution"
+ },
  "sam": {
   "name": "South Australian Museum",
   "place": "Adelaide",

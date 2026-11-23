@@ -1494,6 +1494,27 @@ balticus_eichwald_1829:
   authority:
     auth: [eichwald]
     year: 1829
+banffia:
+  name: Banffia
+  rank: genus
+  authority:
+    source: 1911d_walcott
+    pages: 130
+  citedAs: BANFFIA, new genus
+banffiidae:
+  name: Banffiidae
+  rank: Family
+  authority:
+    source: 2006_caron
+    pages: 98
+  citedAs: Family Banﬃidae, fam. nov.
+banffozoa:
+  name: Banffozoa
+  rank: Class
+  authority:
+    source: 2006_caron
+    pages: 98
+  citedAs: Class Banﬀozoa, Class nov.
 barrandei_jaekel_1918:
   name: barrandei
   authority:
@@ -2542,6 +2563,32 @@ castor:
     source: 1758_linnaeus
     pages: 58
   citedAs: 25. CASTOR.
+catenata_shu.d_conway morris_han.j_zhang.z.f_liu.j.n_2004:
+  name: catenata
+  rank: species
+  authority:
+    source: 2004_shu.d_conway morris_han.j_zhang.z.f_liu.j.n
+    pages: 422
+    illustrations:
+    - page: 423
+      figures:
+      - [1a, 1c]
+      - 1e
+      of: Ech-04-001
+      depicts: specimen
+    - page: 423
+      figures: 1d
+      of: Ech-04-001
+      depicts: drawing
+    - page: 423
+      figures: 1f
+      of: Ech-04-002
+      depicts: specimen
+    - page: 423
+      figures: 1g
+      of: Ech-04-002
+      depicts: drawing
+  citedAs: Vetulocystis catenata gen. et sp. nov.
 catta_linnaeus_1758:
   name: catta
   rank: species
@@ -3125,6 +3172,16 @@ conus:
     source: 1758_linnaeus
     pages: 712
   citedAs: 284. CONUS.
+constricta_walcott_1911:
+  name: constricta
+  rank: species
+  authority:
+    source: 1911d_walcott
+    pages: 130
+    illustrations:
+    - plate: 21
+      figures: [5, 6]
+  citedAs: BANFFIA CONSTRICTA, new species
 convolutus_hall_1852:
   name: convolutus
   authority:
@@ -4039,6 +4096,13 @@ destombesi_ubaghs_1963:
   authority:
     auth: [ubaghs]
     year: 1963
+deuterostomia:
+  name: Deuterostomia
+  rank: Division
+  authority:
+    source: 1908_grobben
+    pages: 496
+  citedAs: Diesen Tierkreis bezeichne ich als Deuterostomia (Grobben)
 devonica_bassler_1936:
   name: devonica
   authority:
@@ -4080,6 +4144,13 @@ diana_linnaeus_1758:
     source: 1758_linnaeus
     pages: 26
   citedAs: Diana. 8.
+dianchicystis:
+  name: Dianchicystis
+  rank: genus
+  authority:
+    source: 2004_shu.d_conway morris_han.j_zhang.z.f_liu.j.n
+    pages: 422
+  citedAs: Dianchicystis jianshanensis gen. et sp. nov.
 dibrachycystidae:
   name: Dibrachycystidae
   rank: Family
@@ -5305,6 +5376,42 @@ ephraemovianus_bogolubov_1926:
   authority:
     auth: [Bogolubov]
     year: 1926
+episoma_conway morris_selden_2015:
+  name: episoma
+  rank: species
+  authority:
+    source: 2015_conway morris_halgedahl_selden_jarrard
+    attributedTo: [conway morris, selden]
+    pages: 3
+    illustrations:
+    - page: 2
+      figures: 1
+      of: 59645
+      depicts: specimen
+    - page: 2
+      figures: 2
+      of: 59645
+      depicts: drawing
+    - page: 2
+      figures: "3.1"
+      of: 314017
+      depicts: specimen
+      notes: >
+        Truncates number to "31041" but all other numbers starting
+        with those digits are accounted for in other figures.
+    - page: 2
+      figures: "3.2"
+      of: 314021
+      depicts: specimen
+    - page: 2
+      figures: "4.1"
+      of: 314018
+      depicts: specimen
+    - page: 2
+      figures: "4.2"
+      of: 314019
+      depicts: specimen
+  citedAs: Banffia episoma Conway Morris and Selden, new species
 espilezorum_sumrall_zamora_2011:
   name: espilezorum
   authority:
@@ -7216,6 +7323,24 @@ icosidactylus_phillips.j_1839:
 icthyocrinus:
   name: Icthyocrinus
   altSpellingOf: ichthyocrinus
+ignotus_halgedahl_jarrard_conway morris_2015:
+  name: ignotus
+  rank: species
+  authority:
+    source: 2015_conway morris_halgedahl_selden_jarrard
+    attributedTo: [halgedahl, jarrard, conway morris]
+    pages: 4
+    illustrations:
+    - page: 4
+      figures: ["5.1", "5.2"]
+      of: "14011.01 a"
+      depicts: specimen
+    - page: 4
+      figures: "5.3"
+      of: "14011.01 a"
+      depicts: drawing
+  citedAs: >-
+    Thylacocercus ignota Halgedahl, Jarrard, and Conway Morris, new species
 ikecanensis_sprinkle_1973:
   name: ikecanensis
   authority:
@@ -7579,6 +7704,52 @@ jewettii-var_hall_1852:
   rank: variety
   authority:
     source: 1852_hall
+jianshanensis_shu.d_conway morris_han.j_zhang.z.f_liu.j.n_2004:
+  name: jianshanensis
+  rank: species
+  authority:
+    source: 2004_shu.d_conway morris_han.j_zhang.z.f_liu.j.n
+    pages: 422
+    illustrations:
+    - page: 424
+      figures:
+      - 2a
+      - [2i, 2j]
+      of: Ech-04-003
+      depicts: specimen
+    - page: 424
+      figures: 2b
+      of: Ech-04-003
+      depicts: drawing
+    - page: 424
+      figures: 2c
+      of: Ech-04-004
+      depicts: specimen
+    - page: 424
+      figures: 2d
+      of: Ech-04-004
+      depicts: drawing
+    - page: 424
+      figures:
+      - 2e
+      - 2k
+      of: Ech-04-005
+      depicts: specimen
+    - page: 424
+      figures: 2f
+      of: Ech-04-005
+      depicts: drawing
+    - page: 424
+      figures:
+      - 2g
+      - 2l
+      of: Ech-04-006
+      depicts: specimen
+    - page: 424
+      figures: 2h
+      of: Ech-04-006
+      depicts: drawing
+  citedAs: Dianchicystis jianshanensis gen. et sp. nov.
 jingxieocrinus:
   name: Jingxieocrinus
   authority:
@@ -11152,6 +11323,14 @@ protorophus:
   name: Protorophus
   authority:
     source: 2010_zamora_smith.a.b
+protostomia:
+  name: Protostomia
+  rank: Division
+  authority:
+    source: 1908_grobben
+    pages: 497
+  citedAs: Protostomia (Grobben)
+  notes: Named as one of three "major divisions" of Coelenterata.
 protozoa:
   name: Protozoa
   rank: Class
@@ -13643,6 +13822,14 @@ thresherodiscus:
   authority:
     auth: [foerste]
     year: 1914
+thylacocercus:
+  name: Thylacocercus
+  rank: genus
+  authority:
+    source: 2015_conway morris_halgedahl_selden_jarrard
+    attributedTo: [halgedahl, jarrard, conway morris]
+    pages: 4
+  citedAs: Genus Thylacocercus Halgedahl, Jarrard and Conway Morris, new genus
 thyroidea:
   name: Thyroidea
   rank: Order
@@ -14311,6 +14498,99 @@ vespertilio:
     source: 1758_linnaeus
     pages: 31
   citedAs: 4. VESPERTILIO.
+vetulicolia:
+  name: Vetulicolia
+  rank: Phylum
+  authority:
+    source: 2004_shu.d_conway morris_han.j_zhang.z.f_liu.j.n
+    pages: 419
+  citedAs: Phylum Vetulicolia nov.
+vetulocystida:
+  name: Vetulocystida
+  rank: null
+  authority:
+    source: 2004_shu.d_conway morris_han.j_zhang.z.f_liu.j.n
+    pages: 422
+  citedAs: Stem group Vetulocystida
+vetulocystids:
+  name: Vetulocystids
+  vulgarSpellingOf: vetulocystida
+  lang: EN
+vetulocystidae:
+  name: Vetulocystidae
+  rank: Family
+  authority:
+    source: 2004_shu.d_conway morris_han.j_zhang.z.f_liu.j.n
+    pages: 422
+  citedAs: Family Vetulocystidae fam. nov.
+vetulocystidae-form-a_shu.d_conway morris_han.j_zhang.z.f_liu.j.n_2004:
+  name: null
+  rank: genus
+  authority:
+    source: 2004_shu.d_conway morris_han.j_zhang.z.f_liu.j.n
+    pages: 425
+  citedAs: Form A
+  notes: From figure captions, not included in formal tree.
+vetulocystidae-form-a-sp_shu.d_conway morris_han.j_zhang.z.f_liu.j.n_2004:
+  name: null
+  designation: Form A
+  rank: species
+  authority:
+    source: 2004_shu.d_conway morris_han.j_zhang.z.f_liu.j.n
+    pages: 425
+    illustrations:
+    - page: 425
+      figures:
+      - [3a, 3b]
+      of: Ech-04-007
+      depicts: specimen
+    - page: 425
+      figures: 3e
+      of: Ech-04-007
+      depicts: drawing
+    - page: 425
+      figures: 3c
+      of: Ech-04-008
+      depicts: specimen
+    - page: 425
+      figures: 3f
+      of: Ech-04-008
+      depicts: drawing
+  citedAs: Form A
+  notes: From figure captions, not included in formal tree.
+vetulocystidae-form-b_shu.d_conway morris_han.j_zhang.z.f_liu.j.n_2004:
+  name: null
+  rank: genus
+  authority:
+    source: 2004_shu.d_conway morris_han.j_zhang.z.f_liu.j.n
+    pages: 425
+  citedAs: Form B
+  notes: From figure captions, not included in formal tree.
+vetulocystidae-form-b-sp_shu.d_conway morris_han.j_zhang.z.f_liu.j.n_2004:
+  name: null
+  designation: Form B
+  rank: species
+  authority:
+    source: 2004_shu.d_conway morris_han.j_zhang.z.f_liu.j.n
+    pages: 425
+    illustrations:
+    - page: 425
+      figures: 3d
+      of: Ech-04-009
+      depicts: specimen
+    - page: 425
+      figures: 3g
+      of: Ech-04-009
+      depicts: drawing
+  citedAs: Form B
+  notes: From figure captions, not included in formal tree.
+vetulocystis:
+  name: Vetulocystis
+  rank: genus
+  authority:
+    source: 2004_shu.d_conway morris_han.j_zhang.z.f_liu.j.n
+    pages: 422
+  citedAs: Vetulocystis catenata gen. et sp. nov.
 vetusta_foerste_1914:
   name: vetusta
   authority:

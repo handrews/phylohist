@@ -1,0 +1,245 @@
+prefixes:
+  ROM: rom
+  KUMIP: u-kansas-mip
+  UU: uu
+horizons:
+  spence-top-third:
+    unit:
+    - from about the top third of unit
+    - Spence Shale Member
+    - Langston Formation
+    - Wellsville Mountains
+    series: Miaolingian # Cambrian Series 3
+    stage: Drumian
+    biozone: polymerid Glossopleura Assemblage Zone (Robison, 1976)
+    notes: Written as Stage 5 but Drumian used interchangeably in paper.
+  spence-float:
+    unit:
+    - from float
+    - Spence Shale Member
+    - Langston Formation
+    - Wellsville Mountains
+    series: Miaolingian # Cambrian Series 3
+    stage: Drumian
+    biozone: polymerid Glossopleura Assemblage Zone (Robison, 1976)
+  spence-160:
+    unit:
+    - ~160 foot level
+    - Spence Shale Member
+    - Langston Formation
+    - Wellsville Mountains
+    series: Miaolingian # Cambrian Series 3
+    stage: Drumian
+    biozone: polymerid Glossopleura Assemblage Zone (Robison, 1976)
+  spence-150:
+    unit:
+    - 150 foot level (above base of section)
+    - Spence Shale Member
+    - Langston Formation
+    - Wellsville Mountains
+    series: Miaolingian # Cambrian Series 3
+    stage: Drumian
+    biozone: polymerid Glossopleura Assemblage Zone (Robison, 1976)
+  spence-110:
+    unit:
+    - 110 foot level ("trilobite layer")
+    - Spence Shale Member
+    - Langston Formation
+    - Wellsville Mountains
+    series: Miaolingian # Cambrian Series 3
+    stage: Drumian
+    biozone: polymerid Glossopleura Assemblage Zone (Robison, 1976)
+  wheeler:
+    unit:
+    - >
+      gamma-ray "hot zone", ~235 m above the Wheeler contact with the underlying
+      Swasey Limestone and ~37 m below the base of a limestone identified as
+      the boundary between the Wheeler and overlying Pierson Cove Formation
+    - Wheeler Formation
+    - Drum Mountains
+    series: Miaolingian # Cambrian Series 3
+    stage: Drumian
+    biozone: Ptychagnostus atavus
+    notes: >
+      Written as Series 2 in one place but Series 3 everywhere else.
+      Written as Stage 5/Drumian.
+localities:
+  hollow:
+    location:
+    - Miners Hollow
+    - Utah
+  drum:
+    landSurvey: SE¼ NE¼ sec. 20, T15S, R10 W
+    mapSheet: Drum Mountains Well, 7.5′ quadrangle
+    coordinatesAsPrinted: 39° 30′ 12.8″ N, 112° 59′ 24.0″ W
+    location:
+    - Millard County
+    - Utah
+taxonomies:
+- taxon: deuterostomia
+  rank: null
+  pages: 3
+  children:
+  - taxon: vetulicolia
+    citedAs: ?Stem-group deuterostome Vetulicolia Shu et al., 2001
+    group: stem
+    rank: null
+    provisional: true
+    pages: 3
+    authority:
+      source: 2001_shu.d_conway morris_han.j_chen.l_zhang.x.l_liu.h.q_li.y_liu.j.n
+    children:
+    - taxon: banffozoa
+      citedAs: Class Banffozoa Caron, 2006
+      rank: Class
+      pages: 3
+      authority:
+        source: 2006_caron
+      children:
+      - taxon: banffiidae
+        citedAs: Family Banfiidae Caron, 2006
+        rank: Family
+        pages: 3
+        authority:
+          source: 2006_caron
+        children:
+        - taxon: banffia
+          citedAs: Genus Banffia Walcott, 1911
+          pages: 3
+          authority:
+            source: 1911d_walcott
+          type:
+            taxon: constricta_walcott_1911
+            citedAs: Banffia constricta Walcott, 1911
+            authority:
+              source: 1911d_walcott
+          children:
+          - taxon: episoma_conway morris_selden_2015
+            citedAs: Banffia episoma Conway Morris and Selden, new species
+            new: true
+            pages: 3
+            material:
+            - role: holotype
+              prefix: ROM
+              numbers: [59645]
+              horizon: spence-150
+              locality: hollow
+            - role: paratype
+              prefix: ROM
+              numbers:
+              - [59646, 59648]
+              horizon: spence-150
+              locality: hollow
+            - role: paratype
+              prefix: ROM
+              numbers: [59649]
+              horizon: spence-110
+              locality: hollow
+            - role: paratype
+              prefix: KUMIP
+              numbers:
+              - [314017, 314018]
+              horizon: spence-160
+              locality: hollow
+            - role: paratype
+              prefix: KUMIP
+              numbers: [314019]
+              horizon: spence-float
+              locality: hollow
+            - role: paratype
+              prefix: KUMIP
+              numbers: [314021]
+              horizon: spence-top-third
+              locality: hollow
+            illustrations:
+            - page: 2
+              figures: 1
+              of: 59645
+              depicts: specimen
+            - page: 2
+              figures: 2
+              of: 59645
+              depicts: drawing
+            - page: 2
+              figures: "3.1"
+              of: 314017
+              depicts: specimen
+              notes: >
+                Truncates number to "31041" but all other numbers starting
+                with those digits are accounted for in other figures.
+            - page: 2
+              figures: "3.2"
+              of: 314021
+              depicts: specimen
+            - page: 2
+              figures: "4.1"
+              of: 314018
+              depicts: specimen
+            - page: 2
+              figures: "4.2"
+              of: 314019
+              depicts: specimen
+  - taxon: ambulacraria
+    citedAs: ?Total group Ambulacraria Metschnikoff, 1881
+    rank: null
+    group: total
+    authority:
+      source: 1881b_metschnikoff
+    pages: 4
+    children:
+    - taxon: vetulocystids
+      citedAs: Stem group Vetulocystids Shu et al., 2002
+      rank: null
+      group: stem
+      provisional: true
+      pages: 4
+      authority:
+        source: 2004_shu.d_conway morris_han.j_zhang.z.f_liu.j.n
+      notes: >
+        Shu et al. is from 2004 but the original printing misprinted the
+        year as 2002 in the footer.
+      synonyms:
+      - taxon: vetulocystida
+      editorial:
+        inferred: [synonyms]
+        basis: The actual taxon the cited paper gives.
+      children:
+      - taxon: vetulocystidae
+        citedAs: ?Family Vetulocystidae Shu et al., 2002
+        rank: Family
+        pages: 4
+        authority:
+          source: 2004_shu.d_conway morris_han.j_zhang.z.f_liu.j.n
+        notes: As above re 2002 vs 2004 for Shu et al.
+        children:
+        - taxon: thylacocercus
+          citedAs: >-
+            Genus Thylacocercus Halgedahl, Jarrard and Conway Morris, new genus
+          new: true
+          provisional: true
+          pages: 4
+          type:
+            taxon: ignotus_halgedahl_jarrard_conway morris_2015
+          children:
+          - taxon: ignotus_halgedahl_jarrard_conway morris_2015
+            citedAs: >-
+              Thylacocercus ignota Halgedahl, Jarrard, and Conway Morris,
+              new species
+            new: true
+            pages: 4
+            material:
+            - role: holotype
+              prefix: UU
+              numbers: [14011.01 a, 14011.01 b]
+              asPrinted: Holotype.—UU 14011.01 a, b.
+              horizon: wheeler
+              locality: drum
+            illustrations:
+            - page: 4
+              figures: ["5.1", "5.2"]
+              of: "14011.01 a"
+              depicts: specimen
+            - page: 4
+              figures: "5.3"
+              of: "14011.01 a"
+              depicts: drawing
