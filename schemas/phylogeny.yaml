@@ -1019,7 +1019,8 @@ $defs:
       group:
         description: |
           The source prints the name as that part of its total group
-          ("Stem group Echinodermata"). Absent says nothing.
+          ("Stem group Echinodermata"). Absent says nothing. The node
+          writes `rank: null` beside it (the loader checks this).
         type: string
         enum: [stem, crown, total]
       term:

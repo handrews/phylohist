@@ -271,6 +271,16 @@ def inferred_pages(node):
   ]
 
 
+def group_rank(node):
+  """A node with a `group` writes `rank: null`: the source prints the name
+  as a stem, crown or total group, with no rank word beside it, and the
+  heading shows none. An error on a node that writes a rank word or leaves
+  the rank to its record."""
+  if 'group' not in node or ('rank' in node and node['rank'] is None):
+    return []
+  return [('error', '`group` on a node that does not write `rank: null`')]
+
+
 def compared_link_conflicts(documents):
   """An open record linked to different `(sign, target)` pairs by nodes
   anywhere in `documents`, an iterable of ``(source key, raw document)``,

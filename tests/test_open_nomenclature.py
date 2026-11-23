@@ -207,6 +207,16 @@ def test_compared_links_read_the_open_form_at_the_rank_its_node_writes():
   assert nomenclature.compared_links(node, LOOKUP) == []
 
 
+def test_a_group_node_writes_rank_null():
+  message = [('error', '`group` on a node that does not write `rank: null`')]
+  assert nomenclature.group_rank({'taxon': 'genus-a'}) == []
+  assert nomenclature.group_rank({'taxon': 'genus-a', 'group': 'stem', 'rank': None}) == []
+  assert nomenclature.group_rank({'taxon': 'genus-a', 'group': 'stem'}) == message
+  assert (
+    nomenclature.group_rank({'taxon': 'genus-a', 'group': 'total', 'rank': 'Phylum'}) == message
+  )
+
+
 def test_quoted_parent():
   assert nomenclature.quoted_parent({'taxon': 'species_a', 'quotedParent': True}, LOOKUP) == []
   assert nomenclature.quoted_parent({'taxon': 'varietya', 'quotedParent': True}, LOOKUP) == []
@@ -477,10 +487,10 @@ def test_placement_claim_carries_term_group_and_monophyly(records):
 
 
 def test_a_root_carries_its_group_on_the_usage_claim(records):
-  root = {'taxon': 'cyathocystidae', 'group': 'total', 'rank': 'Family'}
+  root = {'taxon': 'cyathocystidae', 'group': 'total', 'rank': None}
   at = _by_path(_claims(records, root, 207))
   usage = _one(at['207'], 'usage')
-  assert usage['group'] == 'total' and usage['rankAsPrinted'] == 'Family'
+  assert usage['group'] == 'total' and usage['rankAsPrinted'] is None
   assert not [c for c in at['207'] if c['kind'] == 'placement']
 
 

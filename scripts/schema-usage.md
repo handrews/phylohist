@@ -507,7 +507,7 @@ property.
 |---|---|---|
 | `children` | 2260 | 33.4% |
 | `pages` | 1247 | 18.4% |
-| `rank` | 656 | 9.7% |
+| `rank` | 657 | 9.7% |
 | `authority` | 347 | 5.1% |
 | `parents` | 335 | 4.9% |
 | `bracketEnd` | 28 | 0.4% |
