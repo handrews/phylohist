@@ -48,6 +48,7 @@ NOMENCLATURE_CHECKS = (
   (nomenclature.type_node, ('node', 'is_cited')),
   (nomenclature.children_null, ('node', 'is_cited')),
   (nomenclature.inferred_pages, ('node',)),
+  (nomenclature.group_rank, ('node',)),
 )
 DRAFT_FILE_CHECKS = (
   (material.bracket_errors, ('document',)),

@@ -1,5 +1,5 @@
 """Open nomenclature: the `cf`/`aff` link of an open form, `quotedParent`,
-`nonMonophyletic`, `mutable`, and a material entry's `uncertain` and
+`monophyly`, `mutable`, and a material entry's `uncertain` and
 `roleUncertain`: the schema, the loader checks, the claims, and the words
 the tools say.
 
@@ -60,7 +60,10 @@ def _valid(document):
 def test_schema_accepts_the_new_node_and_material_fields():
   node = {
     'taxon': 'lepidocystis',
-    'nonMonophyletic': True,
+    'term': 'plesion',
+    'group': 'stem',
+    'rank': None,
+    'monophyly': 'nonMonophyletic',
     'mutable': True,
     'children': [
       {'openTaxon': 'gogia-sp_robison_1965', 'cf': 'grayae_bather_1915', 'new': True},
@@ -68,10 +71,11 @@ def test_schema_accepts_the_new_node_and_material_fields():
       {
         'taxon': 'grayae_bather_1915',
         'quotedParent': True,
-        'nonMonophyletic': 'paraphyletic',
+        'monophyly': 'paraphyletic',
         'material': [{'prefix': 'USNM', 'numbers': [1], 'role': 'topotype', 'roleUncertain': True}],
       },
-      {'taxon': 'sardesoni_bather_1915', 'nonMonophyletic': 'polyphyletic'},
+      {'taxon': 'sardesoni_bather_1915', 'monophyly': 'polyphyletic'},
+      {'taxon': 'sardesoni_bather_1915', 'monophyly': 'monophyletic', 'term': 'clade'},
       {'taxon': 'sardesoni_bather_1915', 'material': [{'label': 'A', 'uncertain': True}]},
     ],
   }
@@ -81,8 +85,14 @@ def test_schema_accepts_the_new_node_and_material_fields():
 @pytest.mark.parametrize(
   'node',
   [
-    {'taxon': 'a', 'nonMonophyletic': 'monophyletic'},
-    {'taxon': 'a', 'nonMonophyletic': False},
+    {'taxon': 'a', 'monophyly': True},
+    {'taxon': 'a', 'monophyly': False},
+    {'taxon': 'a', 'monophyly': 'grade'},
+    {'taxon': 'a', 'group': 'basal'},
+    {'taxon': 'a', 'term': 'grade'},
+    {'taxon': 'a', 'rank': 'Plesion'},
+    {'taxon': 'a', 'rank': 'Clade'},
+    {'taxon': 'a', 'rank': 'Scion'},
     {'taxon': 'a', 'quotedParent': 'yes'},
     {'taxon': 'a', 'mutable': 'yes'},
     {'taxon': 'a', 'cf': True},
@@ -195,6 +205,16 @@ def test_compared_links_read_the_open_form_at_the_rank_its_node_writes():
   ]
   node = {'openTaxon': 'open-sp-a', 'cf': 'genus-a', 'rank': None}
   assert nomenclature.compared_links(node, LOOKUP) == []
+
+
+def test_a_group_node_writes_rank_null():
+  message = [('error', '`group` on a node that does not write `rank: null`')]
+  assert nomenclature.group_rank({'taxon': 'genus-a'}) == []
+  assert nomenclature.group_rank({'taxon': 'genus-a', 'group': 'stem', 'rank': None}) == []
+  assert nomenclature.group_rank({'taxon': 'genus-a', 'group': 'stem'}) == message
+  assert (
+    nomenclature.group_rank({'taxon': 'genus-a', 'group': 'total', 'rank': 'Phylum'}) == message
+  )
 
 
 def test_quoted_parent():
@@ -328,7 +348,7 @@ def test_check_draft_accepts_a_linked_open_form(tmp_path):
     '    cf: grayae_bather_1915\n'
     '  - taxon: sardesoni_bather_1915\n'
     '    quotedParent: true\n'
-    '    nonMonophyletic: paraphyletic\n',
+    '    monophyly: paraphyletic\n',
   )
   assert result.returncode == 0, result.stdout + result.stderr
 
@@ -433,19 +453,61 @@ def test_placement_claim_carries_quoted_parent_and_non_monophyly(records):
   root = {
     'taxon': 'cyathocystidae',
     'children': [
-      {'taxon': 'rhenopyrgus', 'nonMonophyletic': True},
-      {'taxon': 'pyrgocystis', 'nonMonophyletic': 'polyphyletic'},
+      {'taxon': 'rhenopyrgus', 'monophyly': 'nonMonophyletic'},
+      {'taxon': 'pyrgocystis', 'monophyly': 'polyphyletic'},
       {'taxon': 'grayae_bather_1915', 'quotedParent': True},
       {'taxon': 'sardesoni_bather_1915'},
     ],
   }
   at = _by_path(_claims(records, root, 202))
-  assert _one(at['202/children/0'], 'placement')['nonMonophyletic'] is True
-  assert _one(at['202/children/1'], 'placement')['nonMonophyletic'] == 'polyphyletic'
+  assert _one(at['202/children/0'], 'placement')['monophyly'] == 'nonMonophyletic'
+  assert _one(at['202/children/1'], 'placement')['monophyly'] == 'polyphyletic'
   quoted = _one(at['202/children/2'], 'placement')
-  assert quoted['quotedParent'] is True and 'nonMonophyletic' not in quoted
+  assert quoted['quotedParent'] is True and 'monophyly' not in quoted
   plain = _one(at['202/children/3'], 'placement')
-  assert 'quotedParent' not in plain and 'nonMonophyletic' not in plain
+  assert 'quotedParent' not in plain and 'monophyly' not in plain
+
+
+def test_placement_claim_carries_term_group_and_monophyly(records):
+  root = {
+    'taxon': 'cyathocystidae',
+    'children': [
+      {'taxon': 'rhenopyrgus', 'term': 'plesion', 'rank': None},
+      {'taxon': 'pyrgocystis', 'term': 'clade', 'rank': 'Family', 'monophyly': 'monophyletic'},
+      {'taxon': 'lepidocystis'},
+    ],
+  }
+  at = _by_path(_claims(records, root, 206))
+  term = _one(at['206/children/0'], 'placement')
+  assert term['term'] == 'plesion' and term['rankAsPrinted'] is None
+  both = _one(at['206/children/1'], 'placement')
+  assert (both['term'], both['rank'], both['monophyly']) == ('clade', 'Family', 'monophyletic')
+  plain = _one(at['206/children/2'], 'placement')
+  assert not {'term', 'group', 'monophyly'} & set(plain)
+
+
+def test_a_root_carries_its_group_on_the_usage_claim(records):
+  root = {'taxon': 'cyathocystidae', 'group': 'total', 'rank': None}
+  at = _by_path(_claims(records, root, 207))
+  usage = _one(at['207'], 'usage')
+  assert usage['group'] == 'total' and usage['rankAsPrinted'] is None
+  assert not [c for c in at['207'] if c['kind'] == 'placement']
+
+
+def test_the_labels_put_the_group_and_term_before_the_rank():
+  from phylohist import render
+
+  def label(rank_word, **flags):
+    node = {'key': 'x', 'name': 'Xus', 'rankWord': rank_word, 'flags': flags}
+    return render.node_label(node)
+
+  assert label('Class', term='plesion') == 'Plesion (Class) Xus'
+  assert label(None, term='plesion') == 'Plesion Xus'
+  assert label(None, group='stem') == 'Stem group Xus'
+  # No source prints a rank word beside a group, so the label shows none.
+  assert label('Phylum', group='total') == 'Total group Xus'
+  assert label('Class', monophyly='monophyletic') == 'Class Xus (monophyletic)'
+  assert label('Class', monophyly='nonMonophyletic') == 'Class Xus (non-monophyletic)'
 
 
 def test_placement_claim_carries_mutable(records):
@@ -462,12 +524,12 @@ def test_acceptance_claim_carries_quoted_parent(records):
   root = {
     'taxon': 'grayae_bather_1915',
     'synonyms': [
-      {'taxon': 'sardesoni_bather_1915', 'quotedParent': True, 'nonMonophyletic': True},
+      {'taxon': 'sardesoni_bather_1915', 'quotedParent': True, 'monophyly': 'nonMonophyletic'},
     ],
   }
   entry = _one(_by_path(_claims(records, root, 203))['203/synonyms/0'], 'acceptance')
   assert entry['quotedParent'] is True
-  assert 'nonMonophyletic' not in entry
+  assert 'monophyly' not in entry
 
 
 def test_specimen_claim_carries_uncertain_and_role_uncertain(records):
@@ -493,7 +555,7 @@ SYNTHETIC = {
   'children': [
     {
       'taxon': 'rhenopyrgus',
-      'nonMonophyletic': 'paraphyletic',
+      'monophyly': 'paraphyletic',
       'mutable': True,
       'children': [
         {'taxon': 'grayae_bather_1915', 'quotedParent': True},
@@ -503,7 +565,7 @@ SYNTHETIC = {
         },
       ],
     },
-    {'taxon': 'pyrgocystis', 'nonMonophyletic': True},
+    {'taxon': 'pyrgocystis', 'monophyly': 'nonMonophyletic'},
     {
       'taxon': 'lepidocystis',
       'children': [
@@ -595,14 +657,19 @@ def test_sedis_mutabilis_in_a_classification_line_and_a_chain(synthetic):
 def test_non_monophyly_in_a_placement_sentence(synthetic):
   words = synthetic.words
   assert words.claim_words(
-    {'kind': 'placement', 'parent': 'cyathocystidae', 'tree': 'taxonomy', 'nonMonophyletic': True}
+    {
+      'kind': 'placement',
+      'parent': 'cyathocystidae',
+      'tree': 'taxonomy',
+      'monophyly': 'nonMonophyletic',
+    }
   ) == ('places it under Cyathocystidae (non-monophyletic)')
   assert words.claim_words(
     {
       'kind': 'placement',
       'parent': 'cyathocystidae',
       'tree': 'taxonomy',
-      'nonMonophyletic': 'paraphyletic',
+      'monophyly': 'paraphyletic',
       'provisional': True,
     }
   ) == ('places it under Cyathocystidae (provisional, paraphyletic)')

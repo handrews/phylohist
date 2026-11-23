@@ -6,8 +6,8 @@
 # informal words follow, flagged `informal`; `section` stays until roadmap
 # C6. A word a source prints that is not here (Stage, Sub-branch) is added
 # by the auditor. The schema's `rank` enum restates the names in this order
-# (a test holds the two equal). A source that prints no rank word and no
-# cladistic term is written `rank: null`.
+# (a test holds the two equal). A source that prints no rank word is
+# written `rank: null`.
 ranks:
 - name: Domain
 - name: Kingdom
@@ -53,12 +53,6 @@ ranks:
 - name: Group
   informal: true
 - name: Grade
-  informal: true
-- name: Clade
-  informal: true
-- name: Plesion
-  informal: true
-- name: Scion
   informal: true
 # TODO: These are historical rather than informal, but that requires
 # a larger design change and we need more data on the historical use

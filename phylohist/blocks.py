@@ -52,10 +52,13 @@ def auctt_words(value):
   return 'auctt.' if value is True else f'auctt. {value}'
 
 
-def non_monophyly_words(value):
-  """The words for a `nonMonophyletic` value: `True` says only that the
-  group is not monophyletic, a string says how ("paraphyletic")."""
-  return 'non-monophyletic' if value is True else value
+def monophyly_words(value):
+  """The words for a `monophyly` value: `nonMonophyletic` says only that
+  the group is not monophyletic, the others are written as they are."""
+  return 'non-monophyletic' if value == 'nonMonophyletic' else value
+
+
+GROUP_WORDS = {'stem': 'stem group', 'crown': 'crown group', 'total': 'total group'}
 
 
 _NEW_MARKS = {

@@ -8,7 +8,8 @@ taxonomies:
   pages: 297
   children:
   - taxon: rhombifera_zittel_1879
-    rank: Plesion
+    rank: null
+    term: plesion
     children:
     - taxon: dibrachycystidae
       new: true

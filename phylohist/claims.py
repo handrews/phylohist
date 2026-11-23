@@ -90,12 +90,13 @@ _PLACEMENT_FLAGS = (
   'questionable',
   'quoted',
   'quotedParent',
-  'nonMonophyletic',
   'pars',
   'tentative',
   'outgroup',
-  'stem',
 )
+# The node fields that carry a value: the part of its total group the name
+# is printed as, the cladistic term, and what the source says of monophyly.
+_PLACEMENT_VALUES = ('group', 'term', 'monophyly')
 # The node fields linking an open form to the taxon it is compared with.
 _COMPARED_SIGNS = ('cf', 'aff')
 # The synonymy entries: each is a name the source accepts (`synonyms`) or
@@ -582,6 +583,10 @@ class _NodeClaims:
     # source prints none.
     if node.axis == 'root' and 'rank' in data:
       claim['rankAsPrinted'] = data['rank']
+    if node.axis == 'root':
+      for name in _PLACEMENT_VALUES:
+        if name in data:
+          claim[name] = data[name]
     self._emit(claim, field)
 
   def _placement_base(self):
@@ -595,6 +600,9 @@ class _NodeClaims:
     for flag in _PLACEMENT_FLAGS:
       if data.get(flag):
         claim[flag] = data[flag]
+    for name in _PLACEMENT_VALUES:
+      if name in data:
+        claim[name] = data[name]
     alt = [p.taxon.key for p in node.related_nodes('altPlacements') if p.taxon is not None]
     if alt:
       claim['altPlacements'] = alt

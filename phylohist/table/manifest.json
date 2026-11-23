@@ -18360,6 +18360,7 @@
    },
    "claims": {
     "act": 3,
+    "editorial": 1,
     "material": 2,
     "placement": 35,
     "usage": 24
@@ -18542,7 +18543,7 @@
    "claims": {
     "acceptance": 5,
     "act": 4,
-    "editorial": 6,
+    "editorial": 5,
     "material": 23,
     "placement": 5,
     "usage": 12

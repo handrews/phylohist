@@ -280,19 +280,21 @@ def test_a_listing_prints_the_rank_its_node_writes(store):
   ]
   [block] = store.contents('2003_guensburg_sprinkle', 'protocrinoida')
   node = block['nodes'][0]
-  assert (node['rank'], node['rankWord'], node['newMark']) == ('Order', 'Plesion', 'nov.')
-  assert block['rendered'].splitlines()[1] == '  Plesion Protocrinoida nov.'
+  assert (node['rank'], node['rankWord'], node['newMark']) == ('Order', 'Order', 'ord. nov.')
+  assert node['flags']['term'] == 'plesion'
+  assert block['rendered'].splitlines()[1] == '  Plesion (Order) Protocrinoida ord. nov.'
   [entry] = store.ancestors(['titanocrinidae'], style='json')['entries']
-  assert [(n['label'], n['rank']) for n in entry['chain']][2] == ('Protocrinoida', 'Plesion')
+  assert [(n['label'], n['rank']) for n in entry['chain']][2] == ('Protocrinoida', 'Order')
 
 
 def test_history_counts_each_paper_at_its_nodes_rank(store):
   # Whiteaves 1897 lists Diploporitidae as an order where the record says
-  # Group; Smith 1985 prints Edrioasteroidea as a plesion.
+  # Group; Smith 1985 prints Edrioasteroidea as a plesion of class rank.
   lines = store.history('diploporitidae')['rendered'].splitlines()
   assert lines[1] == 'class since 1973 (2 papers), order 1897 (1 paper)'
   ranks = store.history('edrioasteroidea', style='json')['measurement']['ranks']
-  assert [r['sources'] for r in ranks if r['rank'] == 'plesion'] == [['1985_smith.a.b']]
+  assert 'plesion' not in [r['rank'] for r in ranks]
+  assert '1985_smith.a.b' in [src for r in ranks if r['rank'] == 'class' for src in r['sources']]
 
 
 def test_gap_sentences(store):
