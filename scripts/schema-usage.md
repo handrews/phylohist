@@ -21,23 +21,24 @@ even when its parent is also unreached, so read parents first.
 | `citedWork` | `phylogeny#/$defs/citedWork/anyOf/1` |
 | `cladisticFields` | `phylogeny#/$defs/cladisticFields/properties/data`<br>`phylogeny#/$defs/cladisticFields/properties/data/additionalProperties` |
 | `editorialObject` | `phylogeny#/$defs/editorialObject/properties/corrections/not`<br>`phylogeny#/$defs/editorialObject/properties/corrections/not/anyOf/0`<br>`phylogeny#/$defs/editorialObject/properties/corrections/not/anyOf/1`<br>`phylogeny#/$defs/editorialObject/properties/corrections/not/anyOf/2`<br>`phylogeny#/$defs/editorialObject/properties/corrections/properties/authority/properties/in`<br>`phylogeny#/$defs/editorialObject/properties/corrections/properties/authority/properties/in/items` |
-| `entryRef` | `phylogeny#/$defs/entryRef` |
-| `entryRefFields` | `phylogeny#/$defs/entryRefFields`<br>`phylogeny#/$defs/entryRefFields/oneOf/0`<br>`phylogeny#/$defs/entryRefFields/oneOf/1`<br>`phylogeny#/$defs/entryRefFields/properties/label`<br>`phylogeny#/$defs/entryRefFields/properties/number`<br>`phylogeny#/$defs/entryRefFields/properties/prefix` |
+| `entryRef` | `phylogeny#/$defs/entryRef`<br>`phylogeny#/$defs/entryRef/oneOf/0`<br>`phylogeny#/$defs/entryRef/oneOf/1`<br>`phylogeny#/$defs/entryRef/properties/label`<br>`phylogeny#/$defs/entryRef/properties/number`<br>`phylogeny#/$defs/entryRef/properties/prefix` |
 | `entryRefOrNumber` | `phylogeny#/$defs/entryRefOrNumber/oneOf/1` |
 | `eon` | `phylogeny#/$defs/eon` |
 | `era` | `phylogeny#/$defs/era` |
 | `figureLocatorFields` | `phylogeny#/$defs/figureLocatorFields/properties/non` |
 | `horizon` | `phylogeny#/$defs/horizon/properties/biozones`<br>`phylogeny#/$defs/horizon/properties/biozones/items`<br>`phylogeny#/$defs/horizon/properties/sources`<br>`phylogeny#/$defs/horizon/properties/sources/items`<br>`phylogeny#/$defs/horizon/properties/tentative/oneOf/0` |
+| `labels` | `phylogeny#/$defs/labels/oneOf/1`<br>`phylogeny#/$defs/labels/oneOf/1/items` |
 | `localTimeFields` | `phylogeny#/$defs/localTimeFields/properties/localStageBoundary` |
 | `locality` | `phylogeny#/$defs/locality/properties/collectedDate`<br>`phylogeny#/$defs/locality/properties/sources`<br>`phylogeny#/$defs/locality/properties/sources/items`<br>`phylogeny#/$defs/locality/properties/tentative`<br>`phylogeny#/$defs/locality/properties/tentative/oneOf/0`<br>`phylogeny#/$defs/locality/properties/tentative/oneOf/1`<br>`phylogeny#/$defs/locality/properties/tentative/oneOf/1/items` |
 | `localityNumber` | `phylogeny#/$defs/localityNumber/not`<br>`phylogeny#/$defs/localityNumber/properties/register` |
-| `materialEntry` | `phylogeny#/$defs/materialEntry/properties/formerIds`<br>`phylogeny#/$defs/materialEntry/properties/formerIds/items`<br>`phylogeny#/$defs/materialEntry/properties/fragmentOf`<br>`phylogeny#/$defs/materialEntry/properties/horizon/oneOf/1`<br>`phylogeny#/$defs/materialEntry/properties/roleUncertain`<br>`phylogeny#/$defs/materialEntry/properties/sameAs`<br>`phylogeny#/$defs/materialEntry/properties/sameAs/properties/source`<br>`phylogeny#/$defs/materialEntry/properties/tentative` |
+| `materialEntry` | `phylogeny#/$defs/materialEntry/not`<br>`phylogeny#/$defs/materialEntry/properties/formerIds`<br>`phylogeny#/$defs/materialEntry/properties/formerIds/items`<br>`phylogeny#/$defs/materialEntry/properties/fragmentOf`<br>`phylogeny#/$defs/materialEntry/properties/horizon/oneOf/1`<br>`phylogeny#/$defs/materialEntry/properties/roleUncertain`<br>`phylogeny#/$defs/materialEntry/properties/sameAs`<br>`phylogeny#/$defs/materialEntry/properties/sameAs/oneOf/0`<br>`phylogeny#/$defs/materialEntry/properties/sameAs/oneOf/1`<br>`phylogeny#/$defs/materialEntry/properties/sameAs/oneOf/1/items`<br>`phylogeny#/$defs/materialEntry/properties/tentative` |
 | `occurrence` | `phylogeny#/$defs/occurrence/properties/notes`<br>`phylogeny#/$defs/occurrence/properties/tentative` |
 | `occurrenceTentative` | `phylogeny#/$defs/occurrenceTentative`<br>`phylogeny#/$defs/occurrenceTentative/items` |
 | `person` | `phylogeny#/$defs/person/properties/suffix` |
 | `publication` | `phylogeny#/$defs/publication/properties/type` |
 | `range` | `phylogeny#/$defs/range/properties/editorial` |
 | `relationalFields` | `phylogeny#/$defs/relationalFields/properties/type/oneOf/1` |
+| `sameAsLink` | `phylogeny#/$defs/sameAsLink`<br>`phylogeny#/$defs/sameAsLink/oneOf/0`<br>`phylogeny#/$defs/sameAsLink/oneOf/1`<br>`phylogeny#/$defs/sameAsLink/properties/labels`<br>`phylogeny#/$defs/sameAsLink/properties/numbers`<br>`phylogeny#/$defs/sameAsLink/properties/numbers/items`<br>`phylogeny#/$defs/sameAsLink/properties/of`<br>`phylogeny#/$defs/sameAsLink/properties/prefix`<br>`phylogeny#/$defs/sameAsLink/properties/source` |
 | `sectionRecord` | `phylogeny#/$defs/sectionRecord/properties/authority/not` |
 | `stageRange` | `phylogeny#/$defs/stageRange`<br>`phylogeny#/$defs/stageRange/items` |
 | `taxonRecord` | `phylogeny#/$defs/taxonRecord/else/oneOf/3`<br>`phylogeny#/$defs/taxonRecord/else/oneOf/4`<br>`phylogeny#/$defs/taxonRecord/properties/altGenderOf`<br>`phylogeny#/$defs/taxonRecord/properties/authority/not`<br>`phylogeny#/$defs/taxonRecord/properties/holotype/additionalProperties/items/items`<br>`phylogeny#/$defs/taxonRecord/properties/latinSpellingOf` |
@@ -258,7 +259,7 @@ property.
 | `horizon` | 160 | 51.3% |
 | `asPrinted` | 85 | 27.2% |
 | `notes` | 69 | 22.1% |
-| `label` | 18 | 5.8% |
+| `labels` | 18 | 5.8% |
 | `preparation` | 17 | 5.4% |
 | `repository` | 12 | 3.8% |
 | `count` | 11 | 3.5% |
@@ -278,7 +279,6 @@ property.
 | `fragmentOf` | 0 | 0.0% |
 | `roleUncertain` | 0 | 0.0% |
 | `sameAs` | 0 | 0.0% |
-| `sameAs.source` | 0 | - |
 | `tentative` | 0 | 0.0% |
 
 ### `materialsFields` -- 5975 instances in `data/`

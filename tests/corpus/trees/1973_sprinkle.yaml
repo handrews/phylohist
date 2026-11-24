@@ -749,7 +749,7 @@ taxonomies:
                 numbers: [6431]
                 role: syntype
                 notes: studied from a University of Cincinnati latex cast
-              - label: six to eight additional unnumbered specimens
+              - labels: six to eight additional unnumbered specimens
                 repository: usnm
               - prefix: MCZ
                 numbers: [[656, 665]]
@@ -766,7 +766,7 @@ taxonomies:
                 horizon: titkana-fm
                 locality: mt-mumm
                 notes: two (out of four) small specimens from Mount Mumm
-              - label: unnumbered slab of three large specimens from Mount Robson
+              - labels: unnumbered slab of three large specimens from Mount Robson
                 count: 3
                 repository: usnm
                 horizon: chetang-fm
@@ -1616,7 +1616,7 @@ taxonomies:
                 numbers: [24691]
                 role: paratype
                 locality: athabaska-glacier
-              - label: additional specimens collected in 1968
+              - labels: additional specimens collected in 1968
                 repository: gsc
                 collectedDate: '1968'
                 horizon: stephen-formation
@@ -2283,7 +2283,7 @@ taxonomies:
                 role: paratype
                 horizon: nolichucky-formation
                 locality: walcott-103a
-              - label: fragmentary material in USNM collection 103a
+              - labels: fragmentary material in USNM collection 103a
                 repository: usnm
                 horizon: nolichucky-formation
                 locality: walcott-103a
@@ -2437,7 +2437,7 @@ taxonomies:
               isType: true
               pages: 121
               material:
-              - label: the apparent type specimens
+              - labels: the apparent type specimens
                 notes: currently on loan from Cornell University to the University of Cincinnati
               illustrations: null
               occurrences: null
@@ -2889,7 +2889,7 @@ taxonomies:
               role: plesiotype
               horizon: chazy-formation
               locality: village-belanger
-            - label: a large unnumbered specimen apparently belonging to the Geological Survey of Canada
+            - labels: a large unnumbered specimen apparently belonging to the Geological Survey of Canada
               horizon: laval-formation-chazy
               locality: ile-jesus
               notes: unnumbered GSC specimen at the Univ. of Kansas
@@ -3023,10 +3023,10 @@ taxonomies:
               horizon: garden-city-formation
               locality: usgs-d190d-co
               notes: possible orals
-            - label: the remainder of this acid residue material in USGS collection D190d CO (Denver)
+            - labels: the remainder of this acid residue material in USGS collection D190d CO (Denver)
               horizon: garden-city-formation
               locality: usgs-d190d-co
-            - label: the remainder of this acid residue material in USGS collection D190e CO (Denver)
+            - labels: the remainder of this acid residue material in USGS collection D190e CO (Denver)
               horizon: garden-city-formation
               locality: usgs-d190e-co
             - prefix: MCZ
@@ -3179,7 +3179,7 @@ taxonomies:
             isType: true
             pages: 155
             material:
-            - label: only one incomplete specimen of this genus and species is known to exist
+            - labels: only one incomplete specimen of this genus and species is known to exist
               examined: false
             illustrations:
             - textFigures: 38

@@ -335,7 +335,7 @@ nothing. One node emits them in a fixed order, which fixes the claim ids
   `usnm:165421`). `roleAct` is the entry's own value, else `designated` for
   a holotype, paratype, syntype or cotype on a `new: true` node, else
   absent. The entry's other fields are copied as written: `count`,
-  `label`, `holder`, `status`, `formerIds`, `fragmentOf`, `parts`,
+  `labels`, `holder`, `status`, `formerIds`, `fragmentOf`, `parts`,
   `examined`, `listComplete`, `preparation`, `castOf`, `sameAs`,
   `collectedBy`, `collectedDate`, `localityNumbers`, `uncertain` (the specimen is doubtfully assigned to the
   taxon), `roleUncertain` (the role word is queried in the source),
@@ -345,24 +345,42 @@ nothing. One node emits them in a fixed order, which fixes the claim ids
   pairing),
   `tentativeFields` (the entry's `tentative`, naming `horizon`, `locality`
   or both), and the entry's `notes` as `materialNotes`.
+  `labels`, one string or a list of distinct strings in the entry (an
+  entry has `numbers` or `labels`, never both), is always a list on the
+  claim; `ids` is absent for an entry without numbers.
   `localityKeys`, when the entry has `localityNumbers` (the specimen's own
   locality numbers within its locality), are built from them by the rule
   the occurrence claim uses for a locality's. `castOf` and `fragmentOf` are
   copied as written: a bare number or label, or the object form
-  (`{number, prefix}` or `{label}`) that names an entry on the same node
-  within a prefix. An
+  (`{number, prefix}` or `{label}`) that names one specimen of an entry on
+  the same node, by a number within a prefix or by one of the entry's
+  labels. An
   entry's `editorial` block becomes the claim's `editorial` (the claim is
   about the entry), with `inferredFields` listing the names in its
   `inferred`; the claim's own `inferred` flag is unchanged, because the
-  entry is printed and only a field of it is the editor's. `sameAs`, the
-  link from this entry to an earlier source's entry for the same specimen
-  (`{source, label}` or `{source, number[, prefix]}`), is copied as
-  written and is the source's own statement unless `inferredFields` lists
-  it; `sameAsClaim` is the id of the one specimen claim in that source it
-  names (matched the way a figure's object `of` is: by folded `label`, or
-  by `number` within `prefix` when given), set once every source's claims are
-  built and absent when the source is not among those extracted or the link
-  names no entry or several.
+  entry is printed and only a field of it is the editor's. `sameAs`, one
+  link or a list of links each tying specimens of this entry to an earlier
+  source's entries (`{source, numbers[, prefix]}` or `{source, labels}`,
+  with an optional `of`), is a list on the claim, copied as written, and is
+  the source's own statement unless `inferredFields` lists it (which covers
+  every link of the entry). Each value of `numbers` or `labels` names
+  exactly one entry of the earlier source: a number exactly, else inside a
+  printed run, within `prefix` when given; a label as one of that entry's
+  labels, folded. With `of`, the link names one target and `of` is this
+  entry's number or label for it. Without `of`, on an entry with several
+  numbers or labels, each target value is also this entry's own number or
+  label (the same number under another prefix) and must be one of them;
+  on an entry with one number or label or only a `count`, the link names
+  one target, whatever the earlier source called the specimen. The loader
+  reports anything else as an error. `sameAsLinks` is a list with one
+  `{key, claim, targetKey}` per pair that resolves: `claim` is the earlier
+  specimen claim's id, `key` this claim's specimen and `targetKey` the
+  earlier claim's specimen. A specimen's key is its join key
+  (`<register>:<folded number>`), else `<claim id>#<folded number or
+  label>`, or the claim id for an entry with only a `count`. It is set once
+  every source's claims are built and absent when the target source is not
+  among those extracted or no pair resolves (a target naming no entry or
+  several is left out).
   `specimenIllustrations` lists the locators of the node's illustrations
   whose `of` names the entry, and `illustrationClaims` their claim ids.
   `figured: false` marks a specimen no figure names, set only when all
@@ -381,10 +399,10 @@ nothing. One node emits them in a fixed order, which fixes the claim ids
   `page`, `figures`, `textFigures`, `non`, `notes`, `uncertain`); `of`
   and `depicts` ride on the claim. `ofClaim` lists the ids of the specimen
   claims `of` names (a string or an integer, folded and compared with the
-  folded numbers, a range endpoint included, and the folded `label`; a
+  folded numbers, a range endpoint included, and the folded `labels`; a
   number inside a pair's run also names it; an object `{number, prefix}`
   names by number among the entries of that prefix alone, and `{label}` by
-  label alone); a figure with no `of` is tied to no specimen.
+  one of an entry's labels alone); a figure with no `of` is tied to no specimen.
 - `range` (field `ranges`): one claim per element, `range` the element
   verbatim, a `tentative` or `editorial` it carries included. It counts under the `occurrences` coverage kind, and
   `statements(kind='occurrences')` returns it with the `occurrence` claims.
@@ -571,12 +589,10 @@ counted under any coverage kind.
 per taxon (`subject`) whose holotype is a different specimen in two
 sources, `{taxon, holotypes: [{source, ids, joinKeys, claim}]}` with one
 entry per holotype claim, in source year order (an unnumbered holotype's
-`label` rides beside). A holotype's identity is the set of its `joinKeys`,
-else its `label`, else its printed `ids`; two are the same specimen when
-those sets intersect, or when they are linked through `sameAsClaim`
-(directly or through a chain of specimen claims, in either direction, or
-by the join key of an entry that prints one number; an entry printing
-several numbers joins nothing but through its own link). A claim marked `uncertain` is ignored, and a source
+`labels` ride beside). A holotype's identity is the set of its `joinKeys`,
+else its `labels`, else its printed `ids`; two are the same specimen when
+those sets intersect, or when a `sameAsLinks` pair ties them (directly or
+through a chain, in either direction). A claim marked `uncertain` is ignored, and a source
 that gives the taxon a `lectotype` or `neotype` does not enter the
 comparison, since its selection supersedes the earlier holotype.
 `scripts/claims.py --inconsistencies` prints the rows after the per-source
@@ -723,7 +739,7 @@ eval runner all go through `tools.call`:
 | `history(record, include_related, synonymy)` | a timeline: one line per source in year order with the name as used, its position, the acts and the page; the measurement as the heading (the papers, the positions given and the ranks used, each paper at the rank its node writes, else the record's); each source's synonymy with `synonymy`; with `years`, only the sources in that span: the parameters report the span asked, the heading the span found |
 | `synonymy(record, source)` | the synonymy a source prints under a record, as a list |
 | `statements(record, source, kind, act_kind)` | every claim about a record as a sentence with source, year and page, the drill-down; with a source named and nothing of that kind entered, the gap block for it ("nothing of this kind" when the source holds other claims about the record), and with no kind asked the gap names every kind of the source not yet entered; with a source and `kind='absence'`, a table of what the source gives for the record per content kind (members, specimens, occurrences, figures, synonymy, type; one group per node), each `N entered`, `none printed` (the auditor's `absence` claim, or a source coverage of `na` or `all` that leaves none to enter) or `not entered`; above species rank the specimens and figures rows appear only when the node carries some, since those kinds are cited for species, and the type row appears for a genus or subgenus, and at another rank only with a type statement (a `type` node, or a child marked `isType`) or a `types` absence, and the members row (the placements of the node's children, `N entered`, or a `skeleton` absence) appears for a named node above the species level, and at species level only with children entered or a `skeleton` absence; with no kind and an `act_kind` of `type`, or `kind='act'`, the `types` absence is selected too, and `kind='placement'` selects the `skeleton` absence; `kind` is one of the claim kinds other than `section` and `secondhand`, or `occurrences`, `illustrations`, `specimens` for one kind of material, and `act_kind` one of the act kinds: any other value is refused |
-| `specimen_history(number, repository, source, label)` | every citation of one specimen, by catalog number as a paper prints it ("UQF 5404", "F. 5404"): a list of the specimen claims whose `joinKeys` hold the number's key (`<repository>:<folded bare number>`, built as the extractor builds it) and those whose printed range contains it, one line per claim in year order: the role ("holotype of X") or, with none, "cited under X", "(doubtfully assigned)", the number as printed when it is not the one asked about (or "in the run …"), and the figures tied to it (locator notes left out) or "not figured"; for an entry with a run or several numbers only the figures whose own `of` names the number asked about, and nothing about figures when none does unless the claim is `figured: false`. The prefix names the repository; a number without one, or with a shared prefix, takes `repository` (a registry key, name or prefix, or an institution with one specimen register within it; the block's parameter is the register's key), and without it the result is the `absent` statement, naming the competing repositories when the prefix is shared. A specimen with no number is asked for by `source` and `label` (the specimen claim of that source whose label matches, folded; no match is the `absent` statement, worded `the specimen "A" of Bather 1914`); with neither a number nor both of them the call is refused. The heading names what was asked (`Specimen UQF 5404 (holder)` or `Specimen "A" of Bather 1914`). Either way every claim in the component of a claim found is listed (`sameAsClaim` in either direction, through a chain, or a shared join key between one-number entries), still in year order; a line reached only through a link ends `(the same specimen according to Bather 1914)`, naming the source that carries the link, or `(the same specimen, editor's inference)` when the carrying claim's `inferredFields` lists `sameAs` |
+| `specimen_history(number, repository, source, label)` | every citation of one specimen, by catalog number as a paper prints it ("UQF 5404", "F. 5404"): a list of the specimen claims whose `joinKeys` hold the number's key (`<repository>:<folded bare number>`, built as the extractor builds it) and those whose printed range contains it, one line per claim in year order: the role ("holotype of X") or, with none, "cited under X", "(doubtfully assigned)", the number as printed when it is not the one asked about (or "in the run …"), and the figures tied to it (locator notes left out) or "not figured"; for an entry with a run or several numbers only the figures whose own `of` names the number asked about, and nothing about figures when none does unless the claim is `figured: false`. The prefix names the repository; a number without one, or with a shared prefix, takes `repository` (a registry key, name or prefix, or an institution with one specimen register within it; the block's parameter is the register's key), and without it the result is the `absent` statement, naming the competing repositories when the prefix is shared. A specimen with no number is asked for by `source` and `label` (the specimen claim of that source one of whose labels matches, folded; no match is the `absent` statement, worded `the specimen "A" of Bather 1914`); with neither a number nor both of them the call is refused. The heading names what was asked (`Specimen UQF 5404 (holder)` or `Specimen "A" of Bather 1914`). Either way every claim carrying the key asked for or a key tied to it is listed (a `sameAsLinks` pair in either direction, directly or through a chain; a join key is one specimen in every claim that carries it), with the claims whose printed run holds one of those join keys, still in year order. A line reached only through a link names the one number (with its prefix) or label (in double quotes) the link ties, as `as ELI HS18` or `as "A"`, shows only that specimen's figures when the claim lists several numbers or labels, and ends `(the same specimen according to Bather 1914)`, naming the source that carries the link, or `(the same specimen, editor's inference)` when the carrying claim's `inferredFields` lists `sameAs`. By source and label, a claim with several labels shows only the figures whose `of` names the label asked about |
 | `gap(source, kind)` / `gap(name=…)` | the contract's sentence for what is not yet entered, or for a name no source carries |
 | `printed_forms(record, source)` | each form a source prints, verbatim (folded to one line in text and markdown; the claim keeps its line breaks), with the page; the usages of the record's spelling variants, since a variant is itself a printed form of the name, whichever spelling is asked for; when the named source recorded no verbatim form, the heading as its listing is entered, marked as such |
 | `source_coverage(key)` | the raw coverage view |
@@ -799,7 +815,7 @@ prints monotypy, so the manifest does not count it against the declared
 `editorial` block (`inferred: [role]`, with the basis) that is the claim's
 `editorial`, with `inferredFields: [role]`; the paper prints "Holotype" in a
 caption and "syntype" in the text, and the editor reads lectotype. The
-second claim is the lost syntype lent to Hudson, which has a `label` and
+second claim is the lost syntype lent to Hudson, which has `labels` and
 `status: lost` and no catalog number, so `ids` is empty and there are no
 `joinKeys`. Both carry the node's `notes` quoting "Holotype, 752" beside
 "labelled a syntype", so both printed words are returned.

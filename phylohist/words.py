@@ -12,6 +12,7 @@ import re
 
 from . import blocks
 from .acts import RELATED_ACTS
+from .claims import specimen_item, specimen_keys
 from .closure import Closure
 from .derivatives import BY_FIELD
 from .names import fold, fold_forms, key_stem
@@ -704,12 +705,12 @@ class Words:
   # -- material: one method per `materialKind` -----------------------------
 
   def _specimen_words(self, claim):
-    """ "role: numbers" as printed (a range pair "a–b"), the label, or "N
+    """ "role: numbers" as printed (a range pair "a–b"), the labels, or "N
     specimens" for a bare count."""
     if claim.get('numbers'):
       numbers = _numbers_words(claim)
-    elif 'label' in claim:
-      numbers = claim['label']
+    elif claim.get('labels'):
+      numbers = ', '.join(claim['labels'])
     elif 'count' in claim:
       numbers = f'{claim["count"]} specimens'
     else:
@@ -740,32 +741,50 @@ class Words:
       words += ' (not figured)'
     return words
 
-  def _figures_of(self, claim, join_key):
-    """The locators of the figures that name the specimen a join key
-    stands for among the several numbers a claim carries: each
-    `illustrationClaims` figure whose `of` has a value equal to the key's
-    number, folded."""
+  def _figures_of(self, claim, key):
+    """The locators of the figures that name the specimen `key` stands for
+    among the several numbers or labels a claim carries: each
+    `illustrationClaims` figure whose `of` has a value equal, folded, to
+    the key's number or label."""
+    wanted = specimen_item(claim, key)
     found = []
     for figure in map(self.store.by_id.get, claim.get('illustrationClaims') or ()):
       of = figure.get('of')
       values = of if isinstance(of, list) else [of]
-      numbers = [v.get('number') if isinstance(v, dict) else v for v in values]
-      if any(n is not None and fold(str(n)) == join_key.partition(':')[2] for n in numbers):
+      named = [v.get('number', v.get('label')) if isinstance(v, dict) else v for v in values]
+      if any(n is not None and fold(str(n)) == wanted for n in named):
         found.append(figure['illustration'])
     return found
 
-  def specimen_history_words(self, claim, number, join_key, runs=None, carrier=None):
+  @staticmethod
+  def _own_words(claim, key):
+    """The one number (with the claim's prefix) or label of `claim` that
+    the specimen key `key` stands for, as printed, or `None` when it is
+    none of them (a number inside a printed run, a bare count)."""
+    wanted = specimen_item(claim, key)
+    for number in claim.get('numbers') or ():
+      for end in number if isinstance(number, list) else [number]:
+        if fold(str(end)) == wanted:
+          return _numbers_words(claim, [end])
+    for label in claim.get('labels') or ():
+      if fold(str(label)) == wanted:
+        return f'"{label}"'
+    return None
+
+  def specimen_history_words(self, claim, number, key, carrier=None, runs=None):
     """One citation in a specimen's history: the role (queried with "?")
     "of <the taxon as the source uses it>", or "cited under <the taxon>"
     without one, the doubt about the assignment, the number as the source
     prints it when that is not the one asked about (or the printed run that
     holds it, `runs`), then its figures, or "not figured" when the source
-    says so. A claim with several numbers or a run says what is figured of
-    the number asked about only, from the figures whose own `of` names it
-    (a locator's `notes` are left out); when none does, nothing. A claim
-    reached only through a `sameAs` link (`carrier` is the claim that
-    carries it) ends with whose statement the link is: the carrier's source,
-    or the editor's inference."""
+    says so. `key` is the claim's own specimen in the history
+    (`Store._specimen_rows`). A claim with several numbers or labels or a
+    run says what is figured of that specimen only, from the figures whose
+    own `of` names it (a locator's `notes` are left out); when none does,
+    nothing. A claim reached only through a `sameAs` link (`carrier` is the
+    claim that carries it) names the one number or label the link ties,
+    and ends with whose statement the link is: the carrier's source, or the
+    editor's inference."""
     role = claim.get('role')
     taxon = self.display(claim['subject'], claim['source'], claim['path'])
     if role:
@@ -778,14 +797,17 @@ class Words:
       words += ' (doubtfully assigned)'
     printed = _numbers_words(claim) if claim.get('numbers') else None
     run_words = [_numbers_words(claim, [run]) for run in runs or ()]
+    own = self._own_words(claim, key) if carrier is not None and key is not None else None
     if runs:
       words += ' in the run ' + ', '.join(run_words)
+    elif own:
+      words += f' as {own}'
     elif printed and printed != number:
       words += f' as {printed}'
-    several = claim.get('rangeJoin') or len(claim.get('joinKeys') or ()) > 1
+    several = claim.get('rangeJoin') or len(specimen_keys(claim)) > 1
     figures = (
-      self._figures_of(claim, join_key)
-      if several and join_key is not None
+      self._figures_of(claim, key)
+      if several and key is not None
       else claim.get('specimenIllustrations') or ()
     )
     figures = [

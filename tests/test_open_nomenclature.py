@@ -76,7 +76,7 @@ def test_schema_accepts_the_new_node_and_material_fields():
       },
       {'taxon': 'sardesoni_bather_1915', 'monophyly': 'polyphyletic'},
       {'taxon': 'sardesoni_bather_1915', 'monophyly': 'monophyletic', 'term': 'clade'},
-      {'taxon': 'sardesoni_bather_1915', 'material': [{'label': 'A', 'uncertain': True}]},
+      {'taxon': 'sardesoni_bather_1915', 'material': [{'labels': 'A', 'uncertain': True}]},
     ],
   }
   assert _valid({'taxonomies': [node]})
@@ -96,8 +96,8 @@ def test_schema_accepts_the_new_node_and_material_fields():
     {'taxon': 'a', 'quotedParent': 'yes'},
     {'taxon': 'a', 'mutable': 'yes'},
     {'taxon': 'a', 'cf': True},
-    {'taxon': 'a', 'material': [{'label': 'A', 'uncertain': 'maybe'}]},
-    {'taxon': 'a', 'material': [{'label': 'A', 'roleUncertain': 1}]},
+    {'taxon': 'a', 'material': [{'labels': 'A', 'uncertain': 'maybe'}]},
+    {'taxon': 'a', 'material': [{'labels': 'A', 'roleUncertain': 1}]},
   ],
 )
 def test_schema_rejects_the_wrong_value_types(node):
@@ -243,9 +243,9 @@ def test_quoted_parent_reads_the_node_at_the_rank_it_writes():
 def test_role_uncertain_needs_a_role():
   node = {
     'material': [
-      {'label': 'A', 'role': 'topotype', 'roleUncertain': True},
-      {'label': 'B', 'roleUncertain': True},
-      {'label': 'C'},
+      {'labels': 'A', 'role': 'topotype', 'roleUncertain': True},
+      {'labels': 'B', 'roleUncertain': True},
+      {'labels': 'C'},
     ],
   }
   assert nomenclature.role_uncertain(node) == [
@@ -302,7 +302,7 @@ def test_load_reports_nomenclature_checks_at_the_right_level(records, caplog):
               {'openTaxon': 'gogia-sp_robison_1965', 'cf': 'rhenopyrgus'},
               {
                 'taxon': 'sardesoni_bather_1915',
-                'material': [{'label': 'A', 'roleUncertain': True}],
+                'material': [{'labels': 'A', 'roleUncertain': True}],
               },
             ],
           },
@@ -373,7 +373,7 @@ def test_check_draft_reports_quoted_parent_and_role_uncertain(tmp_path):
     '    quotedParent: true\n'
     '  - taxon: grayae_bather_1915\n'
     '    material:\n'
-    '    - label: A\n'
+    '    - labels: A\n'
     '      roleUncertain: true\n',
   )
   assert result.returncode == 1, result.stdout + result.stderr

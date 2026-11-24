@@ -35,6 +35,10 @@ from phylohist.claims import (
   manifest,
   merge_patch,
   rank_variants,
+  specimen_classes,
+  specimen_item,
+  specimen_key,
+  specimen_keys,
 )
 from phylohist.evaluation import alternatives, normalise
 from phylohist.loader import io
@@ -435,7 +439,7 @@ def test_material_adapter(records, caplog):
         'locality': 'division-st',
       },
       {'prefix': 'GSC', 'numbers': [[100, 105]], 'role': 'paratype', 'formerIds': ['G 1']},
-      {'label': 'the specimen lent to Hudson', 'role': 'syntype', 'status': 'lost'},
+      {'labels': 'the specimen lent to Hudson', 'role': 'syntype', 'status': 'lost'},
       {'numbers': ['XYZ 1'], 'repository': 'nhmuk', 'notes': 'lent'},
       {'prefix': 'PE', 'numbers': [7], 'preparation': 'latex cast', 'castOf': 752},
       {
@@ -523,7 +527,9 @@ def test_material_adapter(records, caplog):
   assert pair['ids'] == [['GSC 100', 'GSC 105']] and pair['formerIds'] == ['G 1']
   assert pair['joinKeys'] == ['gsc:100', 'gsc:105'] and pair['rangeJoin'] is True
 
-  assert label_only['label'] == 'the specimen lent to Hudson' and label_only['status'] == 'lost'
+  # One label written bare is still a list on the claim.
+  assert label_only['labels'] == ['the specimen lent to Hudson'] and label_only['status'] == 'lost'
+  assert 'label' not in label_only
   assert label_only['ids'] == [] and label_only['repository'] is None
   assert 'joinKeys' not in label_only and 'repositoryVia' not in label_only
 
@@ -741,7 +747,7 @@ def test_an_object_of_names_one_specimen_by_prefix_or_label(records):
     [
       {'prefix': 'GK', 'numbers': [112]},
       {'prefix': 'GTB', 'numbers': [112]},
-      {'label': 'the slab'},
+      {'labels': 'the slab'},
     ],
     {'GK': 'mcz', 'GTB': 'gsc'},
     illustrations=[
@@ -861,7 +867,7 @@ def test_derived_coverage(records):
       tree(
         {
           'taxon': 'rhenopyrgus',
-          'children': [{**child, 'material': [{'label': 'A'}]}, {**other, 'material': None}],
+          'children': [{**child, 'material': [{'labels': 'A'}]}, {**other, 'material': None}],
         },
         1,
       ),
@@ -884,7 +890,7 @@ def test_derived_coverage(records):
       tree(
         {
           'taxon': 'rhenopyrgus',
-          'material': [{'label': 'A', 'listComplete': False}],
+          'material': [{'labels': 'A', 'listComplete': False}],
           'children': [{**child, 'material': None}],
         },
         3,
@@ -892,7 +898,7 @@ def test_derived_coverage(records):
     ),
     # Values alone declare nothing: a value says what the source prints,
     # not that the file was audited for the field.
-    (None, tree({'taxon': 'rhenopyrgus', 'material': [{'label': 'A'}], 'children': [child]}, 4)),
+    (None, tree({'taxon': 'rhenopyrgus', 'material': [{'labels': 'A'}], 'children': [child]}, 4)),
     (None, tree({'taxon': 'rhenopyrgus'}, 5)),
     # A cited entry never counts, whatever it carries or lacks.
     (
@@ -914,8 +920,8 @@ def test_derived_coverage(records):
           'taxon': 'rhenopyrgus',
           'material': None,
           'children': [
-            {**child, 'material': [{'label': 'A'}]},
-            {**other, 'material': [{'label': 'B'}]},
+            {**child, 'material': [{'labels': 'A'}]},
+            {**other, 'material': [{'labels': 'B'}]},
           ],
         },
         11,
@@ -975,7 +981,7 @@ def test_derived_coverage(records):
       'taxon': 'rhenopyrgus',
       'ranges': [{'series': 'Ordovician'}],
       'children': [
-        {**child, 'material': [{'label': 'A', 'horizon': 'x'}]},
+        {**child, 'material': [{'labels': 'A', 'horizon': 'x'}]},
         {**other, 'ranges': None},
       ],
     },
@@ -988,7 +994,7 @@ def test_derived_coverage(records):
       'taxon': 'rhenopyrgus',
       'ranges': [{'series': 'Ordovician'}],
       'children': [
-        {**child, 'material': [{'label': 'A', 'locality': 'x'}]},
+        {**child, 'material': [{'labels': 'A', 'locality': 'x'}]},
         {**other, 'ranges': None},
       ],
     },
@@ -1000,7 +1006,7 @@ def test_derived_coverage(records):
     {
       'taxon': 'rhenopyrgus',
       'ranges': [{'series': 'Ordovician'}],
-      'children': [{**child, 'material': [{'label': 'A'}]}, {**other, 'ranges': None}],
+      'children': [{**child, 'material': [{'labels': 'A'}]}, {**other, 'ranges': None}],
     },
     16,
   )
@@ -1010,7 +1016,7 @@ def test_derived_coverage(records):
     {
       'taxon': 'rhenopyrgus',
       'ranges': [{'series': 'Ordovician'}],
-      'children': [{**child, 'material': [{'label': 'A', 'horizon': 'x'}], 'occurrences': None}],
+      'children': [{**child, 'material': [{'labels': 'A', 'horizon': 'x'}], 'occurrences': None}],
     },
     17,
   )
@@ -1019,7 +1025,7 @@ def test_derived_coverage(records):
     {
       'taxon': 'rhenopyrgus',
       'ranges': [{'series': 'Ordovician'}],
-      'children': [{**child, 'material': [{'label': 'A', 'horizon': 'x'}]}],
+      'children': [{**child, 'material': [{'labels': 'A', 'horizon': 'x'}]}],
     },
     18,
   )
@@ -1205,13 +1211,13 @@ def test_absence_emission_by_kind(records):
   # locality, says the node has occurrences.
   assert absences({'occurrences': None, 'ranges': [{'series': 'Ordovician'}]}, 205) == []
   assert absences({'occurrences': [{'horizon': 'x'}], 'ranges': None}, 211) == []
-  linked = {'occurrences': None, 'material': [{'label': 'A', 'horizon': 'x'}]}
+  linked = {'occurrences': None, 'material': [{'labels': 'A', 'horizon': 'x'}]}
   assert absences(linked, 206, file_horizons={'x': {'unit': ['a']}}) == []
-  by_locality = {'occurrences': None, 'material': [{'label': 'A', 'locality': 'x'}]}
+  by_locality = {'occurrences': None, 'material': [{'labels': 'A', 'locality': 'x'}]}
   assert absences(by_locality, 210, file_localities={'x': {'location': ['a']}}) == []
   # Absent fields and values say nothing.
   assert absences({}, 207) == []
-  assert absences({'material': [{'label': 'A'}], 'synonyms': [{'taxon': _SISTER}]}, 208) == []
+  assert absences({'material': [{'labels': 'A'}], 'synonyms': [{'taxon': _SISTER}]}, 208) == []
   # All four, in the fixed order, whatever the order written.
   everything = {
     'synonyms': None,
@@ -1239,7 +1245,7 @@ def test_absence_is_emitted_at_any_rank_and_never_on_a_cited_entry(records):
 
 
 def test_absence_claim_shape_and_effect_on_ids(records):
-  data = {'taxon': _SPECIES, 'pages': 7, 'notes': 'n', 'material': [{'label': 'A'}]}
+  data = {'taxon': _SPECIES, 'pages': 7, 'notes': 'n', 'material': [{'labels': 'A'}]}
   plain = _claims_of(records, data, 212)
   nulled = _claims_of(records, {**data, 'ranges': None, 'synonyms': None}, 213)
   absences = [c for c in nulled if c['kind'] == 'absence']
@@ -1265,7 +1271,7 @@ def test_absence_claim_shape_and_effect_on_ids(records):
 def test_unfigured_specimens_are_derived_only_when_illustrations_are_all(records, monkeypatch):
   figured = {
     'taxon': _SPECIES,
-    'material': [{'label': 'A'}, {'label': 'B'}],
+    'material': [{'labels': 'A'}, {'labels': 'B'}],
     'illustrations': [{'plate': 1, 'of': 'A'}],
   }
   # A sister species whose figures are null makes the kind `all`.
@@ -1277,7 +1283,7 @@ def test_unfigured_specimens_are_derived_only_when_illustrations_are_all(records
       records, {'taxon': 'rhenopyrgus', 'children': children}, position, **metadata
     )
     return {
-      c['label']: c.get('figured')
+      c['labels'][0]: c.get('figured')
       for c in claims
       if c['kind'] == 'material' and c['materialKind'] == 'specimen' and c['subject'] == _SPECIES
     }
@@ -1285,7 +1291,7 @@ def test_unfigured_specimens_are_derived_only_when_illustrations_are_all(records
   assert specimens(figured, 220) == {'A': None, 'B': False}
   # `figured` is never set to True: a figured specimen has illustrationClaims.
   claims = _claims_of(records, {'taxon': 'rhenopyrgus', 'children': [figured, sister]}, 221)
-  by_label = {c['label']: c for c in claims if c.get('materialKind') == 'specimen'}
+  by_label = {c['labels'][0]: c for c in claims if c.get('materialKind') == 'specimen'}
   assert 'illustrationClaims' in by_label['A'] and 'figured' not in by_label['A']
 
   # Not set when the source's figures are not entered in full.
@@ -1310,7 +1316,7 @@ def test_unfigured_specimens_are_derived_only_when_illustrations_are_all(records
 def test_a_number_inside_a_run_names_its_entry_for_figured(records):
   node = {
     'taxon': _SPECIES,
-    'material': [{'prefix': 'GSC', 'numbers': [[100, 105]]}, {'label': 'B'}],
+    'material': [{'prefix': 'GSC', 'numbers': [[100, 105]]}, {'labels': 'B'}],
     'illustrations': [{'plate': 1, 'of': 103}],
   }
   sister = {'taxon': _SISTER, 'illustrations': None}
@@ -1327,7 +1333,7 @@ def test_a_figured_role_or_a_figured_cast_is_never_unfigured(records):
   def figured(node, position):
     claims = _claims_of(records, {'taxon': 'rhenopyrgus', 'children': [node, sister]}, position)
     return {
-      c['label']: c.get('figured')
+      c['labels'][0]: c.get('figured')
       for c in claims
       if c.get('materialKind') == 'specimen' and c['subject'] == _SPECIES
     }
@@ -1335,7 +1341,7 @@ def test_a_figured_role_or_a_figured_cast_is_never_unfigured(records):
   # The source calls the entry a figured specimen, whatever the figures say.
   node = {
     'taxon': _SPECIES,
-    'material': [{'label': 'A', 'role': 'figured'}, {'label': 'B'}],
+    'material': [{'labels': 'A', 'role': 'figured'}, {'labels': 'B'}],
     'illustrations': [{'plate': 1, 'of': 'B'}],
   }
   assert figured(node, 227) == {'A': None, 'B': None}
@@ -1343,7 +1349,7 @@ def test_a_figured_role_or_a_figured_cast_is_never_unfigured(records):
   # A figure of a cast shows its original; the cast's own entry is figured by it.
   cast = {
     'taxon': _SPECIES,
-    'material': [{'label': 'A'}, {'label': 'B', 'castOf': 'A'}, {'label': 'C'}],
+    'material': [{'labels': 'A'}, {'labels': 'B', 'castOf': 'A'}, {'labels': 'C'}],
     'illustrations': [{'plate': 1, 'of': 'B'}],
   }
   assert figured(cast, 229) == {'A': None, 'B': None, 'C': False}
@@ -1448,11 +1454,15 @@ def test_other_roles_and_a_single_source_are_no_conflict(records):
 
 
 def test_unnumbered_holotypes_are_compared_by_label_then_printed_ids(records):
-  first = _claim('1941_whitehouse', label='the Taf. 2 fossil')
-  same = _claim('2021_jell_sprinkle', label='the Taf. 2 fossil')
+  first = _claim('1941_whitehouse', labels=['the Taf. 2 fossil'])
+  same = _claim('2021_jell_sprinkle', labels=['the Taf. 2 fossil'])
   assert _conflicts(records, first, same) == []
-  [row] = _conflicts(records, first, _claim('2021_jell_sprinkle', label='the Taf. 3 fossil'))
-  assert row['holotypes'][0]['joinKeys'] == [] and row['holotypes'][0]['label'] == first['label']
+  [row] = _conflicts(records, first, _claim('2021_jell_sprinkle', labels=['the Taf. 3 fossil']))
+  assert row['holotypes'][0]['joinKeys'] == [] and row['holotypes'][0]['labels'] == first['labels']
+  assert 'label' not in row['holotypes'][0]
+  # One label in common is one specimen.
+  both = _claim('2021_jell_sprinkle', labels=['the Taf. 3 fossil', 'the Taf. 2 fossil'])
+  assert _conflicts(records, first, both) == []
   # No join keys and no label: the printed ids, a range pair's endpoints included.
   ids = _claim('1941_whitehouse', ids=[['XX 1', 'XX 2']])
   assert _conflicts(records, ids, _claim('2021_jell_sprinkle', ids=['XX 2'])) == []
@@ -1474,12 +1484,21 @@ _EARLY, _LATE, _LATEST = '1897_whiteaves', '1914c_bather', '1962_fay'
 _OTTAWA = 'ottawaensis_whiteaves_1897'
 
 
-def _linked_claims(records, trees, sources=None):
+def _linked_claims(records, trees, sources=None, prefixes=None):
   """`extract` over synthetic trees of real sources: `trees` maps a source
-  key to `(position, node)`."""
+  key to `(position, node)`; `prefixes` is the files' `prefixes` map."""
   roots = {
     source: [
-      Tree(node, {'source_key': source, 'type': 'taxonomy', 'position': position}, corpus=records)
+      Tree(
+        node,
+        {
+          'source_key': source,
+          'type': 'taxonomy',
+          'position': position,
+          'file_prefixes': prefixes or {},
+        },
+        corpus=records,
+      )
     ]
     for source, (position, node) in trees.items()
   }
@@ -1494,23 +1513,47 @@ def test_the_linked_sources_are_in_year_order(records):
   assert [records.sources[k].year for k in (_EARLY, _LATE, _LATEST)] == [1897, 1914, 1962]
 
 
-def test_same_as_is_copied_and_resolved_to_the_earlier_claim(records):
-  link = {'source': _EARLY, 'label': 'First  specimen'}
+def test_same_as_is_copied_as_a_list_and_resolved_to_the_earlier_claim(records):
+  link = {'source': _EARLY, 'labels': 'First  specimen'}
+  early = {'taxon': _OTTAWA, 'material': [{'labels': 'first specimen'}, {'labels': 'x'}]}
   claims = _linked_claims(
     records,
     {
-      _EARLY: (1300, {'taxon': _OTTAWA, 'material': [{'label': 'first specimen'}, {'label': 'x'}]}),
+      _EARLY: (1300, early),
       _LATE: (
         1301,
-        {'taxon': _OTTAWA, 'material': [{'label': 'A', 'role': 'holotype', 'sameAs': link}]},
+        {'taxon': _OTTAWA, 'material': [{'labels': 'A', 'role': 'holotype', 'sameAs': link}]},
       ),
     },
   )
   first, _ = _specimens(claims, _EARLY)
   [later] = _specimens(claims, _LATE)
-  assert later['sameAs'] == link
-  assert later['sameAsClaim'] == first['id']
-  assert 'sameAs' not in first and 'sameAsClaim' not in first
+  # One link written bare is a list of one on the claim.
+  assert later['sameAs'] == [link]
+  assert later['labels'] == ['A']
+  assert later['sameAsLinks'] == [
+    {
+      'key': specimen_key(later, 'A'),
+      'claim': first['id'],
+      'targetKey': specimen_key(first, 'first specimen'),
+    }
+  ]
+  assert 'sameAs' not in first and 'sameAsLinks' not in first and 'sameAsClaim' not in later
+  # The same link written as a list is the same claim.
+  listed = {'taxon': _OTTAWA, 'material': [{'labels': ['A'], 'sameAs': [link]}]}
+  claims = _linked_claims(records, {_EARLY: (1300, early), _LATE: (1301, listed)})
+  [again] = _specimens(claims, _LATE)
+  assert again['sameAs'] == [link] and again['labels'] == ['A']
+  assert [pair['claim'] for pair in again['sameAsLinks']] == [first['id']]
+
+
+def test_a_label_list_is_a_list_on_the_claim_and_each_label_has_a_key(records):
+  node = {'taxon': _OTTAWA, 'material': [{'labels': ['B', 'C'], 'role': 'syntype'}]}
+  [claim] = _specimens(_linked_claims(records, {_EARLY: (1299, node)}), _EARLY)
+  assert claim['labels'] == ['B', 'C']
+  assert specimen_keys(claim) == [f'{claim["id"]}#b', f'{claim["id"]}#c']
+  assert specimen_item(claim, specimen_keys(claim)[1]) == 'c'
+  assert 'label' not in claim and 'sameAs' not in claim
 
 
 def test_same_as_by_number_within_a_prefix(records):
@@ -1522,34 +1565,38 @@ def test_same_as_by_number_within_a_prefix(records):
   trees = {_EARLY: (1302, {'taxon': _OTTAWA, 'material': entries})}
 
   def resolved(link, position):
-    node = {'taxon': _OTTAWA, 'material': [{'label': 'A', 'sameAs': {'source': _EARLY, **link}}]}
+    own = {'labels': 'A', 'sameAs': {'source': _EARLY, **link}}
+    node = {'taxon': _OTTAWA, 'material': [own]}
     claims = _linked_claims(records, {**trees, _LATE: (position, node)})
-    return _specimens(claims, _LATE)[0].get('sameAsClaim'), _specimens(claims, _EARLY)
+    return _specimens(claims, _LATE)[0].get('sameAsLinks'), _specimens(claims, _EARLY)
 
-  target, early = resolved({'number': 5, 'prefix': 'ROM'}, 1303)
-  assert target == early[1]['id']
+  [pair], early = resolved({'numbers': [5], 'prefix': 'ROM'}, 1303)
+  assert pair['claim'] == early[1]['id']
+  assert pair['targetKey'] == specimen_key(early[1], 5)
   # No prefix: the number names two entries, so it names none.
-  assert resolved({'number': 5}, 1304)[0] is None
-  # A number inside a run names the run's entry.
-  target, early = resolved({'number': 105, 'prefix': 'GSC'}, 1305)
-  assert target == early[2]['id']
+  assert resolved({'numbers': [5]}, 1304)[0] is None
+  # A number inside a run names the run's entry; the key is the number asked.
+  [pair], early = resolved({'numbers': [105], 'prefix': 'GSC'}, 1305)
+  assert pair['claim'] == early[2]['id']
+  assert pair['targetKey'] == specimen_key(early[2], 105)
 
 
 def test_same_as_stays_unresolved_when_the_target_is_not_extracted_or_not_found(records):
-  link = {'source': _EARLY, 'label': 'first specimen'}
+  link = {'source': _EARLY, 'labels': 'first specimen'}
   trees = {
-    _EARLY: (1306, {'taxon': _OTTAWA, 'material': [{'label': 'first specimen'}]}),
-    _LATE: (1307, {'taxon': _OTTAWA, 'material': [{'label': 'A', 'sameAs': link}]}),
+    _EARLY: (1306, {'taxon': _OTTAWA, 'material': [{'labels': 'first specimen'}]}),
+    _LATE: (1307, {'taxon': _OTTAWA, 'material': [{'labels': 'A', 'sameAs': link}]}),
   }
   [later] = _specimens(_linked_claims(records, trees, sources=[_LATE]), _LATE)
-  assert later['sameAs'] == link and 'sameAsClaim' not in later
-  lost = {'taxon': _OTTAWA, 'material': [{'label': 'A', 'sameAs': {**link, 'label': 'nope'}}]}
+  assert later['sameAs'] == [link] and 'sameAsLinks' not in later
+  lost = {'taxon': _OTTAWA, 'material': [{'labels': 'A', 'sameAs': {**link, 'labels': 'nope'}}]}
   claims = _linked_claims(records, {**trees, _LATE: (1308, lost)})
-  assert 'sameAsClaim' not in _specimens(claims, _LATE)[0]
+  assert 'sameAsLinks' not in _specimens(claims, _LATE)[0]
 
 
 def test_an_inferred_same_as_is_listed_in_inferred_fields(records):
   editorial = {'inferred': ['role', 'sameAs'], 'basis': 'the editor reads No. 752 as the lectotype'}
+  link = {'source': _LATE, 'labels': 'A'}
   node = {
     'taxon': _OTTAWA,
     'material': [
@@ -1557,37 +1604,110 @@ def test_an_inferred_same_as_is_listed_in_inferred_fields(records):
         'prefix': 'GSC',
         'numbers': [752],
         'role': 'lectotype',
-        'sameAs': {'source': _LATE, 'label': 'A'},
+        'sameAs': link,
         'editorial': editorial,
       }
     ],
   }
   [claim] = _specimens(_linked_claims(records, {_LATEST: (1309, node)}), _LATEST)
   assert claim['inferredFields'] == ['role', 'sameAs']
-  assert claim['sameAs'] == {'source': _LATE, 'label': 'A'}
+  assert claim['sameAs'] == [link]
   # The entry is printed and only its fields are the editor's.
   assert 'inferred' not in claim
 
 
-def _holotype_chain(middle_role):
-  early = _claim(_EARLY, id='early', label='first specimen')
-  middle = _claim(_LATE, role=middle_role, id='middle', label='A', sameAsClaim='early')
-  late = _claim(
-    _LATEST, id='late', ids=['GSC 752'], joinKeys=['gsc:752'], sameAsClaim='middle', role='holotype'
+_P1, _P2 = ('GSC', 'gsc'), ('MCZ', 'mcz')
+
+
+def test_a_several_number_entry_links_each_number_to_its_own_earlier_entry(records):
+  first = {'prefix': _P1[0], 'numbers': [1], 'role': 'holotype'}
+  second = {'prefix': _P1[0], 'numbers': [2], 'role': 'holotype'}
+  labelled = {'labels': 'the slab', 'role': 'figured'}
+  early = {
+    'taxon': 'rhenopyrgus',
+    'children': [
+      {'taxon': _OTTAWA, 'material': [first, labelled]},
+      {'taxon': _SISTER, 'material': [second]},
+    ],
+  }
+  later = {
+    'taxon': _OTTAWA,
+    'material': [
+      {
+        'prefix': _P2[0],
+        'numbers': [1, 2, 3],
+        'role': 'syntype',
+        'sameAs': [
+          {'source': _EARLY, 'prefix': _P1[0], 'numbers': [1, 2]},
+          {'source': _EARLY, 'labels': 'the slab', 'of': 3},
+        ],
+      }
+    ],
+  }
+  claims = _linked_claims(
+    records,
+    {_EARLY: (1310, early), _LATE: (1311, {'taxon': 'rhenopyrgus', 'children': [later]})},
+    prefixes={_P1[0]: _P1[1], _P2[0]: _P2[1]},
   )
+  one, slab, two = _specimens(claims, _EARLY)
+  [batch] = _specimens(claims, _LATE)
+  assert one['subject'] != two['subject']
+  assert batch['joinKeys'] == ['mcz:1', 'mcz:2', 'mcz:3']
+  assert batch['sameAs'] == [
+    {'source': _EARLY, 'prefix': _P1[0], 'numbers': [1, 2]},
+    {'source': _EARLY, 'labels': 'the slab', 'of': 3},
+  ]
+  assert batch['sameAsLinks'] == [
+    {'key': 'mcz:1', 'claim': one['id'], 'targetKey': 'gsc:1'},
+    {'key': 'mcz:2', 'claim': two['id'], 'targetKey': 'gsc:2'},
+    {'key': 'mcz:3', 'claim': slab['id'], 'targetKey': specimen_key(slab, 'the slab')},
+  ]
+  classes = specimen_classes([one, slab, two, batch])
+  assert classes['mcz:1'] == classes['gsc:1']
+  assert classes['mcz:2'] == classes['gsc:2']
+  assert classes['mcz:3'] == classes[specimen_key(slab, 'the slab')]
+  # The earlier claims' specimens stay two: the batch joins nothing but
+  # the pairs its links name.
+  assert len({classes['gsc:1'], classes['gsc:2'], classes['mcz:3']}) == 3
+
+
+def _holotype_chain(middle_role):
+  early = _claim(_EARLY, id='early', labels=['first specimen'])
+  middle = _claim(_LATE, role=middle_role, id='middle', labels=['A'])
+  late = _claim(
+    _LATEST, id='late', ids=['GSC 752'], numbers=[752], joinKeys=['gsc:752'], role='holotype'
+  )
+  _link(middle, 'A', early, 'first specimen')
+  _link(late, 752, middle, 'A')
   return early, middle, late
 
 
+def _link(claim, value, target, target_value):
+  """Add the `sameAsLinks` pair `sameAsLinks` would build for `claim`."""
+  claim.setdefault('sameAsLinks', []).append(
+    {
+      'key': specimen_key(claim, value),
+      'claim': target['id'],
+      'targetKey': specimen_key(target, target_value),
+    }
+  )
+
+
 def test_holotypes_linked_by_same_as_are_one_specimen(records):
-  early = _claim(_EARLY, id='early', label='first specimen')
-  later = _claim(_LATE, id='later', label='A', sameAsClaim='early')
+  early = _claim(_EARLY, id='early', labels=['first specimen'])
+  later = _claim(_LATE, id='later', labels=['A'])
+  _link(later, 'A', early, 'first specimen')
   assert _conflicts(records, early, later) == []
   # The link is read in either direction.
-  early['sameAsClaim'], later['sameAsClaim'] = 'later', None
+  early, later = (
+    _claim(_EARLY, id='early', labels=['first specimen']),
+    _claim(_LATE, id='later', labels=['A']),
+  )
+  _link(early, 'first specimen', later, 'A')
   assert _conflicts(records, early, later) == []
   # Unlinked, different labels are two specimens.
   [row] = _conflicts(
-    records, _claim(_EARLY, id='early', label='first specimen'), _claim(_LATE, label='A')
+    records, _claim(_EARLY, id='early', labels=['first specimen']), _claim(_LATE, labels=['A'])
   )
   assert [h['source'] for h in row['holotypes']] == [_EARLY, _LATE]
 
@@ -1597,23 +1717,59 @@ def test_holotypes_linked_through_a_chain_are_one_specimen(records, middle_role)
   assert _conflicts(records, *_holotype_chain(middle_role)) == []
   # Without the middle link the ends are two specimens.
   early, middle, late = _holotype_chain(middle_role)
-  late['sameAsClaim'] = None
+  del late['sameAsLinks']
   assert len(_conflicts(records, early, middle, late)) == 1
 
 
-def test_a_shared_join_key_joins_one_number_entries_but_a_batch_joins_nothing(records):
-  one = _claim('1941_whitehouse', id='one', ids=['F. 1'], joinKeys=['uq-f:1'])
-  two = _claim('2021_jell_sprinkle', id='two', ids=['UQF 2'], joinKeys=['uq-f:2'])
-  # A paratype entry printing both numbers does not make them one specimen.
+def test_a_claim_listing_several_numbers_is_in_each_numbers_class_and_a_link_joins_one(records):
+  one = _claim('1941_whitehouse', id='one', ids=['F. 1'], numbers=[1], joinKeys=['uq-f:1'])
+  two = _claim('2021_jell_sprinkle', id='two', ids=['UQF 2'], numbers=[2], joinKeys=['uq-f:2'])
+  # A paratype entry printing both numbers shares the class of each number,
+  # which does not make the two numbers one specimen.
   batch = _claim(
-    '1960_gill_caster', role='paratype', id='batch', joinKeys=['uq-f:1', 'uq-f:2'], rangeJoin=True
+    '1960_gill_caster',
+    role='paratype',
+    id='batch',
+    numbers=[1, 2],
+    joinKeys=['uq-f:1', 'uq-f:2'],
   )
+  assert specimen_keys(batch) == ['uq-f:1', 'uq-f:2']
+  classes = specimen_classes([one, two, batch])
+  assert set(classes) == {'uq-f:1', 'uq-f:2'} and classes['uq-f:1'] != classes['uq-f:2']
   assert len(_conflicts(records, one, two, batch)) == 1
-  # A one-number entry that links to the earlier label joins the two.
-  early = _claim(_EARLY, id='early', label='first specimen')
-  bridge = _claim(_LATE, role='paratype', id='bridge', joinKeys=['uq-f:1'], sameAsClaim='early')
-  same = _claim('2021_jell_sprinkle', id='same', ids=['UQF 1'], joinKeys=['uq-f:1'])
+  # A link from one number of the batch to an earlier label joins that
+  # number only.
+  early = _claim(_EARLY, id='early', labels=['first specimen'])
+  bridge = _claim(
+    _LATE, role='paratype', id='bridge', numbers=[1, 2], joinKeys=['uq-f:1', 'uq-f:2']
+  )
+  _link(bridge, 1, early, 'first specimen')
+  classes = specimen_classes([early, bridge, two])
+  assert classes['uq-f:1'] == classes[specimen_key(early, 'first specimen')]
+  assert classes['uq-f:2'] != classes['uq-f:1']
+  same = _claim('2021_jell_sprinkle', id='same', ids=['UQF 1'], numbers=[1], joinKeys=['uq-f:1'])
   assert _conflicts(records, early, bridge, same) == []
+  # Without the link the early label and the holotype are two specimens;
+  # a holotype of the batch's other number is still another.
+  del bridge['sameAsLinks']
+  assert len(_conflicts(records, early, bridge, same)) == 1
+  _link(bridge, 1, early, 'first specimen')
+  assert len(_conflicts(records, early, bridge, two)) == 1
+
+
+def test_holotypes_tied_only_by_a_per_number_link_are_no_conflict(records):
+  early = _claim(_EARLY, id='early', ids=['GSC 1'], numbers=[1], joinKeys=['gsc:1'])
+  late = _claim(_LATE, id='late', ids=['MCZ 1'], numbers=[1], joinKeys=['mcz:1'])
+  assert len(_conflicts(records, early, late)) == 1
+  _link(late, 1, early, 1)
+  assert _conflicts(records, early, late) == []
+  # A holotype entry of two numbers is the earlier holotype by the number
+  # its link names.
+  both = _claim(
+    _LATE, id='both', ids=['MCZ 1', 'MCZ 2'], numbers=[1, 2], joinKeys=['mcz:1', 'mcz:2']
+  )
+  _link(both, 1, early, 1)
+  assert _conflicts(records, early, both) == []
 
 
 def test_auctt_cites_authors_in_place_of_a_work(records, caplog):
@@ -1677,8 +1833,8 @@ def test_a_horizon_shared_by_two_localities_gives_two_claims_sharing_the_horizon
       'kingston': {'location': ['Kingston']},
     },
     'material': [
-      {'label': 'A', 'horizon': 'trenton', 'locality': 'ottawa'},
-      {'label': 'B', 'horizon': 'trenton', 'locality': 'kingston'},
+      {'labels': 'A', 'horizon': 'trenton', 'locality': 'ottawa'},
+      {'labels': 'B', 'horizon': 'trenton', 'locality': 'kingston'},
     ],
   }
   first, second = _occurrences(records, data, 300)
@@ -1694,8 +1850,8 @@ def test_a_locality_with_two_horizons_gives_two_claims_sharing_the_locality(reco
     'horizons': {'lower': {'unit': ['Lower Bed']}, 'upper': {'unit': ['Upper Bed']}},
     'localities': {'quarry': {'location': ['Quarry Road']}},
     'material': [
-      {'label': 'A', 'horizon': 'lower', 'locality': 'quarry'},
-      {'label': 'B', 'horizon': 'upper', 'locality': 'quarry'},
+      {'labels': 'A', 'horizon': 'lower', 'locality': 'quarry'},
+      {'labels': 'B', 'horizon': 'upper', 'locality': 'quarry'},
     ],
   }
   first, second = _occurrences(records, data, 301)
@@ -1752,10 +1908,10 @@ def test_an_occurrence_with_no_specimen_gives_a_claim_and_counts_as_present(reco
   assert coverage({'taxon': _SPECIES, **data}, {'taxon': _SISTER, 'ranges': None}) == 'all'
   # An entry's `locality: null` is the audit's statement for its node: the
   # node is captured and the kind is declared.
-  no_locality = {'taxon': _SISTER, 'material': [{'label': 'A', 'locality': None}]}
+  no_locality = {'taxon': _SISTER, 'material': [{'labels': 'A', 'locality': None}]}
   assert coverage({'taxon': _SPECIES, **data}, no_locality) == 'all'
   assert coverage({'taxon': _SPECIES}, no_locality) == 'partly'
-  no_horizon = {'taxon': _SISTER, 'material': [{'label': 'A', 'horizon': None}]}
+  no_horizon = {'taxon': _SISTER, 'material': [{'labels': 'A', 'horizon': None}]}
   assert coverage({'taxon': _SPECIES, **data}, no_horizon) == 'all'
 
 
@@ -1800,7 +1956,7 @@ def test_a_null_horizon_or_locality_reaches_the_specimen_claim_and_names_no_reco
   [occurrence] = [c for c in claims if c.get('materialKind') == 'occurrence']
   assert occurrence['localityKey'] == 'quarry' and 'horizonKey' not in occurrence
   # A node's `occurrences: null` still stands beside a null locality alone.
-  alone = {'taxon': _SPECIES, 'occurrences': None, 'material': [{'label': 'A', 'locality': None}]}
+  alone = {'taxon': _SPECIES, 'occurrences': None, 'material': [{'labels': 'A', 'locality': None}]}
   assert _absences(_claims_of(records, alone, 322)) == [('occurrences', ['occurrences'])]
 
 
@@ -1809,15 +1965,15 @@ def test_two_entries_naming_one_pair_give_one_claim(records):
     'horizons': {'bed': {'unit': ['Wheeler Shale']}},
     'localities': {'quarry': {'location': ['Quarry Road']}},
     'material': [
-      {'label': 'A', 'horizon': 'bed', 'locality': 'quarry'},
-      {'label': 'B', 'horizon': 'bed', 'locality': 'quarry'},
-      {'label': 'C'},
+      {'labels': 'A', 'horizon': 'bed', 'locality': 'quarry'},
+      {'labels': 'B', 'horizon': 'bed', 'locality': 'quarry'},
+      {'labels': 'C'},
     ],
   }
   [claim] = _occurrences(records, data, 306)
   assert claim['horizonKey'] == 'bed' and claim['localityKey'] == 'quarry'
   # The pair is not the same as either side alone.
-  data['material'].append({'label': 'D', 'horizon': 'bed'})
+  data['material'].append({'labels': 'D', 'horizon': 'bed'})
   assert len(_occurrences(records, data, 307)) == 2
 
 
@@ -1826,7 +1982,7 @@ def test_an_occurrence_item_and_an_entry_naming_the_same_pair_give_one_claim(rec
     'horizons': {'bed': {'unit': ['Wheeler Shale']}},
     'localities': {'quarry': {'location': ['Quarry Road']}},
     'occurrences': [{'horizon': 'bed', 'locality': 'quarry', 'notes': 'stated first'}],
-    'material': [{'label': 'A', 'horizon': 'bed', 'locality': 'quarry'}],
+    'material': [{'labels': 'A', 'horizon': 'bed', 'locality': 'quarry'}],
   }
   [claim] = _occurrences(records, data, 308)
   # The item came first and keeps its note.
@@ -1899,7 +2055,7 @@ def test_an_occurrence_with_one_side_has_no_key_for_the_other(records, store):
   assert store.words.claim_words(only_locality) == 'occurrence quarry: Quarry Road'
   # An entry with one side names a one-sided pairing too.
   [entry_only] = _occurrences(
-    records, {**data, 'occurrences': None, 'material': [{'label': 'A', 'locality': 'quarry'}]}, 313
+    records, {**data, 'occurrences': None, 'material': [{'labels': 'A', 'locality': 'quarry'}]}, 313
   )
   assert entry_only['occurrence'] == {'locality': {'location': ['Quarry Road']}}
 

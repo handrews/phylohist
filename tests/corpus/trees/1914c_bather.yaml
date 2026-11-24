@@ -23,18 +23,18 @@ taxonomies:
             to the species as Steganoblastus canadensis instead of
             S. ottawaensis" (p. 193).
         material:
-        - label: A
+        - labels: A
           role: holotype
           roleAct: designated
           repository: vmm
           horizon: trenton-limestone
           locality: division-street
-        - label: B
+        - labels: B
           role: syntype
           repository: vmm
           horizon: trenton-limestone
           locality: division-street
-        - label: C
+        - labels: C
           role: syntype
           holder: Walter R. Billings
           horizon: trenton-limestone

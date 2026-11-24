@@ -127,9 +127,10 @@ def _describe(claim):
 
 def _describe_holotype(holotype):
   """A source and the catalog numbers it prints for the holotype (a range
-  pair as "a–b"), else its label."""
+  pair as "a–b"), else its labels."""
   numbers = [n if isinstance(n, str) else '–'.join(n) for n in holotype['ids']]
-  return f'{holotype["source"]} {", ".join(numbers) or holotype.get("label", "(unnumbered)")}'
+  named = ', '.join(numbers or holotype.get('labels') or ()) or '(unnumbered)'
+  return f'{holotype["source"]} {named}'
 
 
 def report_inconsistencies(corpus, claims_by_source, roots=None):

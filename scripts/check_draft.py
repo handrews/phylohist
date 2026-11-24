@@ -88,12 +88,12 @@ def check_same_as(key, draft, sources, tree_dir=TREE_DIR):
   documents = {key: draft}
   for _, node, _ in material.walk_document(draft):
     for entry in node.get('material') or ():
-      link = entry.get('sameAs')
-      target = link.get('source') if isinstance(link, dict) else None
-      if isinstance(target, str) and target not in documents:
-        tree = tree_dir / f'{target}.yaml'
-        if tree.exists():
-          documents[target] = load_yaml(tree)
+      for link in material.same_as_list(entry) if isinstance(entry, dict) else ():
+        target = link.get('source') if isinstance(link, dict) else None
+        if isinstance(target, str) and target not in documents:
+          tree = tree_dir / f'{target}.yaml'
+          if tree.exists():
+            documents[target] = load_yaml(tree)
 
   # The raw records as `material.source_year` reads a loaded `Source`.
   years = {
