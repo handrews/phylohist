@@ -453,12 +453,14 @@ def test_resolve_finds_a_mineral_and_keeps_it_apart_from_a_genus_of_the_name(syn
   assert MINERAL not in candidates[HOMONYM]['variants']
 
 
-def test_resolve_by_rank_unranked_finds_a_null_rank(synthetic):
-  # A record written `rank: null` has no rank word; `unranked` asks for it.
-  assert [c['key'] for c in synthetic.resolve_name('Testaceum', rank='unranked')] == [UNRANKED]
-  assert [c['key'] for c in synthetic.resolve_name('mineralum', rank='Unranked')] == [MINERAL]
+def test_resolve_by_rank_not_ranked_finds_a_null_rank(synthetic):
+  # A record written `rank: null` has no rank word; `not ranked` asks for
+  # it, and `unranked`, a rank word some sources print, does not.
+  assert [c['key'] for c in synthetic.resolve_name('Testaceum', rank='not ranked')] == [UNRANKED]
+  assert [c['key'] for c in synthetic.resolve_name('mineralum', rank='Not ranked')] == [MINERAL]
   assert [c['key'] for c in synthetic.resolve_name('mineralum', rank='genus')] == [HOMONYM]
   assert synthetic.resolve_name('Testaceum', rank='') == []
+  assert synthetic.resolve_name('Testaceum', rank='unranked') == []
 
 
 def test_a_null_rank_prints_no_rank_word(synthetic):

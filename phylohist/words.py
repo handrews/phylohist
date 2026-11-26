@@ -449,7 +449,7 @@ class Words:
 
   def placeholder_words(self, key, source=None, path=None):
     """A placeholder in the source's words: a bin by its rank ("Order
-    uncertain", "Unnamed family", "Unnamed unranked" for a record written
+    uncertain", "Unnamed family", "Unnamed, not ranked" for a record written
     `rank: null`), an open-nomenclature record by its designation, or the
     words of its key ("Agelacrinites sp.")."""
     row = self.store.names.get(key) or {}
@@ -458,7 +458,7 @@ class Words:
     if kind == 'uncertain':
       return f'{rank.capitalize()} uncertain' if rank else 'Uncertain'
     if kind == 'unnamed':
-      return f'Unnamed {rank}' if rank else 'Unnamed unranked'
+      return f'Unnamed {rank}' if rank else 'Unnamed, not ranked'
     if row.get('designation'):
       return row['designation']
     words = [self._OPEN_WORDS.get(w, w) for w in key_stem(key).split('-')]
@@ -662,7 +662,7 @@ class Words:
         flags.append('sedis mutabilis')
       words = f'places it under {where}'
       if 'rankAsPrinted' in claim and claim['rankAsPrinted'] is None:
-        words += ', unranked'
+        words += ', not ranked'
       if flags:
         words += ' (' + ', '.join(flags) + ')'
       if claim.get('tree') != 'taxonomy':

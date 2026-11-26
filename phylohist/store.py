@@ -468,7 +468,7 @@ class ClaimStore:
       node['compared'] = usage['compared']['sign']
     if rank_word is None and 'rankAsPrinted' in base:
       # `rank: null`: the source places the taxon with no rank word.
-      node['unranked'] = True
+      node['notRanked'] = True
     if rank_word:
       node['rankWord'] = rank_word[:1].upper() + rank_word[1:]
     also = self.or_names_at.get((source_key, path))

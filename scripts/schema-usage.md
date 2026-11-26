@@ -370,16 +370,16 @@ property.
 
 | property | data | data % |
 |---|---|---|
-| `ranks/items.name` | 31 | 100.0% |
-| `ranks/items.informal` | 8 | 25.8% |
+| `ranks/items.name` | 32 | 100.0% |
+| `ranks/items.informal` | 9 | 28.1% |
 | `exceptions/items.name` | 7 | 100.0% |
 | `exceptions/items.note` | 7 | 100.0% |
 | `exceptions/items.rank` | 7 | 100.0% |
 | `suffixes/items.ranks` | 6 | 100.0% |
 | `suffixes/items.suffix` | 6 | 100.0% |
-| `ranks/items.group` | 5 | 16.1% |
+| `ranks/items.group` | 5 | 15.6% |
 | `ranks/items.endings/items.suffix` | 4 | 100.0% |
-| `ranks/items.endings` | 3 | 9.7% |
+| `ranks/items.endings` | 3 | 9.4% |
 | `checkedFrom` | 1 | 100.0% |
 | `exceptions` | 1 | 100.0% |
 | `ranks` | 1 | 100.0% |
@@ -700,7 +700,7 @@ property.
 
 ### `phylogeny#/$defs/rank`
 
-25 of 31 members used, 1642 occurrences.
+25 of 32 members used, 1642 occurrences.
 
 | value | count |
 |---|---|
@@ -730,7 +730,7 @@ property.
 | `'Parvclass'` | 1 |
 | `'Superphylum'` | 1 |
 
-**Never used (6):** `'Domain'`, `'Infraphylum'`, `'Superclass'`, `'Infraclass'`, `'subspecies'`, `'Embranchement'`
+**Never used (7):** `'Domain'`, `'Infraphylum'`, `'Superclass'`, `'Infraclass'`, `'subspecies'`, `'Embranchement'`, `'Unranked'`
 
 ### `phylogeny#/$defs/ranks/properties/ranks/items/properties/group`
 

@@ -171,7 +171,7 @@ class Taxon:
       if self._name is None:
         # The schema requires `rank` on a null-name record; this is the backstop.
         fail(
-          f'Unnamed, unranked taxon {taxon_key}!',
+          f'Unnamed taxon {taxon_key} has no rank!',
           f'taxon {taxon_key} has neither a name nor a rank',
         )
       self._rank = implied_rank(self._name)
