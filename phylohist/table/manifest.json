@@ -17896,12 +17896,11 @@
     "year": 2015
    },
    "claims": {
-    "acceptance": 1,
     "act": 5,
-    "editorial": 1,
+    "editorial": 2,
     "material": 21,
     "placement": 11,
-    "usage": 14
+    "usage": 13
    },
    "coverage": {
     "illustrations": null,
@@ -17918,8 +17917,7 @@
     "material": 7,
     "newTaxa": 3,
     "occurrences": 6,
-    "skeleton": 25,
-    "synonymy": 1,
+    "skeleton": 23,
     "types": 2
    },
    "derivedCoverage": {
@@ -25222,7 +25220,7 @@
   "icthyocrinus": [
    "1842_conrad.t.a"
   ],
-  "ignotus_halgedahl_jarrard_conway morris_2015": [
+  "ignota_halgedahl_jarrard_conway morris_2015": [
    "2015_conway morris_halgedahl_selden_jarrard"
   ],
   "ikecanensis_sprinkle_1973": [
@@ -30489,8 +30487,7 @@
    "2015_conway morris_halgedahl_selden_jarrard"
   ],
   "vetulocystida": [
-   "2004_shu.d_conway morris_han.j_zhang.z.f_liu.j.n",
-   "2015_conway morris_halgedahl_selden_jarrard"
+   "2004_shu.d_conway morris_han.j_zhang.z.f_liu.j.n"
   ],
   "vetulocystidae": [
    "2004_shu.d_conway morris_han.j_zhang.z.f_liu.j.n",

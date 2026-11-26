@@ -22643,7 +22643,7 @@
   "of": "ichthyocrinus",
   "rank": "genus"
  },
- "ignotus_halgedahl_jarrard_conway morris_2015": {
+ "ignota_halgedahl_jarrard_conway morris_2015": {
   "authority": {
    "authors": [
     "Halgedahl",
@@ -22661,10 +22661,10 @@
    "year": 2015
   },
   "folded": [
-   "ignotus"
+   "ignota"
   ],
   "kind": "primary",
-  "name": "ignotus",
+  "name": "ignota",
   "rank": "species"
  },
  "ikecanensis_sprinkle_1973": {
@@ -45533,12 +45533,15 @@
     "Shu",
     "Conway Morris",
     "Han",
+    "Chen",
     "Zhang",
+    "Liu",
+    "Li",
     "Liu"
    ],
-   "display": "Shu, Conway Morris, Han, Zhang, Liu 2004",
-   "source": "2004_shu.d_conway morris_han.j_zhang.z.f_liu.j.n",
-   "year": 2004
+   "display": "Shu, Conway Morris, Han, Chen, Zhang, Liu, Li, Liu 2001",
+   "source": "2001_shu.d_conway morris_han.j_chen.l_zhang.x.l_liu.h.q_li.y_liu.j.n",
+   "year": 2001
   },
   "folded": [
    "vetulicolia"
