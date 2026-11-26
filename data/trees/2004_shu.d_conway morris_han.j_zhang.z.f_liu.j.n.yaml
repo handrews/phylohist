@@ -28,7 +28,7 @@ taxonomies:
   children:
   - taxon: vetulocystida
     citedAs: Stem group Vetulocystida
-    group: stem
+    term: stem
     rank: null
     new: true
     pages: 422

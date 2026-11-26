@@ -81,7 +81,7 @@ taxonomies:
   children:
   - taxon: vetulicolia
     citedAs: "?Stem-group deuterostome Vetulicolia Shu et al., 2001"
-    group: stem
+    term: stem
     rank: null
     provisional: true
     pages: 633
@@ -184,7 +184,7 @@ taxonomies:
     - taxon: vetulocystids
       citedAs: Stem group Vetulocystids Shu et al., 2002
       rank: null
-      group: stem
+      term: stem
       provisional: true
       pages: 634
       authority:
