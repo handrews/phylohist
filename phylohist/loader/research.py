@@ -15,8 +15,11 @@ class Author:
     if not self._key:
       return
 
-    # `person` allows a surname or a given name alone; the key is built from
-    # the surname, so a record without one ends the load.
+    # A key takes one of three forms: the surname alone (`zhao`), the surname
+    # with dotted initials (`zhao.y.l`), or the surname with the dotted given
+    # names in the same order (`zhao.yuan.long`), for authors whose surname
+    # and initials coincide. `person` allows a surname or a given name alone;
+    # every form starts with the surname, so a record without one ends the load.
     surname = author_data.get('surname')
     if surname is None:
       fail(f'Author "{author_key}" has no surname!', f'author {author_key} has no surname')
@@ -28,8 +31,10 @@ class Author:
       with_initials = f'{surname_only}.{givens[0][0:2].lower()}.{givens[1][0].lower()}'
     else:
       with_initials = f'{surname_only}.' + '.'.join([name[0].lower() for name in givens])
+    # A printed initial or `Jr.` keeps its letters and drops its dot.
+    with_given = f'{surname_only}.' + '.'.join([name.lower().rstrip('.') for name in givens])
 
-    expected_set = {surname_only, with_initials}
+    expected_set = {surname_only, with_initials, with_given}
     if author_key not in expected_set:
       logger.error(f'"{author_key}" not in expected set: {expected_set}')
 

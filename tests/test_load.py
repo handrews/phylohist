@@ -414,6 +414,45 @@ def test_an_author_key_is_built_from_the_surname(records, caplog):
   assert records.authors['somebody'].surname == 'Somebody'
 
 
+@pytest.mark.parametrize(
+  ('given', 'keys'),
+  [
+    ('Jun', ['zhao', 'zhao.j', 'zhao.jun']),
+    ('Jie', ['zhao', 'zhao.j', 'zhao.jie']),
+    # A single hyphenated given name is two parts, in both dotted forms.
+    ('Yuan-Long', ['zhao', 'zhao.y.l', 'zhao.yuan.long']),
+    ('Francis Jeffrey', ['zhao', 'zhao.f.j', 'zhao.francis.jeffrey']),
+    # A printed initial keeps its letter and drops its dot.
+    ('J. Javier', ['zhao', 'zhao.j.j', 'zhao.j.javier']),
+    ('G.-Y.', ['zhao', 'zhao.g.y']),
+  ],
+)
+def test_an_author_key_takes_one_of_three_forms(given, keys, records, caplog):
+  # The surname alone, the surname with dotted initials, or the surname with
+  # the dotted given names: the last tells Zhao Jun from Zhao Jie.
+  with caplog.at_level(logging.ERROR, logger='phylohist'):
+    for key in keys:
+      records.add_author({'surname': 'Zhao', 'given': given}, key)
+  assert _errors(caplog) == []
+
+
+@pytest.mark.parametrize(
+  ('given', 'key'),
+  [
+    ('Jun', 'zhao.ju'),
+    ('Jun', 'zhao.jie'),
+    ('Yuan-Long', 'zhao.yuan-long'),
+    ('Yuan-Long', 'zhao.long.yuan'),
+    ('Yuan-Long', 'zhao.yuan'),
+  ],
+)
+def test_an_author_key_outside_the_three_forms_is_an_error(given, key, records, caplog):
+  with caplog.at_level(logging.ERROR, logger='phylohist'):
+    records.add_author({'surname': 'Zhao', 'given': given}, key)
+  (error,) = _errors(caplog)
+  assert error.startswith(f'"{key}" not in expected set: ')
+
+
 def test_an_unnamed_record_spells_its_rank(records, caplog):
   # Without a name there is no genus or species to read a rank from: the
   # schema requires `rank` on a null-name record, and the loader stops on
