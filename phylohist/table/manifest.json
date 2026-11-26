@@ -14690,9 +14690,9 @@
   },
   "1999_zhao.y.l_yuan.j.l_zhu.m.y_yang.r.d_guo.q.j_qian.y_huang.y.z_pan.y": {
    "acts": {
-    "lapsus": 1,
+    "lapsus": 2,
     "new": 1,
-    "nomNudum": 3,
+    "nomNudum": 2,
     "placeholder": 6
    },
    "audit": {
@@ -14718,10 +14718,10 @@
    "claims": {
     "absence": 3,
     "act": 11,
-    "editorial": 3,
+    "editorial": 2,
     "material": 23,
     "placement": 19,
-    "usage": 22
+    "usage": 23
    },
    "coverage": {
     "illustrations": null,
@@ -14738,7 +14738,7 @@
     "material": 7,
     "newTaxa": 7,
     "occurrences": 9,
-    "skeleton": 41
+    "skeleton": 42
    },
    "derivedCoverage": {
     "illustrations": null,
@@ -24661,6 +24661,9 @@
   ],
   "guizhouensis_zhao.y.l_huang.y.z_gong.x.y_1994": [
    "2006_parsley_zhao.y.l"
+  ],
+  "guizhouensis_zhao.y.l_zhu.m.y_1994": [
+   "1999_zhao.y.l_yuan.j.l_zhu.m.y_yang.r.d_guo.q.j_qian.y_huang.y.z_pan.y"
   ],
   "guizhoueocrinus": [
    "2007_zhao.y.l_parsley_peng.j",

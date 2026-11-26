@@ -20270,6 +20270,23 @@
   "name": "guizhouensis",
   "rank": "species"
  },
+ "guizhouensis_zhao.y.l_zhu.m.y_1994": {
+  "authority": {
+   "authors": [
+    "Zhao",
+    "Zhu"
+   ],
+   "display": "Zhao, Zhu 1994",
+   "source": "1994_zhao.y.l_zhu.m.y",
+   "year": 1994
+  },
+  "folded": [
+   "guizhouensis"
+  ],
+  "kind": "primary",
+  "name": "guizhouensis",
+  "rank": "species"
+ },
  "guizhoueocrinus": {
   "authority": {
    "authors": [

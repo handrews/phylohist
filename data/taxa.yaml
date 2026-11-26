@@ -6562,6 +6562,10 @@ guizhouensis_zhao.y.l_huang.y.z_gong.x.y_1994:
   name: guizhouensis
   authority:
     source: 1994_zhao.y.l_huang.y.z_gong.x.y
+guizhouensis_zhao.y.l_zhu.m.y_1994:
+  name: guizhouensis
+  authority:
+    source: 1994_zhao.y.l_zhu.m.y
 guizhoueocrinus:
   name: Guizhoueocrinus
   authority:
