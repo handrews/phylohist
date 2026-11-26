@@ -1993,14 +1993,14 @@ brevis_luo.h.l_hu.s.x_1999:
   name: brevis
   rank: species
   authority:
-    auth: [luo.h.l, hu.s.x, chen.l.z, zhang.s.s, tao.y.h]
-    attributedTo: [luo.h.l, hu.s.x]
+    auth: [luo.h.l, hu.s.x]
+    in: [luo.h.l, hu.s.x, chen.l.z, zhang.s.s, tao.y.h]
     year: 1999
     pages: 89
     illustrations:
     - plate: 23
       figures: [2, 3]
-    - textfigures: 38
+    - textFigures: 38
     notes: Page and figure information from Hou et al. 2006.
 briareus_barrande_1887:
   name: briareus
@@ -3141,8 +3141,8 @@ conicula:
   name: Conicula
   rank: genus
   authority:
-    auth: [luo.h.l, hu.s.x, chen.l.z, zhang.s.s, tao.y.h]
-    attributedTo: [luo.h.l, hu.s.x]
+    auth: [luo.h.l, hu.s.x]
+    in: [luo.h.l, hu.s.x, chen.l.z, zhang.s.s, tao.y.h]
     year: 1999
     pages: 87
     notes: >-
@@ -3567,7 +3567,7 @@ cryptophya_clarke.j.m_1900:
     pages: 176
     illustrations:
     - plate: 5
-      depcits: drawing
+      depicts: drawing
       notes: Diagram of "the 3 cycles of nonambulacral areas"
     - plate: 6
       of: nearly entire specimen
@@ -4996,8 +4996,6 @@ edrioasteroidea:
   name: Edrioasteroidea
   rank: Class
   bracket: Edrioasteroids
-  authority:
-    source: 1858b_billings
   altRankOf: edrioasteridae_billings_1858b
 edrioasteroidea-order-uncertain_bassler_1935:
   name: null
@@ -5662,7 +5660,7 @@ eumorphus_sun.w.g_hou.x.g_1987:
     notes: Pages and illustrations from Chen, Zhu, and Zhou 1995
 eumorpha_sun.w.g_hou.x.g_1987:
   name: eumorpha
-  genderVariantOf: eumorphus_sun.w.g_hou.x.g_1987
+  altGenderOf: eumorphus_sun.w.g_hou.x.g_1987
 europaeus_linnaeus_1758:
   name: europaeus
   rank: variety
@@ -8574,14 +8572,14 @@ longus_luo.h.l_hu.s.x_1999:
   name: longus
   rank: species
   authority:
-    auth: [luo.h.l, hu.s.x, chen.l.z, zhang.s.s, tao.y.h]
-    attributedTo: [luo.h.l, hu.s.x]
+    auth: [luo.h.l, hu.s.x]
+    in: [luo.h.l, hu.s.x, chen.l.z, zhang.s.s, tao.y.h]
     year: 1999
     pages: 89
     illustrations:
     - plate: 23
       figures: 1
-    - textfigures: 37
+    - textFigures: 37
     notes: Page and figure information from Hou et al. 2006.
 longus_zhao.y.l_huang.y.z_gong.x.y_1994:
   name: longus
@@ -8643,7 +8641,7 @@ ludwigi_walcott_1911:
     pages: 46
     illustrations:
     - page: 47
-      textfigures: 5
+      textFigures: 5
       depicts: specimen
     - plate: 8
       figures: 3
@@ -10874,8 +10872,8 @@ phlogites:
   name: Phlogites
   rank: genus
   authority:
-    auth: [luo.h.l, hu.s.x, chen.l.z, zhang.s.s, tao.y.h]
-    attributedTo: [luo.h.l, hu.s.x]
+    auth: [luo.h.l, hu.s.x]
+    in: [luo.h.l, hu.s.x, chen.l.z, zhang.s.s, tao.y.h]
     year: 1999
     pages: 89
     notes: >-
@@ -13501,14 +13499,14 @@ striata_luo.h.l_hu.s.x_1999:
   name: striata
   rank: species
   authority:
-    auth: [luo.h.l, hu.s.x, chen.l.z, zhang.s.s, tao.y.h]
-    attributedTo: [luo.h.l, hu.s.x]
+    auth: [luo.h.l, hu.s.x]
+    in: [luo.h.l, hu.s.x, chen.l.z, zhang.s.s, tao.y.h]
     year: 1999
     pages: 87
     illustrations:
     - plate: 22
       figures: [5a, 5b]
-    - textfigures: 35
+    - textFigures: 35
     notes: Page information from Zhao et al. 2023 Palaeontology e12637
 striata_pander_1830:
   name: striata

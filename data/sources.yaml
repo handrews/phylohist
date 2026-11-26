@@ -4860,6 +4860,8 @@ inprep_sprinkle_strimple:
   pages:
   - 47
   - 51
+  pubDate:
+    year: 2006
   authors:
   - hou.x.g
   - bergstrom.j
