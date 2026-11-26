@@ -19,7 +19,7 @@ import re
 
 from . import blocks
 from .acts import ACT_KINDS
-from .claims import specimen_components
+from .claims import specimen_key, specimen_keys
 from .closure import TAXONOMY, Closure, in_years
 from .derivatives import KINDS as DERIVATIVE_KINDS
 from .loader.material import in_run
@@ -324,25 +324,32 @@ class ClaimStore:
     # The specimen claims by join key, and the printed runs ("GSC 25935–25961")
     # per holder, each as `(low, high, bare low, bare high, claim)`, so a
     # number inside a run is found beside the claims that cite it by number.
+    # Every specimen has a key (`specimen_keys`: a join key, or one of the
+    # claim's own for a specimen without a register); `same_as_edges` holds
+    # the `sameAs` pairs in both directions, each with the claim that
+    # states it.
     self.by_join_key = collections.defaultdict(list)
+    self.by_specimen_key = collections.defaultdict(list)
+    self.same_as_edges = collections.defaultdict(list)
     self.runs = collections.defaultdict(list)
-    specimens = []
     for claims in self.by_source.values():
       for claim in claims:
         if claim['kind'] == 'material' and claim.get('materialKind') == 'specimen':
           self._index_specimen(claim)
-          specimens.append(claim)
-    # Each specimen claim's component (`specimen_components`): the claims
-    # linked to it by a shared join key or by `sameAs`, in either direction.
-    self.specimen_component = specimen_components(specimens)
     self.resolver = Resolver(self)
     self.words = Words(self)
 
   def _index_specimen(self, claim):
-    """File a specimen claim under each of its join keys and, for each
-    range pair it prints, under the holder of the pair's endpoints."""
+    """File a specimen claim under each of its join keys and specimen
+    keys, its `sameAs` pairs under both of their keys and, for each range
+    pair it prints, under the holder of the pair's endpoints."""
     for key in claim.get('joinKeys') or ():
       self.by_join_key[key].append(claim)
+    for key in specimen_keys(claim):
+      self.by_specimen_key[key].append(claim)
+    for link in claim.get('sameAsLinks') or ():
+      self.same_as_edges[link['key']].append((link['targetKey'], claim))
+      self.same_as_edges[link['targetKey']].append((link['key'], claim))
     if not claim.get('rangeJoin'):
       return
     join_keys = claim.get('joinKeys') or ()
@@ -1419,36 +1426,37 @@ class ClaimStore:
     fields = {'name': f'the specimen "{label}" of {self.cite(source_key)}'}
     return blocks.statement('absent', fields, {'source': source_key, 'label': label})
 
-  def _same_specimen(self, found):
-    """`{claim id: carrier}` for every claim in the component of a claim of
-    `found`: the carrier is the claim whose `sameAs` link first reached it
-    from the claims found directly, `None` for a claim found directly or
-    reached through the join key of a one-number entry from one."""
-    members = {}
-    for claim in found:
-      members.update((c['id'], c) for c in self.specimen_component[claim['id']])
-    edges = collections.defaultdict(list)
-    by_key = collections.defaultdict(list)
-    for claim_id, claim in members.items():
-      keys = claim.get('joinKeys') or ()
-      if len(keys) == 1:
-        by_key[keys[0]].append(claim_id)
-      target = claim.get('sameAsClaim')
-      if target in members:
-        edges[claim_id].append((target, claim))
-        edges[target].append((claim_id, claim))
-    for ids in by_key.values():
-      for one in ids:
-        edges[one].extend((other, None) for other in ids if other != one)
-    carriers = {claim['id']: None for claim in found}
+  def _same_specimen(self, keys):
+    """`{specimen key: carrier}` for `keys` and every key a `sameAs` pair
+    ties to one of them, directly or through a chain, nearest first: the
+    carrier is the claim whose link first reached the key, `None` for the
+    keys given."""
+    carriers = dict.fromkeys(keys)
     queue = collections.deque(carriers)
     while queue:
-      claim_id = queue.popleft()
-      for other, carrier in edges[claim_id]:
+      key = queue.popleft()
+      for other, carrier in self.same_as_edges.get(key, ()):
         if other not in carriers:
-          carriers[other] = carrier or carriers[claim_id]
+          carriers[other] = carrier
           queue.append(other)
     return carriers
+
+  def _specimen_rows(self, keys):
+    """The claims that cite the specimen `keys` stand for, as `{claim id:
+    (claim, key, carrier, runs)}`: every claim carrying one of the keys of
+    `_same_specimen`, or printing a run that holds one of its join keys
+    (`runs`, each `[low, high]` as printed). `key` is the claim's own
+    specimen among them and `carrier` the claim whose `sameAs` link reached
+    it, `None` for a claim found by the keys asked for."""
+    rows = {}
+    for key, carrier in self._same_specimen(keys).items():
+      for claim in self.by_specimen_key.get(key, ()):
+        rows.setdefault(claim['id'], (claim, key, carrier, []))
+      holder, _, bare = key.partition(':')
+      for low, high, bare_low, bare_high, claim in self.runs.get(holder, ()):
+        if in_run(bare, bare_low, bare_high):
+          rows.setdefault(claim['id'], (claim, key, carrier, []))[3].append([low, high])
+    return rows
 
   def specimen_history(self, number=None, repository=None, source=None, label=None, style='text'):
     """Every citation of one specimen, one line per claim in year order,
@@ -1458,11 +1466,12 @@ class ClaimStore:
     entry's own number) and meets the
     claims' join keys; a number inside a printed run ("GSC 25935–25961") is
     found as well. A source and label meet the labels of that source's
-    specimen claims (folded). Either way every claim in the component of a
-    claim found is listed too (`specimen_components`: a `sameAs` link in
-    either direction, through a chain, or the join key of a one-number
-    entry), a line reached only through a link saying on whose authority.
-    With a number, `source` and `label` are not read."""
+    specimen claims (folded). Either way every claim of a specimen that a
+    `sameAs` pair ties to the one asked for is listed too (in either
+    direction, through a chain), a line reached only through a link saying
+    on whose authority. A claim that lists several numbers or labels is in
+    the history of each one, and a link from one of them leads nowhere for
+    the others. With a number, `source` and `label` are not read."""
     if number is None:
       if source is None or label is None:
         raise ValueError('give a catalog number, or a source and a label')
@@ -1483,27 +1492,20 @@ class ClaimStore:
       if via is None:
         return _with_style(self._unfound_specimen(number, repository), style)
     join_key = f'{key}:{fold(bare)}'
-    found = {c['id']: c for c in self.by_join_key.get(join_key, ())}
-    in_runs = {}
-    for low, high, bare_low, bare_high, claim in self.runs.get(key, ()):
-      if in_run(fold(bare), bare_low, bare_high):
-        found.setdefault(claim['id'], claim)
-        in_runs.setdefault(claim['id'], []).append([low, high])
-    if not found:
+    rows = self._specimen_rows([join_key])
+    if not rows:
       return _with_style(self._unfound_specimen(number, repository), style)
     entry = self.repositories[key]
     prefixes = entry.get('prefixes')
     printed = f'{prefixes[0] if prefixes else entry["name"]} {bare}'
     block = self._specimen_listing(
-      list(found.values()),
+      rows,
       {'key': join_key, 'name': printed, 'rank': None},
       # The repository parameter is the resolved key, as a source parameter
       # is the resolved source key.
       {'number': number, 'repository': key if repository is not None else None},
       {'repository': key, 'holder': entry['name'], 'number': bare},
       number,
-      join_key,
-      in_runs,
     )
     return _with_style(block, style)
 
@@ -1514,29 +1516,25 @@ class ClaimStore:
       for c in self.by_source.get(source_key, ())
       if c['kind'] == 'material'
       and c.get('materialKind') == 'specimen'
-      and c.get('label') is not None
-      and fold(str(c['label'])) == wanted
+      and any(fold(str(own)) == wanted for own in c.get('labels') or ())
     ]
     if not found:
       return _with_style(self._unfound_label(source_key, label), style)
     name = f'"{label}" of {self.cite(source_key)}'
     block = self._specimen_listing(
-      found,
+      self._specimen_rows([specimen_key(c, label) for c in found]),
       {'key': f'{source_key}:{wanted}', 'name': name, 'rank': None},
       {'source': source_key, 'label': label},
       {},
       None,
-      None,
-      {},
     )
     return _with_style(block, style)
 
-  def _specimen_listing(self, found, heading, parameters, extra, number, join_key, in_runs):
-    """The list block of the claims `found` and the claims linked to them,
-    in year order."""
-    carriers = self._same_specimen(found)
+  def _specimen_listing(self, rows, heading, parameters, extra, number):
+    """The list block of the claims of `rows` (`_specimen_rows`), in year
+    order."""
     claims = sorted(
-      (self.by_id[claim_id] for claim_id in carriers),
+      (claim for claim, _, _, _ in rows.values()),
       key=lambda c: (self.source_year(c['source']), c['source'], c['path']),
     )
     entries = [
@@ -1548,9 +1546,7 @@ class ClaimStore:
         page=c.get('pages'),
         kind='material',
         authors=self.words.authors(c['source']),
-        sentence=self.words.specimen_history_words(
-          c, number, join_key, in_runs.get(c['id']), carriers[c['id']]
-        ),
+        sentence=self.words.specimen_history_words(c, number, *rows[c['id']][1:]),
       )
       for c in claims
     ]

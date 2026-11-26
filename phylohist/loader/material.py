@@ -9,7 +9,7 @@ loader (`load.py`) runs them over the corpus's own documents, both from the
 tables in `checks.py`. Each check returns a list of ``(level, message)``
 pairs, ``level`` being ``'error'`` or ``'warning'``; the caller adds the
 source key and, for a per-node check, the node path. `OCCURRENCE_SIDES`,
-`flat_numbers`, `entries_named` and `same_as_matches` are exported for the
+`flat_numbers`, `entries_named` and `same_as_pairs` are exported for the
 claims extractor (`phylohist.claims`), and `in_run` for the store
 (`phylohist.store`, `specimen_history`).
 """
@@ -49,6 +49,24 @@ def flat_numbers(entry):
   """Every number of an entry, a range pair's two ends included."""
   for number in entry.get('numbers') or ():
     yield from number if isinstance(number, list) else [number]
+
+
+def entry_labels(entry):
+  """The `labels` of a material entry, a specimen claim or a `sameAs` link
+  as a list, whether written as one string or as a list."""
+  labels = entry.get('labels')
+  if labels is None:
+    return []
+  return list(labels) if isinstance(labels, list) else [labels]
+
+
+def same_as_list(entry):
+  """The `sameAs` links of a material entry or a specimen claim as a list,
+  whether written as one link or as a list."""
+  links = entry.get('sameAs')
+  if links is None:
+    return []
+  return list(links) if isinstance(links, list) else [links]
 
 
 def registry_links(repositories):
@@ -187,21 +205,19 @@ def ref_text(value):
 
 def entry_identifies(entry, value, exact=False):
   """Whether `value` names `entry`: the folded text of `value` (a string or
-  an integer) equals its folded `label` or one of its `numbers` (a range
-  pair's endpoints count separately); unless `exact`, a value lying in the
+  an integer) equals one of its folded `labels` or one of its `numbers` (a
+  range pair's endpoints count separately); unless `exact`, a value lying in the
   run of one of its range pairs names it too. An `entryRef` object names
-  it by `label` alone, or by `number` the same way over the numbers alone,
-  and only when its `prefix`, if given, is the entry's."""
+  it by `label` alone (one of its labels), or by `number` the same way over
+  the numbers alone, and only when its `prefix`, if given, is the entry's."""
   if isinstance(value, dict):
     if 'label' in value:
-      label = entry.get('label')
-      return label is not None and fold(str(label)) == fold(str(value['label']))
+      return entry_identifies({'labels': entry.get('labels')}, value['label'])
     if 'prefix' in value and entry.get('prefix') != value['prefix']:
       return False
     return entry_identifies({'numbers': entry.get('numbers')}, value.get('number'), exact)
   folded = fold(str(value))
-  label = entry.get('label')
-  if label is not None and fold(str(label)) == folded:
+  if any(fold(str(label)) == folded for label in entry_labels(entry)):
     return True
   for number in entry.get('numbers') or ():
     elements = number if isinstance(number, list) else [number]
@@ -220,13 +236,59 @@ def entries_named(entries, value):
   return exact or [entry for entry in entries if entry_identifies(entry, value)]
 
 
-def same_as_matches(entries, link):
-  """The entries a `sameAs` link names among `entries` (raw material
-  entries or specimen claims, which carry the same `label`, `prefix` and
-  `numbers`): the link's `label`, `number` and `prefix` read as an
-  `entryRef` by `entries_named`. Callers read "names exactly one" from the
-  length."""
-  return entries_named(entries, {k: link[k] for k in ('label', 'number', 'prefix') if k in link})
+def _several(entry):
+  """Whether an entry lists several specimens: more than one number, a
+  run, or more than one label."""
+  numbers = entry.get('numbers') or ()
+  return (
+    len(numbers) > 1
+    or any(isinstance(number, list) for number in numbers)
+    or len(entry_labels(entry)) > 1
+  )
+
+
+def same_as_pairs(entry, link):
+  """`(pairs, errors)` for one `sameAs` link of `entry` (a raw material
+  entry or a specimen claim, which carry the same `labels`, `prefix` and
+  `numbers`). Each pair is `(own, target)`: `target` an `entryRef` naming
+  one entry of the link's source (`{number[, prefix]}` or `{label}`, one
+  per value of the link's `numbers` or `labels`), `own` the number or label
+  of this entry that is the same specimen, or `None` for an entry with
+  only a `count`. With `of`, the link names one target and `of` is the own
+  side; without it, on an entry of several numbers or labels each target
+  value is the own side too and must be one of the entry's own, and on an
+  entry of one specimen the link names one target. `errors` are the
+  messages for a link that breaks this; its pairs are then left out."""
+  if 'numbers' in link:
+    prefix = {'prefix': link['prefix']} if 'prefix' in link else {}
+    kind, values = 'numbers', list(link['numbers'])
+    targets = [{'number': value, **prefix} for value in values]
+  elif 'labels' in link:
+    kind, values = 'labels', entry_labels(link)
+    targets = [{'label': value} for value in values]
+  else:
+    # Neither is a schema error, reported there.
+    return [], []
+  if 'of' in link:
+    own = link['of']
+    errors = []
+    if not entry_identifies(entry, own):
+      errors.append(f'`sameAs` has `of` "{own}", which is not a number or label of the entry')
+    if len(targets) != 1:
+      errors.append(f'`sameAs` with `of` names {len(targets)} earlier entries, not 1')
+    return ([] if errors else [(own, targets[0])]), errors
+  if _several(entry):
+    strangers = [value for value in values if not entry_identifies({kind: entry.get(kind)}, value)]
+    if strangers:
+      listed = ', '.join(f'"{value}"' for value in strangers)
+      return [], [
+        f"`sameAs` names {listed}, not among the entry's own {kind}; `of` says which of them it is"
+      ]
+    return list(zip(values, targets, strict=True)), []
+  if len(targets) != 1:
+    return [], [f'`sameAs` on an entry of one specimen names {len(targets)} earlier entries, not 1']
+  own = next(iter([*flat_numbers(entry), *entry_labels(entry)]), None)
+  return [(own, targets[0])], []
 
 
 def _match_error(field, value, entries):
@@ -240,7 +302,7 @@ def _match_error(field, value, entries):
   message = f'{field} "{ref_text(value)}" matches {len(matches)} material entries, not 1'
   if not isinstance(value, dict) and (
     len({entry.get('prefix') for entry in matches}) > 1
-    or any(entry_identifies({'label': entry.get('label')}, value) for entry in matches)
+    or any(entry_identifies({'labels': entry.get('labels')}, value) for entry in matches)
   ):
     message += '; `{number, prefix}` or `{label}` picks one'
   return ('error', message)
@@ -250,9 +312,10 @@ def same_as_links(documents, source_year):
   """Every `sameAs` link on a material entry anywhere in `documents`
   (source key to raw tree document) names a source that has a tree, not
   the entry's own, published no later than the entry's (`source_year` maps
-  a source key to its year, or `None` when unknown, which is not checked),
-  and exactly one material entry in that tree file (`same_as_matches`).
-  Each message names the source and the node's path."""
+  a source key to its year, or `None` when unknown, which is not checked);
+  the link pairs this entry's specimens with its targets by the rules of
+  `same_as_pairs`, and each target names exactly one material entry in
+  that tree file. Each message names the source and the node's path."""
   messages = []
   targets = {}
 
@@ -268,25 +331,50 @@ def same_as_links(documents, source_year):
   for source_key, document in documents.items():
     for path, node, _ in walk_document(document):
       for entry in node.get('material') or ():
-        link = entry.get('sameAs')
-        if not isinstance(link, dict):
+        if not isinstance(entry, dict):
           continue
         where = f'{source_key} at {path}'
-        target = link.get('source')
-        if target not in documents:
-          messages.append(('error', f'{where}: `sameAs` names "{target}", which has no tree'))
-          continue
-        if target == source_key:
-          messages.append(('error', f'{where}: `sameAs` names its own source'))
-          continue
-        own, theirs = source_year(source_key), source_year(target)
-        if own is not None and theirs is not None and theirs > own:
-          messages.append(('error', f'{where}: `sameAs` points at a later source'))
-        matches = len(same_as_matches(target_entries(target), link))
-        if matches != 1:
-          messages.append(
-            ('error', f'{where}: `sameAs` matches {matches} entries in "{target}", not 1')
-          )
+        for link in same_as_list(entry):
+          if not isinstance(link, dict):
+            continue
+          pairs, errors = same_as_pairs(entry, link)
+          messages.extend(('error', f'{where}: {error}') for error in errors)
+          target = link.get('source')
+          if target not in documents:
+            messages.append(('error', f'{where}: `sameAs` names "{target}", which has no tree'))
+            continue
+          if target == source_key:
+            messages.append(('error', f'{where}: `sameAs` names its own source'))
+            continue
+          own, theirs = source_year(source_key), source_year(target)
+          if own is not None and theirs is not None and theirs > own:
+            messages.append(('error', f'{where}: `sameAs` points at a later source'))
+          for _, ref in pairs:
+            matches = len(entries_named(target_entries(target), ref))
+            if matches != 1:
+              messages.append(
+                (
+                  'error',
+                  f'{where}: `sameAs` "{ref_text(ref)}" matches {matches} entries '
+                  f'in "{target}", not 1',
+                )
+              )
+  return messages
+
+
+def label_lists(node):
+  """The labels of one material entry are distinct specimens, so two that
+  fold alike are an error."""
+  messages = []
+  for entry in node.get('material') or ():
+    if not isinstance(entry, dict):
+      continue
+    seen = set()
+    for label in entry_labels(entry):
+      folded = fold(str(label))
+      if folded in seen:
+        messages.append(('error', f'label "{label}" is listed twice on one material entry'))
+      seen.add(folded)
   return messages
 
 

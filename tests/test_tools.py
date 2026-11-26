@@ -823,9 +823,10 @@ def test_material_words(store):
   assert material('specimen', prefix='GSC', numbers=[[100, 105], 7]) == (
     'specimens: GSC 100–105, 7'
   )
-  assert material('specimen', label='the Bigsby specimen', role='syntype') == (
+  assert material('specimen', labels=['the Bigsby specimen'], role='syntype') == (
     'syntype: the Bigsby specimen'
   )
+  assert material('specimen', labels=['B', 'C'], role='syntype') == 'syntype: B, C'
   assert material('specimen', count=5, role='paratype') == 'paratype: 5 specimens'
   assert (
     material(
@@ -1759,26 +1760,29 @@ def test_locality_numbers_read_as_prefix_and_number(store):
 _OTTAWA = 'ottawaensis_whiteaves_1897'
 
 
-def _under_genus(material):
-  return {'taxon': 'astrocystites', 'children': [{'taxon': _OTTAWA, 'material': material}]}
+def _under_genus(material, **species):
+  return {
+    'taxon': 'astrocystites',
+    'children': [{'taxon': _OTTAWA, 'material': material, **species}],
+  }
 
 
 LINKED = {
   '1897_whiteaves': (
     1320,
-    _under_genus([{'label': 'first specimen'}, {'label': 'second specimen'}]),
+    _under_genus([{'labels': 'first specimen'}, {'labels': 'second specimen'}]),
   ),
   '1914c_bather': (
     1321,
     _under_genus(
       [
         {
-          'label': 'A',
+          'labels': 'A',
           'role': 'holotype',
           'roleAct': 'designated',
-          'sameAs': {'source': '1897_whiteaves', 'label': 'first specimen'},
+          'sameAs': {'source': '1897_whiteaves', 'labels': 'first specimen'},
         },
-        {'label': 'B', 'role': 'syntype'},
+        {'labels': 'B', 'role': 'syntype'},
       ]
     ),
   ),
@@ -1790,7 +1794,7 @@ LINKED = {
           'prefix': 'GSC',
           'numbers': [752],
           'role': 'lectotype',
-          'sameAs': {'source': '1914c_bather', 'label': 'A'},
+          'sameAs': {'source': '1914c_bather', 'labels': 'A'},
           'editorial': {'inferred': ['role', 'sameAs'], 'basis': 'the editor reads No. 752 as A'},
         }
       ]
@@ -1799,13 +1803,11 @@ LINKED = {
 }
 
 
-@pytest.fixture(scope='module')
-def linked(corpus, tmp_path_factory):
-  """A `ClaimStore` over a copy of `phylohist/table/` whose files for Whiteaves 1897,
-  Bather 1914c and Fay 1962 are replaced by the claims of synthetic trees
-  in which Fay's No. 752 (the editor's inference) is Bather's A, which
-  Bather says is Whiteaves's first specimen."""
-  directory = tmp_path_factory.mktemp('claims')
+def _store_of(corpus, directory, trees, prefixes):
+  """A `ClaimStore` over a copy of `phylohist/table/` in `directory` whose
+  files for the sources of `trees` (source key to `(position, node)`) are
+  replaced by the claims of those synthetic trees; `prefixes` is the files'
+  `prefixes` map."""
   shutil.copytree(corpus.claims, directory, dirs_exist_ok=True)
   roots = {
     source: [
@@ -1815,25 +1817,34 @@ def linked(corpus, tmp_path_factory):
           'source_key': source,
           'type': 'taxonomy',
           'position': position,
-          'file_prefixes': {'GSC': 'gsc'},
+          'file_prefixes': prefixes,
         },
         corpus=corpus.records,
       )
     ]
-    for source, (position, node) in LINKED.items()
+    for source, (position, node) in trees.items()
   }
   for source, claims in extract(corpus.records, roots).items():
     (directory / f'{source}.jsonl').write_text(''.join(json.dumps(c) + '\n' for c in claims))
   return ClaimStore(directory)
 
 
+@pytest.fixture(scope='module')
+def linked(corpus, tmp_path_factory):
+  """A `ClaimStore` over a copy of `phylohist/table/` whose files for Whiteaves 1897,
+  Bather 1914c and Fay 1962 are replaced by the claims of synthetic trees
+  in which Fay's No. 752 (the editor's inference) is Bather's A, which
+  Bather says is Whiteaves's first specimen."""
+  return _store_of(corpus, tmp_path_factory.mktemp('claims'), LINKED, {'GSC': 'gsc'})
+
+
 def test_specimen_history_by_number_lists_the_linked_entries_with_their_authority(linked):
   block = linked.specimen_history('GSC 752')
   assert block['rendered'].splitlines() == [
     'Specimen GSC 752 (Geological Survey of Canada)',
-    '  1897  Whiteaves  cited under Astrocystites ottawaensis '
+    '  1897  Whiteaves  cited under Astrocystites ottawaensis as "first specimen" '
     '(the same specimen according to Bather 1914)',
-    '  1914  Bather     holotype of Astrocystites ottawaensis '
+    '  1914  Bather     holotype of Astrocystites ottawaensis as "A" '
     "(the same specimen, editor's inference)",
     '  1962  Fay        lectotype of Astrocystites ottawaensis',
   ]
@@ -1849,7 +1860,7 @@ def test_specimen_history_by_source_and_label_lists_the_chain(linked):
   assert block['rendered'].splitlines() == [
     'Specimen "First  Specimen" of Whiteaves 1897',
     '  1897  Whiteaves  cited under Astrocystites ottawaensis',
-    '  1914  Bather     holotype of Astrocystites ottawaensis '
+    '  1914  Bather     holotype of Astrocystites ottawaensis as "A" '
     '(the same specimen according to Bather 1914)',
     '  1962  Fay        lectotype of Astrocystites ottawaensis as GSC 752 '
     "(the same specimen, editor's inference)",
@@ -1889,6 +1900,165 @@ def test_specimen_history_by_label_blocks_validate_and_go_through_call(linked):
   block = linked.specimen_history(source='1897_whiteaves', label='first specimen', style='json')
   assert blocks.validate(block, linked) == []
   assert blocks.validate(linked.specimen_history(source='1914c_bather', label='Z'), linked) == []
+
+
+# One entry of several numbers (Bather 1914c's MCZ 1-3) whose links tie MCZ 1 and
+# MCZ 2 to two entries of Whiteaves 1897 on two taxa (GSC 1 and GSC 2), and
+# MCZ 3, with `of`, to a labelled entry.
+SEVERAL = {
+  '1897_whiteaves': (
+    1330,
+    {
+      'taxon': 'astrocystites',
+      'children': [
+        {
+          'taxon': _OTTAWA,
+          'material': [
+            {'prefix': 'GSC', 'numbers': [1], 'role': 'holotype'},
+            {'labels': 'the slab', 'role': 'figured'},
+          ],
+        },
+        {
+          'taxon': 'sardesoni_bather_1915',
+          'material': [{'prefix': 'GSC', 'numbers': [2], 'role': 'holotype'}],
+        },
+      ],
+    },
+  ),
+  '1914c_bather': (
+    1331,
+    _under_genus(
+      [
+        {
+          'prefix': 'MCZ',
+          'numbers': [1, 2, 3],
+          'role': 'syntype',
+          'sameAs': [
+            {'source': '1897_whiteaves', 'prefix': 'GSC', 'numbers': [1, 2]},
+            {'source': '1897_whiteaves', 'labels': 'the slab', 'of': 3},
+          ],
+        }
+      ],
+      illustrations=[{'plate': 1, 'of': 1}, {'plate': 2, 'of': '2'}, {'plate': 3, 'of': 3}],
+    ),
+  ),
+}
+
+# One entry of several labels, its figures naming one label or both.
+LABELLED = {
+  '1897_whiteaves': (
+    1332,
+    _under_genus(
+      [{'labels': ['B', 'C'], 'role': 'syntype'}],
+      illustrations=[
+        {'plate': 1, 'figures': [2], 'of': 'B'},
+        {'plate': 2, 'of': {'label': 'C'}},
+        {'plate': 3, 'of': ['b', 'C']},
+      ],
+    ),
+  )
+}
+
+
+@pytest.fixture(scope='module')
+def several(corpus, tmp_path_factory):
+  return _store_of(
+    corpus, tmp_path_factory.mktemp('several'), SEVERAL, {'GSC': 'gsc', 'MCZ': 'mcz'}
+  )
+
+
+@pytest.fixture(scope='module')
+def labelled(corpus, tmp_path_factory):
+  return _store_of(corpus, tmp_path_factory.mktemp('labelled'), LABELLED, {})
+
+
+def test_specimen_history_of_the_earlier_number_reaches_only_the_claim_that_links_it(several):
+  block = several.specimen_history('GSC 1')
+  assert block['rendered'].splitlines() == [
+    'Specimen GSC 1 (Geological Survey of Canada)',
+    '  1897  Whiteaves  holotype of Astrocystites ottawaensis',
+    '  1914  Bather     syntype of Astrocystites ottawaensis as MCZ 1; figured pl. 1 '
+    '(the same specimen according to Bather 1914)',
+  ]
+  # The other earlier claim, GSC 2 on another taxon, is not in it: the
+  # batch's two links tie two specimens, not one.
+  assert 'sardesoni' not in block['rendered']
+  assert [e['source'] for e in block['entries']] == ['1897_whiteaves', '1914c_bather']
+  second = several.specimen_history('GSC 2')
+  assert second['rendered'].splitlines() == [
+    'Specimen GSC 2 (Geological Survey of Canada)',
+    '  1897  Whiteaves  holotype of Astrocystites sardesoni',
+    '  1914  Bather     syntype of Astrocystites ottawaensis as MCZ 2; figured pl. 2 '
+    '(the same specimen according to Bather 1914)',
+  ]
+
+
+def test_specimen_history_of_the_later_number_reaches_the_earlier_entry_it_is_tied_to(several):
+  first = several.specimen_history('MCZ 1')
+  assert first['rendered'].splitlines() == [
+    'Specimen MCZ 1 (Museum of Comparative Zoology, Harvard University)',
+    '  1897  Whiteaves  holotype of Astrocystites ottawaensis as GSC 1 '
+    '(the same specimen according to Bather 1914)',
+    '  1914  Bather     syntype of Astrocystites ottawaensis as MCZ 1, 2, 3; figured pl. 1',
+  ]
+  assert 'sardesoni' not in first['rendered'] and 'the slab' not in first['rendered']
+  second = several.specimen_history('MCZ 2')
+  assert second['rendered'].splitlines()[1:] == [
+    '  1897  Whiteaves  holotype of Astrocystites sardesoni as GSC 2 '
+    '(the same specimen according to Bather 1914)',
+    '  1914  Bather     syntype of Astrocystites ottawaensis as MCZ 1, 2, 3; figured pl. 2',
+  ]
+  # The number tied with `of` to a label: the earlier entry is the label's.
+  third = several.specimen_history('MCZ 3')
+  assert third['rendered'].splitlines()[1:] == [
+    '  1897  Whiteaves  figured specimen of Astrocystites ottawaensis as "the slab" '
+    '(the same specimen according to Bather 1914)',
+    '  1914  Bather     syntype of Astrocystites ottawaensis as MCZ 1, 2, 3; figured pl. 3',
+  ]
+  # And from the label, the batch is reached with its one number.
+  slab = several.specimen_history(source='1897_whiteaves', label='the slab')
+  assert slab['rendered'].splitlines()[1:] == [
+    '  1897  Whiteaves  figured specimen of Astrocystites ottawaensis',
+    '  1914  Bather     syntype of Astrocystites ottawaensis as MCZ 3; figured pl. 3 '
+    '(the same specimen according to Bather 1914)',
+  ]
+
+
+def test_specimen_history_of_each_linked_number_lists_only_its_own_chain(several):
+  chains = {
+    number: {e['claim'] for e in several.specimen_history(number)['entries']}
+    for number in ('GSC 1', 'GSC 2', 'MCZ 1', 'MCZ 2', 'MCZ 3')
+  }
+  assert chains['GSC 1'] == chains['MCZ 1'] and chains['GSC 2'] == chains['MCZ 2']
+  # The batch is in every chain; the earlier claims are in one each.
+  early = [c for c in chains['GSC 1'] | chains['GSC 2'] if c.startswith('1897')]
+  assert len(early) == 2 and len(set(early)) == 2
+  assert all(len(chain) == 2 for chain in chains.values())
+  assert len(set().union(*chains.values())) == 4
+
+
+def test_specimen_history_by_label_shows_the_figures_of_that_label_only(labelled):
+  def lines(label):
+    return labelled.specimen_history(source='1897_whiteaves', label=label)['rendered'].splitlines()
+
+  assert lines('B') == [
+    'Specimen "B" of Whiteaves 1897',
+    '  1897  Whiteaves  syntype of Astrocystites ottawaensis; figured pl. 1, fig. 2; pl. 3',
+  ]
+  assert lines('C')[1:] == [
+    '  1897  Whiteaves  syntype of Astrocystites ottawaensis; figured pl. 2; pl. 3'
+  ]
+  # A label is folded as a number is.
+  assert lines('c')[1:] == lines('C')[1:]
+  assert labelled.specimen_history(source='1897_whiteaves', label='D')['kind'] == 'absent'
+
+
+def test_the_statement_words_of_a_several_label_entry_list_the_labels(labelled):
+  [claim] = [c for c in labelled.by_source['1897_whiteaves'] if c.get('materialKind') == 'specimen']
+  assert claim['labels'] == ['B', 'C']
+  assert labelled.words.claim_words(claim) == 'syntype: B, C'
+  block = labelled.statements('ottawaensis_whiteaves_1897', source='1897_whiteaves')
+  assert '  1897  Whiteaves  syntype: B, C' in block['rendered'].splitlines()
 
 
 def test_specimen_history_without_links_is_what_the_numbers_alone_find(store):

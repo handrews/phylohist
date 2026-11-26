@@ -8,7 +8,7 @@ taxonomies:
     pages:
     - [10, 11]
     material:
-    - label: RVS [Plate 2, Figures 1–4]
+    - labels: RVS [Plate 2, Figures 1–4]
       repository: rievers
       horizon: hunsrueck-slate
       locality: near-kirn-nahe

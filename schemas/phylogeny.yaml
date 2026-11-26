@@ -1715,13 +1715,17 @@ $defs:
     items:
       type: string
       enum: [horizon, locality]
-  entryRefFields:
+  entryRef:
     description: |
-      The fields that name one material entry: its `label`, or one of its
-      numbers (a range endpoint included, or a number inside a run), with
-      `prefix` restricting the match to entries of that prefix. The loader
-      resolves them the way it resolves a bare `of`, within the prefix when
-      one is given.
+      A reference to a material entry on the same node by `label` (one of
+      its `labels`), or by `number` (one of its numbers, a range endpoint
+      included, or a number inside a run) with an optional `prefix`
+      restricting the match to entries of that prefix: the object form of
+      `of`, `castOf` and `fragmentOf`, for when the bare number would match
+      entries under two prefixes. The loader resolves it the way it
+      resolves a bare `of`, within the prefix when one is given.
+    type: object
+    additionalProperties: false
     oneOf:
     - required: [label]
     - required: [number]
@@ -1735,15 +1739,69 @@ $defs:
       prefix:
         type: string
         minLength: 1
-  entryRef:
+  labels:
     description: |
-      A reference to a material entry on the same node by `label`, or by
-      `number` with an optional `prefix`: the object form of `of`, `castOf`
-      and `fragmentOf`, for when the bare number would match entries under
-      two prefixes.
+      The source's own name for a specimen it gives no number ("A", "the
+      Bigsby specimen"), or a list of such names, each a distinct specimen.
+      A run of labels is not written; each is listed.
+    oneOf:
+    - type: string
+      minLength: 1
+    - type: array
+      minItems: 1
+      uniqueItems: true
+      items:
+        type: string
+        minLength: 1
+  sameAsLink:
+    description: |
+      One statement that specimens of this entry are specimens an earlier
+      source cites: `source` is that source's key, and `numbers` (within
+      `prefix`, when given) or `labels` name its entries, each value
+      exactly one entry (a number exactly, else inside a printed run; a
+      label as one of the entry's `labels`). Without `of`, on an entry with
+      several numbers or labels, each value is also this entry's own number
+      or label for the specimen (the same number under another prefix); on
+      an entry with one number or label, or only a `count`, the link names
+      one value, whatever the earlier source called the specimen. `of`
+      names the one number or label of this entry the link speaks for, when
+      the earlier source called it something else, and the link then names
+      one value. The loader checks all of this.
     type: object
-    $ref: "#/$defs/entryRefFields"
-    unevaluatedProperties: false
+    additionalProperties: false
+    required: [source]
+    oneOf:
+    - required: [numbers]
+    - required: [labels]
+    dependentRequired:
+      prefix: [numbers]
+    dependentSchemas:
+      of:
+        properties:
+          numbers:
+            maxItems: 1
+          labels:
+            oneOf:
+            - type: string
+            - type: array
+              maxItems: 1
+    properties:
+      source:
+        $ref: "#/$defs/sourceId"
+      prefix:
+        type: string
+        minLength: 1
+      numbers:
+        type: array
+        minItems: 1
+        uniqueItems: true
+        items:
+          $ref: "#/$defs/printedNumber"
+      labels:
+        $ref: "#/$defs/labels"
+      of:
+        description: The number or label of this entry the link speaks for.
+        $ref: "#/$defs/printedNumber"
   entryRefOrNumber:
     description: |
       A catalog number or label of an entry on the same node, or an
@@ -1755,8 +1813,9 @@ $defs:
     description: |
       One specimen, or one batch of specimens the source cites together, as
       this source cites it. An entry is identified by its numbers,
-      or by the source's own label when it prints none ("A", "the Bigsby
-      specimen"), or by a bare count. Absence of `role` means the source
+      or by the source's own labels when it prints none ("A", "the Bigsby
+      specimen"), or by a bare count; it has `numbers` or `labels`, never
+      both. Absence of `role` means the source
       attaches no type word. On a protologue node (`new: true`) a holotype,
       paratype or syntype entry is this source's own designation; `roleAct`
       is written only for a later designation (a lectotype selected here)
@@ -1765,8 +1824,10 @@ $defs:
     additionalProperties: false
     anyOf:
     - required: [numbers]
-    - required: [label]
+    - required: [labels]
     - required: [count]
+    not:
+      required: [numbers, labels]
     dependentRequired:
       prefix: [numbers]
     properties:
@@ -1796,8 +1857,8 @@ $defs:
         description: How many specimens the entry covers; an integer only, vagueness goes in `notes`.
         type: integer
         minimum: 1
-      label:
-        type: string
+      labels:
+        $ref: "#/$defs/labels"
       role:
         $ref: "#/$defs/role"
       roleAct:
@@ -1887,19 +1948,19 @@ $defs:
         $ref: "#/$defs/entryRefOrNumber"
       sameAs:
         description: |
-          The earlier source's entry this one is the same specimen as, named
-          by that source's key and an `entryRef` (`label`, or `number` with
-          `prefix` picking between entries that carry the same number under
-          two prefixes). It sits on the later entry and always points to an
-          earlier source (or one of the same year). It is this source's own
-          statement unless the entry's `editorial.inferred` lists `sameAs`.
-        type: object
-        $ref: "#/$defs/entryRefFields"
-        unevaluatedProperties: false
-        required: [source]
-        properties:
-          source:
-            $ref: "#/$defs/sourceId"
+          The earlier sources' entries this entry's specimens are the same
+          specimens as: one link or a list of links, each tying one or
+          several of the entry's numbers or labels to entries of one earlier
+          source (`sameAsLink`). It sits on the later entry and always
+          points to an earlier source (or one of the same year). It is this
+          source's own statement unless the entry's `editorial.inferred`
+          lists `sameAs`, which then covers every link.
+        oneOf:
+        - $ref: "#/$defs/sameAsLink"
+        - type: array
+          minItems: 1
+          items:
+            $ref: "#/$defs/sameAsLink"
       parts:
         description: Part names parallel to `numbers` (part, counterpart).
         type: array

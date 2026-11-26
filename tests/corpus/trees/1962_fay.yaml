@@ -30,7 +30,7 @@ taxonomies:
             the specimen Bather selected, which Fay does not say and
             which has not been verified; if it is one of the others it
             is a paralectotype.
-      - label: the syntype lent to Hudson
+      - labels: the syntype lent to Hudson
         role: syntype
         status: lost
       notes: |

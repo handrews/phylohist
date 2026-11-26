@@ -38,16 +38,16 @@ taxonomies:
       pages: 2
       notes: The "n. sp." listing is the figure captions.
       material:
-      - label: 'F. I, 1'
+      - labels: 'F. I, 1'
         horizon: echinosphaerites-bed
         locality: reval
-      - label: 'F. I, 2'
+      - labels: 'F. I, 2'
         horizon: echinosphaerites-bed
         locality: reval
-      - label: 'F. II, 2'
+      - labels: 'F. II, 2'
         horizon: echinosphaerites-bed
         locality: reval
-      - label: 'F. II, 3'
+      - labels: 'F. II, 3'
         horizon: echinosphaerites-bed
         locality: reval
       illustrations:
@@ -96,22 +96,22 @@ taxonomies:
       citedAs: Cyathocystis rhizophora n. sp.
       pages: [2, [5, 7]]
       material:
-      - label: 'F. I, 4'
+      - labels: 'F. I, 4'
         horizon: hemicosmitenkalk
         locality: wassalem
-      - label: 'F. III, 1'
+      - labels: 'F. III, 1'
         horizon: hemicosmitenkalk
         locality: wassalem
-      - label: 'F. III, 2'
+      - labels: 'F. III, 2'
         horizon: hemicosmitenkalk
         locality: wassalem
-      - label: 'F. III, 3'
+      - labels: 'F. III, 3'
         horizon: hemicosmitenkalk
         locality: wassalem
-      - label: 'F. III, 4'
+      - labels: 'F. III, 4'
         horizon: hemicosmitenkalk
         locality: wassalem
-      - label: mehrere Exemplare, 1863
+      - labels: mehrere Exemplare, 1863
         collectedBy: the author
         collectedDate: '1863'
         holder: Volborth'sche Sammlung (jetzt der Akademie der Wissenschaften gehörig)

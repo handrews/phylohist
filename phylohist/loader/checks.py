@@ -38,6 +38,7 @@ MATERIAL_CHECKS = (
   (material.record_tentatives, ('node_records',)),
   (material.range_tentatives, ('node',)),
   (material.cast_refs, ('node',)),
+  (material.label_lists, ('node',)),
   (material.null_material, ('node', 'is_cited')),
 )
 NOMENCLATURE_CHECKS = (

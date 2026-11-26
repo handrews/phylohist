@@ -13,7 +13,7 @@ from pathlib import Path
 
 import pytest
 
-from phylohist.loader import io, material
+from phylohist.loader import checks, io, material
 from phylohist.loader.taxa import Tree
 from tests import support
 
@@ -112,13 +112,13 @@ def _records(horizons=None, localities=None):
 
 
 def test_occurrence_refs_missing_is_error_on_each_side():
-  node = {'material': [{'label': 'A', 'horizon': 'nowhere', 'locality': 'nowhere-else'}]}
+  node = {'material': [{'labels': 'A', 'horizon': 'nowhere', 'locality': 'nowhere-else'}]}
   assert material.occurrence_refs(node, _records(), _records()) == [
     ('error', 'horizon "nowhere" is not defined on the node or the file'),
     ('error', 'locality "nowhere-else" is not defined on the node or the file'),
   ]
   # A horizon key is not looked up among the localities, nor the reverse.
-  node = {'material': [{'label': 'A', 'horizon': 'x'}]}
+  node = {'material': [{'labels': 'A', 'horizon': 'x'}]}
   assert material.occurrence_refs(node, _records(), _records(localities={'x': {}})) == [
     ('error', 'horizon "x" is not defined on the node or the file'),
   ]
@@ -128,9 +128,9 @@ def test_occurrence_refs_missing_is_error_on_each_side():
 
 
 def test_occurrence_refs_resolves_from_node_or_file_with_no_message():
-  node_only = {'material': [{'label': 'A', 'horizon': 'here', 'locality': 'here'}]}
+  node_only = {'material': [{'labels': 'A', 'horizon': 'here', 'locality': 'here'}]}
   assert material.occurrence_refs(node_only, _records({'here': {}}, {'here': {}}), _records()) == []
-  file_only = {'material': [{'label': 'A', 'horizon': 'there', 'locality': 'there'}]}
+  file_only = {'material': [{'labels': 'A', 'horizon': 'there', 'locality': 'there'}]}
   assert (
     material.occurrence_refs(file_only, _records(), _records({'there': {}}, {'there': {}})) == []
   )
@@ -142,7 +142,7 @@ def test_occurrence_refs_resolves_from_node_or_file_with_no_message():
 
 
 def test_occurrence_refs_node_key_shadows_file_key_is_warning_on_each_side():
-  node = {'material': [{'label': 'A', 'horizon': 'here', 'locality': 'here'}]}
+  node = {'material': [{'labels': 'A', 'horizon': 'here', 'locality': 'here'}]}
   records = _records({'here': {}}, {'here': {}})
   assert material.occurrence_refs(node, records, records) == [
     ('warning', 'horizon "here" on the node shadows a file-level horizon'),
@@ -156,7 +156,7 @@ def test_occurrence_refs_node_key_shadows_file_key_is_warning_on_each_side():
 
 
 def test_occurrence_refs_entries_without_a_side_are_quiet():
-  node = {'material': [{'label': 'A', 'horizon': 'h', 'tentative': ['horizon']}, {'count': 1}]}
+  node = {'material': [{'labels': 'A', 'horizon': 'h', 'tentative': ['horizon']}, {'count': 1}]}
   assert material.occurrence_refs(node, _records({'h': {}}), _records()) == []
   assert material.occurrence_refs({}, _records(), _records()) == []
   assert material.occurrence_refs({'occurrences': None}, _records(), _records()) == []
@@ -164,7 +164,7 @@ def test_occurrence_refs_entries_without_a_side_are_quiet():
 
 def test_occurrence_refs_node_record_nothing_on_the_node_refers_to_is_error():
   node = {
-    'material': [{'label': 'A', 'horizon': 'used'}],
+    'material': [{'labels': 'A', 'horizon': 'used'}],
     'occurrences': [{'locality': 'stated'}],
   }
   records = _records({'used': {}, 'stray-horizon': {}}, {'stated': {}, 'stray-locality': {}})
@@ -179,12 +179,12 @@ def test_occurrence_refs_node_record_nothing_on_the_node_refers_to_is_error():
 def test_occurrence_refs_tentative_naming_a_field_the_entry_lacks_is_error():
   node = {
     'material': [
-      {'label': 'A', 'horizon': 'h', 'tentative': ['horizon', 'locality']},
-      {'label': 'B', 'horizon': 'h', 'locality': 'l', 'tentative': ['locality']},
+      {'labels': 'A', 'horizon': 'h', 'tentative': ['horizon', 'locality']},
+      {'labels': 'B', 'horizon': 'h', 'locality': 'l', 'tentative': ['locality']},
       # A null locality is the statement that the source gives none, so
       # there is nothing to query.
-      {'label': 'C', 'horizon': 'h', 'locality': None, 'tentative': ['locality']},
-      {'label': 'D', 'horizon': None, 'locality': 'l', 'tentative': ['horizon']},
+      {'labels': 'C', 'horizon': 'h', 'locality': None, 'tentative': ['locality']},
+      {'labels': 'D', 'horizon': None, 'locality': 'l', 'tentative': ['horizon']},
     ],
     'occurrences': [{'horizon': 'h', 'tentative': ['locality']}],
   }
@@ -200,10 +200,10 @@ def test_occurrence_refs_tentative_naming_a_field_the_entry_lacks_is_error():
 def test_occurrence_refs_reads_a_null_horizon_or_locality_as_no_reference():
   node = {
     'material': [
-      {'label': 'A', 'locality': None},
-      {'label': 'B', 'horizon': 'h', 'locality': None, 'tentative': ['horizon']},
-      {'label': 'C', 'horizon': None, 'locality': 'l', 'tentative': ['locality']},
-      {'label': 'D', 'horizon': None, 'locality': None},
+      {'labels': 'A', 'locality': None},
+      {'labels': 'B', 'horizon': 'h', 'locality': None, 'tentative': ['horizon']},
+      {'labels': 'C', 'horizon': None, 'locality': 'l', 'tentative': ['locality']},
+      {'labels': 'D', 'horizon': None, 'locality': None},
     ]
   }
   assert material.occurrence_refs(node, _records({'h': {}}, {'l': {}}), _records()) == []
@@ -343,7 +343,7 @@ def test_unreferenced_file_records_warns_on_the_unused_one_of_each_side():
     'horizons': {'used': {}, 'unused-one': {}},
     'localities': {'used': {}, 'unused-two': {}},
     'taxonomies': [
-      {'taxon': 'a', 'material': [{'label': 'A', 'horizon': 'used', 'locality': 'used'}]}
+      {'taxon': 'a', 'material': [{'labels': 'A', 'horizon': 'used', 'locality': 'used'}]}
     ],
   }
   assert material.unreferenced_file_records(document) == [
@@ -364,7 +364,7 @@ def test_unreferenced_file_records_an_occurrence_refers_too():
 def test_unreferenced_file_records_all_referenced_is_quiet():
   document = {
     'horizons': {'used': {}},
-    'taxonomies': [{'taxon': 'a', 'material': [{'label': 'A', 'horizon': 'used'}]}],
+    'taxonomies': [{'taxon': 'a', 'material': [{'labels': 'A', 'horizon': 'used'}]}],
   }
   assert material.unreferenced_file_records(document) == []
 
@@ -373,7 +373,7 @@ def test_unreferenced_file_records_all_referenced_is_quiet():
 
 
 def test_figure_refs_label_match_is_quiet():
-  node = {'material': [{'label': 'A'}], 'illustrations': [{'plate': 1, 'of': 'A'}]}
+  node = {'material': [{'labels': 'A'}], 'illustrations': [{'plate': 1, 'of': 'A'}]}
   assert material.figure_refs(node) == []
 
 
@@ -386,7 +386,7 @@ def test_figure_refs_range_endpoint_matches():
 
 
 def test_figure_refs_no_match_is_error():
-  node = {'material': [{'label': 'A'}], 'illustrations': [{'plate': 1, 'of': 'B'}]}
+  node = {'material': [{'labels': 'A'}], 'illustrations': [{'plate': 1, 'of': 'B'}]}
   assert material.figure_refs(node) == [
     ('error', 'figure "of" value "B" matches 0 material entries, not 1'),
   ]
@@ -394,7 +394,7 @@ def test_figure_refs_no_match_is_error():
 
 def test_figure_refs_several_matches_is_error():
   node = {
-    'material': [{'label': 'A'}, {'numbers': ['A']}],
+    'material': [{'labels': 'A'}, {'numbers': ['A']}],
     'illustrations': [{'plate': 1, 'of': 'A'}],
   }
   assert material.figure_refs(node) == [
@@ -408,14 +408,14 @@ def test_figure_refs_several_matches_is_error():
 
 def test_figure_refs_list_of_and_no_of_field():
   node = {
-    'material': [{'label': 'A'}, {'label': 'B'}],
+    'material': [{'labels': 'A'}, {'labels': 'B'}],
     'illustrations': [{'plate': 1, 'of': ['A', 'B']}, {'plate': 2}],
   }
   assert material.figure_refs(node) == []
 
 
 def test_figure_refs_cited_entry_is_not_read():
-  node = {'material': [{'label': 'A'}], 'illustrations': [{'plate': 1, 'of': 'B'}]}
+  node = {'material': [{'labels': 'A'}], 'illustrations': [{'plate': 1, 'of': 'B'}]}
   assert material.figure_refs(node, is_cited=True) == []
 
 
@@ -493,7 +493,7 @@ def test_figure_refs_object_of_disambiguates_prefix():
     'material': [
       {'prefix': 'GK', 'numbers': [112]},
       {'prefix': 'GTB', 'numbers': [112, [200, 210]]},
-      {'label': 'the slab'},
+      {'labels': 'the slab'},
     ],
     'illustrations': [{'plate': 1, 'of': 112}],
   }
@@ -543,7 +543,7 @@ def test_cast_refs_matches_a_number_label_or_range_endpoint():
       {'prefix': 'MCZ', 'numbers': ['629A'], 'castOf': 199},
       {'prefix': 'PE', 'numbers': [199]},
       {'prefix': 'MCZ', 'numbers': [700], 'castOf': 'the holotype'},
-      {'label': 'the holotype'},
+      {'labels': 'the holotype'},
       {'prefix': 'MCZ', 'numbers': [800], 'castOf': 205},
       {'prefix': 'PE', 'numbers': [[201, 205]]},
     ],
@@ -577,7 +577,7 @@ def test_cast_refs_several_matches_is_error():
     'material': [
       {'prefix': 'MCZ', 'numbers': ['629A'], 'castOf': 199},
       {'prefix': 'PE', 'numbers': [199]},
-      {'label': '199'},
+      {'labels': '199'},
     ],
   }
   assert material.cast_refs(node) == [
@@ -608,7 +608,7 @@ def test_cast_and_fragment_refs_object_form():
     {'prefix': 'MCZ', 'numbers': [2], 'fragmentOf': {'number': 112, 'prefix': 'QQ'}},
     {'prefix': 'MCZ', 'numbers': [3], 'fragmentOf': {'number': 3, 'prefix': 'MCZ'}},
     {'prefix': 'MCZ', 'numbers': [4], 'castOf': {'label': 'A'}, 'fragmentOf': {'label': 'A'}},
-    {'label': 'A'},
+    {'labels': 'A'},
   )
   assert material.cast_refs(node) == [
     (
@@ -622,7 +622,7 @@ def test_cast_and_fragment_refs_object_form():
 
 
 def test_cast_refs_absent_castof_and_absent_material_are_quiet():
-  assert material.cast_refs({'material': [{'label': 'A'}]}) == []
+  assert material.cast_refs({'material': [{'labels': 'A'}]}) == []
   assert material.cast_refs({}) == []
 
 
@@ -741,7 +741,7 @@ def test_null_material_null_beside_figure_of_is_error():
 
 
 def test_null_material_not_null_beside_figure_of_is_quiet():
-  node = {'material': [{'label': 'A'}], 'illustrations': [{'plate': 1, 'of': 'A'}]}
+  node = {'material': [{'labels': 'A'}], 'illustrations': [{'plate': 1, 'of': 'A'}]}
   assert material.null_material(node, is_cited=False) == []
 
 
@@ -1034,12 +1034,12 @@ def test_load_reports_the_occurrence_checks(records, caplog):
             'localities': {'shared': {'location': ['C2']}, 'stray-l': {'location': ['E']}},
             'material': [
               {
-                'label': 'A',
+                'labels': 'A',
                 'horizon': 'shared',
                 'locality': 'shared',
                 'tentative': ['horizon', 'locality'],
               },
-              {'label': 'B', 'horizon': 'shared', 'tentative': ['locality']},
+              {'labels': 'B', 'horizon': 'shared', 'tentative': ['locality']},
             ],
             'occurrences': [{'horizon': 'shared', 'tentative': ['locality']}],
           },
@@ -1369,7 +1369,7 @@ def test_number_entries_an_explicit_repository_is_a_registry_key_reported_once(n
   node = _node(
     {'numbers': ['1'], 'repository': 'nope'},
     # A label entry has no numbers to check, but its repository is still read.
-    {'label': 'A', 'repository': 'nowhere'},
+    {'labels': 'A', 'repository': 'nowhere'},
     # `GM` is a prefix, not a key: only `gm` is.
     {'prefix': 'GM', 'numbers': [2], 'repository': 'GM'},
     {'count': 1, 'repository': 'gm'},
@@ -1503,7 +1503,7 @@ def test_locality_objects_reads_material_entries(numbered):
         {'prefix': 'USGS', 'number': '4148 CO'},
       ],
     },
-    {'label': 'A'},
+    {'labels': 'A'},
   ]
   prefixes = {'USGS': 'usgs-l', 'MCZ': 'mcz'}
   assert material.locality_objects(None, prefixes, None, numbered, entries) == [
@@ -1524,17 +1524,19 @@ def test_locality_objects_reads_material_entries(numbered):
 
 def test_entries_named_by_label_number_or_integer():
   entries = [
-    {'prefix': 'MCZ', 'numbers': ['581A', 582, 'KR-2'], 'label': 'The Type'},
+    {'prefix': 'MCZ', 'numbers': ['581A', 582, 'KR-2']},
     {'prefix': 'MCZ', 'numbers': [600]},
+    {'labels': ['The Type', 'Other']},
   ]
-  assert material.entries_named(entries, 'The Type') == entries[:1]
-  assert material.entries_named(entries, 'the  type') == entries[:1]
+  assert material.entries_named(entries, 'The Type') == entries[2:]
+  assert material.entries_named(entries, 'the  type') == entries[2:]
+  assert material.entries_named(entries, 'other') == entries[2:]
   assert material.entries_named(entries, '581A') == entries[:1]
   assert material.entries_named(entries, '581a') == entries[:1]
   assert material.entries_named(entries, 582) == entries[:1]
   assert material.entries_named(entries, '582') == entries[:1]
   assert material.entries_named(entries, 'kr 2') == entries[:1]
-  assert material.entries_named(entries, 600) == entries[1:]
+  assert material.entries_named(entries, 600) == entries[1:2]
   assert material.entries_named(entries, 601) == []
   # The prefix is no part of a number.
   assert material.entries_named(entries, 'MCZ 600') == []
@@ -1660,7 +1662,7 @@ def test_schema_rejects_a_malformed_or_mixed_entry(entry):
   ],
 )
 def test_schema_rejects_a_malformed_prefix_map_or_locality_number(extra):
-  assert not _schema_accepts(_numbers_document({'label': 'A'}, **extra))
+  assert not _schema_accepts(_numbers_document({'labels': 'A'}, **extra))
 
 
 def _node_document(node, **extra):
@@ -1697,8 +1699,8 @@ def test_schema_accepts_horizons_localities_occurrences_and_tentative_lists():
         {'locality': 'l'},
       ],
       'material': [
-        {'label': 'A', 'horizon': 'h', 'locality': 'l', 'tentative': ['horizon', 'locality']},
-        {'label': 'B', 'locality': 'l', 'tentative': ['locality']},
+        {'labels': 'A', 'horizon': 'h', 'locality': 'l', 'tentative': ['horizon', 'locality']},
+        {'labels': 'B', 'locality': 'l', 'tentative': ['locality']},
       ],
       'ranges': [
         {
@@ -1712,12 +1714,12 @@ def test_schema_accepts_horizons_localities_occurrences_and_tentative_lists():
   )
   assert _schema_accepts(document)
   assert _schema_accepts(_node_document({'occurrences': None}))
-  assert _schema_accepts(_node_document({'material': [{'label': 'A'}]}, unused=['occurrences']))
+  assert _schema_accepts(_node_document({'material': [{'labels': 'A'}]}, unused=['occurrences']))
   # An entry's null `horizon` or `locality`: the source gives none for the specimen.
-  assert _schema_accepts(_node_document({'material': [{'label': 'A', 'locality': None}]}))
-  assert _schema_accepts(_node_document({'material': [{'label': 'A', 'horizon': None}]}))
+  assert _schema_accepts(_node_document({'material': [{'labels': 'A', 'locality': None}]}))
+  assert _schema_accepts(_node_document({'material': [{'labels': 'A', 'horizon': None}]}))
   assert _schema_accepts(
-    _node_document({'material': [{'label': 'A', 'horizon': None, 'locality': None}]})
+    _node_document({'material': [{'labels': 'A', 'horizon': None, 'locality': None}]})
   )
 
 
@@ -1725,8 +1727,8 @@ def test_schema_accepts_horizons_localities_occurrences_and_tentative_lists():
   'document',
   [
     # The one `context` record, on an entry and on a node and a file, is gone.
-    _node_document({'material': [{'label': 'A', 'context': 'x'}]}),
-    _node_document({'material': [{'label': 'A', 'context': {'key': 'x', 'tentative': True}}]}),
+    _node_document({'material': [{'labels': 'A', 'context': 'x'}]}),
+    _node_document({'material': [{'labels': 'A', 'context': {'key': 'x', 'tentative': True}}]}),
     _node_document({'contexts': {'x': {'unit': ['A']}}}),
     _node_document({'contexts': None}),
     _node_document({}, contexts={'x': {'unit': ['A']}}),
@@ -1742,13 +1744,13 @@ def test_schema_accepts_horizons_localities_occurrences_and_tentative_lists():
     _node_document({'occurrences': [{'tentative': ['horizon']}]}),
     _node_document({'occurrences': [{'horizon': 'h', 'unit': ['A']}]}),
     # `tentative` on an entry or an occurrence names a side, nothing else.
-    _node_document({'material': [{'label': 'A', 'horizon': 'h', 'tentative': ['role']}]}),
-    _node_document({'material': [{'label': 'A', 'horizon': 'h', 'tentative': True}]}),
+    _node_document({'material': [{'labels': 'A', 'horizon': 'h', 'tentative': ['role']}]}),
+    _node_document({'material': [{'labels': 'A', 'horizon': 'h', 'tentative': True}]}),
     _node_document({'occurrences': [{'horizon': 'h', 'tentative': ['unit']}]}),
     _node_document({'occurrences': [{'horizon': 'h', 'tentative': ['horizon', 'horizon']}]}),
     # The entry's plain keys are strings, not the old object.
-    _node_document({'material': [{'label': 'A', 'horizon': {'key': 'h'}}]}),
-    _node_document({'material': [{'label': 'A', 'locality': ['l']}]}),
+    _node_document({'material': [{'labels': 'A', 'horizon': {'key': 'h'}}]}),
+    _node_document({'material': [{'labels': 'A', 'locality': ['l']}]}),
     # The bare `inferred` object is gone from a range, a horizon and a locality.
     _node_document(
       {'ranges': [{'series': 'Middle Cambrian', 'inferred': {'series': 'Middle Cambrian'}}]}
@@ -1882,19 +1884,26 @@ def _same_as_errors(documents, years=YEARS):
 
 def test_same_as_by_label_is_clean():
   documents = {
-    '1897_whiteaves': _same_as_document({'label': 'first specimen'}, {'label': 'second'}),
+    '1897_whiteaves': _same_as_document({'labels': 'first specimen'}, {'labels': 'second'}),
     '1914c_bather': _same_as_document(
-      {'label': 'A', 'sameAs': {'source': '1897_whiteaves', 'label': 'First  Specimen'}}
+      {'labels': 'A', 'sameAs': {'source': '1897_whiteaves', 'labels': 'First  Specimen'}}
     ),
   }
   assert _same_as_errors(documents) == []
+  # The same link as a one-item list, and in a list of links, is the same.
+  link = {'source': '1897_whiteaves', 'labels': ['First  Specimen']}
+  documents['1914c_bather'] = _same_as_document({'labels': 'A', 'sameAs': [link]})
+  assert _same_as_errors(documents) == []
   # Every node of every taxonomy and phylogeny is read.
-  link = {'source': '1897_whiteaves', 'label': 'nope'}
+  link = {'source': '1897_whiteaves', 'labels': 'nope'}
   documents['1914c_bather']['phylogenies'] = [
-    {'treeType': 'cladogram', 'tree': {'taxon': 'a', 'material': [{'label': 'Q', 'sameAs': link}]}}
+    {
+      'treeType': 'cladogram',
+      'tree': {'taxon': 'a', 'material': [{'labels': 'Q', 'sameAs': link}]},
+    }
   ]
   assert _same_as_errors(documents) == [
-    '1914c_bather at 1: `sameAs` matches 0 entries in "1897_whiteaves", not 1'
+    '1914c_bather at 1: `sameAs` "nope" matches 0 entries in "1897_whiteaves", not 1'
   ]
 
 
@@ -1904,46 +1913,231 @@ def test_same_as_by_number_exact_before_a_run_and_by_prefix():
     {'prefix': 'GSC', 'numbers': [105]},
     {'prefix': 'GSC', 'numbers': [5]},
     {'prefix': 'ROM', 'numbers': ['5']},
-    {'label': '777'},
+    {'labels': '777'},
   )
 
   def check(link):
-    entry = {'label': 'A', 'sameAs': {'source': '1897_whiteaves', **link}}
+    entry = {'labels': 'A', 'sameAs': {'source': '1897_whiteaves', **link}}
     return _same_as_errors({'1897_whiteaves': early, '1914c_bather': _same_as_document(entry)})
 
   # An exact number first: 105 is a number of the second entry and in the first's run.
-  assert check({'number': 105}) == []
-  assert check({'number': '102', 'prefix': 'GSC'}) == []
-  assert check({'number': 5, 'prefix': 'ROM'}) == []
+  assert check({'numbers': [105]}) == []
+  assert check({'numbers': ['102'], 'prefix': 'GSC'}) == []
+  assert check({'numbers': [5], 'prefix': 'ROM'}) == []
   # The prefix is what tells two entries with one number apart.
-  assert check({'number': 5}) == [
-    '1914c_bather at 0/children/0: `sameAs` matches 2 entries in "1897_whiteaves", not 1'
+  assert check({'numbers': [5]}) == [
+    '1914c_bather at 0/children/0: `sameAs` "5" matches 2 entries in "1897_whiteaves", not 1'
   ]
-  assert len(check({'number': 999})) == 1
+  assert check({'numbers': [999], 'prefix': 'GSC'}) == [
+    '1914c_bather at 0/children/0: `sameAs` "GSC 999" matches 0 entries in "1897_whiteaves", not 1'
+  ]
   # A number names no label; a label names no number.
-  assert len(check({'number': 777})) == 1
-  assert len(check({'label': '105'})) == 1
-  assert check({'label': '777'}) == []
+  assert len(check({'numbers': [777]})) == 1
+  assert len(check({'labels': '105'})) == 1
+  assert check({'labels': '777'}) == []
 
 
 def test_same_as_label_matching_nothing_or_several_is_an_error():
-  early = _same_as_document({'label': 'A'}, {'label': 'a'})
+  early = _same_as_document({'labels': 'A'}, {'labels': 'a'})
   documents = {
     '1897_whiteaves': early,
     '1914c_bather': _same_as_document(
-      {'label': 'Z', 'sameAs': {'source': '1897_whiteaves', 'label': 'A'}},
-      {'label': 'Y', 'sameAs': {'source': '1897_whiteaves', 'label': 'B'}},
+      {'labels': 'Z', 'sameAs': {'source': '1897_whiteaves', 'labels': 'A'}},
+      {'labels': 'Y', 'sameAs': {'source': '1897_whiteaves', 'labels': 'B'}},
     ),
   }
   assert _same_as_errors(documents) == [
-    '1914c_bather at 0/children/0: `sameAs` matches 2 entries in "1897_whiteaves", not 1',
-    '1914c_bather at 0/children/0: `sameAs` matches 0 entries in "1897_whiteaves", not 1',
+    '1914c_bather at 0/children/0: `sameAs` "A" matches 2 entries in "1897_whiteaves", not 1',
+    '1914c_bather at 0/children/0: `sameAs` "B" matches 0 entries in "1897_whiteaves", not 1',
   ]
+
+
+def test_same_as_links_of_one_entry_to_two_earlier_sources_and_each_target_value():
+  documents = {
+    '1897_whiteaves': _same_as_document({'prefix': 'GSC', 'numbers': [1]}),
+    '1914c_bather': _same_as_document({'prefix': 'GSC', 'numbers': [2]}),
+    '1962_fay': _same_as_document(
+      {
+        'prefix': 'MCZ',
+        'numbers': [1, 2],
+        'sameAs': [
+          {'source': '1897_whiteaves', 'prefix': 'GSC', 'numbers': [1]},
+          {'source': '1914c_bather', 'prefix': 'GSC', 'numbers': [2]},
+        ],
+      }
+    ),
+  }
+  assert _same_as_errors(documents) == []
+  # Each target value names exactly one entry: the one that names none is
+  # reported on its own, with the target it was asked of.
+  documents['1962_fay'] = _same_as_document(
+    {
+      'prefix': 'MCZ',
+      'numbers': [1, 2],
+      'sameAs': [
+        {'source': '1897_whiteaves', 'prefix': 'GSC', 'numbers': [1, 2]},
+        {'source': '1914c_bather', 'prefix': 'GSC', 'numbers': [2]},
+      ],
+    }
+  )
+  assert _same_as_errors(documents) == [
+    '1962_fay at 0/children/0: `sameAs` "GSC 2" matches 0 entries in "1897_whiteaves", not 1'
+  ]
+  # The pairing errors come first and are prefixed with the source and path;
+  # a link that has them still has its source checked.
+  documents['1962_fay'] = _same_as_document(
+    {
+      'prefix': 'MCZ',
+      'numbers': [1, 2],
+      'sameAs': [
+        {'source': '1897_whiteaves', 'prefix': 'GSC', 'numbers': [1, 7]},
+        {'source': '1899_nobody', 'prefix': 'GSC', 'numbers': [2]},
+      ],
+    }
+  )
+  assert _same_as_errors(documents) == [
+    '1962_fay at 0/children/0: `sameAs` names "7", not among the entry\'s own numbers; '
+    '`of` says which of them it is',
+    '1962_fay at 0/children/0: `sameAs` names "1899_nobody", which has no tree',
+  ]
+
+
+# `same_as_pairs`: which specimen of the entry each target value belongs to.
+
+
+def _pairs(entry, link):
+  return material.same_as_pairs(entry, {'source': 'x_a', **link})
+
+
+def test_same_as_pairs_of_an_entry_of_one_specimen_names_one_target():
+  assert _pairs({'prefix': 'MCZ', 'numbers': [1]}, {'numbers': [7], 'prefix': 'GSC'}) == (
+    [(1, {'number': 7, 'prefix': 'GSC'})],
+    [],
+  )
+  assert _pairs({'prefix': 'MCZ', 'numbers': [1]}, {'numbers': ['7']}) == (
+    [(1, {'number': '7'})],
+    [],
+  )
+  assert _pairs({'labels': 'A'}, {'labels': 'first'}) == ([('A', {'label': 'first'})], [])
+  assert _pairs({'labels': ['A']}, {'labels': ['first']}) == ([('A', {'label': 'first'})], [])
+  # A label can be tied to a number and a number to a label.
+  assert _pairs({'labels': 'A'}, {'numbers': [7]}) == ([('A', {'number': 7})], [])
+  assert _pairs({'numbers': [1]}, {'labels': 'first'}) == ([(1, {'label': 'first'})], [])
+  # A bare count has no number or label of its own.
+  assert _pairs({'count': 3}, {'labels': 'first'}) == ([(None, {'label': 'first'})], [])
+  assert _pairs({'count': 3}, {'numbers': [7], 'prefix': 'GSC'}) == (
+    [(None, {'number': 7, 'prefix': 'GSC'})],
+    [],
+  )
+  # More than one target is an error and gives no pair.
+  assert _pairs({'numbers': [1]}, {'numbers': [7, 8]}) == (
+    [],
+    ['`sameAs` on an entry of one specimen names 2 earlier entries, not 1'],
+  )
+  assert _pairs({'count': 2}, {'labels': ['a', 'b', 'c']}) == (
+    [],
+    ['`sameAs` on an entry of one specimen names 3 earlier entries, not 1'],
+  )
+
+
+def test_same_as_pairs_of_a_several_number_entry_pair_each_number_with_itself():
+  entry = {'prefix': 'MCZ', 'numbers': [1, 2, 3]}
+  assert _pairs(entry, {'numbers': [1, 3], 'prefix': 'GSC'}) == (
+    [(1, {'number': 1, 'prefix': 'GSC'}), (3, {'number': 3, 'prefix': 'GSC'})],
+    [],
+  )
+  # The own side is folded as a number is, so a string matches an integer.
+  assert _pairs(entry, {'numbers': ['2']}) == ([('2', {'number': '2'})], [])
+  # A number inside the entry's own run is one of its own; so is an end.
+  run = {'prefix': 'MCZ', 'numbers': [[10, 20]]}
+  assert _pairs(run, {'numbers': [15, 20]}) == ([(15, {'number': 15}), (20, {'number': 20})], [])
+  # A number that is not the entry's own is named in the error, all of them.
+  assert _pairs(entry, {'numbers': [1, 8, 9], 'prefix': 'GSC'}) == (
+    [],
+    ['`sameAs` names "8", "9", not among the entry\'s own numbers; `of` says which of them it is'],
+  )
+  assert _pairs(run, {'numbers': [25]})[1] == [
+    '`sameAs` names "25", not among the entry\'s own numbers; `of` says which of them it is'
+  ]
+  # A label link on an entry of several numbers is read against the labels.
+  assert _pairs(entry, {'labels': 'A'}) == (
+    [],
+    ['`sameAs` names "A", not among the entry\'s own labels; `of` says which of them it is'],
+  )
+
+
+def test_same_as_pairs_of_a_several_label_entry_pair_each_label_with_itself():
+  entry = {'labels': ['B', 'C']}
+  assert _pairs(entry, {'labels': ['b', 'C']}) == (
+    [('b', {'label': 'b'}), ('C', {'label': 'C'})],
+    [],
+  )
+  assert _pairs(entry, {'labels': 'B'}) == ([('B', {'label': 'B'})], [])
+  assert _pairs(entry, {'labels': ['B', 'Z']}) == (
+    [],
+    ['`sameAs` names "Z", not among the entry\'s own labels; `of` says which of them it is'],
+  )
+  assert _pairs(entry, {'numbers': [1]})[1] == [
+    '`sameAs` names "1", not among the entry\'s own numbers; `of` says which of them it is'
+  ]
+
+
+def test_same_as_pairs_with_of_name_the_own_specimen():
+  entry = {'prefix': 'MCZ', 'numbers': [1, 2]}
+  assert _pairs(entry, {'numbers': [7], 'prefix': 'GSC', 'of': 2}) == (
+    [(2, {'number': 7, 'prefix': 'GSC'})],
+    [],
+  )
+  assert _pairs(entry, {'labels': 'first', 'of': '1'}) == ([('1', {'label': 'first'})], [])
+  assert _pairs({'labels': ['B', 'C']}, {'labels': ['first'], 'of': 'c'}) == (
+    [('c', {'label': 'first'})],
+    [],
+  )
+  # An own number inside a run is named by `of`.
+  assert _pairs({'numbers': [[10, 20]]}, {'numbers': [7], 'of': 15})[0] == [(15, {'number': 7})]
+  # `of` that is not the entry's, and a link that names several targets.
+  assert _pairs(entry, {'numbers': [7], 'of': 9}) == (
+    [],
+    ['`sameAs` has `of` "9", which is not a number or label of the entry'],
+  )
+  assert _pairs(entry, {'numbers': [7, 8], 'of': 1}) == (
+    [],
+    ['`sameAs` with `of` names 2 earlier entries, not 1'],
+  )
+  assert _pairs(entry, {'numbers': [7, 8], 'of': 9}) == (
+    [],
+    [
+      '`sameAs` has `of` "9", which is not a number or label of the entry',
+      '`sameAs` with `of` names 2 earlier entries, not 1',
+    ],
+  )
+  # `of` is checked against the entry even when it has one specimen.
+  assert _pairs({'labels': 'A'}, {'labels': 'first', 'of': 'B'})[1] == [
+    '`sameAs` has `of` "B", which is not a number or label of the entry'
+  ]
+
+
+def test_same_as_pairs_of_a_link_with_neither_numbers_nor_labels_is_empty():
+  # The schema reports it; the pairing has nothing to say.
+  assert _pairs({'numbers': [1, 2]}, {}) == ([], [])
+  assert _pairs({'labels': 'A'}, {'of': 'A'}) == ([], [])
+
+
+def test_same_as_list_and_entry_labels_read_either_written_form():
+  link = {'source': 'x_a', 'labels': 'A'}
+  assert material.same_as_list({'sameAs': link}) == [link]
+  assert material.same_as_list({'sameAs': [link, link]}) == [link, link]
+  assert material.same_as_list({'numbers': [1]}) == []
+  assert material.entry_labels({'labels': 'A'}) == ['A']
+  assert material.entry_labels({'labels': ['A', 'B']}) == ['A', 'B']
+  assert material.entry_labels({'numbers': [1]}) == []
+  # The link of a `sameAs` reads the same way.
+  assert material.entry_labels(link) == ['A']
 
 
 def test_same_as_source_with_no_tree_or_the_entrys_own_source_is_an_error():
   def entry(source):
-    return _same_as_document({'label': 'A', 'sameAs': {'source': source, 'label': 'A'}})
+    return _same_as_document({'labels': 'A', 'sameAs': {'source': source, 'labels': 'A'}})
 
   documents = {'1914c_bather': entry('1897_whiteaves'), '1962_fay': entry('1962_fay')}
   assert _same_as_errors(documents) == [
@@ -1954,9 +2148,9 @@ def test_same_as_source_with_no_tree_or_the_entrys_own_source_is_an_error():
 
 def test_same_as_pointing_at_a_later_source_is_an_error_but_equal_years_are_allowed():
   def entry(source):
-    return _same_as_document({'label': 'A', 'sameAs': {'source': source, 'label': 'A'}})
+    return _same_as_document({'labels': 'A', 'sameAs': {'source': source, 'labels': 'A'}})
 
-  target = _same_as_document({'label': 'A'})
+  target = _same_as_document({'labels': 'A'})
   later = {'1897_whiteaves': entry('1914c_bather'), '1914c_bather': target}
   assert _same_as_errors(later) == [
     '1897_whiteaves at 0/children/0: `sameAs` points at a later source'
@@ -1973,9 +2167,9 @@ def test_the_loader_reports_same_as_links_across_the_corpus(records, caplog):
     'repositories': {},
     'trees': {
       '1914c_bather': _same_as_document(
-        {'label': 'A', 'sameAs': {'source': '1897_whiteaves', 'label': 'nope'}}
+        {'labels': 'A', 'sameAs': {'source': '1897_whiteaves', 'labels': 'nope'}}
       ),
-      '1897_whiteaves': _same_as_document({'label': 'first'}),
+      '1897_whiteaves': _same_as_document({'labels': 'first'}),
     },
   }
   with caplog.at_level(logging.WARNING, logger='phylohist'):
@@ -1983,27 +2177,140 @@ def test_the_loader_reports_same_as_links_across_the_corpus(records, caplog):
   errors = [r.getMessage() for r in caplog.records if r.levelno == logging.ERROR]
   # The corpus's own years come from the source records, 1897 before 1914.
   assert errors == [
-    '1914c_bather at 0/children/0: `sameAs` matches 0 entries in "1897_whiteaves", not 1'
+    '1914c_bather at 0/children/0: `sameAs` "nope" matches 0 entries in "1897_whiteaves", not 1'
+  ]
+
+
+def test_label_lists_report_two_labels_of_one_entry_that_fold_alike():
+  node = _node({'labels': ['A', 'B']}, {'labels': 'A'}, {'labels': ['C', 'c', 'D', 'd']})
+  assert material.label_lists(node) == [
+    ('error', 'label "c" is listed twice on one material entry'),
+    ('error', 'label "d" is listed twice on one material entry'),
+  ]
+  # The same label on two entries is the figure check's, and a bare label is one.
+  assert material.label_lists(_node({'labels': 'A'}, {'labels': ['A']}, {'numbers': [1]})) == []
+  assert material.label_lists({}) == []
+  assert (material.label_lists, ('node',)) in checks.MATERIAL_CHECKS
+
+
+def test_a_figure_cast_or_fragment_may_name_one_label_of_a_several_label_entry():
+  entries = [{'labels': ['B', 'C']}, {'labels': 'D', 'castOf': 'C', 'fragmentOf': {'label': 'b'}}]
+  node = {
+    'material': entries,
+    'illustrations': [
+      {'plate': 1, 'of': 'B'},
+      {'plate': 2, 'of': {'label': 'C'}},
+      {'plate': 3, 'of': ['b', {'label': 'c'}, 'D']},
+    ],
+  }
+  assert material.figure_refs(node) == []
+  assert material.cast_refs(node) == []
+  assert material.entries_named(entries, 'c') == entries[:1]
+  assert material.entries_named(entries, {'label': 'B'}) == entries[:1]
+  assert material.entries_named(entries, {'label': 'E'}) == []
+  # A label two entries share matches both, and the message says how to pick.
+  node['material'] = [{'labels': ['B', 'C']}, {'labels': ['C', 'E']}]
+  node['illustrations'] = [{'plate': 1, 'of': 'C'}]
+  assert material.figure_refs(node) == [
+    (
+      'error',
+      'figure "of" value "C" matches 2 material entries, not 1; '
+      '`{number, prefix}` or `{label}` picks one',
+    )
   ]
 
 
 def test_schema_accepts_and_rejects_same_as():
-  def entry(link):
-    return _numbers_document({'label': 'A', 'sameAs': link})
+  def entry(link, **fields):
+    return _numbers_document({'labels': 'A', 'sameAs': link, **fields})
 
-  assert _schema_accepts(entry({'source': '1897_whiteaves', 'label': 'first specimen'}))
-  assert _schema_accepts(entry({'source': '1897_whiteaves', 'number': 752}))
-  assert _schema_accepts(entry({'source': '1897_whiteaves', 'number': '752A', 'prefix': 'GSC'}))
+  one = {'source': '1897_whiteaves', 'labels': 'first specimen'}
+  assert _schema_accepts(entry(one))
+  assert _schema_accepts(entry([one]))
+  assert _schema_accepts(entry({'source': '1897_whiteaves', 'labels': ['first', 'second']}))
+  assert _schema_accepts(entry({'source': '1897_whiteaves', 'numbers': [752]}))
+  assert _schema_accepts(entry({'source': '1897_whiteaves', 'numbers': ['752A', 5, '6']}))
+  prefixed = {'source': '1897_whiteaves', 'numbers': ['752A'], 'prefix': 'GSC'}
+  assert _schema_accepts(entry(prefixed))
+  assert _schema_accepts(entry([prefixed, one, {'source': '1914c_bather', 'numbers': [1]}]))
+  # `of` names the number or label of the entry the link speaks for.
+  assert _schema_accepts(entry({**prefixed, 'of': 'B'}))
+  assert _schema_accepts(entry({**one, 'of': 3}))
+  assert _schema_accepts(entry({'source': '1897_whiteaves', 'labels': ['first'], 'of': 'B'}))
+  assert _schema_accepts(entry({'source': '1897_whiteaves', 'numbers': [1], 'of': '1'}))
   for bad in (
-    {'label': 'first specimen'},
+    # The old shapes.
+    {'source': '1897_whiteaves', 'label': 'first specimen'},
+    {'source': '1897_whiteaves', 'number': 752},
+    {'source': '1897_whiteaves', 'number': '752A', 'prefix': 'GSC'},
+    # Both or neither of `numbers` and `labels`.
+    {'source': '1897_whiteaves', 'labels': 'A', 'numbers': [1]},
     {'source': '1897_whiteaves'},
-    {'source': '1897_whiteaves', 'label': 'A', 'number': 1},
-    {'source': '1897_whiteaves', 'label': 'A', 'prefix': 'GSC'},
-    {'source': 'Not A Key', 'label': 'A'},
-    {'source': '1897_whiteaves', 'label': 'A', 'other': 1},
-    {'source': '1897_whiteaves', 'number': 1.5},
+    {'source': '1897_whiteaves', 'prefix': 'GSC'},
+    {'source': '1897_whiteaves', 'of': 'A'},
+    # `prefix` goes with `numbers`.
+    {'source': '1897_whiteaves', 'labels': 'A', 'prefix': 'GSC'},
+    {'source': '1897_whiteaves', 'numbers': [1], 'prefix': ''},
+    # No run, no repeat, no empty list.
+    {'source': '1897_whiteaves', 'numbers': [[1, 5]]},
+    {'source': '1897_whiteaves', 'numbers': [1, 1]},
+    {'source': '1897_whiteaves', 'numbers': []},
+    {'source': '1897_whiteaves', 'numbers': 1},
+    {'source': '1897_whiteaves', 'numbers': [1.5]},
+    {'source': '1897_whiteaves', 'labels': []},
+    {'source': '1897_whiteaves', 'labels': ['A', 'A']},
+    {'source': '1897_whiteaves', 'labels': ['A', ['B']]},
+    {'source': '1897_whiteaves', 'labels': ''},
+    # `of` names one target.
+    {'source': '1897_whiteaves', 'numbers': [1, 2], 'of': 1},
+    {'source': '1897_whiteaves', 'labels': ['A', 'B'], 'of': 'A'},
+    {'source': '1897_whiteaves', 'labels': 'A', 'of': ['A']},
+    {'source': '1897_whiteaves', 'labels': 'A', 'of': 1.5},
+    # The source.
+    {'labels': 'first specimen'},
+    {'numbers': [1]},
+    {'source': 'Not A Key', 'labels': 'A'},
+    {'source': '1897_whiteaves', 'labels': 'A', 'other': 1},
   ):
     assert not _schema_accepts(entry(bad)), bad
+  assert not _schema_accepts(entry([]))
+  assert not _schema_accepts(entry([one, {'labels': 'A'}]))
+  assert not _schema_accepts(entry(None))
+
+
+def test_schema_accepts_and_rejects_labels_on_a_material_entry():
+  def entry(**fields):
+    return _numbers_document(fields)
+
+  assert _schema_accepts(entry(labels='A'))
+  assert _schema_accepts(entry(labels='the Bigsby specimen'))
+  assert _schema_accepts(entry(labels=['A']))
+  assert _schema_accepts(entry(labels=['B', 'C'], role='syntype'))
+  assert _schema_accepts(entry(labels=['B', 'C'], horizon='h', tentative=['horizon']))
+  assert _schema_accepts(entry(count=2, labels='A'))
+  for bad in (
+    # The old key.
+    {'label': 'A'},
+    {'label': ['A']},
+    # An entry has numbers or labels, never both.
+    {'numbers': [1], 'labels': 'A'},
+    {'numbers': [1], 'labels': ['A', 'B']},
+    {'prefix': 'GSC', 'numbers': [1], 'labels': 'A'},
+    # One non-empty string, or a non-empty list of distinct non-empty strings.
+    {'labels': []},
+    {'labels': ['A', 'A']},
+    {'labels': ''},
+    {'labels': ['A', '']},
+    {'labels': [['A', 'C']]},
+    {'labels': ['A', ['B', 'C']]},
+    {'labels': 1},
+    {'labels': ['A', 1]},
+    {'labels': None},
+  ):
+    assert not _schema_accepts(entry(**bad)), bad
+  # The object form of `of`, `castOf` and `fragmentOf` keeps its singular `label`.
+  assert _schema_accepts(entry(labels=['B', 'C'], castOf={'label': 'D'}, fragmentOf='B'))
+  assert not _schema_accepts(entry(labels=['B', 'C'], castOf={'labels': 'D'}))
 
 
 def test_schema_accepts_and_rejects_entry_refs_and_entry_locality_numbers():
@@ -2052,24 +2359,31 @@ def test_check_draft_checks_same_as_against_the_corpus(tmp_path):
   def draft(link):
     path = tmp_path / '1914c_bather.yaml'
     path.write_text(
-      f'taxonomies:\n- taxon: cyathocystis\n  material:\n  - {{label: A, sameAs: {link}}}\n'
+      f'taxonomies:\n- taxon: cyathocystis\n  material:\n  - {{labels: A, sameAs: {link}}}\n'
     )
     return _run_check_draft(path)
 
   first = (
     'first specimen collected by John Stewart, 1886, Museum of the Geological Survey of Canada'
   )
-  clean = draft(f'{{source: 1897_whiteaves, label: "{first}"}}')
+  clean = draft(f'{{source: 1897_whiteaves, labels: "{first}"}}')
   assert clean.returncode == 0, clean.stdout + clean.stderr
   assert 'error' not in clean.stdout
+  # A list of links is read link by link.
+  listed = draft(f'[{{source: 1897_whiteaves, labels: "{first}"}}]')
+  assert listed.returncode == 0, listed.stdout + listed.stderr
   for link, line in (
     (
-      '{source: 1897_whiteaves, label: nope}',
-      '`sameAs` matches 0 entries in "1897_whiteaves", not 1',
+      '{source: 1897_whiteaves, labels: nope}',
+      '`sameAs` "nope" matches 0 entries in "1897_whiteaves", not 1',
     ),
-    ('{source: 1962_fay, label: A}', '`sameAs` points at a later source'),
-    ('{source: 1914c_bather, label: A}', '`sameAs` names its own source'),
-    ('{source: 1899_nobody, label: A}', '`sameAs` names "1899_nobody", which has no tree'),
+    ('{source: 1962_fay, labels: A}', '`sameAs` points at a later source'),
+    ('{source: 1914c_bather, labels: A}', '`sameAs` names its own source'),
+    ('{source: 1899_nobody, labels: A}', '`sameAs` names "1899_nobody", which has no tree'),
+    (
+      '[{source: 1897_whiteaves, labels: nope}]',
+      '`sameAs` "nope" matches 0 entries in "1897_whiteaves", not 1',
+    ),
   ):
     result = draft(link)
     assert result.returncode == 1, result.stdout + result.stderr

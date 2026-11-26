@@ -18,9 +18,9 @@ taxonomies:
     citedAs: Astrocystites (Steganoblastus) ottawaensis, Whiteaves
     pages: 97
     material:
-    - label: A
+    - labels: A
       role: cotype
-    - label: B
+    - labels: B
       role: cotype
     notes: |
       Printed "Astroeystites" in the title, Abstract and plate captions

@@ -16,7 +16,7 @@ taxonomies:
       new: true
       pages: 158
       material:
-      - label: Page 306, Figure 80
+      - labels: Page 306, Figure 80
         horizon: hamilton-group
         locality: upper-quarry
         role: holotype

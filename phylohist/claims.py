@@ -13,7 +13,14 @@ it from; nothing is kept between calls.
 import collections
 
 from .acts import RELATED_ACTS
-from .loader.material import OCCURRENCE_SIDES, entries_named, flat_numbers, same_as_matches
+from .loader.material import (
+  OCCURRENCE_SIDES,
+  entries_named,
+  entry_labels,
+  flat_numbers,
+  same_as_list,
+  same_as_pairs,
+)
 from .loader.taxa import names_attribution
 from .names import fold, fold_forms, key_stem
 from .ranks import GENUS_GROUP, SPECIES_GROUP, fold_rank
@@ -125,7 +132,6 @@ _MATERIAL_FIELDS = (
   'numbers',
   'asPrinted',
   'count',
-  'label',
   'holder',
   'status',
   'formerIds',
@@ -135,7 +141,6 @@ _MATERIAL_FIELDS = (
   'listComplete',
   'preparation',
   'castOf',
-  'sameAs',
   'collectedBy',
   'collectedDate',
   'localityNumbers',
@@ -806,6 +811,11 @@ class _NodeClaims:
       for field in _MATERIAL_FIELDS:
         if field in entry:
           claim[field] = entry[field]
+      # One label or one link is written bare; the claim always has a list.
+      if 'labels' in entry:
+        claim['labels'] = entry_labels(entry)
+      if 'sameAs' in entry:
+        claim['sameAs'] = same_as_list(entry)
       if 'notes' in entry:
         claim['materialNotes'] = entry['notes']
       # A `horizon: null` or `locality: null` is kept as a null key: the
@@ -1087,52 +1097,88 @@ def _specimen_claims(claims):
   return [c for c in claims if c['kind'] == 'material' and c.get('materialKind') == 'specimen']
 
 
+def specimen_key(claim, value=None):
+  """The key of one specimen of a specimen claim, named by its number or
+  label `value`: the join key `<register>:<folded number>` when the claim's
+  numbers have a register, else `<claim id>#<folded value>`, which no other
+  claim shares; without a value (an entry with only a `count`), the claim's
+  id."""
+  if value is None:
+    return claim['id']
+  keys = claim.get('joinKeys')
+  if keys:
+    return f'{keys[0].partition(":")[0]}:{fold(str(value))}'
+  return f'{claim["id"]}#{fold(str(value))}'
+
+
+def specimen_keys(claim):
+  """The keys of the specimens a specimen claim lists, in printed order: one
+  per number (a run's two ends; a number inside the run is no key of the
+  claim) or per label, or the claim's id alone."""
+  values = [*flat_numbers(claim), *entry_labels(claim)]
+  return list(dict.fromkeys(specimen_key(claim, value) for value in values)) or [claim['id']]
+
+
+def specimen_item(claim, key):
+  """The folded number or label that `key`, a specimen key, stands for
+  among the specimens of `claim`, or `None` for the claim's own id."""
+  if key == claim['id']:
+    return None
+  local = claim['id'] + '#'
+  return key[len(local) :] if key.startswith(local) else key.partition(':')[2]
+
+
 def _link_same_as(claims_by_source):
-  """`sameAsClaim` on each specimen claim whose `sameAs` names exactly one
-  specimen claim of its target source (`same_as_matches`, the loader's
-  matching over the claims); a link whose target source is not in
-  `claims_by_source`, or that does not resolve, is left without it."""
+  """`sameAsLinks` on each specimen claim with `sameAs` links: one `{key,
+  claim, targetKey}` for each pair of `same_as_pairs` whose target names
+  exactly one specimen claim of the link's source (the loader's matching,
+  over the claims). `key` is this claim's specimen, `claim` the earlier
+  claim's id and `targetKey` its specimen (`specimen_key`). A pair whose
+  source is not in `claims_by_source`, or that does not resolve, is left
+  out, and a claim with none has no `sameAsLinks`."""
   specimens = {key: _specimen_claims(claims) for key, claims in claims_by_source.items()}
   for claims in specimens.values():
     for claim in claims:
-      link = claim.get('sameAs')
-      if link is None:
-        continue
-      matches = same_as_matches(specimens.get(link['source'], ()), link)
-      if len(matches) == 1:
-        claim['sameAsClaim'] = matches[0]['id']
+      links = []
+      for link in claim.get('sameAs') or ():
+        pairs, _ = same_as_pairs(claim, link)
+        for own, ref in pairs:
+          matches = entries_named(specimens.get(link['source'], ()), ref)
+          if len(matches) == 1:
+            value = ref['number'] if 'number' in ref else ref['label']
+            links.append(
+              {
+                'key': specimen_key(claim, own),
+                'claim': matches[0]['id'],
+                'targetKey': specimen_key(matches[0], value),
+              }
+            )
+      if links:
+        claim['sameAsLinks'] = links
 
 
-def specimen_components(claims):
-  """The connected components of `claims`, specimen claims: two are
-  connected when they share a join key or one's `sameAsClaim` is the
-  other's id. A claim that prints several numbers (or a run) is a batch of
-  specimens, not one, so it is connected by its `sameAsClaim` only: its
-  numbers join nothing beyond the claims that cite them. `{claim id: the
-  component, a list of claims in the order given}`; a claim with no
-  connection is a component of its own."""
-  parent = {claim['id']: claim['id'] for claim in claims}
+def specimen_classes(claims):
+  """`{specimen key: class}` over the specimens of `claims`, specimen
+  claims: two keys are one specimen, and share a class (the key standing
+  for it), when a `sameAsLinks` pair ties them, directly or through a
+  chain. A join key is one specimen in every claim that carries it, so the
+  claims of one number need no link. A claim that lists several numbers or
+  labels has a key for each, and a link joins only the one it names."""
+  parent = {}
 
   def find(item):
+    parent.setdefault(item, item)
     while parent[item] != item:
       parent[item] = parent[parent[item]]
       item = parent[item]
     return item
 
-  def join(first, second):
-    parent[find(first)] = find(second)
-
-  first_with_key = {}
   for claim in claims:
-    keys = claim.get('joinKeys') or ()
-    if len(keys) == 1:
-      join(claim['id'], first_with_key.setdefault(keys[0], claim['id']))
-    if claim.get('sameAsClaim') in parent:
-      join(claim['id'], claim['sameAsClaim'])
-  members = collections.defaultdict(list)
-  for claim in claims:
-    members[find(claim['id'])].append(claim)
-  return {claim['id']: members[find(claim['id'])] for claim in claims}
+    for key in specimen_keys(claim):
+      find(key)
+    for link in claim.get('sameAsLinks') or ():
+      parent[find(link['key'])] = find(link['targetKey'])
+  return {key: find(key) for key in list(parent)}
 
 
 def citation(source):
@@ -1223,11 +1269,11 @@ def _flat_ids(ids):
 
 def _specimen_identity(claim):
   """What makes two holotype claims one specimen: the set of the claim's
-  join keys; without any, its label; without either, its printed ids."""
+  join keys; without any, its labels; without either, its printed ids."""
   if claim.get('joinKeys'):
     return set(claim['joinKeys'])
-  if claim.get('label') is not None:
-    return {claim['label']}
+  if claim.get('labels'):
+    return set(claim['labels'])
   return set(_flat_ids(claim.get('ids')))
 
 
@@ -1235,15 +1281,16 @@ def holotype_conflicts(corpus, claims_by_source):
   """One row per taxon whose holotype is a different specimen in two
   sources (roadmap F5): `{'taxon', 'holotypes': [{'source', 'ids',
   'joinKeys', 'claim'}]}`, sources in year order, every holotype claim of
-  the taxon on the row. Two holotypes are one specimen when their
-  identities (`_specimen_identity`) intersect or they lie in one component
-  of `specimen_components` (linked by `sameAs`, directly or through a
-  chain, or by the join key of a one-number entry). A claim marked `uncertain`
+  the taxon on the row (an unnumbered holotype's `labels` ride beside).
+  Two holotypes are one specimen when their identities
+  (`_specimen_identity`) intersect or a specimen of one is a specimen of
+  the other by `specimen_classes` (tied by `sameAs`, directly or through a
+  chain). A claim marked `uncertain`
   is ignored, and a source that gives the taxon a lectotype or neotype
   does not enter the comparison: its holotype entry reports an earlier
   designation that its own later selection supersedes. A report, never a
   failure."""
-  component = specimen_components(
+  classes = specimen_classes(
     [c for claims in claims_by_source.values() for c in _specimen_claims(claims)]
   )
   by_taxon = collections.defaultdict(lambda: collections.defaultdict(list))
@@ -1265,10 +1312,11 @@ def holotype_conflicts(corpus, claims_by_source):
         continue
       holotypes.extend(c for c in claims if c.get('role') == 'holotype')
     identities = [_specimen_identity(c) for c in holotypes]
+    specimens = [{classes[key] for key in specimen_keys(c)} for c in holotypes]
     differ = any(
       holotypes[i]['source'] != holotypes[j]['source']
       and not identities[i] & identities[j]
-      and component[holotypes[i]['id']] is not component[holotypes[j]['id']]
+      and not specimens[i] & specimens[j]
       for i in range(len(holotypes))
       for j in range(i + 1, len(holotypes))
     )
@@ -1282,7 +1330,7 @@ def holotype_conflicts(corpus, claims_by_source):
               'ids': c.get('ids') or [],
               'joinKeys': c.get('joinKeys') or [],
               'claim': c['id'],
-              **({'label': c['label']} if c.get('label') is not None else {}),
+              **({'labels': c['labels']} if c.get('labels') else {}),
             }
             for c in holotypes
           ],
