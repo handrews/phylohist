@@ -1023,17 +1023,23 @@ $defs:
       group:
         description: |
           The source prints the name as that part of its total group
-          ("Stem group Echinodermata"). Absent says nothing. The node
-          writes `rank: null` beside it (the loader checks this).
+          ("Stem group Echinodermata"). Absent says nothing. A rank word
+          printed beside it is the node's `rank` ("Total group Phylum
+          Echinodermata"); a node with no rank word writes `rank: null`.
+          A taxon printed as a stem group within the group above it is
+          `term: stem`.
         type: string
         enum: [stem, crown, total]
       term:
         description: |
           The cladistic term the source prints for the taxon, beside a rank
           word or with none. Records the word only: it says nothing of
-          monophyly or position.
+          monophyly or position. `stem` is for a taxon the source prints
+          as a stem group within the group above it ("Stem group
+          Vetulocystida" under "Total group Ambulacraria"); a name printed
+          as the stem part of its own total group is `group: stem`.
         type: string
-        enum: [plesion, scion, clade]
+        enum: [plesion, scion, clade, stem]
       emended:
         description: |
           This source emends the diagnosis. An emendation it follows from

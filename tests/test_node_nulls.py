@@ -298,6 +298,13 @@ def test_the_placement_sentence_says_not_ranked(synthetic):
   assert synthetic.words.claim_words(ranked) == 'places it under Animalia'
   sentences = [e['sentence'] for e in synthetic.statements('vermes', source=SOURCE)['entries']]
   assert 'places it under Animalia, not ranked' in sentences
+  # A stem group within the group above reads as the words printed.
+  assert synthetic.words.claim_words({**ranked, 'term': 'stem'}) == (
+    'places it under Animalia (stem group)'
+  )
+  assert synthetic.words.claim_words({**ranked, 'group': 'total', 'term': 'plesion'}) == (
+    'places it under Animalia (total group, plesion)'
+  )
 
 
 def test_the_placements_cell_carries_the_nodes_rank(synthetic):

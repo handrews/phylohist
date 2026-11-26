@@ -59,6 +59,7 @@ def monophyly_words(value):
 
 
 GROUP_WORDS = {'stem': 'stem group', 'crown': 'crown group', 'total': 'total group'}
+TERM_WORDS = {'plesion': 'plesion', 'scion': 'scion', 'clade': 'clade', 'stem': 'stem group'}
 
 
 _NEW_MARKS = {

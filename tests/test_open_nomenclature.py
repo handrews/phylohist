@@ -76,6 +76,8 @@ def test_schema_accepts_the_new_node_and_material_fields():
       },
       {'taxon': 'sardesoni_bather_1915', 'monophyly': 'polyphyletic'},
       {'taxon': 'sardesoni_bather_1915', 'monophyly': 'monophyletic', 'term': 'clade'},
+      {'taxon': 'sardesoni_bather_1915', 'term': 'stem', 'rank': 'Unranked'},
+      {'taxon': 'sardesoni_bather_1915', 'group': 'total', 'rank': 'Phylum'},
       {'taxon': 'sardesoni_bather_1915', 'material': [{'labels': 'A', 'uncertain': True}]},
     ],
   }
@@ -205,16 +207,6 @@ def test_compared_links_read_the_open_form_at_the_rank_its_node_writes():
   ]
   node = {'openTaxon': 'open-sp-a', 'cf': 'genus-a', 'rank': None}
   assert nomenclature.compared_links(node, LOOKUP) == []
-
-
-def test_a_group_node_writes_rank_null():
-  message = [('error', '`group` on a node that does not write `rank: null`')]
-  assert nomenclature.group_rank({'taxon': 'genus-a'}) == []
-  assert nomenclature.group_rank({'taxon': 'genus-a', 'group': 'stem', 'rank': None}) == []
-  assert nomenclature.group_rank({'taxon': 'genus-a', 'group': 'stem'}) == message
-  assert (
-    nomenclature.group_rank({'taxon': 'genus-a', 'group': 'total', 'rank': 'Phylum'}) == message
-  )
 
 
 def test_quoted_parent():
@@ -504,8 +496,11 @@ def test_the_labels_put_the_group_and_term_before_the_rank():
   assert label('Class', term='plesion') == 'Plesion (Class) Xus'
   assert label(None, term='plesion') == 'Plesion Xus'
   assert label(None, group='stem') == 'Stem group Xus'
-  # No source prints a rank word beside a group, so the label shows none.
-  assert label('Phylum', group='total') == 'Total group Xus'
+  assert label('Phylum', group='total') == 'Total group Phylum Xus'
+  # A stem group within the group above follows its rank word, as printed.
+  assert label(None, term='stem') == 'Stem group Xus'
+  assert label('Unranked', term='stem') == 'Unranked stem group Xus'
+  assert label('Class', group='total', term='plesion') == 'Total group plesion (Class) Xus'
   assert label('Class', monophyly='monophyletic') == 'Class Xus (monophyletic)'
   assert label('Class', monophyly='nonMonophyletic') == 'Class Xus (non-monophyletic)'
 

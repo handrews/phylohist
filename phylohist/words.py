@@ -655,7 +655,7 @@ class Words:
       if claim.get('group'):
         flags.append(blocks.GROUP_WORDS[claim['group']])
       if claim.get('term'):
-        flags.append(claim['term'])
+        flags.append(blocks.TERM_WORDS[claim['term']])
       if claim.get('monophyly'):
         flags.append(blocks.monophyly_words(claim['monophyly']))
       if claim.get('mutable'):

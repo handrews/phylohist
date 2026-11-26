@@ -71,16 +71,22 @@ def node_label(node):
   shown = bool(
     rank_word and fold_rank(rank_word) not in SPECIES_GROUP and not node.get('placeholder')
   )
-  # A group stands with no rank word: "Stem group Echinodermata". A cladistic
-  # term puts the rank in parentheses: "Plesion (Class) Edrioasteroidea".
-  if flags.get('group'):
-    head = blocks.GROUP_WORDS[flags['group']]
-    name = f'{head[:1].upper()}{head[1:]} {name}'
+  # A cladistic term puts the rank in parentheses: "Plesion (Class)
+  # Edrioasteroidea". A stem group within the group above follows its rank
+  # word, as printed: "Unranked stem group Cambroernids". A group the name
+  # is printed as leads: "Total group Phylum Echinodermata".
+  if flags.get('term') == 'stem':
+    head = blocks.TERM_WORDS['stem']
+    name = f'{rank_word} {head} {name}' if shown else f'{head} {name}'
   elif flags.get('term'):
-    head = flags['term'].capitalize()
+    head = blocks.TERM_WORDS[flags['term']]
     name = f'{head} ({rank_word}) {name}' if shown else f'{head} {name}'
   elif shown:
     name = f'{rank_word} {name}'
+  if flags.get('group'):
+    name = f'{blocks.GROUP_WORDS[flags["group"]]} {name}'
+  if flags.get('group') or flags.get('term'):
+    name = name[:1].upper() + name[1:]
   if (node.get('flags') or {}).get('new') and not node.get('compared'):
     mark = node.get('newMark') or blocks.new_mark(rank_word)
     # An open-nomenclature name already ends in "sp."; the mark completes it.
@@ -384,7 +390,7 @@ def _chain_text(chain):
     label = node['label']
     words = [blocks.GROUP_WORDS[node['group']]] if node.get('group') else []
     if node.get('term'):
-      words.append(node['term'])
+      words.append(blocks.TERM_WORDS[node['term']])
     if words:
       label = ' '.join(words).capitalize() + ' ' + label
     if node.get('mark'):
