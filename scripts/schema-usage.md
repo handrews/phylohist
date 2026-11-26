@@ -565,13 +565,13 @@ property.
 
 ### `phylogeny#/$defs/actAndModifierFields/properties/term`
 
-1 of 3 members used, 3 occurrences.
+1 of 4 members used, 3 occurrences.
 
 | value | count |
 |---|---|
 | `'plesion'` | 3 |
 
-**Never used (2):** `'scion'`, `'clade'`
+**Never used (3):** `'scion'`, `'clade'`, `'stem'`
 
 ### `phylogeny#/$defs/article/properties/audit/properties/coverage/additionalProperties`
 

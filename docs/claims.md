@@ -121,9 +121,11 @@ Emitted for every child under its parent in a taxonomy. Fields added:
   combination), `pars`, `tentative`, `outgroup`; `altPlacements` as a list
   of keys. (`listHedged`, `listComplete` (B16) are not in the schema yet.)
 - Fields copied from the node with their values: `group` (`stem`, `crown`
-  or `total`: the source prints the name as that part of its total group),
-  `term` (`plesion`, `scion` or `clade`: the cladistic term the source
-  prints, beside a rank word or with none) and `monophyly`
+  or `total`: the source prints the name as that part of its total group,
+  beside a rank word or with none), `term` (`plesion`, `scion`, `clade` or
+  `stem`: the cladistic term the source prints, beside a rank word or with
+  none; `stem` is a taxon printed as a stem group within the group above
+  it) and `monophyly`
   (`monophyletic`, `paraphyletic`, `polyphyletic` or `nonMonophyletic`:
   what the source says about the taxon's monophyly). Absent says nothing.
   A root has no placement claim, so it carries them on its usage claim,
@@ -137,6 +139,7 @@ derived from it.
 |---|---|---|
 | `term: plesion` | the source prints "Plesion" for the taxon | that the taxon is a stem group, paraphyletic or monophyletic |
 | `term: clade`, `term: scion` | the source prints "Clade" or "Scion" for the taxon | that the taxon is monophyletic |
+| `term: stem` | the source prints "Stem group" for the taxon, as a group within a stem ("Stem group Vetulocystida" under "Total group Ambulacraria") | which taxon's stem it is: that is read from the node above |
 | `rank: Grade` | the source prints "Grade" in the place of a rank word | that the taxon is paraphyletic or polyphyletic |
 | `quoted` | the name is printed in quotation marks | that the group is non-monophyletic |
 | `group` | the name is printed as a stem, crown or total group | that its children are the group's only members, or which clade is its sister |
