@@ -74,6 +74,8 @@ bullamp:
   name: Bulletins of American Paleontology
 bullbrgeo:
   name: Bulletin of the British Museum (Natural History) Geology
+bullnysm:
+  name: Bulletin of the New York State Museum
 bulldessci:
   name: Bulletin des Sciences, par la Société Philomathique de Paris
 bullgeo:
@@ -169,6 +171,11 @@ geo-survey-canada:
   name: Geological Survey of Canada. Report of Progress for the years 1853–54–55–56
 geo-survey-illinois:
   name: Geological Survey of Illinois
+gff:
+  name: GFF
+  notes: >-
+    Formerly "Geologiska Föreningens i Stockholm Förhandlingar
+    (‘Transactions of the Geological Society in Stockholm’)"
 handbuch:
   name: Handbuch der Palaeontologie
 handbuch-nat:

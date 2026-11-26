@@ -2460,6 +2460,26 @@
       illustrations: none
       phylogeny: na
     notes: Reviewed against the paper 2026-09-10; see notes/reviews/review_1900_bather.md
+1900_clarke.j.m:
+  title: >-
+    Paropsonema cryptophya: A peculiar echinoderm from the Intumescens-zone
+    (Portage beds) of western New York
+  journal: bullnysm
+  volume: 8
+  number: 39
+  pages:
+  - 172
+  - 178
+  plates:
+  - 5
+  - 9
+  pubDate:
+    year: 1900
+    month: 10
+  authors:
+  - clarke.j.m
+  identifiers:
+    url: http://www.biodiversitylibrary.org/page/34822752
 1900_jaekel:
   title: Ueber Carpoideen, eine neue Classe von Pelmatozoen
   journal: zeitschrift
@@ -4832,6 +4852,21 @@ inprep_sprinkle_strimple:
   - caron
   identifiers:
     doi: 10.1017/S0263593300001255
+2006_hou.x.g_bergstrom.j_ma.x.y_zhao.j:
+  title: The Lower Cambrian Phlogites Luo & Hu re-considered
+  journal: gff
+  volume: 128
+  number: 1
+  pages:
+  - 47
+  - 51
+  authors:
+  - hou.x.g
+  - bergstrom.j
+  - ma.x.y
+  - zhao.j
+  identifiers:
+    doi: 10.1080/11035890601281047
 2006_parsley_zhao.y.l:
   title: Long stalked eocrinoids in the basal Middle Cambrian Kaili Biota, Taijiang County, Guizhou Province, China
   journal: jofpaleo
@@ -5155,6 +5190,23 @@ inprep_sprinkle_strimple:
   - liñán
   identifiers:
     doi: 10.4202/app.2008.0010
+2010_caron_conway morris_shu.d:
+  title: >-
+    Tentaculate Fossils from the Cambrian of Canada (British Columbia)
+    and China (Yunnan) Interpreted as Primitive Deuterostomes
+  journal: plos-one
+  volume: 5
+  number: 3
+  articleNumber: e9586
+  pubDate:
+    year: 2010
+    month: 3
+  authors:
+  - caron
+  - conway morris
+  - shu.d
+  identifiers:
+    doi: 10.1371/journal.pone.0009586
 2010_liu.q_hu.s.x_zhang.z_cuevas-castell_gong.y.m_tao.j.l:
   title: >-
     A new Burgess Shale-type biota from the upper Shilongdong Formation,

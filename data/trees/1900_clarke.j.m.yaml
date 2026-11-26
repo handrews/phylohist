@@ -1,0 +1,76 @@
+horizons:
+  portage:
+    unit:
+    - Portage beds
+    biozone: Manticoceras intumescens
+localities:
+  tannery:
+    location:
+    - in the vicinity of the Tannery gully
+    - Naples
+    - New York
+taxonomies:
+- taxon: echinodermata
+  rank: null
+  pages: 177
+  authority: null
+  notes: Prose only, no formal tree.
+  children:
+  - taxon: echinoidea
+    rank: null
+    pages:
+    - 176
+    - 178
+    notes: >-
+      "Probably an echinoid" on page 176, "Echinoidea" stated explicitly 178.
+    authority: null
+    children:
+    - taxon: paropsonema
+      provisional: true
+      new: true
+      pages: 176
+      children:
+      - taxon: cryptophya_clarke.j.m_1900
+        pages: 176
+        new: true
+        material:
+        - repository: nysm
+          labels:
+          - nearly entire specimen
+          - half-specimen showing three cycles of ambulacral bands
+          - infolded and imperfect specimen with clear detail
+          - young specimen 1 with no indication of second cycle of bands
+          - young specimen 2, adambulacral side
+          - infolded and distorted specimen, ambulacral side
+          horizon: portage
+          locality: tannery
+        illustrations:
+        - plate: 5
+          depcits: drawing
+          notes: Diagram of "the 3 cycles of nonambulacral areas"
+        - plate: 6
+          of: nearly entire specimen
+          depicts: specimen
+        - plate: 7
+          of: nearly entire specimen
+          depicts: specimen
+        - plate: 8
+          figures: 1
+          of: half-specimen showing three cycles of ambulacral bands
+          depicts: specimen
+        - plate: 8
+          figures: 2
+          of: infolded and imperfect specimen with clear detail
+          depicts: specimen
+        - plate: 9
+          figures: 1
+          of: young specimen 1 with no indication of second cycle of bands
+          depicts: specimen
+        - plate: 9
+          figures: 2
+          of: young specimen 2, adambulacral side
+          depicts: specimen
+        - plate: 9
+          figures: 3
+          of: infolded and distorted specimen, ambulacral side
+          depicts: specimen
