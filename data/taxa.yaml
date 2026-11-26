@@ -3673,10 +3673,10 @@ cupressocrinites:
   name: Cupressocrinites
   authority:
     source: 1831_goldfuss
-cupuliformis_zhao.j_guo.j_selden_cong.p.y_li.y.j_2022:
+cupuliformis_zhao.jun_guo.j_selden_cong.p.y_li.y.j_2022:
   name: cupuliformis
   authority:
-    source: 2022_zhao.j_guo.j_selden_cong.p.y_li.y.j
+    source: 2022_zhao.jun_guo.j_selden_cong.p.y_li.y.j
 cupulocrinidae:
   name: Cupulocrinidae
   rank: Family
@@ -4079,7 +4079,7 @@ dendrobrachia:
   name: Dendrobrachia
   rank: Phylum
   authority:
-    source: 2006_hou.x.g_bergstrom.j_ma.x.y_zhao.j
+    source: 2006_hou.x.g_bergstrom.j_ma.x.y_zhao.jie
     pages: 47
   citedAs: PHYLUM DENDROBRACHIA, NEW PHYLUM
 dendrocrinacea:
@@ -5728,10 +5728,10 @@ expansus_phillips.j_1839:
   authority:
     attributedTo: [phillips.j]
     source: 1839_murchison
-extenuatus_zhao.j_rahman_zamora_chen.a_cong.p.y_2022:
+extenuatus_zhao.jun_rahman_zamora_chen.a_cong.p.y_2022:
   name: extenuatus
   authority:
-    auth: [zhao.j, rahman, zamora, chen.a, cong.p.y]
+    auth: [zhao.jun, rahman, zamora, chen.a, cong.p.y]
     year: 2022
 externes:
   name: Externes
@@ -8017,7 +8017,7 @@ kukersiana_hecker_1940:
 kunmingeocrinus:
   name: Kunmingeocrinus
   authority:
-    source: 2022_zhao.j_guo.j_selden_cong.p.y_li.y.j
+    source: 2022_zhao.jun_guo.j_selden_cong.p.y_li.y.j
 kypsi_sumrall_2001:
   name: kypsi
   authority:
@@ -10884,7 +10884,7 @@ phlogitidae:
   name: Phlogitidae
   rank: Family
   authority:
-    source: 2006_hou.x.g_bergstrom.j_ma.x.y_zhao.j
+    source: 2006_hou.x.g_bergstrom.j_ma.x.y_zhao.jie
     pages: 47
   citedAs: FAMILY PHLOGITIDAE FAM. NOV.
 phlogitids:

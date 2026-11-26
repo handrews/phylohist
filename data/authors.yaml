@@ -73,6 +73,9 @@ bell.f.j:
   given: Francis Jeffrey
   birth: 1855
   death: 1924
+bergstrom.j:
+  surname: Bergstrom
+  given: Jan
 bernard.f:
   surname: Bernard
   given: Félix
@@ -547,6 +550,9 @@ hoşgör:
 hou.s.g:
   surname: Hou
   given: Shu-Guang
+hou.x.g:
+  surname: Hou
+  given: Xian-Guang
 house:
   surname: House
   given: M. R.
@@ -709,6 +715,9 @@ lydekker:
   given: Richard
   birth: 1849
   death: 1915
+ma.x.y:
+  surname: Ma
+  given: Xiao-Ya
 macleay:
   surname: Macleay
   given: William Sharp
@@ -1081,6 +1090,9 @@ strimple:
 sumrall:
   surname: Sumrall
   given: Colin D.
+sun.w.g:
+  surname: Sun
+  given: Wei-Guo
 sun.z.x:
   surname: Sun
   given: Zhi-Xin
@@ -1096,6 +1108,9 @@ szabad:
 tao.j.l:
   surname: Tao
   given: Jian-Li
+tao.y.h:
+  surname: Tao
+  given: Yong-He
 tarlo:
   surname: Tarlo
   given: L. B. H.
@@ -1249,6 +1264,9 @@ zamora:
 zeng.h:
   surname: Zeng
   given: Han
+zhang.s.s:
+  surname: Zhang
+  given: Shi-Shan
 zhang.x.l:
   surname: Zhang
   given: Xing-Liang
