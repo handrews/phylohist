@@ -303,9 +303,10 @@ class Resolver:
       }
 
     if rank is not None:
-      # A record written `rank: null` has no rank word; `unranked` asks for it.
+      # A record written `rank: null` has no rank word; `not ranked` asks for
+      # it. `unranked` is the rank word a source prints.
       wanted = fold_rank(rank)
-      keys = {k for k in keys if (self.store._rank_of(k) or 'unranked') == wanted}
+      keys = {k for k in keys if (self.store._rank_of(k) or 'not ranked') == wanted}
 
     candidates = [self._candidate(k) for k in keys]
     candidates.sort(

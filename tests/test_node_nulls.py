@@ -14,7 +14,7 @@ import shutil
 
 import pytest
 
-from phylohist.claims import DERIVED_KINDS, derived_coverage, extract, manifest
+from phylohist.claims import DERIVED_KINDS, derived_coverage, extract, manifest, names_index
 from phylohist.loader import io, material, nomenclature
 from phylohist.loader.load import _report_nomenclature
 from phylohist.loader.taxa import Tree
@@ -274,7 +274,7 @@ def synthetic(corpus, tmp_path_factory):
   return ClaimStore(directory)
 
 
-def test_contents_prints_an_unranked_node_as_its_name_alone(synthetic):
+def test_contents_prints_a_node_with_no_rank_as_its_name_alone(synthetic):
   [block] = synthetic.contents(SOURCE, 'animalia')
   lines = block['rendered'].splitlines()
   assert lines[1:] == [
@@ -284,20 +284,20 @@ def test_contents_prints_an_unranked_node_as_its_name_alone(synthetic):
     '    Order Mollusca',
   ]
   vermes, echinodermata, mollusca = block['nodes'][1:]
-  assert vermes['unranked'] is True and 'rankWord' not in vermes
-  assert echinodermata['unranked'] is True and 'rankWord' not in echinodermata
-  assert 'unranked' not in mollusca and mollusca['rankWord'] == 'Order'
+  assert vermes['notRanked'] is True and 'rankWord' not in vermes
+  assert echinodermata['notRanked'] is True and 'rankWord' not in echinodermata
+  assert 'notRanked' not in mollusca and mollusca['rankWord'] == 'Order'
   assert 'pages' not in block['nodes'][0]
 
 
-def test_the_placement_sentence_says_unranked(synthetic):
+def test_the_placement_sentence_says_not_ranked(synthetic):
   placement = synthetic.at_path[SOURCE]['340/children/0']
   [claim] = [c for c in placement if c['kind'] == 'placement']
-  assert synthetic.words.claim_words(claim) == 'places it under Animalia, unranked'
+  assert synthetic.words.claim_words(claim) == 'places it under Animalia, not ranked'
   [ranked] = [c for c in synthetic.at_path[SOURCE]['340/children/2'] if c['kind'] == 'placement']
   assert synthetic.words.claim_words(ranked) == 'places it under Animalia'
   sentences = [e['sentence'] for e in synthetic.statements('vermes', source=SOURCE)['entries']]
-  assert 'places it under Animalia, unranked' in sentences
+  assert 'places it under Animalia, not ranked' in sentences
 
 
 def test_the_placements_cell_carries_the_nodes_rank(synthetic):
@@ -310,7 +310,7 @@ def test_the_placements_cell_carries_the_nodes_rank(synthetic):
   assert cell['value'] == 'Animalia' and cell['rank'] is None
 
 
-def test_an_unranked_root_prints_its_name_alone(records, corpus, tmp_path):
+def test_a_root_with_no_rank_prints_its_name_alone(records, corpus, tmp_path):
   # A root has no placement claim: its usage carries the null printed rank.
   root = {'taxon': 'vermes', 'rank': None, 'pages': 12, 'children': [{'taxon': 'mollusca'}]}
   claims = _claims(records, root, 341)
@@ -320,7 +320,37 @@ def test_an_unranked_root_prints_its_name_alone(records, corpus, tmp_path):
   (directory / f'{SOURCE}.jsonl').write_text(''.join(json.dumps(c) + '\n' for c in claims))
   [block] = ClaimStore(directory).contents(SOURCE, 'vermes')
   assert block['rendered'].splitlines()[1] == '  Vermes'
-  assert block['nodes'][0]['unranked'] is True
+  assert block['nodes'][0]['notRanked'] is True
+
+
+def test_a_printed_unranked_is_a_rank_word(records, corpus, tmp_path):
+  # "Unranked" as a source prints it is a rank word, beside nodes that carry
+  # ranks; `rank: null` is for no rank word and reads "not ranked".
+  child = {'taxon': 'mollusca', 'rank': 'Unranked', 'pages': 13}
+  root = {'taxon': 'vermes', 'rank': 'Unranked', 'pages': 12, 'children': [child]}
+  assert _valid({'taxonomies': [root]})
+  assert _record_valid({**RECORD, 'rank': 'Unranked'})
+  claims = _claims(records, root, 344)
+  assert _at(claims, '344', kind='usage')['rankAsPrinted'] == 'Unranked'
+  placement = _at(claims, '344/children/0')
+  assert placement['rankAsPrinted'] == 'Unranked'
+  directory = tmp_path / 'claims'
+  shutil.copytree(corpus.claims, directory)
+  (directory / f'{SOURCE}.jsonl').write_text(''.join(json.dumps(c) + '\n' for c in claims))
+  key = 'unrankedum'
+  added = records.copy()
+  added.add_taxon({**RECORD, 'name': 'Unrankedum', 'rank': 'Unranked'}, key)
+  names = json.loads((directory / 'names.json').read_text())
+  names[key] = names_index(added)[key]
+  (directory / 'names.json').write_text(json.dumps(names))
+  store = ClaimStore(directory)
+  [block] = store.contents(SOURCE, 'vermes')
+  assert block['rendered'].splitlines()[1:] == ['  Unranked Vermes', '    Unranked Mollusca']
+  for node in block['nodes']:
+    assert node['rankWord'] == 'Unranked' and 'notRanked' not in node
+  assert 'not ranked' not in store.words.claim_words(placement)
+  assert [c['key'] for c in store.resolve_name('Unrankedum', rank='unranked')] == [key]
+  assert store.resolve_name('Unrankedum', rank='not ranked') == []
 
 
 def test_a_root_prints_the_rank_it_writes(records, corpus, tmp_path):
@@ -335,7 +365,7 @@ def test_a_root_prints_the_rank_it_writes(records, corpus, tmp_path):
   [block] = ClaimStore(directory).contents(SOURCE, 'vermes')
   assert block['rendered'].splitlines()[1:] == ['  Order Vermes', '    Order Mollusca']
   node = block['nodes'][0]
-  assert node['rank'] == 'Class' and node['rankWord'] == 'Order' and 'unranked' not in node
+  assert node['rank'] == 'Class' and node['rankWord'] == 'Order' and 'notRanked' not in node
 
 
 # -- `children: null` and the derived `skeleton` coverage -----------------------

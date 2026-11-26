@@ -90,7 +90,8 @@ every `synonyms`, `non`, `removed`, `parents`, `or` and `type` entry. Fields add
   declares one (an `openTaxon` node only; the loader rejects it beside
   `taxon` or `mineralTaxon`).
 - `rankAsPrinted`: on a root's usage only, the rank the root writes, a
-  word or null (the source prints no rank word); a child's written rank
+  word or null (the source prints no rank word; a printed "Unranked" is
+  the word `Unranked`); a child's written rank
   goes on its placement claim.
 - A `synonyms` or `non` entry with no name field of its own is a usage of
   the node's own name by the cited source (the 2020 tree's stacked
@@ -106,7 +107,8 @@ Emitted for every child under its parent in a taxonomy. Fields added:
   named ancestor is further up, `parentPath` says so too.
 - `rank`: the rank the source places the taxon at: the word the node
   writes, null for a node written `rank: null` (the source places the
-  taxon with no rank word), else the record's (null
+  taxon with no rank word; a printed "Unranked" is the rank `Unranked`),
+  else the record's (null
   for a record written `rank: null`). `rankAsPrinted` is present exactly
   when the node writes `rank`, with the same word or null; a root, which
   has no placement claim, carries it on its usage claim. The listings,
@@ -729,7 +731,7 @@ eval runner all go through `tools.call`:
 
 | tool | answers |
 |---|---|
-| `resolve_name(query, rank)` | which records a printed name can mean, with each record's variants (the same name at other ranks or spellings) and the count of sources with statements about it; empty is the closed-world answer. `rank` restricts the candidates to one rank word, `unranked` to the records written `rank: null`. A mineral formation's name resolves like any named record and is marked `mineral`. Unnamed records (bins, open nomenclature) are never found by name: the words in their designation name other taxa. Keys are lowercase; every tool accepts a key in any case, or a printed name that resolves to one record ("Rhenopyrgus grayae", "Pyrgocystis (Rhenopyrgus) coronaeformis", "Pyrgocystis (Rhenopyrgus)"); a name that can mean several records is refused with the candidates |
+| `resolve_name(query, rank)` | which records a printed name can mean, with each record's variants (the same name at other ranks or spellings) and the count of sources with statements about it; empty is the closed-world answer. `rank` restricts the candidates to one rank word, `not ranked` to the records written `rank: null` (`unranked` is the rank word `Unranked`). A mineral formation's name resolves like any named record and is marked `mineral`. Unnamed records (bins, open nomenclature) are never found by name: the words in their designation name other taxa. Keys are lowercase; every tool accepts a key in any case, or a printed name that resolves to one record ("Rhenopyrgus grayae", "Pyrgocystis (Rhenopyrgus) coronaeformis", "Pyrgocystis (Rhenopyrgus)"); a name that can mean several records is refused with the candidates |
 | `resolve_source(query)` | the sources a citation can mean ("Dehm 1961", "Holloway & Jell 1983", "Sumrall et al. 2013", "Fay 1967a"): key, citation, year, authors, entered or not; empty means no source in the corpus is that paper. Every `source` parameter accepts a key or the citation as the blocks print it; a citation that can mean several papers is refused with their keys |
 | `contents(source, record, depth, synonymy)` | a classification block of what a source places under a record; every source that places it when no source is given |
 | `placements(records, sources, years, …)` | the matrix: records as rows (variants folded) with their rank, sources as columns in year order, the parent each gives (a rejection marked "; not X"); the schemes measured in the header |

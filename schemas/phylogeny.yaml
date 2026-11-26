@@ -433,7 +433,8 @@ $defs:
       holds the two equal): the formal ranks, capitalised above the genus
       group and lower-case from the genus down, then the informal words a
       source prints in a rank's place. A record or node whose source prints
-      no rank word writes `null`; a cladistic term it prints is `term`.
+      no rank word writes `null`, and one whose source prints "Unranked"
+      writes `Unranked`; a cladistic term it prints is `term`.
     type: string
     enum:
     - Domain
@@ -467,6 +468,7 @@ $defs:
     - Subtypus
     - Embranchement
     - Branch
+    - Unranked
 
   citationFields:
     $comment: |
@@ -584,8 +586,9 @@ $defs:
           Explicit on a record that gives its protologue page
           (`authority.pages`), where the tree node leaves a genus or
           species implicit; `null` says the protologue prints no rank word
-          for the taxon, and the loader reads it as no rank (a cladistic
-          term it prints is `term`, on a tree node). An unnamed record
+          for the taxon, and the loader reads it as no rank (a printed
+          "Unranked" is the rank `Unranked`; a cladistic term it prints
+          is `term`, on a tree node). An unnamed record
           spells its rank, and a node under a genus, subgenus or species
           is at a rank below its parent's, each at the word it writes,
           else at its record's; a node written `rank: null` stands outside
@@ -836,7 +839,8 @@ $defs:
           order under a genus or species, the open-nomenclature checks,
           the listings and the history. A node that writes none sits at
           its record's rank. `null`: the source prints no rank word for the
-          taxon (a cladistic term it prints is `term`).
+          taxon (a printed "Unranked" is the rank `Unranked`; a cladistic
+          term it prints is `term`).
         oneOf:
         - $ref: "phylogeny#/$defs/rank"
         - type: "null"

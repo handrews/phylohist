@@ -68,6 +68,10 @@ ranks:
   informal: true
 - name: Branch
   informal: true
+# "Unranked" as a source prints it, in a classification that ranks some
+# taxa and leaves others without one. `rank: null` is for no rank word.
+- name: Unranked
+  informal: true
 
 # The suffix lint checks a named record above the genus group, at a formal
 # rank, whose authority year is `checkedFrom` or later (a work with no

@@ -470,7 +470,7 @@ def test_an_unnamed_record_spells_its_rank(records, caplog):
     pytest.raises(LoadError, match='taxon testum-sp has neither a name nor a rank'),
   ):
     records.add_taxon(unnamed, 'testum-sp')
-  assert 'Unnamed, unranked taxon testum-sp!' in _errors(caplog)
+  assert 'Unnamed taxon testum-sp has no rank!' in _errors(caplog)
   assert 'testum-sp' not in records.taxa
   # An explicit null is a rank statement: the source gives none.
   with caplog.at_level(logging.ERROR, logger='phylohist'):
@@ -728,7 +728,7 @@ def test_the_ranks_are_the_tables_and_the_schemas():
 
   assert ranks.RANKS == ranks.TABLE.names
   assert ranks.RANKS == tuple(io.load_yaml(io.SCHEMA_PATH)['$defs']['rank']['enum'])
-  assert len(set(ranks.RANKS)) == len(ranks.RANKS) and 'Unranked' not in ranks.RANKS
+  assert len(set(ranks.RANKS)) == len(ranks.RANKS)
   genus = ranks.RANKS.index('genus')
   assert all(rank[0].isupper() for rank in ranks.RANKS[:genus])
   assert all(rank.islower() for rank in ranks.SPECIES_GROUP + ranks.GENUS_GROUP)
@@ -741,6 +741,7 @@ def test_the_ranks_are_the_tables_and_the_schemas():
     'subtypus',
     'embranchement',
     'branch',
+    'unranked',
   }
   assert ranks.SPECIES_GROUP == ('species', 'subspecies', 'variety')
   assert ranks.GENUS_GROUP == ('genus', 'subgenus')

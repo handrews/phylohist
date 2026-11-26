@@ -377,7 +377,7 @@ class Closure:
         if not self._wanted(claim, trees, years):
           continue
         rank = self.store.node_rank(claim['source'], claim['path'], key)
-        rank = fold_rank(rank) or 'unranked'
+        rank = fold_rank(rank) or 'not ranked'
         entry = ranks.setdefault(rank, {'rank': rank, 'records': set(), 'sources': set()})
         entry['records'].add(key)
         entry['sources'].add(claim['source'])
