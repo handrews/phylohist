@@ -1267,7 +1267,10 @@ zheng.y.j:
 zhao.f.c:
   surname: Zhao
   given: Fang-Chen
-zhao.j:
+zhao.jie:
+  surname: Zhao
+  given: Jie
+zhao.jun:
   surname: Zhao
   given: Jun
 zhao.y.l:

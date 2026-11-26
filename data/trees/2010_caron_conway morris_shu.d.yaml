@@ -11,12 +11,13 @@ taxonomies:
     group: stem
     provisional: true
     pages: 2
+    type:
+      taxon: herpetogaster
     children:
     - taxon: herpetogaster
       citedAs: Herpetogaster gen. nov.
       new: true
       pages: 2
-      type: true
       children:
       - taxon: collinsi_caron_conway morris_shu.d_2010
         citedAs: Herpetogaster collinsi gen. et sp. nov.

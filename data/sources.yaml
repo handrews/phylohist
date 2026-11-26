@@ -4852,7 +4852,7 @@ inprep_sprinkle_strimple:
   - caron
   identifiers:
     doi: 10.1017/S0263593300001255
-2006_hou.x.g_bergstrom.j_ma.x.y_zhao.j:
+2006_hou.x.g_bergstrom.j_ma.x.y_zhao.jie:
   title: The Lower Cambrian Phlogites Luo & Hu re-considered
   journal: gff
   volume: 128
@@ -4866,7 +4866,7 @@ inprep_sprinkle_strimple:
   - hou.x.g
   - bergstrom.j
   - ma.x.y
-  - zhao.j
+  - zhao.jie
   identifiers:
     doi: 10.1080/11035890601281047
 2006_parsley_zhao.y.l:
@@ -6266,7 +6266,7 @@ inprep_sprinkle_strimple:
   - thompson
   identifiers:
     doi: 10.1098/rspb.2021.2733
-2022_zhao.j_guo.j_selden_cong.p.y_li.y.j:
+2022_zhao.jun_guo.j_selden_cong.p.y_li.y.j:
   title: A new eocrinoid from the Guanshan Biota (Cambrian Series 2, Stage 4), with implication of the development of different attachment modes in early Cambrian
   journal: pworld
   volume: 31
@@ -6281,12 +6281,12 @@ inprep_sprinkle_strimple:
     accepted: 2021-08-04
     online: 2021-08-12
   authors:
-  - zhao.j
+  - zhao.jun
   - guo.j
   - selden
   - cong.p.y
   - li.y.j
-2022_zhao.j_rahman_zamora_chen.a_cong.p.y:
+2022_zhao.jun_rahman_zamora_chen.a_cong.p.y:
   title: The first edrioasteroid echinoderm from the lower Cambrian Chengjiang biota of Yunnan Province, China
   journal: papersinpalaeo
   number: 8
@@ -6296,7 +6296,7 @@ inprep_sprinkle_strimple:
     month: 8
     day: 27
   authors:
-  - zhao.j
+  - zhao.jun
   - rahman
   - zamora
   - chen.a
