@@ -9,7 +9,7 @@
     doi: 10.5962/bhl.title.65731
     url: https://www.biodiversitylibrary.org/bibliography/65731
 1740_tilas:
-  title: >
+  title: >-
     Mineral-historia öfwer Osmundsberget uti Rättwiks Socken och Öster-Dalarne
   journal: kungliga-svenska
   volume: 1
@@ -103,7 +103,7 @@
   identifiers:
     url: https://www.biodiversitylibrary.org/item/100333#page/11/mode/1up
 1762_gaertner:
-  title: >
+  title: >-
     An Account of the Urtica Marina: In a Letter to
     Mr. Peter Collinson, F. R. S. from Joseph Gaertner, M. D.
   journal: phil-trans
@@ -899,7 +899,7 @@
 # h. Mr. Gray on Mammalia in vol. 10 Number V. November
 # i. [see below]
 1825f_gray.j.e:
-  title: >
+  title: >-
     A Synopsis of the genera of Reptiles and Amphibia, with a description
     of some new species
   journal: annals-phil-ns
@@ -1247,7 +1247,7 @@
   identifiers:
     url: https://www.biodiversitylibrary.org/page/49045685
 1842_austin.t_austin.t.j:
-  title: >
+  title: >-
     Proposed Arrangement of the Echinodermata, particularly as regards the
     Crinoidea, and a Scooping out of the Alveoli
   journal: annals-and-mag
@@ -1337,7 +1337,7 @@
   identifiers:
     url: https://www.biodiversitylibrary.org/bibliography/58729
 1843_hall:
-  title: >
+  title: >-
     Geology of New-York. Part IV. Comprising the Survey of the
     Fourth Geological District
   book: nat-hist-ny
@@ -1348,7 +1348,7 @@
   identifiers:
     url: https://www.biodiversitylibrary.org/page/55361977
 1844_buch:
-  title: >
+  title: >-
     Hr. v. Buch las über Cystideen, eingeleitet durch die Entwickelung
     der Eigenthümlichkeiten des Caryocrinus ornatus.
   journal: bericht-berlin
@@ -2420,7 +2420,7 @@
   identifiers:
     url: https://www.google.com/books/edition/Stammesgeschichte_der_Pelmatozoen/cvdaAAAAQAAJ
 1899_sollas:
-  title: >
+  title: >-
     Fossils in the University Museum, Oxford: I. On Silurian Eocrinoidea
     and Ophiuroidea
   journal: quart-jour-geol-soc
@@ -2791,7 +2791,7 @@
       (p. 9) is a synonymy of the earlier combination and is captured; the
       two-line citation under Discocystis kaskaskiensis (p. 21) is not.
 1938_gekker:
-  title: >
+  title: >-
     Новые данные о роде Rhipidocystis Jkl. (отряд Digitata n. o., класс
     Carpoidea Jkl.) и новый род Bockia n. g. (подкласс Eocrinoidea Jkl.,
     класс Crinoidea Mill.) из ордовика Ленинградской области СССР и Эстонии
@@ -3473,7 +3473,7 @@
   processDates:
     revised: 1971-05-06
 1972b_paul.c.r.c:
-  title: >
+  title: >-
     Cheirocystella anti gua gen. et sp. nov. from the Lower Ordovician
     of western Utah, and its bearing on the evolution of the Cheirocrinidae
     (Rhombifera, Glyptocystitida)
@@ -3548,7 +3548,7 @@
   identifiers:
     doi: 10.1017/S0022336000061734
 1975_parsley:
-  title: >
+  title: >-
     Systematics and functional morphology of Columbocystis, a Middle
     Ordovician “Cystidean” (Echinodermata) of uncertain affinities
   journal: bullamp
@@ -3562,7 +3562,7 @@
   authors:
   - parsley
 1975_parsley_mintz:
-  title: >
+  title: >-
     North American Paracrinoidea: Ordovician Echinodermata
   journal: bullamp
   volume: 68
@@ -3579,7 +3579,7 @@
   - parsley
   - mintz
 1975_pope.j.k:
-  title: >
+  title: >-
     Evidence for relating the Lepidocoleidae, machaeridian echinoderms,
     to the mitrate carpoids
   journal: bullamp
@@ -4506,7 +4506,7 @@ inprep_sprinkle_strimple:
   authors:
   - domínguez alonso
 1999_ubaghs:
-  title: >
+  title: >-
     Échinodermes nouveaux du Cambrien supérieur de la Montagne Noire
     (France méridionale)
   journal: geobios
@@ -4523,7 +4523,7 @@ inprep_sprinkle_strimple:
   authors:
   - ubaghs
 1999_vizcaïno_lefebvre:
-  title: >
+  title: >-
     Les échinodermes du Paléozoïque inférieur
     de Montagne Noire: biostratigraphie et paléodiversité
   journal: geobios
@@ -4556,7 +4556,7 @@ inprep_sprinkle_strimple:
   identifiers:
     url: https://www.researchgate.net/publication/284507301_A_progress_report_on_research_on_the_early_Middle_Cambrian_Kaili_Biota_Guizhou_PRC
 1999_zhu.m.y_erdtmann_zhao.y.l:
-  title: >
+  title: >-
     Body-plan and phylogenetic affinity of a medusiform animal from the
     Middle Cambrian Kaili Lagerstättein Guizhou, China
   journal: origins-body-plans
@@ -4620,7 +4620,7 @@ inprep_sprinkle_strimple:
   - fedorov
   notes: Translated from Paleontologicheskii Zhurnal, No. 6, 2001, pp. 42-49.
 2001_shu.d_conway morris_han.j_chen.l_zhang.x.l_liu.h.q_li.y_liu.j.n:
-  title: >
+  title: >-
     Primitive deuterostomes from the Chengjiang Lagerstätte
     (Lower Cambrian, China)
   journal: nature
@@ -4803,7 +4803,7 @@ inprep_sprinkle_strimple:
   identifiers:
     doi: 10.1002/gj.1017
 2006_caron:
-  title: >
+  title: >-
     Banffia constricta, a putative vetulicolid from the Middle Cambrian
     Burgess Shale
   journal: trans-r-soc-ed-earth
@@ -4984,7 +4984,7 @@ inprep_sprinkle_strimple:
   identifiers:
     doi: 10.1016/j.palaeo.2007.03.020
 2008_guo.j.f_li.y_han.j_zhang.x.l_zhang.z.f_ou.q_liu.j.n_shu.d_maruyama.s_komiya.t:
-  title: >
+  title: >-
     Fossil Association from the Lower Cambrian Yanjiahe Formation in the
     Yangtze Gorges Area, Hubei, South China
   journal: acta-g-sinica-eng
@@ -5144,7 +5144,9 @@ inprep_sprinkle_strimple:
   identifiers:
     doi: 10.4202/app.2008.0010
 2010_liu.q_hu.s.x_zhang.z_cuevas-castell_gong.y.m_tao.j.l:
-  title: A new Burgess Shale-type biota from the upper Shilongdong Formation,Lower Cambrian of central Hubei,South China
+  title: >-
+    A new Burgess Shale-type biota from the upper Shilongdong Formation,
+    Lower Cambrian of central Hubei,South China
   journal: acta-p-sinica
   volume: 49
   number: 3
