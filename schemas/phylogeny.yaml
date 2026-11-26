@@ -467,6 +467,7 @@ $defs:
     - Subtypus
     - Embranchement
     - Branch
+    - Unranked
 
   citationFields:
     $comment: |

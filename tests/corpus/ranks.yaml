@@ -68,6 +68,8 @@ ranks:
   informal: true
 - name: Branch
   informal: true
+- name: Unranked
+  informal: true
 
 # The suffix lint checks a named record above the genus group, at a formal
 # rank, whose authority year is `checkedFrom` or later (a work with no
