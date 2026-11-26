@@ -18,6 +18,6 @@ taxonomies:
           - taxon: kunmingeocrinus
             new: true
             children:
-            - taxon: cupuliformis_zhao.j_guo.j_selden_cong.p.y_li.y.j_2022
+            - taxon: cupuliformis_zhao.jun_guo.j_selden_cong.p.y_li.y.j_2022
               isType: true
               new: true
