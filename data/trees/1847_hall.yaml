@@ -44,6 +44,23 @@ notes: >
   to be "more nearly with Crinoideans than with Corals", but is placed
   under Zoophyta with undisputed corals in the summary tables and so
   is omitted here.
+horizons:
+  hudson-shales:
+    unit:
+    - partially metamorphic arenaceous shales
+    - Hudson-river Group
+    seriesRange: [Lower Silurian, Upper Devonian]
+    notes: >
+      It is hard to tell from Hall's account where this is in the range
+      of "Lower Silurian" (=Ordovician) to Devonian.  If anything, he
+      seems to lean towards Devonian, but later work puts this horizon
+      in the Ordovician.
+localities:
+  nail-factory:
+    location:
+    - near the Nail Factory
+    - below Troy
+    - New York
 taxonomies:
 - taxon: crinoidea
   rank: Order
@@ -202,17 +219,25 @@ taxonomies:
     new: true
     pages: 277
     notes: Hudson River Group
+    editorial:
+      inferred: [new]
+      basis: The only species in the genus is new in this publication.
     children:
     - taxon: peltatum_hall_1847
       new: true
       pages: 277
+      material:
+      - repository: lyceum
+        labels: lyceum
+        horizon: hudson-shales
+        locality: nail-factory
+      - repository: cook
+        labels: cook
+        horizon: hudson-shales
+        locality: nail-factory
       illustrations:
       - plate: LXXV
         figures:
         - 3
-    - openTaxon: discophyllum-sp_hall_1847
-      pages: 277
-      illustrations:
-      - plate: LXXV
-        figures:
-        - 4
+        depicts: specimen
+        notes: There is no indication of which specimen is depicted.

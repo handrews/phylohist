@@ -4427,13 +4427,11 @@ discoidea_lamarck_1816:
     source: 1816a_lamarck
 discophyllum:
   name: Discophyllum
+  rank: genus
   authority:
     source: 1847_hall
-discophyllum-sp_hall_1847:
-  name: null
-  rank: species
-  authority:
-    source: 1847_hall
+    pages: 277
+  citedAs: Genus DISCOPHYLLUM
 disparida:
   name: Disparida
   rank: Subclass
@@ -10699,8 +10697,17 @@ pelmatozoans:
     source: 1848_leuckart
 peltatum_hall_1847:
   name: peltatum
+  rank: species
   authority:
     source: 1847_hall
+    pages: 277
+    illustrations:
+    - plate: LXXV
+      figures:
+      - 3
+      depicts: specimen
+      notes: There is no indication of which specimen is depicted.
+  citedAs: 335. 1. DISCOPHYLLUM PELTATUM (n. sp.)
 peltiformis_wahlenberg_1821:
   name: peltiformis
   authority:

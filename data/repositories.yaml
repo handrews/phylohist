@@ -13,6 +13,9 @@ bspg:
   type: institution
   place: Munich
   prefixes: [BSPG]
+cook:
+  name: Cabinet of Prof. Cook
+  type: person
 cpc:
   name: Commonwealth Palaeontological Collection
   type: institution
@@ -88,6 +91,9 @@ lsn-mainz:
   place: Mainz
   prefixes: [PWL]
   notes: LS suffix denotes silicone casts (Abgüsse); Müller & Hahn 2010.
+lyceum:
+  name: Cabinet of Troy Lyceum
+  type: person
 mcz:
   name: Museum of Comparative Zoology, Harvard University
   type: institution
@@ -126,7 +132,8 @@ nhmuk-ee:
   subject: specimens
   prefixes: [EE, NHMUK EE, NHM UK EE]
 nigpas:
-  name: Nanjing Institute of Geology and Palaeontology, Chinese Academy of Sciences
+  name: >-
+    Nanjing Institute of Geology and Palaeontology, Chinese Academy of Sciences
   type: institution
   place: Nanjing
   prefixes: [NIGPAS]
