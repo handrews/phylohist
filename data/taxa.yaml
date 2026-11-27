@@ -1507,14 +1507,14 @@ banffiidae:
   authority:
     source: 2006_caron
     pages: 98
-  citedAs: Family Banﬃidae, fam. nov.
+  citedAs: Family Banffiidae, fam. nov.
 banffozoa:
   name: Banffozoa
   rank: Class
   authority:
     source: 2006_caron
     pages: 98
-  citedAs: Class Banﬀozoa, Class nov.
+  citedAs: Class Banffozoa, Class nov.
 barrandei_jaekel_1918:
   name: barrandei
   authority:
@@ -5384,30 +5384,30 @@ episoma_conway morris_selden_2015:
     attributedTo: [conway morris, selden]
     pages: 633
     illustrations:
-    - page: 2
+    - page: 632
       figures: 1
       of: 59645
       depicts: specimen
-    - page: 2
+    - page: 632
       figures: 2
       of: 59645
       depicts: drawing
-    - page: 2
+    - page: 632
       figures: "3.1"
       of: 314017
       depicts: specimen
       notes: >
-        Truncates number to "31041" but all other numbers starting
+        Truncates number to "31401" but all other numbers starting
         with those digits are accounted for in other figures.
-    - page: 2
+    - page: 632
       figures: "3.2"
       of: 314021
       depicts: specimen
-    - page: 2
+    - page: 632
       figures: "4.1"
       of: 314018
       depicts: specimen
-    - page: 2
+    - page: 632
       figures: "4.2"
       of: 314019
       depicts: specimen
@@ -7333,11 +7333,11 @@ ignota_halgedahl_jarrard_conway morris_2015:
     illustrations:
     - page: 634
       figures: ["5.1", "5.2"]
-      of: "14011.01 a"
+      of: "14011.01"
       depicts: specimen
     - page: 634
       figures: "5.3"
-      of: "14011.01 a"
+      of: "14011.01"
       depicts: drawing
   citedAs: >-
     Thylacocercus ignota Halgedahl, Jarrard, and Conway Morris, new species

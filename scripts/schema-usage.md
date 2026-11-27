@@ -74,15 +74,15 @@ property.
 | `pubDate` | 410 | 99.8% |
 | `volume` | 323 | 78.6% |
 | `title` | 295 | 71.8% |
-| `identifiers` | 291 | 70.8% |
-| `pages` | 264 | 64.2% |
+| `identifiers` | 292 | 71.0% |
+| `pages` | 265 | 64.5% |
 | `journal` | 253 | 61.6% |
 | `number` | 204 | 49.6% |
-| `identifiers.url` | 201 | 69.1% |
+| `identifiers.url` | 201 | 68.8% |
 | `book` | 157 | 38.2% |
 | `processDates` | 104 | 25.3% |
 | `notes` | 72 | 17.5% |
-| `identifiers.doi` | 69 | 23.7% |
+| `identifiers.doi` | 70 | 24.0% |
 | `processDates.accepted` | 66 | 63.5% |
 | `processDates.received` | 55 | 52.9% |
 | `audit` | 48 | 11.7% |
@@ -896,7 +896,7 @@ Tests whether each multi-type declaration is actually needed.
 | `phylogeny#/$defs/article/properties/articleNumber` | integer/string | intx6, strx2 | `e1465`, `e38296` | - |
 | `phylogeny#/$defs/article/properties/chapter` | integer/string | strx2 | `III. Stamm. Echinodermat...`, `Report of E. Billings, E...` | integer |
 | `phylogeny#/$defs/article/properties/number` | integer/string | intx191, strx13 | `Supplement`, `1/2`, `Part 4, No. 220`, `Adv. Pr.` | - |
-| `phylogeny#/$defs/article/properties/pages/items` | integer/string | intx494, strx48 | `supplementary 17`, `supplementary 1`, `S637`, `S634` | - |
+| `phylogeny#/$defs/article/properties/pages/items` | integer/string | intx496, strx48 | `supplementary 17`, `supplementary 1`, `S637`, `S634` | - |
 | `phylogeny#/$defs/article/properties/plates/items` | integer/string | intx31, strx17 | `II`, `I`, `XXXVII`, `VI` | - |
 | `phylogeny#/$defs/article/properties/series` | integer/string | intx10, strx4 | `A`, `New Series` | - |
 | `phylogeny#/$defs/article/properties/volume` | integer/string | intx297, strx26 | `New Series`, `3: Echinoderms: Notes fo...`, `Report of the 68th Meeti...`, `Eighty-Three Plates to A...` | - |
@@ -910,7 +910,7 @@ Tests whether each multi-type declaration is actually needed.
 | `phylogeny#/$defs/materialsFields/properties/ranges` | array/null | listx72, nullx41 | - | - |
 | `phylogeny#/$defs/person/properties/death` | integer/null | intx111, nullx1 | - | - |
 | `phylogeny#/$defs/phylogeny/properties/characteristics/items/additionalProperties/additionalProperties` | integer/string | intx40 | - | string |
-| `phylogeny#/$defs/printedNumber` | string/integer | intx688, strx483 | `HS81`, `Ech-04-009`, `Ech-04-008`, `Ech-04-007` | - |
+| `phylogeny#/$defs/printedNumber` | string/integer | intx688, strx482 | `HS81`, `Ech-04-009`, `Ech-04-008`, `Ech-04-007` | - |
 | `phylogeny#/$defs/relationalFields/properties/synonyms` | array/null | listx377 | - | null |
 | `phylogeny#/$defs/sectionRecord/properties/name` | string/null | strx11, nullx3 | `Stellatae`, `Radiatae`, `Multivalvia`, `Lunatae` | - |
 | `phylogeny#/$defs/taxonRecord/properties/holotype/additionalProperties/items` | array/string/integer | strx1 | `E23470` | array, integer |

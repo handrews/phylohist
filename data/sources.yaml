@@ -3734,6 +3734,8 @@
   - halgedahl
   - selden
   - jarrard
+  identifiers:
+    doi: 10.1017/jpa.2015.40
 2015_zamora_lefebvre_hoşgör_franzen_nardin_fatka_álvaro:
   title: "The Cambrian edrioasteroid Stromatocystites (Echinodermata): Systematics, palaeogeography, and palaeoecology"
   journal: geobios
@@ -4623,6 +4625,9 @@ inprep_sprinkle_strimple:
     (Lower Cambrian, China)
   journal: nature
   volume: 414
+  pages:
+  - 419
+  - 424
   pubDate:
     year: 2001
   authors:
@@ -4768,7 +4773,7 @@ inprep_sprinkle_strimple:
     doi: 10.1038/nature02648
   notes: >
     Footer gives year as 2002 in error; 2004 is correct.
-    Degan Shu is crediged as D.-G. Shu, a form he only rarely uses.
+    Degan Shu is credited as D.-G. Shu, a form he only rarely uses.
 2004_parsley_prokop:
   title: Functional morphology and paleoecology of some sessile Middle Cambrian echinoderms from the Barrandian region of Bohemia
   journal: bullgeo

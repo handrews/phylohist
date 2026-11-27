@@ -163,8 +163,9 @@ taxonomies:
             to mean the locality defined for Dianchicystis, which is the
             only one of the two localities to be near Haikou.  There is no
             indication of a second locality near Haikou.
-            The horizon is not given, but is assumed to be the same as
-            all other specimens from both localities.
+            The horizon is only given as Lower Cambrian Qiongzhusi Formation,
+            but is assumed to be the same as all other specimens from both
+            localities.
           material:
           - prefix: ELI
             numbers:
@@ -213,8 +214,9 @@ taxonomies:
             to mean the locality defined for Dianchicystis, which is the
             only one of the two localities to be near Haikou.  There is no
             indication of a second locality near Haikou.
-            The horizon is not given, but is assumed to be the same as
-            all other specimens from both localities.
+            The horizon is only given as Lower Cambrian Qiongzhusi Formation,
+            but is assumed to be the same as all other specimens from both
+            localities.
           material:
           - prefix: ELI
             numbers: [Ech-04-009]
