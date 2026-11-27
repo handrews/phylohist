@@ -121,7 +121,7 @@ property.
 | `source` | 2133 | 70.8% |
 | `auth` | 856 | 28.4% |
 | `year` | 853 | 28.3% |
-| `pages` | 446 | 14.8% |
+| `pages` | 447 | 14.8% |
 | `illustrations` | 101 | 3.4% |
 | `attributedTo` | 28 | 0.9% |
 | `in` | 27 | 0.9% |
@@ -133,7 +133,7 @@ property.
 
 | property | data | data % |
 |---|---|---|
-| `citedAs` | 1137 | 11.7% |
+| `citedAs` | 1139 | 11.7% |
 
 ### `cladisticFields` -- 793 instances in `data/`
 
@@ -462,7 +462,7 @@ property.
 | `name` | 2892 | 99.0% |
 | `authority` | 2698 | 92.3% |
 | `/if.authority` | 2697 | 100.0% |
-| `rank` | 1066 | 36.5% |
+| `rank` | 1067 | 36.5% |
 | `notes` | 257 | 8.8% |
 | `altSpellingOf` | 149 | 5.1% |
 | `lang` | 77 | 2.6% |
@@ -700,13 +700,13 @@ property.
 
 ### `phylogeny#/$defs/rank`
 
-25 of 32 members used, 1665 occurrences.
+25 of 32 members used, 1666 occurrences.
 
 | value | count |
 |---|---|
 | `'Order'` | 312 |
 | `'Class'` | 294 |
-| `'species'` | 287 |
+| `'species'` | 288 |
 | `'Family'` | 233 |
 | `'genus'` | 158 |
 | `'variety'` | 65 |
@@ -900,7 +900,7 @@ Tests whether each multi-type declaration is actually needed.
 | `phylogeny#/$defs/article/properties/plates/items` | integer/string | intx31, strx17 | `II`, `I`, `XXXVII`, `VI` | - |
 | `phylogeny#/$defs/article/properties/series` | integer/string | intx10, strx4 | `A`, `New Series` | - |
 | `phylogeny#/$defs/article/properties/volume` | integer/string | intx297, strx26 | `New Series`, `3: Echinoderms: Notes fo...`, `Report of the 68th Meeti...`, `Eighty-Three Plates to A...` | - |
-| `phylogeny#/$defs/citationNumber` | integer/string | intx2976, strx470 | `5f`, `3g`, `3d`, `3f` | - |
+| `phylogeny#/$defs/citationNumber` | integer/string | intx2974, strx470 | `5f`, `3g`, `3d`, `3f` | - |
 | `phylogeny#/$defs/cladisticFields/properties/matrix/items` | integer/string | intx139, strx5 | `?` | - |
 | `phylogeny#/$defs/editorialObject/properties/corrections/properties/authority/properties/auth` | array/null | nullx7, listx1 | - | - |
 | `phylogeny#/$defs/editorialObject/properties/inferred` | boolean/array | boolx47, listx34 | - | - |

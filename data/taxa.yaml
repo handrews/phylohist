@@ -13549,15 +13549,15 @@ taeniaster:
   name: Taeniaster
   authority:
     source: 1858b_billings
-taijiangensis_zhao.y.l_zhu.m.y_1994:
+taijiangensis_zhao.y.l_yuan.j.l_zhu.m.y_yang.r.d_guo.q.j_qian.y_huang.y.z_pan.y_1999:
   name: taijiangensis
+  rank: species
   authority:
-    source: 1994_zhao.y.l_zhu.m.y
+    source: 1999_zhao.y.l_yuan.j.l_zhu.m.y_yang.r.d_guo.q.j_qian.y_huang.y.z_pan.y
+    pages: 9
+  citedAs: Pararotadiscus taijiangensis (Zhao and Zhu, 1994)
   notes: >
-    Used as Pararotadiscus taijiangensis in
-    1999_zhao.y.l_yuan.j.l_zhu.m.y_yang.r.d_guo.q.j_qian.y_huang.y.z_pan.y
-    without formal description.  Apparently this is actually
-    guizhouensis_zhao.y.l_zhu.m.y_1994.
+    Apparently actually intended to be guizhouensis_zhao.y.l_zhu.m.y_1994.
 talpa:
   name: Talpa
   rank: genus
