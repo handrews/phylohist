@@ -15165,8 +15165,9 @@
   "folded": [
    "edrioasteroidea"
   ],
-  "kind": "primary",
+  "kind": "altRankOf",
   "name": "Edrioasteroidea",
+  "of": "edrioasteridae_billings_1858b",
   "rank": "Class"
  },
  "edrioasteroidea-family-uncertain_guensburg_sprinkle_1994": {

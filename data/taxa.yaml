@@ -4904,7 +4904,8 @@ edrioasteridae:
   authority:
     auth: [bather]
     year: 1899
-  notes: from the 1898 meeting paper, published 1899; cited as both 1898 and 1899
+  notes: >-
+    From the 1898 meeting paper, published 1899; cited as both 1898 and 1899.
 edrioasterids:
   name: Edrioasterids
   rank: Group
@@ -4924,6 +4925,7 @@ edrioasteroidea:
   bracket: Edrioasteroids
   authority:
     source: 1858b_billings
+  altRankOf: edrioasteridae_billings_1858b
 edrioasteroidea-order-uncertain_bassler_1935:
   name: null
   rank: Order
@@ -7055,7 +7057,7 @@ holothuria_linnaeus_1758:
     Does not contain echinoderms.  Suppressed by ICZN Opinion 85 (1925)
     in favor of Holothuria Linnaeus 1767.  ICZN Direction 37 (1956)
     more formally reinforced this and entered Holothuria Linnaeus 1758
-    into the "Official Index of Rejected and Invalid Generic Names 
+    into the "Official Index of Rejected and Invalid Generic Names
     in Zoology".
 holothuria:
   name: Holothuria

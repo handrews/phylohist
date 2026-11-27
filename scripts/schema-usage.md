@@ -467,7 +467,7 @@ property.
 | `altSpellingOf` | 149 | 5.1% |
 | `lang` | 77 | 2.6% |
 | `originalParent` | 71 | 2.4% |
-| `altRankOf` | 51 | 1.7% |
+| `altRankOf` | 52 | 1.8% |
 | `vulgarSpellingOf` | 46 | 1.6% |
 | `homonym` | 18 | 0.6% |
 | `needsQualification` | 17 | 0.6% |
