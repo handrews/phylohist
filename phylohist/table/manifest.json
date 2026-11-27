@@ -40,12 +40,14 @@
   "burrett": "Burrett",
   "calvin.s": "Calvin",
   "candia carnevali": "Candia Carnevali",
+  "caron": "Caron",
   "caster": "Caster",
   "chapman.e.j": "Chapman",
   "chapman.f": "Chapman",
   "chen.a": "Chen",
   "chen.g.y": "Chen",
   "chen.j.y": "Chen",
+  "chen.l": "Chen",
   "chen.l.z": "Chen",
   "chen.m.g": "Chen",
   "cheng.m.r": "Cheng",
@@ -60,6 +62,7 @@
   "collins.d": "Collins",
   "cong.p.y": "Cong",
   "conrad.t.a": "Conrad",
+  "conway morris": "Conway Morris",
   "cooper": "Cooper",
   "cornell": "Cornell",
   "cuevas-castell": "Cuevas-Castell",
@@ -116,6 +119,7 @@
   "gray.g.r": "Gray",
   "gray.j.e": "Gray",
   "grigo": "Grigo",
+  "grobben": "Grobben",
   "guensburg": "Guensburg",
   "gunnerus": "Gunnerus",
   "guo.j": "Guo",
@@ -125,6 +129,7 @@
   "gyllenhaal": "Gyllenhaal",
   "haeckel": "Haeckel",
   "hahn": "Hahn",
+  "halgedahl": "Halgedahl",
   "hall": "Hall",
   "han.h.p": "Han",
   "han.j": "Han",
@@ -147,6 +152,7 @@
   "hyman": "Hyman",
   "isotalo": "Isotalo",
   "jaekel": "Jaekel",
+  "jarrard": "Jarrard",
   "jeffries": "Jeffries",
   "jell": "Jell",
   "joysey": "Joysey",
@@ -172,6 +178,7 @@
   "li.y.j": "Li",
   "lin.j.p": "Lin",
   "linnaeus": "Linnaeus",
+  "liu.h.q": "Liu",
   "liu.j.n": "Liu",
   "liu.q": "Liu",
   "liu.x.y": "Liu",
@@ -8362,6 +8369,41 @@
    "material": {},
    "tree": false
   },
+  "1908_grobben": {
+   "acts": {},
+   "audit": {
+    "state": "unaudited"
+   },
+   "citation": {
+    "authors": [
+     "Grobben"
+    ],
+    "in": "Verhandlungen der Kaiserlich-Königlichen Zoologisch-Botanischen Gesellschaft in Wien",
+    "pages": [
+     491,
+     511
+    ],
+    "title": "Die systematische Einteilung des Tierreiches",
+    "volume": 58,
+    "year": 1908
+   },
+   "claims": {},
+   "coverage": {
+    "illustrations": null,
+    "material": null,
+    "newTaxa": null,
+    "occurrences": null,
+    "phylogeny": null,
+    "skeleton": null,
+    "synonymy": null,
+    "types": null
+   },
+   "derived": {},
+   "derivedCoverage": {},
+   "inconsistencies": [],
+   "material": {},
+   "tree": false
+  },
   "1911b_walcott": {
    "acts": {},
    "audit": {
@@ -14925,6 +14967,48 @@
    },
    "tree": true
   },
+  "2001_shu.d_conway morris_han.j_chen.l_zhang.x.l_liu.h.q_li.y_liu.j.n": {
+   "acts": {},
+   "audit": {
+    "state": "unaudited"
+   },
+   "citation": {
+    "authors": [
+     "Shu",
+     "Conway Morris",
+     "Han",
+     "Chen",
+     "Zhang",
+     "Liu",
+     "Li",
+     "Liu"
+    ],
+    "in": "Nature",
+    "pages": [
+     419,
+     424
+    ],
+    "title": "Primitive deuterostomes from the Chengjiang Lagerstätte (Lower Cambrian, China)\n",
+    "volume": 414,
+    "year": 2001
+   },
+   "claims": {},
+   "coverage": {
+    "illustrations": null,
+    "material": null,
+    "newTaxa": null,
+    "occurrences": null,
+    "phylogeny": null,
+    "skeleton": null,
+    "synonymy": null,
+    "types": null
+   },
+   "derived": {},
+   "derivedCoverage": {},
+   "inconsistencies": [],
+   "material": {},
+   "tree": false
+  },
   "2001_sumrall": {
    "acts": {
     "new": 3,
@@ -15323,6 +15407,71 @@
    },
    "tree": true
   },
+  "2004_shu.d_conway morris_han.j_zhang.z.f_liu.j.n": {
+   "acts": {
+    "new": 6,
+    "placeholder": 4
+   },
+   "audit": {
+    "state": "unaudited"
+   },
+   "citation": {
+    "authors": [
+     "Shu",
+     "Conway Morris",
+     "Han",
+     "Zhang",
+     "Liu"
+    ],
+    "in": "Nature",
+    "pages": [
+     422,
+     428
+    ],
+    "title": "Ancestral echinoderms from the Chengjiang deposits of China",
+    "volume": 430,
+    "year": 2004
+   },
+   "claims": {
+    "act": 10,
+    "editorial": 5,
+    "material": 28,
+    "placement": 10,
+    "usage": 11
+   },
+   "coverage": {
+    "illustrations": null,
+    "material": null,
+    "newTaxa": null,
+    "occurrences": null,
+    "phylogeny": null,
+    "skeleton": null,
+    "synonymy": null,
+    "types": null
+   },
+   "derived": {
+    "illustrations": 12,
+    "material": 4,
+    "newTaxa": 5,
+    "occurrences": 2,
+    "skeleton": 13
+   },
+   "derivedCoverage": {
+    "illustrations": null,
+    "material": null,
+    "occurrences": null,
+    "skeleton": null,
+    "synonymy": null,
+    "types": null
+   },
+   "inconsistencies": [],
+   "material": {
+    "illustration": 18,
+    "occurrence": 4,
+    "specimen": 6
+   },
+   "tree": true
+  },
   "2005_frest": {
    "acts": {
     "new": 3,
@@ -15376,6 +15525,41 @@
    "inconsistencies": [],
    "material": {},
    "tree": true
+  },
+  "2006_caron": {
+   "acts": {},
+   "audit": {
+    "state": "unaudited"
+   },
+   "citation": {
+    "authors": [
+     "Caron"
+    ],
+    "in": "Transactions of the Royal Society of Edinburgh: Earth Sciences",
+    "pages": [
+     95,
+     111
+    ],
+    "title": "Banffia constricta, a putative vetulicolid from the Middle Cambrian Burgess Shale\n",
+    "volume": 96,
+    "year": 2006
+   },
+   "claims": {},
+   "coverage": {
+    "illustrations": null,
+    "material": null,
+    "newTaxa": null,
+    "occurrences": null,
+    "phylogeny": null,
+    "skeleton": null,
+    "synonymy": null,
+    "types": null
+   },
+   "derived": {},
+   "derivedCoverage": {},
+   "inconsistencies": [],
+   "material": {},
+   "tree": false
   },
   "2006_parsley_zhao.y.l": {
    "acts": {
@@ -17690,6 +17874,72 @@
    "material": {},
    "tree": false
   },
+  "2015_conway morris_halgedahl_selden_jarrard": {
+   "acts": {
+    "new": 3,
+    "type": 2
+   },
+   "audit": {
+    "state": "unaudited"
+   },
+   "citation": {
+    "authors": [
+     "Conway Morris",
+     "Halgedahl",
+     "Selden",
+     "Jarrard"
+    ],
+    "in": "Journal of Paleontology",
+    "number": 4,
+    "pages": [
+     631,
+     636
+    ],
+    "title": "Rare primitive deuterostomes from the Cambrian (Series 3) of Utah",
+    "volume": 89,
+    "year": 2015
+   },
+   "claims": {
+    "act": 5,
+    "editorial": 2,
+    "material": 21,
+    "placement": 11,
+    "usage": 13
+   },
+   "coverage": {
+    "illustrations": null,
+    "material": null,
+    "newTaxa": null,
+    "occurrences": null,
+    "phylogeny": null,
+    "skeleton": null,
+    "synonymy": null,
+    "types": null
+   },
+   "derived": {
+    "illustrations": 8,
+    "material": 7,
+    "newTaxa": 3,
+    "occurrences": 6,
+    "skeleton": 23,
+    "types": 2
+   },
+   "derivedCoverage": {
+    "illustrations": null,
+    "material": null,
+    "occurrences": null,
+    "skeleton": null,
+    "synonymy": null,
+    "types": null
+   },
+   "inconsistencies": [],
+   "material": {
+    "illustration": 8,
+    "occurrence": 6,
+    "specimen": 7
+   },
+   "tree": true
+  },
   "2015_rahman_stewart_zamora": {
    "acts": {
     "new": 1,
@@ -19772,6 +20022,8 @@
   ],
   "ambulacraria": [
    "1881b_metschnikoff",
+   "2004_shu.d_conway morris_han.j_zhang.z.f_liu.j.n",
+   "2015_conway morris_halgedahl_selden_jarrard",
    "2026_he.k.y_mussini_han.j_reich.m_ou.q_cheng.m.r_shu.d"
   ],
   "ambulacraria-indeterminate-class_he.k.y_mussini_han.j_reich.m_ou.q_cheng.m.r_shu.d_2026": [
@@ -20502,6 +20754,15 @@
   "balticus_jaekel_1899": [
    "1935_bassler",
    "1985_smith.a.b"
+  ],
+  "banffia": [
+   "2015_conway morris_halgedahl_selden_jarrard"
+  ],
+  "banffiidae": [
+   "2015_conway morris_halgedahl_selden_jarrard"
+  ],
+  "banffozoa": [
+   "2015_conway morris_halgedahl_selden_jarrard"
   ],
   "barrandei_jaekel_1918": [
    "1993_young.t.p_donovan.s.k",
@@ -21274,6 +21535,9 @@
   "castor": [
    "1758_linnaeus"
   ],
+  "catenata_shu.d_conway morris_han.j_zhang.z.f_liu.j.n_2004": [
+   "2004_shu.d_conway morris_han.j_zhang.z.f_liu.j.n"
+  ],
   "catta_linnaeus_1758": [
    "1758_linnaeus"
   ],
@@ -21677,6 +21941,9 @@
   ],
   "conolliidae": [
    "1999_domínguez alonso"
+  ],
+  "constricta_walcott_1911": [
+   "2015_conway morris_halgedahl_selden_jarrard"
   ],
   "conulus": [
    "1778_leske",
@@ -22440,6 +22707,9 @@
    "2017_allaire_lefebvre_nardin_martin.e.l.o_vaucher_escarguel",
    "2020_guensburg_sprinkle_mooi_lefebvre_david_roux_derstler"
   ],
+  "deuterostomia": [
+   "2015_conway morris_halgedahl_selden_jarrard"
+  ],
   "devonica_bassler_1936": [
    "1987_smith.a.b_arbizu",
    "2010_müller.p_hahn",
@@ -22469,6 +22739,9 @@
   ],
   "diana_linnaeus_1758": [
    "1758_linnaeus"
+  ],
+  "dianchicystis": [
+   "2004_shu.d_conway morris_han.j_zhang.z.f_liu.j.n"
   ],
   "dibrachycystidae": [
    "2012_zamora_smith.a.b"
@@ -23552,6 +23825,9 @@
    "1983_holloway_jell",
    "1994_guensburg_sprinkle",
    "2011_sumrall_zamora"
+  ],
+  "episoma_conway morris_selden_2015": [
+   "2015_conway morris_halgedahl_selden_jarrard"
   ],
   "equestris_linnaeus_1758": [
    "1758_linnaeus",
@@ -24948,6 +25224,9 @@
   "icthyocrinus": [
    "1842_conrad.t.a"
   ],
+  "ignota_halgedahl_jarrard_conway morris_2015": [
+   "2015_conway morris_halgedahl_selden_jarrard"
+  ],
   "ikecanensis_sprinkle_1973": [
    "1973_sprinkle"
   ],
@@ -25272,6 +25551,9 @@
   ],
   "jewettii_hall_1852": [
    "1852_hall"
+  ],
+  "jianshanensis_shu.d_conway morris_han.j_zhang.z.f_liu.j.n_2004": [
+   "2004_shu.d_conway morris_han.j_zhang.z.f_liu.j.n"
   ],
   "jingxieocrinus": [
    "2014_chen.g.y_han.n.r"
@@ -29713,6 +29995,9 @@
    "1994_guensburg_sprinkle",
    "2006_sumrall_gahn"
   ],
+  "thylacocercus": [
+   "2015_conway morris_halgedahl_selden_jarrard"
+  ],
   "thyroida": [
    "1900_bather"
   ],
@@ -30201,6 +30486,34 @@
   ],
   "vespertilio": [
    "1758_linnaeus"
+  ],
+  "vetulicolia": [
+   "2015_conway morris_halgedahl_selden_jarrard"
+  ],
+  "vetulocystida": [
+   "2004_shu.d_conway morris_han.j_zhang.z.f_liu.j.n"
+  ],
+  "vetulocystidae": [
+   "2004_shu.d_conway morris_han.j_zhang.z.f_liu.j.n",
+   "2015_conway morris_halgedahl_selden_jarrard"
+  ],
+  "vetulocystidae-form-a-sp_shu.d_conway morris_han.j_zhang.z.f_liu.j.n_2004": [
+   "2004_shu.d_conway morris_han.j_zhang.z.f_liu.j.n"
+  ],
+  "vetulocystidae-form-a_shu.d_conway morris_han.j_zhang.z.f_liu.j.n_2004": [
+   "2004_shu.d_conway morris_han.j_zhang.z.f_liu.j.n"
+  ],
+  "vetulocystidae-form-b-sp_shu.d_conway morris_han.j_zhang.z.f_liu.j.n_2004": [
+   "2004_shu.d_conway morris_han.j_zhang.z.f_liu.j.n"
+  ],
+  "vetulocystidae-form-b_shu.d_conway morris_han.j_zhang.z.f_liu.j.n_2004": [
+   "2004_shu.d_conway morris_han.j_zhang.z.f_liu.j.n"
+  ],
+  "vetulocystids": [
+   "2015_conway morris_halgedahl_selden_jarrard"
+  ],
+  "vetulocystis": [
+   "2004_shu.d_conway morris_han.j_zhang.z.f_liu.j.n"
   ],
   "vetusta_foerste_1914": [
    "1935_bassler",

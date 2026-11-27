@@ -4475,6 +4475,54 @@
   "name": "balticus",
   "rank": "species"
  },
+ "banffia": {
+  "authority": {
+   "authors": [
+    "Walcott"
+   ],
+   "display": "Walcott 1911",
+   "source": "1911d_walcott",
+   "year": 1911
+  },
+  "folded": [
+   "banffia"
+  ],
+  "kind": "primary",
+  "name": "Banffia",
+  "rank": "genus"
+ },
+ "banffiidae": {
+  "authority": {
+   "authors": [
+    "Caron"
+   ],
+   "display": "Caron 2006",
+   "source": "2006_caron",
+   "year": 2006
+  },
+  "folded": [
+   "banffiidae"
+  ],
+  "kind": "primary",
+  "name": "Banffiidae",
+  "rank": "Family"
+ },
+ "banffozoa": {
+  "authority": {
+   "authors": [
+    "Caron"
+   ],
+   "display": "Caron 2006",
+   "source": "2006_caron",
+   "year": 2006
+  },
+  "folded": [
+   "banffozoa"
+  ],
+  "kind": "primary",
+  "name": "Banffozoa",
+  "rank": "Class"
+ },
  "barrandei_jaekel_1918": {
   "authority": {
    "authors": [
@@ -7696,6 +7744,26 @@
   "name": "Castor",
   "rank": "genus"
  },
+ "catenata_shu.d_conway morris_han.j_zhang.z.f_liu.j.n_2004": {
+  "authority": {
+   "authors": [
+    "Shu",
+    "Conway Morris",
+    "Han",
+    "Zhang",
+    "Liu"
+   ],
+   "display": "Shu, Conway Morris, Han, Zhang, Liu 2004",
+   "source": "2004_shu.d_conway morris_han.j_zhang.z.f_liu.j.n",
+   "year": 2004
+  },
+  "folded": [
+   "catenata"
+  ],
+  "kind": "primary",
+  "name": "catenata",
+  "rank": "species"
+ },
  "catta_linnaeus_1758": {
   "authority": {
    "authors": [
@@ -9517,6 +9585,22 @@
   "kind": "primary",
   "name": "Conolliidae",
   "rank": "Family"
+ },
+ "constricta_walcott_1911": {
+  "authority": {
+   "authors": [
+    "Walcott"
+   ],
+   "display": "Walcott 1911",
+   "source": "1911d_walcott",
+   "year": 1911
+  },
+  "folded": [
+   "constricta"
+  ],
+  "kind": "primary",
+  "name": "constricta",
+  "rank": "species"
  },
  "conulus": {
   "authority": {
@@ -12540,6 +12624,22 @@
   "name": "destombesi",
   "rank": "species"
  },
+ "deuterostomia": {
+  "authority": {
+   "authors": [
+    "Grobben"
+   ],
+   "display": "Grobben 1908",
+   "source": "1908_grobben",
+   "year": 1908
+  },
+  "folded": [
+   "deuterostomia"
+  ],
+  "kind": "primary",
+  "name": "Deuterostomia",
+  "rank": "Division"
+ },
  "devonica_bassler_1936": {
   "authority": {
    "authors": [
@@ -12684,6 +12784,26 @@
   "kind": "primary",
   "name": "diana",
   "rank": "species"
+ },
+ "dianchicystis": {
+  "authority": {
+   "authors": [
+    "Shu",
+    "Conway Morris",
+    "Han",
+    "Zhang",
+    "Liu"
+   ],
+   "display": "Shu, Conway Morris, Han, Zhang, Liu 2004",
+   "source": "2004_shu.d_conway morris_han.j_zhang.z.f_liu.j.n",
+   "year": 2004
+  },
+  "folded": [
+   "dianchicystis"
+  ],
+  "kind": "primary",
+  "name": "Dianchicystis",
+  "rank": "genus"
  },
  "dibrachycystidae": {
   "authority": {
@@ -16476,6 +16596,29 @@
   "kind": "primary",
   "name": "Epipaston",
   "rank": "genus"
+ },
+ "episoma_conway morris_selden_2015": {
+  "authority": {
+   "authors": [
+    "Conway Morris",
+    "Selden"
+   ],
+   "display": "Conway Morris, Selden in Conway Morris, Halgedahl, Selden, Jarrard 2015",
+   "in": [
+    "Conway Morris",
+    "Halgedahl",
+    "Selden",
+    "Jarrard"
+   ],
+   "source": "2015_conway morris_halgedahl_selden_jarrard",
+   "year": 2015
+  },
+  "folded": [
+   "episoma"
+  ],
+  "kind": "primary",
+  "name": "episoma",
+  "rank": "species"
  },
  "equestris_linnaeus_1758": {
   "authority": {
@@ -22500,6 +22643,30 @@
   "of": "ichthyocrinus",
   "rank": "genus"
  },
+ "ignota_halgedahl_jarrard_conway morris_2015": {
+  "authority": {
+   "authors": [
+    "Halgedahl",
+    "Jarrard",
+    "Conway Morris"
+   ],
+   "display": "Halgedahl, Jarrard, Conway Morris in Conway Morris, Halgedahl, Selden, Jarrard 2015",
+   "in": [
+    "Conway Morris",
+    "Halgedahl",
+    "Selden",
+    "Jarrard"
+   ],
+   "source": "2015_conway morris_halgedahl_selden_jarrard",
+   "year": 2015
+  },
+  "folded": [
+   "ignota"
+  ],
+  "kind": "primary",
+  "name": "ignota",
+  "rank": "species"
+ },
  "ikecanensis_sprinkle_1973": {
   "authority": {
    "authors": [
@@ -23705,6 +23872,26 @@
   "kind": "altSpellingOf",
   "name": "jewettii",
   "of": "jewetti_hall_1852",
+  "rank": "species"
+ },
+ "jianshanensis_shu.d_conway morris_han.j_zhang.z.f_liu.j.n_2004": {
+  "authority": {
+   "authors": [
+    "Shu",
+    "Conway Morris",
+    "Han",
+    "Zhang",
+    "Liu"
+   ],
+   "display": "Shu, Conway Morris, Han, Zhang, Liu 2004",
+   "source": "2004_shu.d_conway morris_han.j_zhang.z.f_liu.j.n",
+   "year": 2004
+  },
+  "folded": [
+   "jianshanensis"
+  ],
+  "kind": "primary",
+  "name": "jianshanensis",
   "rank": "species"
  },
  "jingxieocrinus": {
@@ -35059,6 +35246,22 @@
   "name": "Protorophus",
   "rank": "genus"
  },
+ "protostomia": {
+  "authority": {
+   "authors": [
+    "Grobben"
+   ],
+   "display": "Grobben 1908",
+   "source": "1908_grobben",
+   "year": 1908
+  },
+  "folded": [
+   "protostomia"
+  ],
+  "kind": "primary",
+  "name": "Protostomia",
+  "rank": "Division"
+ },
  "protozoa": {
   "authority": {
    "authors": [
@@ -43193,6 +43396,30 @@
   "name": "Thresherodiscus",
   "rank": "genus"
  },
+ "thylacocercus": {
+  "authority": {
+   "authors": [
+    "Halgedahl",
+    "Jarrard",
+    "Conway Morris"
+   ],
+   "display": "Halgedahl, Jarrard, Conway Morris in Conway Morris, Halgedahl, Selden, Jarrard 2015",
+   "in": [
+    "Conway Morris",
+    "Halgedahl",
+    "Selden",
+    "Jarrard"
+   ],
+   "source": "2015_conway morris_halgedahl_selden_jarrard",
+   "year": 2015
+  },
+  "folded": [
+   "thylacocercus"
+  ],
+  "kind": "primary",
+  "name": "Thylacocercus",
+  "rank": "genus"
+ },
  "thyroida": {
   "authority": {
    "authors": [
@@ -45298,6 +45525,189 @@
   ],
   "kind": "primary",
   "name": "Vespertilio",
+  "rank": "genus"
+ },
+ "vetulicolia": {
+  "authority": {
+   "authors": [
+    "Shu",
+    "Conway Morris",
+    "Han",
+    "Chen",
+    "Zhang",
+    "Liu",
+    "Li",
+    "Liu"
+   ],
+   "display": "Shu, Conway Morris, Han, Chen, Zhang, Liu, Li, Liu 2001",
+   "source": "2001_shu.d_conway morris_han.j_chen.l_zhang.x.l_liu.h.q_li.y_liu.j.n",
+   "year": 2001
+  },
+  "folded": [
+   "vetulicolia"
+  ],
+  "kind": "primary",
+  "name": "Vetulicolia",
+  "rank": "Phylum"
+ },
+ "vetulocystida": {
+  "authority": {
+   "authors": [
+    "Shu",
+    "Conway Morris",
+    "Han",
+    "Zhang",
+    "Liu"
+   ],
+   "display": "Shu, Conway Morris, Han, Zhang, Liu 2004",
+   "source": "2004_shu.d_conway morris_han.j_zhang.z.f_liu.j.n",
+   "year": 2004
+  },
+  "folded": [
+   "vetulocystida"
+  ],
+  "kind": "primary",
+  "name": "Vetulocystida",
+  "rank": null
+ },
+ "vetulocystidae": {
+  "authority": {
+   "authors": [
+    "Shu",
+    "Conway Morris",
+    "Han",
+    "Zhang",
+    "Liu"
+   ],
+   "display": "Shu, Conway Morris, Han, Zhang, Liu 2004",
+   "source": "2004_shu.d_conway morris_han.j_zhang.z.f_liu.j.n",
+   "year": 2004
+  },
+  "folded": [
+   "vetulocystidae"
+  ],
+  "kind": "primary",
+  "name": "Vetulocystidae",
+  "rank": "Family"
+ },
+ "vetulocystidae-form-a-sp_shu.d_conway morris_han.j_zhang.z.f_liu.j.n_2004": {
+  "authority": {
+   "authors": [
+    "Shu",
+    "Conway Morris",
+    "Han",
+    "Zhang",
+    "Liu"
+   ],
+   "display": "Shu, Conway Morris, Han, Zhang, Liu 2004",
+   "source": "2004_shu.d_conway morris_han.j_zhang.z.f_liu.j.n",
+   "year": 2004
+  },
+  "designation": "Form A",
+  "folded": [],
+  "kind": "placeholder",
+  "name": null,
+  "placeholder": "open",
+  "rank": "species"
+ },
+ "vetulocystidae-form-a_shu.d_conway morris_han.j_zhang.z.f_liu.j.n_2004": {
+  "authority": {
+   "authors": [
+    "Shu",
+    "Conway Morris",
+    "Han",
+    "Zhang",
+    "Liu"
+   ],
+   "display": "Shu, Conway Morris, Han, Zhang, Liu 2004",
+   "source": "2004_shu.d_conway morris_han.j_zhang.z.f_liu.j.n",
+   "year": 2004
+  },
+  "folded": [],
+  "kind": "placeholder",
+  "name": null,
+  "placeholder": "open",
+  "rank": "genus"
+ },
+ "vetulocystidae-form-b-sp_shu.d_conway morris_han.j_zhang.z.f_liu.j.n_2004": {
+  "authority": {
+   "authors": [
+    "Shu",
+    "Conway Morris",
+    "Han",
+    "Zhang",
+    "Liu"
+   ],
+   "display": "Shu, Conway Morris, Han, Zhang, Liu 2004",
+   "source": "2004_shu.d_conway morris_han.j_zhang.z.f_liu.j.n",
+   "year": 2004
+  },
+  "designation": "Form B",
+  "folded": [],
+  "kind": "placeholder",
+  "name": null,
+  "placeholder": "open",
+  "rank": "species"
+ },
+ "vetulocystidae-form-b_shu.d_conway morris_han.j_zhang.z.f_liu.j.n_2004": {
+  "authority": {
+   "authors": [
+    "Shu",
+    "Conway Morris",
+    "Han",
+    "Zhang",
+    "Liu"
+   ],
+   "display": "Shu, Conway Morris, Han, Zhang, Liu 2004",
+   "source": "2004_shu.d_conway morris_han.j_zhang.z.f_liu.j.n",
+   "year": 2004
+  },
+  "folded": [],
+  "kind": "placeholder",
+  "name": null,
+  "placeholder": "open",
+  "rank": "genus"
+ },
+ "vetulocystids": {
+  "authority": {
+   "authors": [
+    "Shu",
+    "Conway Morris",
+    "Han",
+    "Zhang",
+    "Liu"
+   ],
+   "display": "Shu, Conway Morris, Han, Zhang, Liu 2004",
+   "source": "2004_shu.d_conway morris_han.j_zhang.z.f_liu.j.n",
+   "year": 2004
+  },
+  "folded": [
+   "vetulocystids"
+  ],
+  "kind": "vulgarSpellingOf",
+  "lang": "EN",
+  "name": "Vetulocystids",
+  "of": "vetulocystida",
+  "rank": null
+ },
+ "vetulocystis": {
+  "authority": {
+   "authors": [
+    "Shu",
+    "Conway Morris",
+    "Han",
+    "Zhang",
+    "Liu"
+   ],
+   "display": "Shu, Conway Morris, Han, Zhang, Liu 2004",
+   "source": "2004_shu.d_conway morris_han.j_zhang.z.f_liu.j.n",
+   "year": 2004
+  },
+  "folded": [
+   "vetulocystis"
+  ],
+  "kind": "primary",
+  "name": "Vetulocystis",
   "rank": "genus"
  },
  "vetusta_foerste_1914": {

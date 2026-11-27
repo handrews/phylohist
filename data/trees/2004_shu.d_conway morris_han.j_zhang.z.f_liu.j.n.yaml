@@ -1,0 +1,233 @@
+prefixes:
+  ELI: nwu-eli
+horizons:
+  yuanshan:
+    unit:
+    - Yu’anshan Member
+    - Qiongzhusi (Chiungchussu) Formation
+    biozone: Eoredlichia
+    localSeries: Lower Cambrian
+localities:
+  shankou:
+    location:
+    - Shankou section
+    - near Anning
+    - about 30 km west of Kunming
+  jianshan:
+    location:
+    - Jianshan
+    - near Haikou
+    - about 40 km south of Kunming
+taxonomies:
+- taxon: ambulacraria
+  citedAs: Total group Ambulacraria
+  group: total
+  rank: null
+  authority: null
+  pages: 422
+  children:
+  - taxon: vetulocystida
+    citedAs: Stem group Vetulocystida
+    term: stem
+    rank: null
+    new: true
+    pages: 422
+    editorial:
+      inferred: [new]
+      basis: The entire concept of vetulocystids is new in this paper.
+    children:
+    - taxon: vetulocystidae
+      citedAs: Family Vetulocystidae fam. nov.
+      rank: Family
+      new: true
+      pages: 422
+      children:
+      - taxon: vetulocystis
+        citedAs: Vetulocystis catenata gen. et sp. nov.
+        new: true
+        pages: 422
+        children:
+        - taxon: catenata_shu.d_conway morris_han.j_zhang.z.f_liu.j.n_2004
+          citedAs: Vetulocystis catenata gen. et sp. nov.
+          new: true
+          pages: 422
+          material:
+          - role: holotype
+            prefix: ELI
+            numbers: [Ech-04-001]
+            horizon: yuanshan
+            locality: shankou
+          - prefix: ELI
+            numbers: [Ech-04-002]
+            horizon: yuanshan
+            locality: shankou
+          illustrations:
+          - page: 423
+            figures:
+            - [1a, 1c]
+            - 1e
+            of: Ech-04-001
+            depicts: specimen
+          - page: 423
+            figures: 1d
+            of: Ech-04-001
+            depicts: drawing
+          - page: 423
+            figures: 1f
+            of: Ech-04-002
+            depicts: specimen
+          - page: 423
+            figures: 1g
+            of: Ech-04-002
+            depicts: drawing
+      - taxon: dianchicystis
+        citedAs: Dianchicystis jianshanensis gen. et sp. nov.
+        new: true
+        pages: 422
+        children:
+        - taxon: jianshanensis_shu.d_conway morris_han.j_zhang.z.f_liu.j.n_2004
+          citedAs: Dianchicystis jianshanensis gen. et sp. nov.
+          new: true
+          pages: 422
+          material:
+          - role: holotype
+            prefix: ELI
+            numbers: [Ech-04-003]
+            horizon: yuanshan
+            locality: jianshan
+          - prefix: ELI
+            numbers:
+            - [Ech-04-004, Ech-04-006]
+            horizon: yuanshan
+            locality: jianshan
+          illustrations:
+          - page: 424
+            figures:
+            - 2a
+            - [2i, 2j]
+            of: Ech-04-003
+            depicts: specimen
+          - page: 424
+            figures: 2b
+            of: Ech-04-003
+            depicts: drawing
+          - page: 424
+            figures: 2c
+            of: Ech-04-004
+            depicts: specimen
+          - page: 424
+            figures: 2d
+            of: Ech-04-004
+            depicts: drawing
+          - page: 424
+            figures:
+            - 2e
+            - 2k
+            of: Ech-04-005
+            depicts: specimen
+          - page: 424
+            figures: 2f
+            of: Ech-04-005
+            depicts: drawing
+          - page: 424
+            figures:
+            - 2g
+            - 2l
+            of: Ech-04-006
+            depicts: specimen
+          - page: 424
+            figures: 2h
+            of: Ech-04-006
+            depicts: drawing
+      - openTaxon: vetulocystidae-form-a_shu.d_conway morris_han.j_zhang.z.f_liu.j.n_2004
+        citedAs: Form A
+        new: true
+        pages: 422
+        editorial:
+          inferred: true
+          basis: >
+            Specimen assignment on page 422,
+            specimen illustrations (Fig. 3 p. 425)
+        children:
+        - openTaxon: vetulocystidae-form-a-sp_shu.d_conway morris_han.j_zhang.z.f_liu.j.n_2004
+          citedAs: Form A
+          new: true
+          pages: 422
+          editorial:
+            inferred: true
+            basis: >
+              Specimen assignment on page 422,
+              specimen illustrations (Fig. 3 p. 425)
+          notes: >
+            Material said to be "from the Haikou locality" which is assumed
+            to mean the locality defined for Dianchicystis, which is the
+            only one of the two localities to be near Haikou.  There is no
+            indication of a second locality near Haikou.
+            The horizon is only given as Lower Cambrian Qiongzhusi Formation,
+            but is assumed to be the same as all other specimens from both
+            localities.
+          material:
+          - prefix: ELI
+            numbers:
+            - [Ech-04-007, Ech-04-008]
+            horizon: yuanshan
+            locality: jianshan
+          illustrations:
+          - page: 425
+            figures:
+            - [3a, 3b]
+            of: Ech-04-007
+            depicts: specimen
+          - page: 425
+            figures: 3e
+            of: Ech-04-007
+            depicts: drawing
+          - page: 425
+            figures: 3c
+            of: Ech-04-008
+            depicts: specimen
+          - page: 425
+            figures: 3f
+            of: Ech-04-008
+            depicts: drawing
+      - openTaxon: vetulocystidae-form-b_shu.d_conway morris_han.j_zhang.z.f_liu.j.n_2004
+        citedAs: Form B
+        new: true
+        pages: 422
+        editorial:
+          inferred: true
+          basis: >
+            Specimen assignment on page 422,
+            specimen illustrations (Fig. 3 p. 425)
+        children:
+        - openTaxon: vetulocystidae-form-b-sp_shu.d_conway morris_han.j_zhang.z.f_liu.j.n_2004
+          citedAs: Form B
+          new: true
+          pages: 422
+          editorial:
+            inferred: true
+            basis: >
+              Specimen assignment on page 422,
+              specimen illustrations (Fig. 3 p. 425)
+          notes: >
+            Material said to be "from the Haikou locality" which is assumed
+            to mean the locality defined for Dianchicystis, which is the
+            only one of the two localities to be near Haikou.  There is no
+            indication of a second locality near Haikou.
+            The horizon is only given as Lower Cambrian Qiongzhusi Formation,
+            but is assumed to be the same as all other specimens from both
+            localities.
+          material:
+          - prefix: ELI
+            numbers: [Ech-04-009]
+            horizon: yuanshan
+            locality: jianshan
+          illustrations:
+          - page: 425
+            figures: 3d
+            of: Ech-04-009
+            depicts: specimen
+          - page: 425
+            figures: 3g
+            of: Ech-04-009
+            depicts: drawing

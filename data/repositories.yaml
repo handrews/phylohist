@@ -211,6 +211,11 @@ rievers:
   type: person
   place: Enkirch (Moselle)
   prefixes: [RVS]
+rom:
+  name: Royal Ontario Museum
+  type: institution
+  place: Toronto
+  prefixes: [ROM]
 sam:
   name: South Australian Museum
   type: institution
