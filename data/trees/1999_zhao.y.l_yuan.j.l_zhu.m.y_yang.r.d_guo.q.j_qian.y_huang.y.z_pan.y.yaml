@@ -13,12 +13,11 @@ horizons:
     biota: Kaili
     series: Middle Cambrian
     notes: >-
-      On page 1, the border between beds GTM-8-2 and GTM-8-3 is said to also
-      be the border between the Lower Cambrian and Middle Cambrian.  The
-      bed and sub-bed numbers in these horizons are taken from the analogous
-      numbers in other collection codes (see the localityNumbers fields on
-      the materials for those codes).  The bed numbers, without sub-beds,
-      are also shown on the diagram of the Balang-Wuliu Formatoin.
+      On page 1, the border between beds GTBM-8-2 and GTBM-8-3 is said to also
+      be the border between the Lower Cambrian and Middle Cambrian in the
+      Miobanpo section.  The bed and sub-bed numbers in these horizons are
+      taken from the analogous numbers in other collection codes (see the
+      localityNumbers fields on the materials for those codes).
   miaobanpo-bed-9-1:
     unit:
     - Sub-bed 1
@@ -53,12 +52,15 @@ horizons:
     - Kaili Formation
     biota: Kaili
     series: Middle Cambrian
-  balang-wuliu-24:
+  wuliu-zengjiaya-24:
     unit:
     - Bed 24
     - Kaili Formation
     biota: Kaili
     series: Middle Cambrian
+    notes: >
+      Per text figure 1, the boundary between the Lower Cambrian and Middle
+      Cambrian is within bed 9 in the Wuliu–Zengjiaya section.
 localities:
   miaobanpo:
     location:
@@ -67,13 +69,19 @@ localities:
     - Taijiang County
     - Guizhou
     - China
-  balang-wuliu:
+    notes: >
+      On page 1, the border between beds 8-2 and 8-3 is said to also be the
+      border between the Lower Cambrian and Middle Cambrian in this section.
+  wuliu-zengjiaya:
     location:
-    - Balang Wuliu Section
+    - Wuliu–Zengjiaya Section
     - Balang
     - Taijiang County
     - Guizhou
     - China
+    notes: >
+      Per text figure 1, the boundary between the Lower Cambrian and Middle
+      Cambrian is within bed 9 in Wuliu–Zengjiaya section.
 taxonomies:
 - taxon: echinodermata
   citedAs: 棘皮动物
@@ -188,8 +196,8 @@ taxonomies:
           - prefix: GK
             numbers: [1707]
             asPrinted: GTB24-60a, GK1707。
-            horizon: balang-wuliu-24
-            locality: balang-wuliu
+            horizon: wuliu-zengjiaya-24
+            locality: wuliu-zengjiaya
             localityNumbers:
             - prefix: GTB
               number: 24-60a
@@ -333,8 +341,8 @@ taxonomies:
               number: 9-3-170
 - taxon: 纤毛环类
   notes: >
-    Lophophorates, but the Latin form is not given directly, nor is it
-    mentioned in the English text.
+    Lophophorates, but the Latin form is not given directly.  The English
+    text mentions "lophophorates such as Dinomischus."
     The Chinese section also lists the appropriate included phyla for
     Lophophorata (Bryozoa, Brachiopoda, Phoronida, and Entoprocta, athough
     also implying that there are more phyla in the group).
