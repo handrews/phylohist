@@ -1,3 +1,7 @@
+纤毛环类:
+  name: 纤毛环类
+  vulgarSpellingOf: lophophorata
+  lang: ZH
 α_linnaeus_1758_orbiculus_linnaeus_1758:
   name: α
   citedAs: α.
@@ -5173,7 +5177,7 @@ enterocoelia:
   name: Enterocoelia
   rank: Division
   authority:
-    auth: [Hatschek]
+    auth: [hatschek]
     year: 1888
   notes: Rank unclear
 enterocoela:
@@ -8449,6 +8453,16 @@ lophotocystis:
   authority:
     auth: [paul.c.r.c]
     year: 1972
+lophophorata:
+  name: Lophophorata
+  rank: null
+  authority:
+    source: 1959_hyman
+    pages: 229
+  notes: >-
+    Suggested as a better name than Tentaculata Hatschek 1888 which is
+    a homonym of a class within Ctenophora.  Not formally established
+    with a rank, but this seems to be the first use.
 loricatus_say_1825:
   name: loricatus
   authority:
@@ -13554,7 +13568,7 @@ taijiangensis_zhao.y.l_yuan.j.l_zhu.m.y_yang.r.d_guo.q.j_qian.y_huang.y.z_pan.y_
   rank: species
   authority:
     source: 1999_zhao.y.l_yuan.j.l_zhu.m.y_yang.r.d_guo.q.j_qian.y_huang.y.z_pan.y
-    pages: 9
+    pages: 13
   citedAs: Pararotadiscus taijiangensis (Zhao and Zhu, 1994)
   notes: >
     Apparently actually intended to be guizhouensis_zhao.y.l_zhu.m.y_1994.
@@ -13628,6 +13642,23 @@ tennesseensis_bassler_1936:
   name: tennesseensis
   authority:
     source: 1936_bassler
+tentaculata_hatschek_1888:
+  name: Tentaculata
+  homonym: true
+  rank: Phylum
+  authority:
+    auth: [hatschek]
+    year: 1888
+  notes: >-
+    Rank based on 1959_hyman's account of Hatschek's work, although she
+    used Tentaculata to contain several Phyla.
+tentaculata:
+  name: Tentaculata
+  rank: Class
+  authority:
+    auth: [eschscholtz]
+    year: 1825
+  notes: Rank is a guess based on later usage.
 tentaculées:
   name: Tentaculées
   rank: section

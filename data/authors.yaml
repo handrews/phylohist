@@ -319,6 +319,11 @@ erdtmann:
 escarguel:
   surname: Escarguel
   given: Gilles
+eschscholtz:
+  surname: Eschscholtz
+  given: Johann Friedrich Gustav von
+  birth: 1793
+  death: 1831
 ewin:
   surname: Ewin
   given: Timothy A. M.
@@ -514,6 +519,11 @@ han.n.r:
 harland:
   surname: Harland
   given: W. B.
+hatschek:
+  surname: Hatschek
+  given: Berthold
+  birth: 1854
+  death: 1941
 he.k.y:
   surname: He
   given: Kai-Yue

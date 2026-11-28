@@ -83,6 +83,7 @@
   "eichwald": "Eichwald",
   "erdtmann": "Erdtmann",
   "escarguel": "Escarguel",
+  "eschscholtz": "Eschscholtz",
   "ewin": "Ewin",
   "exline": "Exline",
   "fatka": "Fatka",
@@ -135,6 +136,7 @@
   "han.j": "Han",
   "han.n.r": "Han",
   "harland": "Harland",
+  "hatschek": "Hatschek",
   "he.k.y": "He",
   "heredia": "Heredia",
   "hisinger": "Hisinger",
@@ -9274,6 +9276,37 @@
    "material": {},
    "tree": false
   },
+  "1959_hyman": {
+   "acts": {},
+   "audit": {
+    "state": "unaudited"
+   },
+   "citation": {
+    "authors": [
+     "Hyman"
+    ],
+    "in": "The Invertebrates",
+    "title": "Smaller Coelomate Groups",
+    "volume": 5,
+    "year": 1959
+   },
+   "claims": {},
+   "coverage": {
+    "illustrations": null,
+    "material": null,
+    "newTaxa": null,
+    "occurrences": null,
+    "phylogeny": null,
+    "skeleton": null,
+    "synonymy": null,
+    "types": null
+   },
+   "derived": {},
+   "derivedCoverage": {},
+   "inconsistencies": [],
+   "material": {},
+   "tree": false
+  },
   "1960_gill_caster": {
    "acts": {
     "corrected": 2,
@@ -14147,6 +14180,7 @@
      "Gong"
     ],
     "in": "Acta Palaeontologica Sinica",
+    "number": 3,
     "pages": [
      305,
      324
@@ -14183,9 +14217,10 @@
      "Zhu"
     ],
     "in": "Acta Palaeontologica Sinica",
+    "number": 3,
     "pages": [
-     350,
-     358
+     272,
+     280
     ],
     "title": "Medusiform fossils of Kaili Fauna from Taijiang, Guizhou",
     "volume": 33,
@@ -14719,9 +14754,9 @@
     "absence": 3,
     "act": 11,
     "editorial": 2,
-    "material": 23,
-    "placement": 19,
-    "usage": 23
+    "material": 24,
+    "placement": 20,
+    "usage": 24
    },
    "coverage": {
     "illustrations": null,
@@ -14737,8 +14772,8 @@
     "illustrations": 7,
     "material": 7,
     "newTaxa": 7,
-    "occurrences": 9,
-    "skeleton": 42
+    "occurrences": 10,
+    "skeleton": 44
    },
    "derivedCoverage": {
     "illustrations": null,
@@ -14751,7 +14786,7 @@
    "inconsistencies": [],
    "material": {
     "illustration": 7,
-    "occurrence": 6,
+    "occurrence": 7,
     "range": 3,
     "specimen": 7
    },
@@ -30836,6 +30871,9 @@
   "δ_linnaeus_1758_orbiculus_linnaeus_1758": [
    "1758_linnaeus",
    "1767_linnaeus"
+  ],
+  "纤毛环类": [
+   "1999_zhao.y.l_yuan.j.l_zhu.m.y_yang.r.d_guo.q.j_qian.y_huang.y.z_pan.y"
   ]
  }
 }

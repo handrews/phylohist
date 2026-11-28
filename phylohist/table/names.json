@@ -26101,6 +26101,22 @@
   "name": "longus",
   "rank": "species"
  },
+ "lophophorata": {
+  "authority": {
+   "authors": [
+    "Hyman"
+   ],
+   "display": "Hyman 1959",
+   "source": "1959_hyman",
+   "year": 1959
+  },
+  "folded": [
+   "lophophorata"
+  ],
+  "kind": "primary",
+  "name": "Lophophorata",
+  "rank": null
+ },
  "lophotocystis": {
   "authority": {
    "authors": [
@@ -42796,6 +42812,37 @@
   "name": "tennesseensis",
   "rank": "species"
  },
+ "tentaculata": {
+  "authority": {
+   "authors": [
+    "Eschscholtz"
+   ],
+   "display": "Eschscholtz 1825",
+   "year": 1825
+  },
+  "folded": [
+   "tentaculata"
+  ],
+  "kind": "primary",
+  "name": "Tentaculata",
+  "rank": "Class"
+ },
+ "tentaculata_hatschek_1888": {
+  "authority": {
+   "authors": [
+    "Hatschek"
+   ],
+   "display": "Hatschek 1888",
+   "year": 1888
+  },
+  "folded": [
+   "tentaculata"
+  ],
+  "homonym": true,
+  "kind": "primary",
+  "name": "Tentaculata",
+  "rank": "Phylum"
+ },
  "tentaculites_emmons_1842": {
   "authority": {
    "authors": [
@@ -47226,5 +47273,23 @@
   "name": "δ",
   "originalParent": "orbiculus_linnaeus_1758",
   "rank": "variety"
+ },
+ "纤毛环类": {
+  "authority": {
+   "authors": [
+    "Hyman"
+   ],
+   "display": "Hyman 1959",
+   "source": "1959_hyman",
+   "year": 1959
+  },
+  "folded": [
+   "纤毛环类"
+  ],
+  "kind": "vulgarSpellingOf",
+  "lang": "ZH",
+  "name": "纤毛环类",
+  "of": "lophophorata",
+  "rank": null
  }
 }

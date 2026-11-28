@@ -2853,6 +2853,16 @@
   - hyman
   identifiers:
     url: https://archive.org/details/in.ernet.dli.2015.260496/page/n5/mode/2up
+1959_hyman:
+  title: Smaller Coelomate Groups
+  book: invertebrates
+  volume: 5
+  pubDate:
+    year: 1959
+  authors:
+  - hyman
+  identifiers:
+    url: https://archive.org/details/invertebratessma0005libb/page/n5/mode/2up
 1960_gill_caster:
   title: Carpoid echinoderms from the Silurian and Devonian of Australia
   journal: bullamp
@@ -4372,6 +4382,7 @@ inprep_sprinkle_strimple:
   title: The middle Cambrian Kaili Formation of southwestern China
   journal: acta-p-sinica
   volume: 33
+  number: 3
   pages:
   - 305
   - 324
@@ -4385,9 +4396,10 @@ inprep_sprinkle_strimple:
   title: Medusiform fossils of Kaili Fauna from Taijiang, Guizhou
   journal: acta-p-sinica
   volume: 33
+  number: 3
   pages:
-  - 350
-  - 358
+  - 272
+  - 280
   pubDate:
     year: 1994
   authors:
