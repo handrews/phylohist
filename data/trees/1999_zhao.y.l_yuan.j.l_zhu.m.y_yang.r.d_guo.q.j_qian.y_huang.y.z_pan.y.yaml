@@ -10,36 +10,42 @@ horizons:
     - Sub-bed 5
     - Bed 8
     - Kaili Formation
-    biota: Taijiang
+    biota: Kaili
     series: Middle Cambrian
     notes: >-
-      Lower-Middle Cambrian boundary is between sub-bed 2 and 3 at Miaobanpo.
+      On page 1, the border between beds GTM-8-2 and GTM-8-3 is said to also
+      be the border between the Lower Cambrian and Middle Cambrian.  The
+      bed and sub-bed numbers in these horizons are taken from the analogous
+      numbers in other collection codes (see the localityNumbers fields on
+      the materials for those codes).  The bed numbers, without sub-beds,
+      are also shown on the diagram of the Balang-Wuliu Formatoin.
   miaobanpo-bed-9-1:
     unit:
     - Sub-bed 1
     - Bed 9
     - Kaili Formation
-    biota: Taijiang
+    biota: Kaili
     series: Middle Cambrian
   miaobanpo-bed-9-2:
     unit:
     - Sub-bed 2
     - Bed 9
     - Kaili Formation
-    biota: Taijiang
+    biota: Kaili
     series: Middle Cambrian
   miaobanpo-bed-9-3:
     unit:
     - Sub-bed 3
     - Bed 9
     - Kaili Formation
-    biota: Taijiang
+    biota: Kaili
     series: Middle Cambrian
   miaobanpo-bed-20:
     unit:
     - Bed 20
     - Kaili Formation
     biota: Kaili
+    series: Middle Cambrian
   miaobanpo-bed-24-3:
     unit:
     - Sub-bed 3
@@ -327,12 +333,17 @@ taxonomies:
               number: 9-3-170
 - taxon: 纤毛环类
   notes: >
-    Lophophorates, but the latin form is not given directly despite citing
-    a paper that uses it.
+    Lophophorates, but the Latin form is not given directly, nor is it
+    mentioned in the English text.
+    The Chinese section also lists the appropriate included phyla for
+    Lophophorata (Bryozoa, Brachiopoda, Phoronida, and Entoprocta, athough
+    also implying that there are more phyla in the group).
+  rank: null
+  authority: null
   pages: 4
   children:
   - taxon: pararotadiscus_zhu.m.y_erdtmann_zhao.y.l_1999
-    citedAs: Pararotadiscus gen. nov. 以示两者明显区别 (Zhu et al., 1999)
+    citedAs: Pararotadiscus gen. nov. (Zhu et al., 1999)
     nudum: true
     pages: 4
     editorial:
@@ -345,8 +356,7 @@ taxonomies:
         to reassign Rotadiscus guizhouensis Zhao and Zhu 1994, but this is
         not formally stated and the species name was given incorrectly; no other
         source credits this publication for Pararotadiscus.
-        Pararotadiscus is properly credited to Zhu, Zhao, & Chen (2002),
-        which references this paper as if it stated Rotadiscus here.
+        Pararotadiscus is properly credited to Zhu, Zhao, & Chen (2002).
     notes: >
       Latin name printed in the Chinese section on page 4 and the plate caption
       on page 13.  The English translation on page 11 mentions only Rotadiscus
@@ -354,8 +364,6 @@ taxonomies:
       Classified as "medusiform animals" in the English section, with the
       Chinese section using a word equivalent to Lophophorata and citing
       Dzik et al. 1997 which assigns the taxa in question to Lophophorata.
-      The Chinese section also lists the appropriate included phyla for
-      Lophophorata (Bryozoa, Brachiopoda, Phoronida, and Entoprocta).
     children:
     - taxon: guizhouensis_zhao.y.l_zhu.m.y_1994
       citedAs: Pararotadiscus taijiangensis (Zhao and Zhu, 1994)
